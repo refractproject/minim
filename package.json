@@ -1,0 +1,34 @@
+{
+  "name": "minim",
+  "version": "0.1.0",
+  "description": "Building blocks for JSON DOM",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/smizell/minim"
+  },
+  "keywords": [
+    "JSON",
+    "DOM"
+  ],
+  "author": "Stephen Mizell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smizell/minim/issues"
+  },
+  "homepage": "https://github.com/smizell/minim",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "gulp": "^3.8.10",
+    "gulp-jshint": "^1.9.0",
+    "gulp-mocha": "^2.0.0",
+    "jshint-stylish": "^1.0.0",
+    "mocha": "^2.1.0"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1"
+  }
+}
