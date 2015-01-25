@@ -48,25 +48,25 @@ describe('Minim Primitives', function() {
 
     typeCheck('null', {
       element: 'null',
-      meta: {},
+      attributes: {},
       content: null
     });
 
     typeCheck('string', {
       element: 'string',
-      meta: {},
+      attributes: {},
       content: 'foo'
     });
 
     typeCheck('number', {
       element: 'number',
-      meta: {},
+      attributes: {},
       content: 4
     });
 
     typeCheck('boolean', {
       element: 'boolean',
-      meta: {},
+      attributes: {},
       content: true
     });
 
@@ -76,10 +76,10 @@ describe('Minim Primitives', function() {
       // { foo: 'bar' }
       el = {
         element: 'keyValue',
-        meta: { key: 'foo' },
+        attributes: { key: 'foo' },
         content: {
           element: 'string',
-          meta: {},
+          attributes: {},
           content: 'bar'
         }
       };
@@ -96,8 +96,8 @@ describe('Minim Primitives', function() {
         expect(returnedType.toValue()).to.equal(el.content.content);
       });
 
-      it('has the right meta', function() {
-        expect(returnedType.meta).to.deep.equal(el.meta);
+      it('has the right attributes', function() {
+        expect(returnedType.attributes).to.deep.equal(el.attributes);
       });
     });
 
@@ -107,16 +107,16 @@ describe('Minim Primitives', function() {
       // [1, 2]
       el = {
         element: 'array',
-        meta: {},
+        attributes: {},
         content: [
           {
             element: 'number',
-            meta: {},
+            attributes: {},
             content: 1
           },
           {
             element: 'number',
-            meta: {},
+            attributes: {},
             content: 2
           }
         ]
@@ -141,23 +141,23 @@ describe('Minim Primitives', function() {
       // { foo: 'bar', z: 2 }
       el = {
         element: 'object',
-        meta: {},
+        attributes: {},
         content: [
           {
             element: 'keyValue',
-            meta: { key: 'foo' },
+            attributes: { key: 'foo' },
             content: {
               element: 'string',
-              meta: {},
+              attributes: {},
               content: 'bar'
             }
           },
           {
             element: 'keyValue',
-            meta: { key: 'z' },
+            attributes: { key: 'z' },
             content: {
               element: 'number',
-              meta: {},
+              attributes: {},
               content: 2
             }
           }
@@ -200,7 +200,7 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'null',
-        meta: {},
+        attributes: {},
         content: null
       };
 
@@ -232,7 +232,7 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'string',
-        meta: {},
+        attributes: {},
         content: 'foobar'
       };
 
@@ -264,7 +264,7 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'number',
-        meta: {},
+        attributes: {},
         content: 4
       };
 
@@ -296,7 +296,7 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'boolean',
-        meta: {},
+        attributes: {},
         content: true
       };
 
@@ -343,26 +343,26 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'array',
-        meta: {},
+        attributes: {},
         content: [
           {
             element: 'string',
-            meta: {},
+            attributes: {},
             content: 'a'
           },
           {
             element: 'boolean',
-            meta: {},
+            attributes: {},
             content: true
           },
           {
             element: 'null',
-            meta: {},
+            attributes: {},
             content: null
           },
           {
             element: 'number',
-            meta: {},
+            attributes: {},
             content: 1
           }
         ]
@@ -381,9 +381,9 @@ describe('Minim Primitives', function() {
       keyValueType = new minim.KeyValueType('foo', 'bar');
     });
 
-    describe('.meta', function() {
+    describe('.attributes', function() {
       it('has the correct key', function() {
-        keyValueType.meta.key = 'foo';
+        keyValueType.attributes.key = 'foo';
       });
     });
 
@@ -402,10 +402,10 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'keyValue',
-        meta: { key: 'foo' },
+        attributes: { key: 'foo' },
         content: {
           element: 'string',
-          meta: {},
+          attributes: {},
           content: 'bar'
         }
       };
@@ -453,23 +453,23 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'object',
-        meta: {},
+        attributes: {},
         content: [
           {
             element: 'keyValue',
-            meta: { key: 'foo' },
+            attributes: { key: 'foo' },
             content: {
               element: 'string',
-              meta: {},
+              attributes: {},
               content: 'bar'
             }
           },
           {
             element: 'keyValue',
-            meta: { key: 'z' },
+            attributes: { key: 'z' },
             content: {
               element: 'number',
-              meta: {},
+              attributes: {},
               content: 1
             }
           }

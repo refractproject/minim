@@ -14,12 +14,12 @@ npm install minim
 
 In working with the XML-based DOM, there is a limitation on what types are available in the document. Element attributes may only be strings, and element values can only be strings, mixed types, and nested elements.
 
-JSON provides additional types, which include objects, arrays, booleans, and nulls. A plain JSON document, though, provides no structure and no meta data about each property and value in the document.
+JSON provides additional types, which include objects, arrays, booleans, and nulls. A plain JSON document, though, provides no structure and no attributes for each property and value in the document.
 
 JDOM is a JSON structure for JSON documents to make a more flexible document object model. In JDOM, each element has three components:
 
 1. Name of the element
-1. Attributes (or in this library, meta)
+1. Attributes
 1. Content (which can be of different types depending on the element)
 
 An element ends up looking like this:
@@ -27,7 +27,7 @@ An element ends up looking like this:
 ```javascript
 var el = {
   element: 'string',
-  meta: {},
+  attributes: {},
   content: 'bar'
 };
 ```
@@ -47,21 +47,21 @@ The `jdom` variable above has the following JSON value.
 ```json
 {
   "element": "array",
-  "meta": {},
+  "attributes": {},
   "content": [
     {
       "element": "number",
-      "meta": {},
+      "attributes": {},
       "content": 1
     },
     {
       "element": "number",
-      "meta": {},
+      "attributes": {},
       "content": 2
     },
     {
       "element": "number",
-      "meta": {},
+      "attributes": {},
       "content": 3
     }
   ]
