@@ -39,9 +39,10 @@ var el = {
 ```javascript
 var minim = require('minim');
 var arrayType = minim.convertToType([1, 2, 3]);
+var jdom = arrayType.toDom();
 ```
 
-The `arrayType` here has the following JSON value.
+The `jdom` variable above has the following JSON value.
 
 ```json
 {
@@ -83,19 +84,19 @@ Once you have set up a type, you then have the following methods.
 
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
-var rawArray = arrayType.elementType(); // array
+var elementType = arrayType.elementType(); // array
 ```
 
 #### .toValue
 
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
-var rawArray = arrayType.toValue(); // [1, 2, 3]
+var arrayValue = arrayType.toValue(); // [1, 2, 3]
 ```
 
 #### .toDom
 
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
-var rawArray = arrayType.toDom(); // See converting to types above
+var jdom = arrayType.toDom(); // See converting to types above
 ```
