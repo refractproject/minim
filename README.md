@@ -1,5 +1,7 @@
 # Minim
 
+[![Build Status](https://travis-ci.org/smizell/minim.svg)](https://travis-ci.org/smizell/minim)
+
 A library for interacting with JDOM elements
 
 ## Install
