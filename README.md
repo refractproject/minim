@@ -1,6 +1,6 @@
 # Minim
 
-A library for building JDOM APIs
+A library for interacting with JDOM elements
 
 ## Install
 
