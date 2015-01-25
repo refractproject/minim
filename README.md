@@ -76,6 +76,18 @@ If the JSON above is used, it can be converted back to Minim types to make a rou
 var arrayType = minim.convertFromDom(aboveJson);
 ```
 
+### Primitive Types
+
+The following types are currently supported:
+
+1. NullType
+1. StringType
+1. NumberType
+1. BoolType
+1. ArrayType
+1. KeyValueType
+1. ObjectType
+
 ### Element methods
 
 Once you have set up a type, you then have the following methods.
@@ -99,4 +111,11 @@ var arrayValue = arrayType.toValue(); // [1, 2, 3]
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
 var jdom = arrayType.toDom(); // See converting to types above
+```
+
+#### .toCompactDom
+
+```javascript
+var stringType = minim.convertToType("foobar");
+var compact = stringType.toDom(); // ['string', {}, 'foobar']
 ```
