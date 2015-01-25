@@ -76,7 +76,7 @@ describe('Minim Primitives', function() {
       // { foo: 'bar' }
       el = {
         element: 'keyValue',
-        meta: { name: 'foo' },
+        meta: { key: 'foo' },
         content: {
           element: 'string',
           meta: {},
@@ -145,7 +145,7 @@ describe('Minim Primitives', function() {
         content: [
           {
             element: 'keyValue',
-            meta: { name: 'foo' },
+            meta: { key: 'foo' },
             content: {
               element: 'string',
               meta: {},
@@ -154,7 +154,7 @@ describe('Minim Primitives', function() {
           },
           {
             element: 'keyValue',
-            meta: { name: 'z' },
+            meta: { key: 'z' },
             content: {
               element: 'number',
               meta: {},
@@ -382,8 +382,8 @@ describe('Minim Primitives', function() {
     });
 
     describe('.meta', function() {
-      it('has the correct name', function() {
-        keyValueType.meta.name = 'foo';
+      it('has the correct key', function() {
+        keyValueType.meta.key = 'foo';
       });
     });
 
@@ -402,7 +402,7 @@ describe('Minim Primitives', function() {
     describe('#toDom', function() {
       var expected = {
         element: 'keyValue',
-        meta: { name: 'foo' },
+        meta: { key: 'foo' },
         content: {
           element: 'string',
           meta: {},
@@ -457,7 +457,7 @@ describe('Minim Primitives', function() {
         content: [
           {
             element: 'keyValue',
-            meta: { name: 'foo' },
+            meta: { key: 'foo' },
             content: {
               element: 'string',
               meta: {},
@@ -466,7 +466,7 @@ describe('Minim Primitives', function() {
           },
           {
             element: 'keyValue',
-            meta: { name: 'z' },
+            meta: { key: 'z' },
             content: {
               element: 'number',
               meta: {},
