@@ -208,6 +208,14 @@ describe('Minim Primitives', function() {
         expect(nullType.toDom()).to.deep.equal(expected);
       });
     });
+
+    describe('#toCompactDom', function() {
+      var expected = ['null', {}, null];
+
+      it('returns a null Compact DOM object', function() {
+        expect(nullType.toCompactDom()).to.deep.equal(expected);
+      });
+    });
   });
 
   describe('StringType', function() {
@@ -238,6 +246,14 @@ describe('Minim Primitives', function() {
 
       it('returns a string DOM object', function() {
         expect(stringType.toDom()).to.deep.equal(expected);
+      });
+    });
+
+    describe('#toCompactDom', function() {
+      var expected = ['string', {}, 'foobar'];
+
+      it('returns a string Compact DOM object', function() {
+        expect(stringType.toCompactDom()).to.deep.equal(expected);
       });
     });
   });
@@ -272,6 +288,14 @@ describe('Minim Primitives', function() {
         expect(numberType.toDom()).to.deep.equal(expected);
       });
     });
+
+    describe('#toCompactDom', function() {
+      var expected = ['number', {}, 4];
+
+      it('returns a number Compact DOM object', function() {
+        expect(numberType.toCompactDom()).to.deep.equal(expected);
+      });
+    });
   });
 
   describe('BoolType', function() {
@@ -302,6 +326,14 @@ describe('Minim Primitives', function() {
 
       it('returns a boolean DOM object', function() {
         expect(boolType.toDom()).to.deep.equal(expected);
+      });
+    });
+
+    describe('#toCompactDom', function() {
+      var expected = ['boolean', {}, true];
+
+      it('returns a boolean Compact DOM object', function() {
+        expect(boolType.toCompactDom()).to.deep.equal(expected);
       });
     });
   });
@@ -372,6 +404,17 @@ describe('Minim Primitives', function() {
         expect(arrayType.toDom()).to.deep.equal(expected);
       });
     });
+
+    describe('#toCompactDom', function() {
+      var expected = ['array', {}, [['string', {}, 'a'],
+                                    ['boolean', {}, true],
+                                    ['null', {}, null],
+                                    ['number', {}, 1]]]
+
+      it('returns an array Compact DOM object', function() {
+        expect(arrayType.toCompactDom()).to.deep.equal(expected);
+      });
+    });
   });
 
   describe('KeyValueType', function() {
@@ -412,6 +455,14 @@ describe('Minim Primitives', function() {
 
       it('returns a keyValue type DOM object', function() {
         expect(keyValueType.toDom()).to.deep.equal(expected);
+      });
+    });
+
+    describe('#toCompactDom', function() {
+      var expected = ['keyValue', { key: 'foo' }, ['string', {}, 'bar']];
+
+      it('returns a KeyValue Compact DOM object', function() {
+        expect(keyValueType.toCompactDom()).to.deep.equal(expected);
       });
     });
   });
@@ -478,6 +529,15 @@ describe('Minim Primitives', function() {
 
       it('returns an object DOM object', function() {
         expect(objectType.toDom()).to.deep.equal(expected);
+      });
+    });
+
+    describe('#toCompactDom', function() {
+      var expected = ['object', {}, [['keyValue', {key: 'foo'}, ['string', {}, 'bar']],
+                                     ['keyValue', {key: 'z'}, ['number', {}, 1]]]];
+
+      it('returns a object Compact DOM object', function() {
+        expect(objectType.toCompactDom()).to.deep.equal(expected);
       });
     });
   });
