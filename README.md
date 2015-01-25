@@ -70,7 +70,7 @@ The `jdom` variable above has the following JSON value.
 
 ### Converting from Types
 
-If the JSON above is used, it can be converted back to Minim types to make a roundtrip. As a note, all meta data is lost in a roundtrip.
+If the JSON above is used, it can be converted back to Minim types to make a roundtrip.
 
 ```javascript
 var arrayType = minim.convertFromDom(aboveJson);
