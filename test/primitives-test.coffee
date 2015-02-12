@@ -1,7 +1,7 @@
 mocha = require 'mocha'
 chai = require 'chai'
 expect = chai.expect
-minim = require '../lib/primitives'
+minim = require '../src/primitives'
 
 describe 'Minim Primitives', ->
   describe 'convertToType', ->
