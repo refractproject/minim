@@ -83,6 +83,10 @@ class ArrayType extends ElementType
 
   length: -> @content.length
 
+  push: (val) ->
+    @content.push convertToType(val)
+    @
+
 class PropertyType extends ElementType
   constructor: (name, val, attributes = {}) ->
     content = convertToType val

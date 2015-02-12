@@ -391,6 +391,12 @@ describe 'Minim Primitives', ->
       it 'returns the length of the content', ->
         expect(arrayType.length()).to.equal 4
 
+    describe '#push', ->
+      it 'adds a new item to the array', ->
+        arrayType.push 'foobar'
+        expect(arrayType.length()).to.equal 5
+        expect(arrayType.get(4).toValue()).to.equal 'foobar'
+
   describe 'PropertyType', ->
     propertyType = undefined
     before ->

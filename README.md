@@ -258,6 +258,16 @@ arrayType.forEach(function(item) {
 }); // logs each value to console
 ```
 
+##### push
+
+The `push` method may be used to add items to a Minim array.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
+arrayType.push('d');
+console.log(arrayType.toValue()); // ['a', 'b', 'c', 'd']
+```
+
 #### ObjectType
 
 This is a type for representing objects.
@@ -304,8 +314,7 @@ var value = objectType.values() // ['bar']
 Methods may also be chained when using getters and setters.
 
 ```javascript
-var objectType = new minim.ObjectType();
-objectType
+var objectType = new minim.ObjectType()
   .set('name', 'John Doe')
   .set('email', 'john@example.com')
   .set('id', 4)
