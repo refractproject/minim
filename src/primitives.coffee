@@ -129,7 +129,12 @@ class ObjectType extends ElementType
     _.first(@content.filter (val) -> val.attributes.name is name)
 
   set: (name, val) ->
-    (@get name).set val
+    property = @get name
+
+    unless property
+      return @content.push new PropertyType name, val
+
+    property.set val
     @
 
   keys: -> @content.map (val) -> val.attributes.name
