@@ -175,6 +175,10 @@ describe 'Minim Primitives', ->
       it 'returns a null Compact DOM object', ->
         expect(nullType.toCompactDom()).to.deep.equal expected
 
+    describe '#get', ->
+      it 'returns the null value', ->
+        expect(nullType.get()).to.equal null
+
   describe 'StringType', ->
     stringType = undefined
 
@@ -202,6 +206,10 @@ describe 'Minim Primitives', ->
       expected = ['string', {}, 'foobar']
       it 'returns a string Compact DOM object', ->
         expect(stringType.toCompactDom()).to.deep.equal expected
+
+    describe '#get', ->
+      it 'returns the string value', ->
+        expect(stringType.get()).to.equal 'foobar'
 
   describe 'NumberType', ->
     numberType = undefined
@@ -232,6 +240,10 @@ describe 'Minim Primitives', ->
       it 'returns a number Compact DOM object', ->
         expect(numberType.toCompactDom()).to.deep.equal expected
 
+    describe '#get', ->
+      it 'returns the number value', ->
+        expect(numberType.get()).to.equal 4
+
   describe 'BoolType', ->
     boolType = undefined
 
@@ -260,6 +272,10 @@ describe 'Minim Primitives', ->
 
       it 'returns a boolean Compact DOM object', ->
         expect(boolType.toCompactDom()).to.deep.equal expected
+
+    describe '#get', ->
+      it 'returns the boolean value', ->
+        expect(boolType.get()).to.equal true
 
   describe 'ArrayType', ->
     arrayType = undefined
@@ -318,6 +334,10 @@ describe 'Minim Primitives', ->
       it 'returns an array Compact DOM object', ->
         expect(arrayType.toCompactDom()).to.deep.equal expected
 
+    describe '#get', ->
+      it 'returns the item from the array', ->
+        expect(arrayType.get(0).get()).to.equal 'a'
+
   describe 'KeyValueType', ->
     keyValueType = undefined
     before ->
@@ -354,6 +374,10 @@ describe 'Minim Primitives', ->
 
       it 'returns a KeyValue Compact DOM object', ->
         expect(keyValueType.toCompactDom()).to.deep.equal expected
+
+    describe '#get', ->
+      it 'returns the value and key', ->
+        expect(keyValueType.get()).to.equal 'bar'
 
   describe 'ObjectType', ->
     objectType = undefined
@@ -416,3 +440,7 @@ describe 'Minim Primitives', ->
 
       it 'returns a object Compact DOM object', ->
         expect(objectType.toCompactDom()).to.deep.equal expected
+
+    describe '#get', ->
+      it 'returns the value of the key given', ->
+        expect(objectType.get('foo').get()).to.equal 'bar'

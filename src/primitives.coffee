@@ -23,6 +23,8 @@ class ElementType
     dom = @toDom(options)
     [dom.element, dom.attributes, dom.content]
 
+  get: -> @content
+
 class NullType extends ElementType
   constructor: (attributes) ->
     super 'null', null, attributes
@@ -58,6 +60,8 @@ class ArrayType extends ElementType
     @content = el.content.map (content) -> convertFromDom content
     @
 
+  get: (index) -> @content[index]
+
 class KeyValueType extends ElementType
   constructor: (key, val, attributes = {}) ->
     content = convertToType val
@@ -78,6 +82,8 @@ class KeyValueType extends ElementType
     @content = convertFromDom el.content
     @
 
+  get: -> @content.get()
+
 class ObjectType extends ElementType
   constructor: (val = {}, attributes) ->
     content = _.keys(val).map (key) -> new KeyValueType key, val[key]
@@ -88,6 +94,9 @@ class ObjectType extends ElementType
       results[el.attributes.key] = el.toValue()
       results
     , {}
+
+  get: (key) ->
+    _.first(@content.filter (val) -> val.attributes.key is key)
 
 ObjectType::toDom = ArrayType::toDom
 ObjectType::toCompactDom = ArrayType::toCompactDom
