@@ -298,3 +298,15 @@ The `values` method returns an array of keys.
 var objectType = new minim.ObjectType({ foo: 'bar' });
 var value = objectType.values() // ['bar']
 ```
+
+### Chaining
+
+Methods may also be chained when using getters and setters.
+
+```javascript
+var objectType = new minim.ObjectType();
+objectType
+  .set('name', 'John Doe')
+  .set('email', 'john@example.com')
+  .set('id', 4)
+```
