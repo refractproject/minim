@@ -39,10 +39,10 @@ var el = {
 ```javascript
 var minim = require('minim');
 var arrayType = minim.convertToType([1, 2, 3]);
-var jdom = arrayType.toRefract();
+var refract = arrayType.toRefract();
 ```
 
-The `jdom` variable above has the following JSON value.
+The `refract` variable above has the following JSON value.
 
 ```json
 {
@@ -110,7 +110,7 @@ var arrayValue = arrayType.toValue(); // [1, 2, 3]
 
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
-var jdom = arrayType.toRefract(); // See converting to types above
+var refract = arrayType.toRefract(); // See converting to types above
 ```
 
 #### .toCompactRefract
