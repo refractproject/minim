@@ -70,6 +70,17 @@ class ArrayType extends ElementType
     @content[index] = convertToType val
     @
 
+  map: (cb) -> @content.map cb
+
+  filter: (cb) ->
+    newArray = new ArrayType
+    newArray.content =  @content.filter cb
+    newArray
+
+  forEach: (cb) -> @content.forEach cb
+
+  length: -> @content.length
+
 class PropertyType extends ElementType
   constructor: (name, val, attributes = {}) ->
     content = convertToType val
@@ -113,6 +124,10 @@ class ObjectType extends ElementType
   set: (name, val) ->
     (@get name).set val
     @
+
+  keys: -> @content.map (val) -> val.attributes.name
+
+  values: -> @content.map (val) -> val.get()
 
 ObjectType::toDom = ArrayType::toDom
 ObjectType::toCompactDom = ArrayType::toCompactDom

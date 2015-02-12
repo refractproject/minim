@@ -298,8 +298,12 @@ describe 'Minim Primitives', ->
 
   describe 'ArrayType', ->
     arrayType = undefined
-    before ->
+
+    setArray = ->
       arrayType = new minim.ArrayType(['a', true, null, 1 ])
+
+    before -> setArray()
+    beforeEach -> setArray()
 
     describe '.content', ->
       correctTypes = undefined
@@ -362,6 +366,26 @@ describe 'Minim Primitives', ->
         arrayType.set(0, 'hello world')
         expect(arrayType.get(0).get()).to.equal 'hello world'
 
+    describe '#map', ->
+      it 'allows for mapping the content of the array', ->
+        newArray = arrayType.map (item) -> item.get()
+        expect(newArray).to.deep.equal ['a', true, null, 1]
+
+    describe '#filter', ->
+      it 'allows for filtering the content', ->
+        newArray = arrayType.filter (item) -> item.get() in ['a', 1]
+        expect(newArray.toValue()).to.deep.equal ['a', 1]
+
+    describe '#forEach', ->
+      it 'iterates over each item', ->
+        results = []
+        arrayType.forEach (item) -> results.push item
+        expect(results.length).to.equal 4
+
+    describe '#length', ->
+      it 'returns the length of the content', ->
+        expect(arrayType.length()).to.equal 4
+
   describe 'PropertyType', ->
     propertyType = undefined
     before ->
@@ -411,10 +435,13 @@ describe 'Minim Primitives', ->
   describe 'ObjectType', ->
     objectType = undefined
 
-    before ->
+    setObject = ->
       objectType = new minim.ObjectType
         foo: 'bar'
         z: 1
+
+    before -> setObject()
+    beforeEach -> setObject()
 
     describe '.content', ->
       correctTypes = undefined
@@ -478,3 +505,11 @@ describe 'Minim Primitives', ->
       it 'sets the value of the name given', ->
         objectType.set('foo', 'hello world')
         expect(objectType.get('foo').get()).to.equal 'hello world'
+
+    describe '#keys', ->
+      it 'gets the keys of all properties', ->
+        expect(objectType.keys()).to.deep.equal ['foo', 'z']
+
+    describe '#values', ->
+      it 'gets the values of all properties', ->
+        expect(objectType.values()).to.deep.equal ['bar', 1]
