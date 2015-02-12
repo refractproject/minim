@@ -516,6 +516,10 @@ describe 'Minim Primitives', ->
         objectType.set('foo', 'hello world')
         expect(objectType.get('foo').get()).to.equal 'hello world'
 
+      it 'sets a value that has not been defined yet', ->
+        objectType.set('bar', 'hello world')
+        expect(objectType.get('bar').get()).to.equal 'hello world'
+
     describe '#keys', ->
       it 'gets the keys of all properties', ->
         expect(objectType.keys()).to.deep.equal ['foo', 'z']
