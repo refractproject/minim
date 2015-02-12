@@ -70,16 +70,16 @@ class ArrayType extends ElementType
     @content[index] = convertToType val
     @
 
-class KeyValueType extends ElementType
-  constructor: (key, val, attributes = {}) ->
+class PropertyType extends ElementType
+  constructor: (name, val, attributes = {}) ->
     content = convertToType val
-    attributes.key = key
-    super 'keyValue', content, attributes
+    attributes.name = name
+    super 'property', content, attributes
 
   toValue: -> @content.toValue()
 
   toDom: ->
-    super element: 'keyValue', content: @content.toDom()
+    super element: 'property', content: @content.toDom()
 
   toCompactDom: ->
     compactDom = @content.toCompactDom()
@@ -98,20 +98,20 @@ class KeyValueType extends ElementType
 
 class ObjectType extends ElementType
   constructor: (val = {}, attributes) ->
-    content = _.keys(val).map (key) -> new KeyValueType key, val[key]
+    content = _.keys(val).map (name) -> new PropertyType name, val[name]
     super 'object', content, attributes
 
   toValue: ->
     @content.reduce (results, el) ->
-      results[el.attributes.key] = el.toValue()
+      results[el.attributes.name] = el.toValue()
       results
     , {}
 
-  get: (key) ->
-    _.first(@content.filter (val) -> val.attributes.key is key)
+  get: (name) ->
+    _.first(@content.filter (val) -> val.attributes.name is name)
 
-  set: (key, val) ->
-    (@get key).set val
+  set: (name, val) ->
+    (@get name).set val
     @
 
 ObjectType::toDom = ArrayType::toDom
@@ -129,12 +129,12 @@ convertToType = (val) ->
 
 # TODO: This needs to be a register so future types can be added
 convertFromDom = (el) ->
-  return new StringType().fromDom(el)  if el.element is "string"
-  return new NumberType().fromDom(el)  if el.element is "number"
-  return new BoolType().fromDom(el)  if el.element is "boolean"
-  return new KeyValueType().fromDom(el)  if el.element is "keyValue"
-  return new ArrayType().fromDom(el)  if el.element is "array"
-  return new ObjectType().fromDom(el)  if el.element is "object"
+  return new StringType().fromDom(el)  if el.element is 'string'
+  return new NumberType().fromDom(el)  if el.element is 'number'
+  return new BoolType().fromDom(el)  if el.element is 'boolean'
+  return new PropertyType().fromDom(el)  if el.element is 'property'
+  return new ArrayType().fromDom(el)  if el.element is 'array'
+  return new ObjectType().fromDom(el)  if el.element is 'object'
   new NullType().fromDom el
 
 module.exports = {
@@ -143,7 +143,7 @@ module.exports = {
   NumberType
   BoolType
   ArrayType
-  KeyValueType
+  PropertyType
   ObjectType
   convertFromDom
   convertToType
