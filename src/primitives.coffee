@@ -131,10 +131,10 @@ class ObjectType extends ElementType
   set: (name, val) ->
     property = @get name
 
-    unless property
-      return @content.push new PropertyType name, val
-
-    property.set val
+    if property
+      property.set val
+    else
+      @content.push new PropertyType name, val
     @
 
   keys: -> @content.map (val) -> val.attributes.name
