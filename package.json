@@ -1,7 +1,7 @@
 {
   "name": "minim",
-  "version": "0.1.1",
-  "description": "A library for interacting with JDOM elements",
+  "version": "0.2.0",
+  "description": "A library for interacting with JSON through Refract elements",
   "main": "index.js",
   "scripts": {
     "test": "gulp",
