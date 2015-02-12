@@ -56,15 +56,15 @@ describe 'Minim Primitives', ->
       attributes: {}
       content: true
 
-    context 'when give keyValue', ->
+    context 'when give property', ->
       returnedType = undefined
       el = undefined
 
       # { foo: 'bar' }
       el =
-        element: 'keyValue'
+        element: 'property'
         attributes:
-          key: 'foo'
+          name: 'foo'
         content:
           element: 'string'
           attributes: {}
@@ -73,8 +73,8 @@ describe 'Minim Primitives', ->
       before ->
         returnedType = minim.convertFromDom el
 
-      it 'returns keyValue element', ->
-        expect(returnedType.elementType()).to.equal 'keyValue'
+      it 'returns property element', ->
+        expect(returnedType.elementType()).to.equal 'property'
 
       it 'has the correct value', ->
         expect(returnedType.toValue()).to.equal el.content.content
@@ -118,17 +118,17 @@ describe 'Minim Primitives', ->
         element: 'object'
         attributes: {}
         content: [
-          element: 'keyValue'
+          element: 'property'
           attributes:
-            key: 'foo'
+            name: 'foo'
           content:
             element: 'string'
             attributes: {}
             content: 'bar'
         ,
-          element: 'keyValue'
+          element: 'property'
           attributes:
-            key: 'z'
+            name: 'z'
           content:
             element: 'number'
             attributes: {}
@@ -362,51 +362,51 @@ describe 'Minim Primitives', ->
         arrayType.set(0, 'hello world')
         expect(arrayType.get(0).get()).to.equal 'hello world'
 
-  describe 'KeyValueType', ->
-    keyValueType = undefined
+  describe 'PropertyType', ->
+    propertyType = undefined
     before ->
-      keyValueType = new minim.KeyValueType('foo', 'bar')
+      propertyType = new minim.PropertyType('foo', 'bar')
 
     describe '.attributes', ->
-      it 'has the correct key', ->
-        keyValueType.attributes.key = 'foo'
+      it 'has the correct name', ->
+        propertyType.attributes.name = 'foo'
 
     describe '#elementType', ->
-      it 'is a keyValue type', ->
-        expect(keyValueType.elementType()).to.equal 'keyValue'
+      it 'is a property type', ->
+        expect(propertyType.elementType()).to.equal 'property'
 
     describe '#toValue', ->
       it 'returns the string type', ->
-        expect(keyValueType.toValue()).to.equal 'bar'
+        expect(propertyType.toValue()).to.equal 'bar'
 
     describe '#toDom', ->
       expected =
-        element: 'keyValue'
+        element: 'property'
         attributes:
-          key: 'foo'
+          name: 'foo'
 
         content:
           element: 'string'
           attributes: {}
           content: 'bar'
 
-      it 'returns a keyValue type DOM object', ->
-        expect(keyValueType.toDom()).to.deep.equal expected
+      it 'returns a property type DOM object', ->
+        expect(propertyType.toDom()).to.deep.equal expected
 
     describe '#toCompactDom', ->
-      expected = ['keyValue', {key: 'foo'}, ['string', {}, 'bar']]
+      expected = ['property', {name: 'foo'}, ['string', {}, 'bar']]
 
-      it 'returns a KeyValue Compact DOM object', ->
-        expect(keyValueType.toCompactDom()).to.deep.equal expected
+      it 'returns a PropertyType Compact DOM object', ->
+        expect(propertyType.toCompactDom()).to.deep.equal expected
 
     describe '#get', ->
-      it 'returns the value and key', ->
-        expect(keyValueType.get()).to.equal 'bar'
+      it 'returns the value and name', ->
+        expect(propertyType.get()).to.equal 'bar'
 
     describe '#set', ->
       it 'sets the value of the property', ->
-        keyValueType.set('hello world')
-        expect(keyValueType.get()).to.equal 'hello world'
+        propertyType.set('hello world')
+        expect(propertyType.get()).to.equal 'hello world'
 
   describe 'ObjectType', ->
     objectType = undefined
@@ -443,17 +443,17 @@ describe 'Minim Primitives', ->
         element: 'object'
         attributes: {}
         content: [
-          element: 'keyValue'
+          element: 'property'
           attributes:
-            key: 'foo'
+            name: 'foo'
           content:
             element: 'string'
             attributes: {}
             content: 'bar'
         ,
-          element: 'keyValue'
+          element: 'property'
           attributes:
-            key: 'z'
+            name: 'z'
           content:
             element: 'number'
             attributes: {}
@@ -464,17 +464,17 @@ describe 'Minim Primitives', ->
         expect(objectType.toDom()).to.deep.equal expected
 
     describe '#toCompactDom', ->
-      expected = ['object', {}, [['keyValue', {key: 'foo'}, ['string', {}, 'bar']],
-                                 ['keyValue', {key: 'z'}, ['number', {}, 1 ]]]]
+      expected = ['object', {}, [['property', {name: 'foo'}, ['string', {}, 'bar']],
+                                 ['property', {name: 'z'}, ['number', {}, 1 ]]]]
 
       it 'returns a object Compact DOM object', ->
         expect(objectType.toCompactDom()).to.deep.equal expected
 
     describe '#get', ->
-      it 'returns the value of the key given', ->
+      it 'returns the value of the name given', ->
         expect(objectType.get('foo').get()).to.equal 'bar'
 
     describe '#set', ->
-      it 'sets the value of the key given', ->
+      it 'sets the value of the name given', ->
         objectType.set('foo', 'hello world')
         expect(objectType.get('foo').get()).to.equal 'hello world'
