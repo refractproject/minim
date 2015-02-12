@@ -76,23 +76,13 @@ If the JSON above is used, it can be converted back to Minim types to make a rou
 var arrayType = minim.convertFromDom(aboveJson);
 ```
 
-### Primitive Types
+### Element Methods
 
-The following types are currently supported:
-
-1. NullType
-1. StringType
-1. NumberType
-1. BoolType
-1. ArrayType
-1. KeyValueType
-1. ObjectType
-
-### Element methods
-
-Once you have set up a type, you then have the following methods.
+Each Minim type provides the following the methods.
 
 #### .elementType
+
+The `elementType` method returns the type of the Minim element.
 
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
@@ -101,12 +91,16 @@ var elementType = arrayType.elementType(); // array
 
 #### .toValue
 
+The `toValue` method returns the JSON value of the Minim element.
+
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
 var arrayValue = arrayType.toValue(); // [1, 2, 3]
 ```
 
 #### .toRefract
+
+The `toRefract` method returns the Refract value of the Minim element.
 
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
@@ -115,7 +109,192 @@ var refract = arrayType.toRefract(); // See converting to types above
 
 #### .toCompactRefract
 
+The `toCompactRefract` method returns the Compact Refract value of the Minim element.
+
 ```javascript
 var stringType = minim.convertToType("foobar");
 var compact = stringType.toRefract(); // ['string', {}, 'foobar']
+```
+
+### Element Types
+
+Minim supports the following primitive types and the
+
+#### NullType
+
+This is a type for representing the `null` value.
+
+##### get
+
+The `get` method returns the value of the `NullType` instance.
+
+```javascript
+var nullType = new minim.NullType();
+var value = nullType.get() // get() returns null
+```
+
+#### StringType
+
+This is a type for representing string values.
+
+##### get
+
+The `get` method returns the value of the `StringType` instance.
+
+```javascript
+var stringType = new minim.StringType('foobar');
+var value = stringType.get() // get() returns 'foobar'
+```
+
+##### set
+
+The `set` method sets the value of the `StringType` instance.
+
+```javascript
+var stringType = new minim.StringType();
+stringType.set('foobar');
+var value = stringType.get() // get() returns 'foobar'
+```
+
+#### NumberType
+
+This is a type for representing number values.
+
+##### get
+
+The `get` method returns the value of the `NumberType` instance.
+
+```javascript
+var numberType = new minim.NumberType(4);
+var value = numberType.get() // get() returns 4
+```
+
+##### set
+
+The `set` method sets the value of the `NumberType` instance.
+
+```javascript
+var numberType = new minim.NumberType();
+numberType.set(4);
+var value = numberType.get() // get() returns 4
+```
+
+#### BoolType
+
+This is a type for representing boolean values.
+
+##### get
+
+The `get` method returns the value of the `BoolType` instance.
+
+```javascript
+var boolType = new minim.BoolType(true);
+var value = boolType.get() // get() returns true
+```
+
+##### set
+
+The `set` method sets the value of the `BoolType` instance.
+
+```javascript
+var boolType = new minim.BoolType();
+boolType.set(true);
+var value = boolType.get() // get() returns 4
+```
+
+#### ArrayType
+
+This is a type for representing arrays.
+
+##### get
+
+The `get` method returns the item of the `ArrayType` instance at the given index.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
+var value = arrayType.get(0) // get(0) returns 'a'
+```
+
+##### set
+
+The `set` method sets the value of the `ArrayType` instance.
+
+```javascript
+var arrayType = new minim.ArrayType();
+arrayType.set(0, 'z');
+var value = arrayType.get(0) // get(0) returns 'z'
+```
+
+##### map
+
+The `map` method may be used to map over an array. Each item given is a Minim instance.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
+var newArray = arrayType.map(function(item) {
+  return item.elementType();
+}); // newArray is now ['string', 'string', 'string']
+```
+
+##### filter
+
+The `filter` method may be used to filter a Minim array. This method returns a Minim array itself rather than a JavaScript array instance.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
+var newArray = arrayType.filter(function(item) {
+  return item.get() === 'a'
+}); // newArray.toValue() is now ['a']
+```
+
+##### forEach
+
+The `forEach` method may be used to iterate over a Minim array.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
+arrayType.forEach(function(item) {
+  console.log(item.toValue())
+}); // logs each value to console
+```
+
+#### ObjectType
+
+This is a type for representing objects.
+
+##### get
+
+The `get` method returns the item of the `ObjectType` instance at the given index.
+
+```javascript
+var objectType = new minim.ObjectType({ foo: 'bar' });
+var value = objectType.get('foo') // get('foo') returns 'bar'
+```
+
+##### set
+
+The `set` method sets the value of the `ObjectType` instance.
+
+```javascript
+var objectType = new minim.ObjectType();
+objectType.set('foo', 'hello world');
+var value = objectType.get('foo') // get('foo') returns 'hello world'
+```
+
+##### keys
+
+The `keys` method returns an array of keys.
+
+```javascript
+var objectType = new minim.ObjectType({ foo: 'bar' });
+var value = objectType.keys() // ['foo']
+```
+
+##### values
+
+The `values` method returns an array of keys.
+
+```javascript
+var objectType = new minim.ObjectType({ foo: 'bar' });
+var value = objectType.values() // ['bar']
 ```
