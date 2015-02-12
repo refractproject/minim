@@ -160,20 +160,20 @@ describe 'Minim Primitives', ->
       it 'returns null', ->
         expect(nullType.toValue()).to.equal null
 
-    describe '#toDom', ->
+    describe '#toRefract', ->
       expected =
         element: 'null'
         attributes: {}
         content: null
 
       it 'returns a null DOM object', ->
-        expect(nullType.toDom()).to.deep.equal expected
+        expect(nullType.toRefract()).to.deep.equal expected
 
-    describe '#toCompactDom', ->
+    describe '#toCompactRefract', ->
       expected = ['null', {}, null]
 
       it 'returns a null Compact DOM object', ->
-        expect(nullType.toCompactDom()).to.deep.equal expected
+        expect(nullType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
       it 'returns the null value', ->
@@ -197,19 +197,19 @@ describe 'Minim Primitives', ->
       it 'returns the string', ->
         expect(stringType.toValue()).to.equal 'foobar'
 
-    describe '#toDom', ->
+    describe '#toRefract', ->
       expected =
         element: 'string'
         attributes: {}
         content: 'foobar'
 
       it 'returns a string DOM object', ->
-        expect(stringType.toDom()).to.deep.equal expected
+        expect(stringType.toRefract()).to.deep.equal expected
 
-    describe '#toCompactDom', ->
+    describe '#toCompactRefract', ->
       expected = ['string', {}, 'foobar']
       it 'returns a string Compact DOM object', ->
-        expect(stringType.toCompactDom()).to.deep.equal expected
+        expect(stringType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
       it 'returns the string value', ->
@@ -234,20 +234,20 @@ describe 'Minim Primitives', ->
       it 'returns the number', ->
         expect(numberType.toValue()).to.equal 4
 
-    describe '#toDom', ->
+    describe '#toRefract', ->
       expected =
         element: 'number'
         attributes: {}
         content: 4
 
       it 'returns a number DOM object', ->
-        expect(numberType.toDom()).to.deep.equal expected
+        expect(numberType.toRefract()).to.deep.equal expected
 
-    describe '#toCompactDom', ->
+    describe '#toCompactRefract', ->
       expected = ['number', {}, 4]
 
       it 'returns a number Compact DOM object', ->
-        expect(numberType.toCompactDom()).to.deep.equal expected
+        expect(numberType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
       it 'returns the number value', ->
@@ -272,20 +272,20 @@ describe 'Minim Primitives', ->
       it 'returns the boolean', ->
         expect(boolType.toValue()).to.equal true
 
-    describe '#toDom', ->
+    describe '#toRefract', ->
       expected =
         element: 'boolean'
         attributes: {}
         content: true
 
       it 'returns a boolean DOM object', ->
-        expect(boolType.toDom()).to.deep.equal expected
+        expect(boolType.toRefract()).to.deep.equal expected
 
-    describe '#toCompactDom', ->
+    describe '#toCompactRefract', ->
       expected = ['boolean', {}, true]
 
       it 'returns a boolean Compact DOM object', ->
-        expect(boolType.toCompactDom()).to.deep.equal expected
+        expect(boolType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
       it 'returns the boolean value', ->
@@ -324,7 +324,7 @@ describe 'Minim Primitives', ->
       it 'returns the array', ->
         expect(arrayType.toValue()).to.deep.equal ['a', true, null, 1]
 
-    describe '#toDom', ->
+    describe '#toRefract', ->
       expected =
         element: 'array'
         attributes: {}
@@ -347,15 +347,15 @@ describe 'Minim Primitives', ->
          ]
 
       it 'returns an array DOM object', ->
-        expect(arrayType.toDom()).to.deep.equal expected
+        expect(arrayType.toRefract()).to.deep.equal expected
 
-    describe '#toCompactDom', ->
+    describe '#toCompactRefract', ->
       expected = ['array', {}, [['string', {}, 'a'],
                                 ['boolean', {}, true],
                                 ['null', {}, null],
                                 ['number', {}, 1]]]
       it 'returns an array Compact DOM object', ->
-        expect(arrayType.toCompactDom()).to.deep.equal expected
+        expect(arrayType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
       it 'returns the item from the array', ->
@@ -403,7 +403,7 @@ describe 'Minim Primitives', ->
       it 'returns the string type', ->
         expect(propertyType.toValue()).to.equal 'bar'
 
-    describe '#toDom', ->
+    describe '#toRefract', ->
       expected =
         element: 'property'
         attributes:
@@ -415,13 +415,13 @@ describe 'Minim Primitives', ->
           content: 'bar'
 
       it 'returns a property type DOM object', ->
-        expect(propertyType.toDom()).to.deep.equal expected
+        expect(propertyType.toRefract()).to.deep.equal expected
 
-    describe '#toCompactDom', ->
+    describe '#toCompactRefract', ->
       expected = ['property', {name: 'foo'}, ['string', {}, 'bar']]
 
       it 'returns a PropertyType Compact DOM object', ->
-        expect(propertyType.toCompactDom()).to.deep.equal expected
+        expect(propertyType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
       it 'returns the value and name', ->
@@ -465,7 +465,7 @@ describe 'Minim Primitives', ->
           foo: 'bar'
           z: 1
 
-    describe '#toDom', ->
+    describe '#toRefract', ->
       expected =
         element: 'object'
         attributes: {}
@@ -488,14 +488,14 @@ describe 'Minim Primitives', ->
          ]
 
       it 'returns an object DOM object', ->
-        expect(objectType.toDom()).to.deep.equal expected
+        expect(objectType.toRefract()).to.deep.equal expected
 
-    describe '#toCompactDom', ->
+    describe '#toCompactRefract', ->
       expected = ['object', {}, [['property', {name: 'foo'}, ['string', {}, 'bar']],
                                  ['property', {name: 'z'}, ['number', {}, 1 ]]]]
 
       it 'returns a object Compact DOM object', ->
-        expect(objectType.toCompactDom()).to.deep.equal expected
+        expect(objectType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
       it 'returns the value of the name given', ->

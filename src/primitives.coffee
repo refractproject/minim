@@ -7,7 +7,7 @@ class ElementType
 
   toValue: -> @content
 
-  toDom: (options = {}) ->
+  toRefract: (options = {}) ->
     initial =
       element: @elementType()
       attributes: @attributes
@@ -19,8 +19,8 @@ class ElementType
     @content = el.content
     @
 
-  toCompactDom: (options) ->
-    dom = @toDom(options)
+  toCompactRefract: (options) ->
+    dom = @toRefract(options)
     [dom.element, dom.attributes, dom.content]
 
   get: -> @content
@@ -52,11 +52,11 @@ class ArrayType extends ElementType
 
   toValue: -> @content.map (el) -> el.toValue()
 
-  toDom: ->
-    super content: @content.map (el) -> el.toDom()
+  toRefract: ->
+    super content: @content.map (el) -> el.toRefract()
 
-  toCompactDom: (options = {}) ->
-    compactDoms = @content.map (el) -> el.toCompactDom()
+  toCompactRefract: (options = {}) ->
+    compactDoms = @content.map (el) -> el.toCompactRefract()
     [@element, @attributes, compactDoms]
 
   fromDom: (el) ->
@@ -89,11 +89,11 @@ class PropertyType extends ElementType
 
   toValue: -> @content.toValue()
 
-  toDom: ->
-    super element: 'property', content: @content.toDom()
+  toRefract: ->
+    super element: 'property', content: @content.toRefract()
 
-  toCompactDom: ->
-    compactDom = @content.toCompactDom()
+  toCompactRefract: ->
+    compactDom = @content.toCompactRefract()
     [@element, @attributes, compactDom]
 
   fromDom: (el) ->
@@ -129,8 +129,8 @@ class ObjectType extends ElementType
 
   values: -> @content.map (val) -> val.get()
 
-ObjectType::toDom = ArrayType::toDom
-ObjectType::toCompactDom = ArrayType::toCompactDom
+ObjectType::toRefract = ArrayType::toRefract
+ObjectType::toCompactRefract = ArrayType::toCompactRefract
 ObjectType::fromDom = ArrayType::fromDom
 
 # TODO: This needs to be a register so future types can be added
