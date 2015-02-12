@@ -64,7 +64,9 @@ class ArrayType extends ElementType
     @content = el.content.map (content) -> convertFromDom content
     @
 
-  get: (index) -> @content[index]
+  get: (index) ->
+    return @ unless index?
+    @content[index]
 
   set: (index, val) ->
     @content[index] = convertToType val
@@ -119,6 +121,7 @@ class ObjectType extends ElementType
     , {}
 
   get: (name) ->
+    return @ unless name?
     _.first(@content.filter (val) -> val.attributes.name is name)
 
   set: (name, val) ->

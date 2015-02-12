@@ -358,8 +358,13 @@ describe 'Minim Primitives', ->
         expect(arrayType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
-      it 'returns the item from the array', ->
-        expect(arrayType.get(0).get()).to.equal 'a'
+      context 'when an index is given', ->
+        it 'returns the item from the array', ->
+          expect(arrayType.get(0).get()).to.equal 'a'
+
+      context 'when no index is given', ->
+        it 'returns itself', ->
+          expect(arrayType.get().get(0).get()).to.equal 'a'
 
     describe '#set', ->
       it 'sets the value of the array', ->
@@ -498,8 +503,13 @@ describe 'Minim Primitives', ->
         expect(objectType.toCompactRefract()).to.deep.equal expected
 
     describe '#get', ->
-      it 'returns the value of the name given', ->
-        expect(objectType.get('foo').get()).to.equal 'bar'
+      context 'when a property name is given', ->
+        it 'returns the value of the name given', ->
+          expect(objectType.get('foo').get()).to.equal 'bar'
+
+      context 'when a property name is not given', ->
+        it 'returns itself', ->
+          expect(objectType.get().get('foo').get()).to.equal 'bar'
 
     describe '#set', ->
       it 'sets the value of the name given', ->
