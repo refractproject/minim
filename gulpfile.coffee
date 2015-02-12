@@ -1,5 +1,3 @@
-jshint = require 'gulp-jshint'
-stylish = require 'jshint-stylish'
 mocha = require 'gulp-mocha'
 coffee = require 'gulp-coffee'
 coffeelint = require 'gulp-coffeelint'
