@@ -80,7 +80,7 @@ var arrayType = minim.convertFromDom(aboveJson);
 
 Each Minim type provides the following the methods.
 
-#### .elementType
+#### elementType
 
 The `elementType` method returns the type of the Minim element.
 
@@ -89,7 +89,7 @@ var arrayType = minim.convertToType([1, 2, 3]);
 var elementType = arrayType.elementType(); // array
 ```
 
-#### .toValue
+#### toValue
 
 The `toValue` method returns the JSON value of the Minim element.
 
@@ -98,7 +98,7 @@ var arrayType = minim.convertToType([1, 2, 3]);
 var arrayValue = arrayType.toValue(); // [1, 2, 3]
 ```
 
-#### .toRefract
+#### toRefract
 
 The `toRefract` method returns the Refract value of the Minim element.
 
@@ -107,7 +107,7 @@ var arrayType = minim.convertToType([1, 2, 3]);
 var refract = arrayType.toRefract(); // See converting to types above
 ```
 
-#### .toCompactRefract
+#### toCompactRefract
 
 The `toCompactRefract` method returns the Compact Refract value of the Minim element.
 
