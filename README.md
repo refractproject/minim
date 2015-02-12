@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/smizell/minim.svg)](https://travis-ci.org/smizell/minim)
 
-A library for interacting with JDOM elements
+A library for interacting with [Refract elements](https://github.com/refractproject/refract-spec)
 
 ## Install
 
@@ -16,7 +16,7 @@ In working with the XML-based DOM, there is a limitation on what types are avail
 
 JSON provides additional types, which include objects, arrays, booleans, and nulls. A plain JSON document, though, provides no structure and no attributes for each property and value in the document.
 
-JDOM is a JSON structure for JSON documents to make a more flexible document object model. In JDOM, each element has three components:
+Refract is a JSON structure for JSON documents to make a more flexible document object model. In Refract, each element has three components:
 
 1. Name of the element
 1. Attributes
@@ -39,7 +39,7 @@ var el = {
 ```javascript
 var minim = require('minim');
 var arrayType = minim.convertToType([1, 2, 3]);
-var jdom = arrayType.toDom();
+var jdom = arrayType.toRefract();
 ```
 
 The `jdom` variable above has the following JSON value.
@@ -106,16 +106,16 @@ var arrayType = minim.convertToType([1, 2, 3]);
 var arrayValue = arrayType.toValue(); // [1, 2, 3]
 ```
 
-#### .toDom
+#### .toRefract
 
 ```javascript
 var arrayType = minim.convertToType([1, 2, 3]);
-var jdom = arrayType.toDom(); // See converting to types above
+var jdom = arrayType.toRefract(); // See converting to types above
 ```
 
-#### .toCompactDom
+#### .toCompactRefract
 
 ```javascript
 var stringType = minim.convertToType("foobar");
-var compact = stringType.toDom(); // ['string', {}, 'foobar']
+var compact = stringType.toRefract(); // ['string', {}, 'foobar']
 ```
