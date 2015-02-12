@@ -1,13 +1,12 @@
-jshint = require 'gulp-jshint'
-stylish = require 'jshint-stylish'
 mocha = require 'gulp-mocha'
 coffee = require 'gulp-coffee'
+coffeelint = require 'gulp-coffeelint'
 gulp   = require 'gulp'
 
 gulp.task "lint", ->
-  gulp.src([ "./lib/**/*.js", "./index" ])
-    .pipe(jshint())
-    .pipe jshint.reporter(stylish)
+  gulp.src('./src/**/*.coffee')
+    .pipe(coffeelint())
+    .pipe(coffeelint.reporter())
 
 gulp.task "test", ->
   gulp.src("./test/**/*.coffee", read: false)
@@ -20,4 +19,4 @@ gulp.task "coffee", ->
     .pipe(coffee(bare: true))
     .pipe gulp.dest("./lib/")
 
-gulp.task "default", ["coffee", "lint", "test"]
+gulp.task "default", ["lint", "test"]
