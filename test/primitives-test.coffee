@@ -179,6 +179,10 @@ describe 'Minim Primitives', ->
       it 'returns the null value', ->
         expect(nullType.get()).to.equal null
 
+    describe '#set', ->
+      it 'cannot set the value', ->
+        expect(nullType.set('foobar')).to.be.an.instanceof Error
+
   describe 'StringType', ->
     stringType = undefined
 
@@ -210,6 +214,11 @@ describe 'Minim Primitives', ->
     describe '#get', ->
       it 'returns the string value', ->
         expect(stringType.get()).to.equal 'foobar'
+
+    describe '#set', ->
+      it 'sets the value of the string', ->
+        stringType.set('hello world')
+        expect(stringType.get()).to.equal 'hello world'
 
   describe 'NumberType', ->
     numberType = undefined
@@ -244,6 +253,11 @@ describe 'Minim Primitives', ->
       it 'returns the number value', ->
         expect(numberType.get()).to.equal 4
 
+    describe '#set', ->
+      it 'sets the value of the number', ->
+        numberType.set(10)
+        expect(numberType.get()).to.equal 10
+
   describe 'BoolType', ->
     boolType = undefined
 
@@ -276,6 +290,11 @@ describe 'Minim Primitives', ->
     describe '#get', ->
       it 'returns the boolean value', ->
         expect(boolType.get()).to.equal true
+
+    describe '#set', ->
+      it 'sets the value of the boolean', ->
+        boolType.set(false)
+        expect(boolType.get()).to.equal false
 
   describe 'ArrayType', ->
     arrayType = undefined
@@ -338,6 +357,11 @@ describe 'Minim Primitives', ->
       it 'returns the item from the array', ->
         expect(arrayType.get(0).get()).to.equal 'a'
 
+    describe '#set', ->
+      it 'sets the value of the array', ->
+        arrayType.set(0, 'hello world')
+        expect(arrayType.get(0).get()).to.equal 'hello world'
+
   describe 'KeyValueType', ->
     keyValueType = undefined
     before ->
@@ -378,6 +402,11 @@ describe 'Minim Primitives', ->
     describe '#get', ->
       it 'returns the value and key', ->
         expect(keyValueType.get()).to.equal 'bar'
+
+    describe '#set', ->
+      it 'sets the value of the property', ->
+        keyValueType.set('hello world')
+        expect(keyValueType.get()).to.equal 'hello world'
 
   describe 'ObjectType', ->
     objectType = undefined
@@ -444,3 +473,8 @@ describe 'Minim Primitives', ->
     describe '#get', ->
       it 'returns the value of the key given', ->
         expect(objectType.get('foo').get()).to.equal 'bar'
+
+    describe '#set', ->
+      it 'sets the value of the key given', ->
+        objectType.set('foo', 'hello world')
+        expect(objectType.get('foo').get()).to.equal 'hello world'

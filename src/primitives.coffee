@@ -25,9 +25,13 @@ class ElementType
 
   get: -> @content
 
+  set: (@content) -> @
+
 class NullType extends ElementType
   constructor: (attributes) ->
     super 'null', null, attributes
+
+  set: -> new Error 'Cannot set value of null'
 
 class StringType extends ElementType
   constructor: (val, attributes) ->
@@ -62,6 +66,10 @@ class ArrayType extends ElementType
 
   get: (index) -> @content[index]
 
+  set: (index, val) ->
+    @content[index] = convertToType val
+    @
+
 class KeyValueType extends ElementType
   constructor: (key, val, attributes = {}) ->
     content = convertToType val
@@ -84,6 +92,10 @@ class KeyValueType extends ElementType
 
   get: -> @content.get()
 
+  set: (val) ->
+    @content = convertToType val
+    @
+
 class ObjectType extends ElementType
   constructor: (val = {}, attributes) ->
     content = _.keys(val).map (key) -> new KeyValueType key, val[key]
@@ -97,6 +109,10 @@ class ObjectType extends ElementType
 
   get: (key) ->
     _.first(@content.filter (val) -> val.attributes.key is key)
+
+  set: (key, val) ->
+    (@get key).set val
+    @
 
 ObjectType::toDom = ArrayType::toDom
 ObjectType::toCompactDom = ArrayType::toCompactDom
