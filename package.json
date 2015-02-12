@@ -4,7 +4,7 @@
   "description": "A library for interacting with JDOM elements",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R spec",
+    "test": "mocha --compilers coffee:coffee-script/register",
     "prepublish": "coffee -co lib src"
   },
   "repository": {
