@@ -541,4 +541,13 @@ describe 'Minim Primitives', ->
     describe '#values', ->
       it 'gets the values of all properties', ->
         expect(objectType.values()).to.deep.equal ['bar', 1]
-        
+
+    itHascollectionMethod = (method) ->
+      describe "##{method}", ->
+        it "responds to ##{method}", -> expect(objectType).to.respondTo(method)
+
+    itHascollectionMethod 'map'
+    itHascollectionMethod 'filter'
+    itHascollectionMethod 'forEach'
+    itHascollectionMethod 'push'
+    itHascollectionMethod 'add'

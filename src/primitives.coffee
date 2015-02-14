@@ -45,11 +45,7 @@ class BoolType extends ElementType
   constructor: (val, attributes) ->
     super 'boolean', val, attributes
 
-class ArrayType extends ElementType
-  constructor: (vals = [], attributes) ->
-    content = vals.map (val) -> convertToType val
-    super 'array', content, attributes
-
+class Collection extends ElementType
   toValue: -> @content.map (el) -> el.toValue()
 
   toRefract: ->
@@ -89,6 +85,11 @@ class ArrayType extends ElementType
 
   add: (val) -> @push val
 
+class ArrayType extends Collection
+  constructor: (vals = [], attributes) ->
+    content = vals.map (val) -> convertToType val
+    super 'array', content, attributes
+
 class PropertyType extends ElementType
   constructor: (name, val, attributes = {}) ->
     content = convertToType val
@@ -115,7 +116,7 @@ class PropertyType extends ElementType
     @content = convertToType val
     @
 
-class ObjectType extends ElementType
+class Item extends Collection
   constructor: (val = {}, attributes) ->
     content = _.keys(val).map (name) -> new PropertyType name, val[name]
     super 'object', content, attributes
@@ -143,9 +144,7 @@ class ObjectType extends ElementType
 
   values: -> @content.map (val) -> val.get()
 
-ObjectType::toRefract = ArrayType::toRefract
-ObjectType::toCompactRefract = ArrayType::toCompactRefract
-ObjectType::fromDom = ArrayType::fromDom
+class ObjectType extends Item
 
 # TODO: This needs to be a register so future types can be added
 convertToType = (val) ->
