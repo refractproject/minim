@@ -116,7 +116,7 @@ class PropertyType extends ElementType
     @content = convertToType val
     @
 
-class ObjectType extends Collection
+class Item extends Collection
   constructor: (val = {}, attributes) ->
     content = _.keys(val).map (name) -> new PropertyType name, val[name]
     super 'object', content, attributes
@@ -143,6 +143,8 @@ class ObjectType extends Collection
   keys: -> @content.map (val) -> val.attributes.name
 
   values: -> @content.map (val) -> val.get()
+
+class ObjectType extends Item
 
 # TODO: This needs to be a register so future types can be added
 convertToType = (val) ->
