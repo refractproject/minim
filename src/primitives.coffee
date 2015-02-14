@@ -87,6 +87,8 @@ class ArrayType extends ElementType
     @content.push convertToType(val)
     @
 
+  add: (val) -> @push val
+
 class PropertyType extends ElementType
   constructor: (name, val, attributes = {}) ->
     content = convertToType val
