@@ -82,7 +82,7 @@ describe 'Minim Primitives', ->
       it 'has the right attributes', ->
         expect(returnedType.attributes).to.deep.equal el.attributes
 
-    context 'when give array', ->
+    context 'when given array', ->
       returnedType = undefined
       el = undefined
 
@@ -109,7 +109,7 @@ describe 'Minim Primitives', ->
       it 'has the correct values', ->
         expect(returnedType.toValue()).to.deep.equal [ 1, 2 ]
 
-    context 'when give array', ->
+    context 'when given object', ->
       returnedType = undefined
       el = undefined
 
@@ -138,7 +138,7 @@ describe 'Minim Primitives', ->
       before ->
         returnedType = minim.convertFromDom el
 
-      it 'returns array element', ->
+      it 'returns object element', ->
         expect(returnedType.elementType()).to.equal 'object'
 
       it 'has the correct values', ->
