@@ -113,7 +113,7 @@ The `toCompactRefract` method returns the Compact Refract value of the Minim ele
 
 ```javascript
 var stringType = minim.convertToType("foobar");
-var compact = stringType.toRefract(); // ['string', {}, 'foobar']
+var compact = stringType.toCompactRefract(); // ['string', {}, 'foobar']
 ```
 
 ### Element Types
