@@ -85,13 +85,11 @@ class Collection extends ElementType
 
   add: (val) -> @push val
 
-  findElements: (cond) ->
-    elements = @content.reduce (results, el) ->
-      return results.concat([el.findElements(cond)]) if el.elementType() in ['array', 'object']
-      return results.concat([el]) if cond(el)
-      return results
-    , []
-    _.flatten elements, true
+  findElements: (cond, results = []) ->
+    @content.forEach (el) ->
+      el.findElements(cond, results) if el.elementType() in ['array', 'object']
+      results.push(el) if cond(el)
+    results
 
   find: (cond) ->
     newArray = new ArrayType
