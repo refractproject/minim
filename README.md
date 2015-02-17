@@ -268,6 +268,17 @@ arrayType.push('d');
 console.log(arrayType.toValue()); // ['a', 'b', 'c', 'd']
 ```
 
+##### find
+
+The `find` method traverses the element tree and returns an `ArrayType` of all elements that match the conditional function given.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
+var numbers = arrayType.find(function(el) {
+  return el.elementType() == 'number'
+}).toValue(); // [1, 2, 3]
+```
+
 #### ObjectType
 
 This is a type for representing objects.
