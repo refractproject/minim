@@ -296,6 +296,58 @@ describe 'Minim Primitives', ->
         boolType.set(false)
         expect(boolType.get()).to.equal false
 
+  describe 'Collection', ->
+    describe '#find', ->
+      strings = undefined
+      refract =
+        element: 'array',
+        content: [
+          {
+            element: 'string'
+            content: 'foobar'
+          },
+          {
+            element: 'string'
+            content: 'hello world'
+          },
+          {
+            element: 'array'
+            content: [
+              {
+                element: 'string'
+                content: 'baz'
+              }
+              {
+                element: 'boolean'
+                content: true
+              }
+              {
+                element: 'array'
+                content: [
+                  {
+                    element: 'string'
+                    content: 'bar'
+                  }
+                  {
+                    element: 'number'
+                    content: 4
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+
+      before ->
+        doc = minim.convertFromDom refract
+        strings = doc.find (el) -> el.elementType() == 'string'
+
+      it 'returns the correct number of items', ->
+        expect(strings.length()).to.equal 4
+
+      it 'returns the correct values', ->
+        expect(strings.toValue()).to.deep.equal ['foobar', 'hello world', 'baz', 'bar']
+
   describe 'ArrayType', ->
     arrayType = undefined
 

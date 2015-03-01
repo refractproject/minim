@@ -70,9 +70,9 @@ class Collection extends ElementType
 
   map: (cb) -> @content.map cb
 
-  filter: (cb) ->
+  filter: (cond) ->
     newArray = new ArrayType
-    newArray.content =  @content.filter cb
+    newArray.content =  @content.filter cond
     newArray
 
   forEach: (cb) -> @content.forEach cb
@@ -84,6 +84,17 @@ class Collection extends ElementType
     @
 
   add: (val) -> @push val
+
+  findElements: (cond, results = []) ->
+    @content.forEach (el) ->
+      el.findElements(cond, results) if el.elementType() in ['array', 'object']
+      results.push(el) if cond(el)
+    results
+
+  find: (cond) ->
+    newArray = new ArrayType
+    newArray.content = @findElements cond
+    newArray
 
 class ArrayType extends Collection
   constructor: (vals = [], attributes) ->
