@@ -139,12 +139,15 @@ class Item extends Collection
       results
     , {}
 
-  get: (name) ->
-    return @ unless name?
+  getProperty: (name) ->
     _.first(@content.filter (val) -> val.attributes.name is name)
 
+  get: (name) ->
+    return @ unless name?
+    @getProperty(name).get()
+
   set: (name, val) ->
-    property = @get name
+    property = @getProperty name
 
     if property
       property.set val

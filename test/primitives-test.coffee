@@ -580,20 +580,20 @@ describe 'Minim Primitives', ->
     describe '#get', ->
       context 'when a property name is given', ->
         it 'returns the value of the name given', ->
-          expect(objectType.get('foo').get()).to.equal 'bar'
+          expect(objectType.get('foo')).to.equal 'bar'
 
       context 'when a property name is not given', ->
         it 'returns itself', ->
-          expect(objectType.get().get('foo').get()).to.equal 'bar'
+          expect(objectType.get().get('foo')).to.equal 'bar'
 
     describe '#set', ->
       it 'sets the value of the name given', ->
         objectType.set('foo', 'hello world')
-        expect(objectType.get('foo').get()).to.equal 'hello world'
+        expect(objectType.get('foo')).to.equal 'hello world'
 
       it 'sets a value that has not been defined yet', ->
         objectType.set('bar', 'hello world')
-        expect(objectType.get('bar').get()).to.equal 'hello world'
+        expect(objectType.get('bar')).to.equal 'hello world'
 
     describe '#has', ->
       context 'when an existing property is given', ->
