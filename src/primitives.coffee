@@ -27,8 +27,30 @@ class ElementType
 
   set: (@content) -> @
 
+  getProperty: -> new ErrorType 'Element does not have method getProperty', @
+
+  has: -> new ErrorType 'Element does not have method has', @
+
+  map: -> new ErrorType 'Element does not have method map', @
+
+  filter: -> new ErrorType 'Element does not have method filter', @
+
+  forEach: -> new ErrorType 'Element does not have method forEach', @
+
+  length: -> new ErrorType 'Element does not have method length', @
+
+  push: -> new ErrorType 'Element does not have method push', @
+
+  add: -> new ErrorType 'Element does not have method add', @
+
+  find: -> new ErrorType 'Element does not have method find', @
+
+  keys: -> new ErrorType 'Element does not have method keys', @
+
+  values: -> new ErrorType 'Element does not have method values', @
+
 class ErrorType
-  constructor: (@message = 'Unspecified error') ->
+  constructor: (@message = 'Unspecified error', @element) ->
 
   elementType: -> 'error'
 
@@ -53,6 +75,10 @@ class ErrorType
   add: -> @
 
   find: -> @
+
+  keys: -> @
+
+  values: -> @
 
 class NullType extends ElementType
   constructor: (attributes) ->
@@ -213,6 +239,7 @@ convertFromDom = (el) ->
   new NullType().fromDom el
 
 module.exports = {
+  ElementType
   ErrorType
   NullType
   StringType

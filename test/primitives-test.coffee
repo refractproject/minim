@@ -146,6 +146,56 @@ describe 'Minim Primitives', ->
           foo: 'bar'
           z: 2
 
+  describe 'ElementType', ->
+    elType = undefined
+
+    before ->
+      elType = new minim.ElementType 'element'
+
+    describe '#getProperty', ->
+      it 'returns an error', ->
+        expect(elType.getProperty('foo').elementType()).to.equal 'error'
+
+    describe '#has', ->
+      it 'returns an error', ->
+        expect(elType.has('foo').elementType()).to.equal 'error'
+
+    describe '#map', ->
+      it 'returns an error', ->
+        expect(elType.map((el) -> 'test').elementType()).to.equal 'error'
+
+    describe '#filter', ->
+      it 'returns an error', ->
+        expect(elType.filter((el) -> true).elementType()).to.equal 'error'
+
+    describe '#forEach', ->
+      it 'returns an error', ->
+        expect(elType.forEach((el) -> console.log('test')).elementType()).to.equal 'error'
+
+    describe '#length', ->
+      it 'returns an error', ->
+        expect(elType.length().elementType()).to.equal 'error'
+
+    describe '#push', ->
+      it 'returns an error', ->
+        expect(elType.push('foo').elementType()).to.equal 'error'
+
+    describe '#add', ->
+      it 'returns an error', ->
+        expect(elType.add('add').elementType()).to.equal 'error'
+
+    describe '#find', ->
+      it 'returns an error', ->
+        expect(elType.find((el) -> true).elementType()).to.equal 'error'
+
+    describe '#keys', ->
+      it 'returns an error', ->
+        expect(elType.keys().elementType()).to.equal 'error'
+
+    describe '#values', ->
+      it 'returns an error', ->
+        expect(elType.values().elementType()).to.equal 'error'
+
   describe 'ErrorType', ->
     errType = undefined
 
@@ -198,6 +248,14 @@ describe 'Minim Primitives', ->
     describe '#find', ->
       it 'returns itself', ->
         expect(errType.find((el) -> true)).to.equal errType
+
+    describe '#keys', ->
+      it 'returns itself', ->
+        expect(errType.keys()).to.equal errType
+
+    describe '#values', ->
+      it 'returns itself', ->
+        expect(errType.values()).to.equal errType
 
     describe '#elementType', ->
       it 'is an error', ->
