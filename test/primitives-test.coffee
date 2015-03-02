@@ -146,6 +146,67 @@ describe 'Minim Primitives', ->
           foo: 'bar'
           z: 2
 
+  describe 'ErrorType', ->
+    errType = undefined
+
+    before ->
+      errType = new minim.ErrorType 'Error message'
+
+    it 'stores the error message', ->
+      expect(errType.message).to.equal 'Error message'
+
+    describe '#getProperty', ->
+      it 'returns itself', ->
+        expect(errType.getProperty('foo')).to.equal errType
+
+    describe '#get', ->
+      it 'returns itself', ->
+        expect(errType.get('foo')).to.equal errType
+
+    describe '#set', ->
+      it 'returns itself', ->
+        expect(errType.set('foo')).to.equal errType
+
+    describe '#has', ->
+      it 'returns false', ->
+        expect(errType.has('foo')).to.be.false
+
+    describe '#map', ->
+      it 'returns itself', ->
+        expect(errType.map((el) -> 'test')).to.equal errType
+
+    describe '#filter', ->
+      it 'returns itself', ->
+        expect(errType.filter((el) -> true)).to.equal errType
+
+    describe '#forEach', ->
+      it 'returns itself', ->
+        expect(errType.forEach((el) -> console.log('test'))).to.equal errType
+
+    describe '#length', ->
+      it 'returns itself', ->
+        expect(errType.length()).to.equal errType
+
+    describe '#push', ->
+      it 'returns itself', ->
+        expect(errType.push('foo')).to.equal errType
+
+    describe '#add', ->
+      it 'returns itself', ->
+        expect(errType.add('add')).to.equal errType
+
+    describe '#find', ->
+      it 'returns itself', ->
+        expect(errType.find((el) -> true)).to.equal errType
+
+    describe '#elementType', ->
+      it 'is an error', ->
+        expect(errType.elementType()).to.equal 'error'
+
+    context 'when chained', ->
+      it 'returns itself', ->
+        expect(errType.get('foo').get(0).get('bar')).to.equal errType
+
   describe 'NullType', ->
     nullType = undefined
 

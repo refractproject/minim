@@ -27,6 +27,33 @@ class ElementType
 
   set: (@content) -> @
 
+class ErrorType
+  constructor: (@message = 'Unspecified error') ->
+
+  elementType: -> 'error'
+
+  get: -> @
+
+  set: -> @
+
+  getProperty: -> @
+
+  has: -> false
+
+  map: -> @
+
+  filter: -> @
+
+  forEach: -> @
+
+  length: -> @
+
+  push: -> @
+
+  add: -> @
+
+  find: -> @
+
 class NullType extends ElementType
   constructor: (attributes) ->
     super 'null', null, attributes
@@ -186,6 +213,7 @@ convertFromDom = (el) ->
   new NullType().fromDom el
 
 module.exports = {
+  ErrorType
   NullType
   StringType
   NumberType
