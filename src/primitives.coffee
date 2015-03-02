@@ -88,6 +88,7 @@ class Collection extends ElementType
   findElements: (cond, results = []) ->
     @content.forEach (el) ->
       el.findElements(cond, results) if el.elementType() in ['array', 'object']
+      results.push(el.content) if el.elementType() is 'property' and cond(el.content)
       results.push(el) if cond(el)
     results
 
@@ -150,6 +151,11 @@ class Item extends Collection
     else
       @content.push new PropertyType name, val
     @
+
+  has: (name) ->
+    for property in @content
+      return true if property.attributes.name is name
+    return false
 
   keys: -> @content.map (val) -> val.attributes.name
 

@@ -329,8 +329,17 @@ describe 'Minim Primitives', ->
                     content: 'bar'
                   }
                   {
-                    element: 'number'
-                    content: 4
+                    element: 'object'
+                    content: [
+                      {
+                        element: 'property'
+                        attributes:
+                          name: 'foo'
+                        content:
+                            element: 'string'
+                            content: 'baz'
+                      }
+                    ]
                   }
                 ]
               }
@@ -343,10 +352,10 @@ describe 'Minim Primitives', ->
         strings = doc.find (el) -> el.elementType() == 'string'
 
       it 'returns the correct number of items', ->
-        expect(strings.length()).to.equal 4
+        expect(strings.length()).to.equal 5
 
       it 'returns the correct values', ->
-        expect(strings.toValue()).to.deep.equal ['foobar', 'hello world', 'baz', 'bar']
+        expect(strings.toValue()).to.deep.equal ['foobar', 'hello world', 'baz', 'bar', 'baz']
 
   describe 'ArrayType', ->
     arrayType = undefined
@@ -585,6 +594,15 @@ describe 'Minim Primitives', ->
       it 'sets a value that has not been defined yet', ->
         objectType.set('bar', 'hello world')
         expect(objectType.get('bar').get()).to.equal 'hello world'
+
+    describe '#has', ->
+      context 'when an existing property is given', ->
+        it 'returns true', ->
+          expect(objectType.has('foo')).to.be.true
+
+      context 'when a property that does not exist is given', ->
+        it 'returns false', ->
+          expect(objectType.has('does-not-exist')).to.be.false
 
     describe '#keys', ->
       it 'gets the keys of all properties', ->
