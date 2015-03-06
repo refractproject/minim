@@ -546,6 +546,10 @@ describe 'Minim Primitives', ->
         it 'returns itself', ->
           expect(arrayType.get().get(0).get()).to.equal 'a'
 
+      context 'when the index does not exist', ->
+        it 'returns an error element', ->
+          expect(arrayType.get(10).elementType()).to.equal 'error'
+
     describe '#set', ->
       it 'sets the value of the array', ->
         arrayType.set(0, 'hello world')
@@ -704,6 +708,10 @@ describe 'Minim Primitives', ->
       context 'when a property name is not given', ->
         it 'returns itself', ->
           expect(objectType.get().get('foo')).to.equal 'bar'
+
+      context 'when the property name does not exist', ->
+        it 'returns an error type', ->
+          expect(objectType.get('does-not-exist').elementType()).to.equal 'error'
 
     describe '#set', ->
       it 'sets the value of the name given', ->

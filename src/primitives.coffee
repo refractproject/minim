@@ -115,7 +115,9 @@ class Collection extends ElementType
 
   get: (index) ->
     return @ unless index?
-    @content[index]
+    item = @content[index]
+    return new ErrorType "Index #{index} does not exist", @ unless item
+    item
 
   set: (index, val) ->
     @content[index] = convertToType val
@@ -197,7 +199,9 @@ class Item extends Collection
 
   get: (name) ->
     return @ unless name?
-    @getProperty(name).get()
+    property = @getProperty(name)
+    return new ErrorType "Property #{name} does not exist", @ unless property
+    property.get()
 
   set: (name, val) ->
     property = @getProperty name
