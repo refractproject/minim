@@ -54,6 +54,8 @@ class ErrorType
 
   elementType: -> 'error'
 
+  toValue: -> undefined
+
   get: -> @
 
   set: -> @

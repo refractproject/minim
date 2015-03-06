@@ -261,6 +261,10 @@ describe 'Minim Primitives', ->
       it 'is an error', ->
         expect(errType.elementType()).to.equal 'error'
 
+    describe '#toValue', ->
+      it 'returns undefined', ->
+        expect(errType.toValue()).to.be.undefined
+
     context 'when chained', ->
       it 'returns itself', ->
         expect(errType.get('foo').get(0).get('bar')).to.equal errType
