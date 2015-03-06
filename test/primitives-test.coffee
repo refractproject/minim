@@ -158,7 +158,7 @@ describe 'Minim Primitives', ->
 
     describe '#has', ->
       it 'returns an error', ->
-        expect(elType.has('foo').elementType()).to.equal 'error'
+        expect(elType.has('foo')).to.be.false
 
     describe '#map', ->
       it 'returns an error', ->

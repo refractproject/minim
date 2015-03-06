@@ -29,7 +29,7 @@ class ElementType
 
   getProperty: -> new ErrorType 'Element does not have method getProperty', @
 
-  has: -> new ErrorType 'Element does not have method has', @
+  has: -> false
 
   map: -> new ErrorType 'Element does not have method map', @
 
