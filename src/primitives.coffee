@@ -213,9 +213,8 @@ class Item extends Collection
     @
 
   has: (name) ->
-    for property in @content
-      return true if property.attributes.name is name
-    return false
+    return true for property in @content when property.attributes.name is name
+    false
 
   keys: -> @content.map (val) -> val.attributes.name
 
