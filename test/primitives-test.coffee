@@ -202,8 +202,12 @@ describe 'Minim Primitives', ->
     before ->
       errType = new minim.ErrorType 'Error message'
 
-    it 'stores the error message', ->
-      expect(errType.message).to.equal 'Error message'
+    context 'when initializing', ->
+      it 'stores the error message', ->
+        expect(errType.message).to.equal 'Error message'
+
+      it 'stores throws an error', ->
+        expect(errType.err).to.be.instanceOf Error
 
     describe '#getProperty', ->
       it 'returns itself', ->

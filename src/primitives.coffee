@@ -51,6 +51,11 @@ class ElementType
 
 class ErrorType
   constructor: (@message = 'Unspecified error', @element) ->
+    try
+      throw new Error @message
+    catch err
+      console.log err.stack
+      @err = err
 
   elementType: -> 'error'
 
