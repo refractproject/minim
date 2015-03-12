@@ -146,6 +146,133 @@ describe 'Minim Primitives', ->
           foo: 'bar'
           z: 2
 
+  describe 'ElementType', ->
+    elType = undefined
+
+    before ->
+      elType = new minim.ElementType 'element'
+
+    describe '#getProperty', ->
+      it 'returns an error', ->
+        expect(elType.getProperty('foo').elementType()).to.equal 'error'
+
+    describe '#has', ->
+      it 'returns an error', ->
+        expect(elType.has('foo')).to.be.false
+
+    describe '#map', ->
+      it 'returns an error', ->
+        expect(elType.map((el) -> 'test').elementType()).to.equal 'error'
+
+    describe '#filter', ->
+      it 'returns an error', ->
+        expect(elType.filter((el) -> true).elementType()).to.equal 'error'
+
+    describe '#forEach', ->
+      it 'returns an error', ->
+        expect(elType.forEach((el) -> console.log('test')).elementType()).to.equal 'error'
+
+    describe '#length', ->
+      it 'returns an error', ->
+        expect(elType.length().elementType()).to.equal 'error'
+
+    describe '#push', ->
+      it 'returns an error', ->
+        expect(elType.push('foo').elementType()).to.equal 'error'
+
+    describe '#add', ->
+      it 'returns an error', ->
+        expect(elType.add('add').elementType()).to.equal 'error'
+
+    describe '#find', ->
+      it 'returns an error', ->
+        expect(elType.find((el) -> true).elementType()).to.equal 'error'
+
+    describe '#keys', ->
+      it 'returns an error', ->
+        expect(elType.keys().elementType()).to.equal 'error'
+
+    describe '#values', ->
+      it 'returns an error', ->
+        expect(elType.values().elementType()).to.equal 'error'
+
+  describe 'ErrorType', ->
+    errType = undefined
+
+    before ->
+      errType = new minim.ErrorType 'Error message'
+
+    context 'when initializing', ->
+      it 'stores the error message', ->
+        expect(errType.message).to.equal 'Error message'
+
+      it 'stores throws an error', ->
+        expect(errType.err).to.be.instanceOf Error
+
+    describe '#getProperty', ->
+      it 'returns itself', ->
+        expect(errType.getProperty('foo')).to.equal errType
+
+    describe '#get', ->
+      it 'returns itself', ->
+        expect(errType.get('foo')).to.equal errType
+
+    describe '#set', ->
+      it 'returns itself', ->
+        expect(errType.set('foo')).to.equal errType
+
+    describe '#has', ->
+      it 'returns false', ->
+        expect(errType.has('foo')).to.be.false
+
+    describe '#map', ->
+      it 'returns itself', ->
+        expect(errType.map((el) -> 'test')).to.equal errType
+
+    describe '#filter', ->
+      it 'returns itself', ->
+        expect(errType.filter((el) -> true)).to.equal errType
+
+    describe '#forEach', ->
+      it 'returns itself', ->
+        expect(errType.forEach((el) -> console.log('test'))).to.equal errType
+
+    describe '#length', ->
+      it 'returns itself', ->
+        expect(errType.length()).to.equal errType
+
+    describe '#push', ->
+      it 'returns itself', ->
+        expect(errType.push('foo')).to.equal errType
+
+    describe '#add', ->
+      it 'returns itself', ->
+        expect(errType.add('add')).to.equal errType
+
+    describe '#find', ->
+      it 'returns itself', ->
+        expect(errType.find((el) -> true)).to.equal errType
+
+    describe '#keys', ->
+      it 'returns itself', ->
+        expect(errType.keys()).to.equal errType
+
+    describe '#values', ->
+      it 'returns itself', ->
+        expect(errType.values()).to.equal errType
+
+    describe '#elementType', ->
+      it 'is an error', ->
+        expect(errType.elementType()).to.equal 'error'
+
+    describe '#toValue', ->
+      it 'returns undefined', ->
+        expect(errType.toValue()).to.be.undefined
+
+    context 'when chained', ->
+      it 'returns itself', ->
+        expect(errType.get('foo').get(0).get('bar')).to.equal errType
+
   describe 'NullType', ->
     nullType = undefined
 
@@ -329,8 +456,17 @@ describe 'Minim Primitives', ->
                     content: 'bar'
                   }
                   {
-                    element: 'number'
-                    content: 4
+                    element: 'object'
+                    content: [
+                      {
+                        element: 'property'
+                        attributes:
+                          name: 'foo'
+                        content:
+                            element: 'string'
+                            content: 'baz'
+                      }
+                    ]
                   }
                 ]
               }
@@ -343,10 +479,10 @@ describe 'Minim Primitives', ->
         strings = doc.find (el) -> el.elementType() == 'string'
 
       it 'returns the correct number of items', ->
-        expect(strings.length()).to.equal 4
+        expect(strings.length()).to.equal 5
 
       it 'returns the correct values', ->
-        expect(strings.toValue()).to.deep.equal ['foobar', 'hello world', 'baz', 'bar']
+        expect(strings.toValue()).to.deep.equal ['foobar', 'hello world', 'baz', 'bar', 'baz']
 
   describe 'ArrayType', ->
     arrayType = undefined
@@ -417,6 +553,10 @@ describe 'Minim Primitives', ->
       context 'when no index is given', ->
         it 'returns itself', ->
           expect(arrayType.get().get(0).get()).to.equal 'a'
+
+      context 'when the index does not exist', ->
+        it 'returns an error element', ->
+          expect(arrayType.get(10).elementType()).to.equal 'error'
 
     describe '#set', ->
       it 'sets the value of the array', ->
@@ -571,20 +711,33 @@ describe 'Minim Primitives', ->
     describe '#get', ->
       context 'when a property name is given', ->
         it 'returns the value of the name given', ->
-          expect(objectType.get('foo').get()).to.equal 'bar'
+          expect(objectType.get('foo')).to.equal 'bar'
 
       context 'when a property name is not given', ->
         it 'returns itself', ->
-          expect(objectType.get().get('foo').get()).to.equal 'bar'
+          expect(objectType.get().get('foo')).to.equal 'bar'
+
+      context 'when the property name does not exist', ->
+        it 'returns an error type', ->
+          expect(objectType.get('does-not-exist').elementType()).to.equal 'error'
 
     describe '#set', ->
       it 'sets the value of the name given', ->
         objectType.set('foo', 'hello world')
-        expect(objectType.get('foo').get()).to.equal 'hello world'
+        expect(objectType.get('foo')).to.equal 'hello world'
 
       it 'sets a value that has not been defined yet', ->
         objectType.set('bar', 'hello world')
-        expect(objectType.get('bar').get()).to.equal 'hello world'
+        expect(objectType.get('bar')).to.equal 'hello world'
+
+    describe '#has', ->
+      context 'when an existing property is given', ->
+        it 'returns true', ->
+          expect(objectType.has('foo')).to.be.true
+
+      context 'when a property that does not exist is given', ->
+        it 'returns false', ->
+          expect(objectType.has('does-not-exist')).to.be.false
 
     describe '#keys', ->
       it 'gets the keys of all properties', ->

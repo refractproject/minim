@@ -27,6 +27,65 @@ class ElementType
 
   set: (@content) -> @
 
+  getProperty: -> new ErrorType 'Element does not have method getProperty', @
+
+  has: -> false
+
+  map: -> new ErrorType 'Element does not have method map', @
+
+  filter: -> new ErrorType 'Element does not have method filter', @
+
+  forEach: -> new ErrorType 'Element does not have method forEach', @
+
+  length: -> new ErrorType 'Element does not have method length', @
+
+  push: -> new ErrorType 'Element does not have method push', @
+
+  add: -> new ErrorType 'Element does not have method add', @
+
+  find: -> new ErrorType 'Element does not have method find', @
+
+  keys: -> new ErrorType 'Element does not have method keys', @
+
+  values: -> new ErrorType 'Element does not have method values', @
+
+class ErrorType
+  constructor: (@message = 'Unspecified error', @element) ->
+    try
+      throw new Error @message
+    catch err
+      @err = err
+
+  elementType: -> 'error'
+
+  toValue: -> undefined
+
+  get: -> @
+
+  set: -> @
+
+  getProperty: -> @
+
+  has: -> false
+
+  map: -> @
+
+  filter: -> @
+
+  forEach: -> @
+
+  length: -> @
+
+  push: -> @
+
+  add: -> @
+
+  find: -> @
+
+  keys: -> @
+
+  values: -> @
+
 class NullType extends ElementType
   constructor: (attributes) ->
     super 'null', null, attributes
@@ -62,7 +121,9 @@ class Collection extends ElementType
 
   get: (index) ->
     return @ unless index?
-    @content[index]
+    item = @content[index]
+    return new ErrorType "Index #{index} does not exist", @ unless item
+    item
 
   set: (index, val) ->
     @content[index] = convertToType val
@@ -88,6 +149,7 @@ class Collection extends ElementType
   findElements: (cond, results = []) ->
     @content.forEach (el) ->
       el.findElements(cond, results) if el.elementType() in ['array', 'object']
+      results.push(el.content) if el.elementType() is 'property' and cond(el.content)
       results.push(el) if cond(el)
     results
 
@@ -138,18 +200,27 @@ class Item extends Collection
       results
     , {}
 
-  get: (name) ->
-    return @ unless name?
+  getProperty: (name) ->
     _.first(@content.filter (val) -> val.attributes.name is name)
 
+  get: (name) ->
+    return @ unless name?
+    property = @getProperty(name)
+    return new ErrorType "Property #{name} does not exist", @ unless property
+    property.get()
+
   set: (name, val) ->
-    property = @get name
+    property = @getProperty name
 
     if property
       property.set val
     else
       @content.push new PropertyType name, val
     @
+
+  has: (name) ->
+    return true for property in @content when property.attributes.name is name
+    false
 
   keys: -> @content.map (val) -> val.attributes.name
 
@@ -177,6 +248,8 @@ convertFromDom = (el) ->
   new NullType().fromDom el
 
 module.exports = {
+  ElementType
+  ErrorType
   NullType
   StringType
   NumberType

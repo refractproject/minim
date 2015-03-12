@@ -330,3 +330,19 @@ var objectType = new minim.ObjectType()
   .set('email', 'john@example.com')
   .set('id', 4)
 ```
+
+### Errors
+
+Minim has its own error type that is passed down through the call chain. This allows clients to write chains that may break but do not throw JavaScript errors.
+
+```javascript
+var objectExample = {
+  foo: {
+    bar: 'value 1'
+  }
+};
+
+var objectType = minim.ObjectType(objectExample);
+var value1 = objectType.get('foo').get('bar'); // value of foo.bar
+var notFound = objectType.get('baz').get('foo') // Returns error object
+```
