@@ -147,6 +147,10 @@ class Collection extends ElementType {
     return this.content.length;
   }
 
+  get [Symbol.iterator]() {
+    return this.content[Symbol.iterator];
+  }
+
   toValue() {
     return this.content.map((el) => el.toValue());
   }
@@ -301,6 +305,10 @@ export class ObjectType extends Collection {
 
   values() {
     return this.content.map((value) => value.get());
+  }
+
+  items() {
+    return this.content.map((value) => [value.meta.name, value.get()]);
   }
 }
 

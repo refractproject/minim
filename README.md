@@ -212,6 +212,18 @@ var value = boolType.get() // get() returns 4
 
 This is a type for representing arrays.
 
+##### iteration
+
+The array type is iterable.
+
+```js
+const arrayType = new minim.ArrayType(['a', 'b', 'c']);
+
+for (let item of arrayType) {
+  console.log(item);
+}
+```
+
 ##### get
 
 The `get` method returns the item of the `ArrayType` instance at the given index.
@@ -287,7 +299,7 @@ var numbers = arrayType.find(function(el) {
 
 #### ObjectType
 
-This is a type for representing objects.
+This is a type for representing objects. Objects store their items as an ordered array, so they inherit most of the methods above from the `ArrayType`.
 
 ##### get
 
@@ -314,7 +326,7 @@ The `keys` method returns an array of keys.
 
 ```javascript
 var objectType = new minim.ObjectType({ foo: 'bar' });
-var value = objectType.keys() // ['foo']
+var keys = objectType.keys() // ['foo']
 ```
 
 ##### values
@@ -323,7 +335,19 @@ The `values` method returns an array of keys.
 
 ```javascript
 var objectType = new minim.ObjectType({ foo: 'bar' });
-var value = objectType.values() // ['bar']
+var values = objectType.values() // ['bar']
+```
+
+##### items
+
+The `items` method returns an array of key value pairs which can make iteration simpler.
+
+```js
+const objectType = new minim.ObjectType({ foo: 'bar' });
+
+for (let [key, value] of objectType.items()) {
+  console.log(key, value); // foo, bar
+}
 ```
 
 ### Element Registry

@@ -590,6 +590,17 @@ describe('Minim Primitives', function() {
         itAddsToArray(arrayType);
       });
     });
+
+    describe('#[Symbol.iterator]', function () {
+      it('can be used in a for ... of loop', function () {
+        const items = [];
+        for (let item of arrayType) {
+          items.push(item);
+        }
+
+        expect(items).to.have.length(4);
+      });
+    });
   });
 
   describe('ObjectType', function() {
@@ -725,6 +736,21 @@ describe('Minim Primitives', function() {
       });
     });
 
+    describe('#items', function () {
+      it('provides a list of name/value pairs to iterate', function () {
+        const keys = [];
+        const values = [];
+
+        for (let [key, value] of objectType.items()) {
+          keys.push(key);
+          values.push(value);
+        }
+
+        expect(keys).to.have.members(['foo', 'z']);
+        expect(values).to.have.length(2);
+      });
+    });
+
     itHascollectionMethod = function(method) {
       describe('#' + method, function() {
         it('responds to #' + method, function() {
@@ -737,6 +763,17 @@ describe('Minim Primitives', function() {
     itHascollectionMethod('filter');
     itHascollectionMethod('forEach');
     itHascollectionMethod('push');
-    return itHascollectionMethod('add');
+    itHascollectionMethod('add');
+
+    describe('#[Symbol.iterator]', function () {
+      it('can be used in a for ... of loop', function () {
+        const items = [];
+        for (let item of objectType) {
+          items.push(item);
+        }
+
+        expect(items).to.have.length(2);
+      });
+    });
   });
 });
