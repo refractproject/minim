@@ -1,11 +1,36 @@
 {
   "name": "minim",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A library for interacting with JSON through Refract elements",
   "main": "index.js",
   "scripts": {
-    "test": "gulp",
-    "prepublish": "coffee -co lib src"
+    "lint": "eslint --ext .js,.es6 src",
+    "precompile": "npm run lint",
+    "compile": "babel src --out-dir lib",
+    "precoverage": "npm run compile",
+    "coverage": "istanbul cover _mocha -- --compilers es6:babel/register -R spec --recursive",
+    "precoveralls": "npm run coverage",
+    "coveralls": "coveralls <coverage/lcov.info",
+    "pretest": "npm run compile",
+    "test": "mocha --compilers es6:babel/register -R spec --recursive",
+    "prepublish": "npm run compile"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "node": true,
+      "mocha": true
+    },
+    "ext": ".js,.es6",
+    "rules": {
+      "quotes": [
+        1,
+        "single",
+        "avoid-escape"
+      ],
+      "strict": "never",
+      "no-use-before-define": "never"
+    }
   },
   "repository": {
     "type": "git",
@@ -22,18 +47,19 @@
   },
   "homepage": "https://github.com/smizell/minim",
   "devDependencies": {
+    "babel": "^5.3.1",
+    "babel-eslint": "^3.1.1",
     "chai": "^1.10.0",
     "coffee-script": "^1.9.0",
-    "gulp": "^3.8.10",
-    "gulp-coffee": "^2.3.1",
-    "gulp-coffeelint": "^0.4.0",
-    "gulp-jshint": "^1.9.0",
-    "gulp-mocha": "^2.0.0",
-    "mocha": "^2.1.0",
+    "coveralls": "^2.11.2",
+    "eslint": "^0.21.0",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.4",
     "mocha-sinon": "^1.1.4",
     "sinon-chai": "^2.7.0"
   },
   "dependencies": {
+    "core-js": "^0.9.8",
     "lodash": "^2.4.1"
   }
 }
