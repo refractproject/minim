@@ -148,7 +148,7 @@ This is a type for representing string values.
 The `get` method returns the value of the `StringType` instance.
 
 ```javascript
-var stringType = new minim.StringType({}, {}, 'foobar');
+var stringType = new minim.StringType('foobar');
 var value = stringType.get() // get() returns 'foobar'
 ```
 
@@ -171,7 +171,7 @@ This is a type for representing number values.
 The `get` method returns the value of the `NumberType` instance.
 
 ```javascript
-var numberType = new minim.NumberType({}, {}, 4);
+var numberType = new minim.NumberType(4);
 var value = numberType.get() // get() returns 4
 ```
 
@@ -194,7 +194,7 @@ This is a type for representing boolean values.
 The `get` method returns the value of the `BoolType` instance.
 
 ```javascript
-var boolType = new minim.BoolType({}, {}, true);
+var boolType = new minim.BoolType(true);
 var value = boolType.get() // get() returns true
 ```
 
@@ -217,7 +217,7 @@ This is a type for representing arrays.
 The `get` method returns the item of the `ArrayType` instance at the given index.
 
 ```javascript
-var arrayType = new minim.ArrayType({}, {}, ['a', 'b', 'c']);
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
 var value = arrayType.get(0) // get(0) returns 'a'
 ```
 
@@ -236,7 +236,7 @@ var value = arrayType.get(0) // get(0) returns 'z'
 The `map` method may be used to map over an array. Each item given is a Minim instance.
 
 ```javascript
-var arrayType = new minim.ArrayType({}, {}, ['a', 'b', 'c']);
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
 var newArray = arrayType.map(function(item) {
   return item.elementType();
 }); // newArray is now ['string', 'string', 'string']
@@ -247,7 +247,7 @@ var newArray = arrayType.map(function(item) {
 The `filter` method may be used to filter a Minim array. This method returns a Minim array itself rather than a JavaScript array instance.
 
 ```javascript
-var arrayType = new minim.ArrayType({}, {}, ['a', 'b', 'c']);
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
 var newArray = arrayType.filter(function(item) {
   return item.get() === 'a'
 }); // newArray.toValue() is now ['a']
@@ -258,7 +258,7 @@ var newArray = arrayType.filter(function(item) {
 The `forEach` method may be used to iterate over a Minim array.
 
 ```javascript
-var arrayType = new minim.ArrayType({}, {}, ['a', 'b', 'c']);
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
 arrayType.forEach(function(item) {
   console.log(item.toValue())
 }); // logs each value to console
@@ -269,7 +269,7 @@ arrayType.forEach(function(item) {
 The `push` method may be used to add items to a Minim array.
 
 ```javascript
-var arrayType = new minim.ArrayType({}, {}, ['a', 'b', 'c']);
+var arrayType = new minim.ArrayType(['a', 'b', 'c']);
 arrayType.push('d');
 console.log(arrayType.toValue()); // ['a', 'b', 'c', 'd']
 ```
@@ -279,7 +279,7 @@ console.log(arrayType.toValue()); // ['a', 'b', 'c', 'd']
 The `find` method traverses the element tree and returns an `ArrayType` of all elements that match the conditional function given.
 
 ```javascript
-var arrayType = new minim.ArrayType({}, {}, ['a', [1, 2], 'b', 3]);
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
 var numbers = arrayType.find(function(el) {
   return el.elementType() == 'number'
 }).toValue(); // [1, 2, 3]
@@ -294,7 +294,7 @@ This is a type for representing objects.
 The `get` method returns the item of the `ObjectType` instance at the given index.
 
 ```javascript
-var objectType = new minim.ObjectType({}, {}, { foo: 'bar' });
+var objectType = new minim.ObjectType({ foo: 'bar' });
 var value = objectType.get('foo') // get('foo') returns 'bar'
 ```
 
@@ -313,7 +313,7 @@ var value = objectType.get('foo') // get('foo') returns 'hello world'
 The `keys` method returns an array of keys.
 
 ```javascript
-var objectType = new minim.ObjectType({}, {}, { foo: 'bar' });
+var objectType = new minim.ObjectType({ foo: 'bar' });
 var value = objectType.keys() // ['foo']
 ```
 
@@ -322,7 +322,7 @@ var value = objectType.keys() // ['foo']
 The `values` method returns an array of keys.
 
 ```javascript
-var objectType = new minim.ObjectType({}, {}, { foo: 'bar' });
+var objectType = new minim.ObjectType({ foo: 'bar' });
 var value = objectType.values() // ['bar']
 ```
 

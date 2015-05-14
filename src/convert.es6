@@ -13,7 +13,7 @@ export function convertToType(value) {
 
   for (let [test, ElementClass] of TypeRegistry.typeDetection) {
     if (test(value)) {
-      element = new ElementClass({}, {}, value);
+      element = new ElementClass(value);
       break;
     }
   }

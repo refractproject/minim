@@ -208,7 +208,7 @@ describe('Minim Primitives', function() {
     let stringType;
 
     before(function() {
-      stringType = new minim.StringType({}, {}, 'foobar');
+      stringType = new minim.StringType('foobar');
     });
 
     describe('#elementType', function() {
@@ -262,7 +262,7 @@ describe('Minim Primitives', function() {
     let numberType;
 
     before(function() {
-      numberType = new minim.NumberType({}, {}, 4);
+      numberType = new minim.NumberType(4);
     });
 
     describe('#elementType', function() {
@@ -316,7 +316,7 @@ describe('Minim Primitives', function() {
     let boolType;
 
     before(function() {
-      boolType = new minim.BooleanType({}, {}, true);
+      boolType = new minim.BooleanType(true);
     });
 
     describe('#elementType', function() {
@@ -437,7 +437,7 @@ describe('Minim Primitives', function() {
     let arrayType, itAddsToArray;
 
     function setArray() {
-      arrayType = new minim.ArrayType({}, {}, ['a', true, null, 1]);
+      arrayType = new minim.ArrayType(['a', true, null, 1]);
     }
 
     before(function() {
@@ -596,7 +596,7 @@ describe('Minim Primitives', function() {
     let objectType, itHascollectionMethod;
 
     function setObject() {
-      objectType = new minim.ObjectType({}, {}, {
+      objectType = new minim.ObjectType({
         foo: 'bar',
         z: 1
       });

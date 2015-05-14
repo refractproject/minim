@@ -17,7 +17,7 @@ export const attributeElementKeys = Symbol('attributeElementKeys');
  * able to convert to and from Refract/Javascript.
  */
 export class ElementType {
-  constructor(element, meta={}, attributes={}, content=null) {
+  constructor(element, content=null, meta={}, attributes={}) {
     this.element = element;
     this.meta = meta;
     this.attributes = attributes;
@@ -31,8 +31,8 @@ export class ElementType {
   }
 
   toRefract(options={}) {
-    let attributes = this.convertAttributesToRefract('toRefract');
-    let initial = {
+    const attributes = this.convertAttributesToRefract('toRefract');
+    const initial = {
       element: this.element,
       meta: this.meta,
       attributes,
@@ -121,8 +121,8 @@ export class NullType extends ElementType {
 }
 
 export class StringType extends ElementType {
-  constructor(meta, attributes, value) {
-    super('string', meta, attributes, value);
+  constructor(content, meta, attributes) {
+    super('string', content, meta, attributes);
   }
 
   get length() {
@@ -131,14 +131,14 @@ export class StringType extends ElementType {
 }
 
 export class NumberType extends ElementType {
-  constructor(meta, attributes, value) {
-    super('number', meta, attributes, value);
+  constructor(content, meta, attributes) {
+    super('number', content, meta, attributes);
   }
 }
 
 export class BooleanType extends ElementType {
-  constructor(meta, attributes, value) {
-    super('boolean', meta, attributes, value);
+  constructor(content, meta, attributes) {
+    super('boolean', content, meta, attributes);
   }
 }
 
@@ -158,8 +158,8 @@ class Collection extends ElementType {
   }
 
   toCompactRefract() {
-    let attributes = this.convertAttributesToRefract('toCompactRefract');
-    let compactDoms = this.content.map((el) =>
+    const attributes = this.convertAttributesToRefract('toCompactRefract');
+    const compactDoms = this.content.map((el) =>
       el.toCompactRefract());
     return [this.element, this.meta, attributes, compactDoms];
   }
@@ -202,7 +202,7 @@ class Collection extends ElementType {
   }
 
   filter(condition) {
-    let newArray = new Collection();
+    const newArray = new Collection();
     newArray.content = this.content.filter(condition);
     return newArray;
   }
@@ -238,28 +238,28 @@ class Collection extends ElementType {
   }
 
   find(condition, options) {
-    let newArray = new Collection();
+    const newArray = new Collection();
     newArray.content = this.findElements(condition, options);
     return newArray;
   }
 }
 
 export class ArrayType extends Collection {
-  constructor(meta={}, attributes={}, values=[]) {
-    let content = values.map((value) => convertToType(value));
+  constructor(content=[], meta={}, attributes={}) {
+    const converted = content.map((value) => convertToType(value));
 
-    super('array', meta, attributes, content);
+    super('array', converted, meta, attributes);
   }
 }
 
 export class ObjectType extends Collection {
-  constructor(meta={}, attributes={}, value={}) {
-    let content = Object.keys(value).map((key) => {
-      const element = convertToType(value[key]);
+  constructor(content={}, meta={}, attributes={}) {
+    const converted = Object.keys(content).map((key) => {
+      const element = convertToType(content[key]);
       element.meta.name = key;
       return element;
     });
-    super('object', meta, attributes, content);
+    super('object', converted, meta, attributes);
   }
 
   toValue() {
