@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.es6 src",
     "precompile": "npm run lint",
-    "compile": "babel src --out-dir lib",
+    "compile": "babel --optional runtime src --out-dir lib",
     "precoverage": "npm run compile",
     "coverage": "istanbul cover _mocha -- --compilers es6:babel/register -R spec --recursive",
     "precoveralls": "npm run coverage",
@@ -59,7 +59,7 @@
     "sinon-chai": "^2.7.0"
   },
   "dependencies": {
-    "core-js": "^0.9.8",
+    "babel-runtime": "^5.3.3",
     "lodash": "^2.4.1"
   }
 }
