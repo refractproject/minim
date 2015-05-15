@@ -15,23 +15,6 @@
     "test": "mocha --compilers es6:babel/register -R spec --recursive",
     "prepublish": "npm run compile"
   },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "env": {
-      "node": true,
-      "mocha": true
-    },
-    "ext": ".js,.es6",
-    "rules": {
-      "quotes": [
-        1,
-        "single",
-        "avoid-escape"
-      ],
-      "strict": "never",
-      "no-use-before-define": "never"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "http://github.com/smizell/minim"
