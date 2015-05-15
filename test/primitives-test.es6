@@ -1,6 +1,5 @@
 import {expect} from './spec-helper';
-import * as minim from '../lib/primitives';
-import {convertToType, convertFromRefract, convertFromCompactRefract} from '../lib/convert';
+import minim from '../lib/minim';
 
 describe('Minim Primitives', function() {
   describe('convertToType', function() {
@@ -9,7 +8,7 @@ describe('Minim Primitives', function() {
 
       context('when given ' + name, function() {
         before(function() {
-          returnedType = convertToType(val);
+          returnedType = minim.convertToType(val);
         });
 
         it('returns ' + name, function() {
@@ -34,7 +33,7 @@ describe('Minim Primitives', function() {
         let returnedType;
 
         before(function() {
-          returnedType = convertFromRefract(el);
+          returnedType = minim.convertFromRefract(el);
         });
 
         it('returns ' + name + ' element', function() {
@@ -52,7 +51,7 @@ describe('Minim Primitives', function() {
         before(function() {
           // NOTE: If this is ever giving you issues, remember that it
           //       does NOT handle nested long-form elements.
-          returnedType = convertFromCompactRefract([
+          returnedType = minim.convertFromCompactRefract([
             el.element, el.metadata, el.attributes, el.content
           ]);
         });
@@ -103,7 +102,7 @@ describe('Minim Primitives', function() {
       let returnedType;
 
       before(function() {
-        returnedType = convertFromRefract(el);
+        returnedType = minim.convertFromRefract(el);
       });
 
       it('returns array element', function() {
@@ -137,7 +136,7 @@ describe('Minim Primitives', function() {
       let returnedType;
 
       before(function() {
-        returnedType = convertFromRefract(el);
+        returnedType = minim.convertFromRefract(el);
       });
 
       it('returns object element', function() {
@@ -367,7 +366,7 @@ describe('Minim Primitives', function() {
   });
 
   describe('Collection', function() {
-    describe('#find', function() {
+    describe('searching', function() {
       const refract = {
         element: 'array',
         content: [
@@ -406,12 +405,12 @@ describe('Minim Primitives', function() {
       let recursiveStrings;
 
       before(function() {
-        const doc = convertFromRefract(refract);
-        strings = doc.find(el => el.element === 'string');
-        recursiveStrings = doc.find(el => el.element === 'string', {recursive: true});
+        const doc = minim.convertFromRefract(refract);
+        strings = doc.children(el => el.element === 'string');
+        recursiveStrings = doc.find(el => el.element === 'string');
       });
 
-      describe('non-recursive', function () {
+      describe('#children', function () {
         it('returns the correct number of items', function() {
           expect(strings.length).to.equal(2);
         });
@@ -421,7 +420,7 @@ describe('Minim Primitives', function() {
         });
       });
 
-      describe('recursive', function () {
+      describe('#find', function () {
         it('returns the correct number of items', function() {
           expect(recursiveStrings.length).to.equal(4);
         });

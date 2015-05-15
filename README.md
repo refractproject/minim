@@ -82,11 +82,11 @@ If the JSON above is used, it can be converted back to Minim types to make a rou
 var arrayType = minim.convertFromDom(aboveJson);
 ```
 
-### Element attributes
+### Element Attributes
 
 Each Minim type provides the following attributes:
 
-- element: `array` (string) - The name of the element type.
+- element (string) - The name of the element type.
 - meta (object) - The element's metadata
 - attributes (object) - The element's attributes
 - content - The element's content, e.g. a list of other elements.
@@ -212,7 +212,7 @@ var value = boolType.get() // get() returns 4
 
 This is a type for representing arrays.
 
-##### iteration
+##### Iteration
 
 The array type is iterable.
 
@@ -288,14 +288,27 @@ console.log(arrayType.toValue()); // ['a', 'b', 'c', 'd']
 
 ##### find
 
-The `find` method traverses the element tree and returns an `ArrayType` of all elements that match the conditional function given.
+The `find` method traverses the entire descendent element tree and returns an `ArrayType` of all elements that match the conditional function given.
 
 ```javascript
 var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
 var numbers = arrayType.find(function(el) {
-  return el.elementType() == 'number'
+  return el.elementType() === 'number'
 }).toValue(); // [1, 2, 3]
 ```
+
+##### children
+
+The `children` method traverses direct descendants and returns an `ArrayType` of all elements that match the condition function given.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
+var numbers = arrayType.children(function(el) {
+  return el.elementType() === 'number';
+}).toValue(); // [3]
+```
+
+Because only children are tested with the condition function, the values `[1, 2]` are seen as an `array` type whose content is never tested. Thus, the only direct child which is a number type is `3`.
 
 #### ObjectType
 
@@ -358,7 +371,7 @@ Minim allows you to register custom types for elements. For example, if the elem
 var minim = require('minim');
 
 // Register your custom type
-minim.TypeRegistry.elementMap.category = minim.ArrayType;
+minim.registry.register('category', minim.ArrayType);
 
 // Load serialized refract elements that include the type!
 var elements = minim.fromCompactRefract(['category', {}, {}, [
@@ -366,6 +379,9 @@ var elements = minim.fromCompactRefract(['category', {}, {}, [
 ]]);
 
 console.log(elements.get(0).content); // hello, world
+
+// Unregister your custom type
+minim.registry.unregister('category');
 ```
 
 ### Chaining

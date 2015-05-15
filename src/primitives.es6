@@ -3,7 +3,7 @@
  */
 
 import _ from 'lodash';
-import {convertToType, convertFromRefract, convertFromCompactRefract} from './convert';
+import registry from './registry';
 
 /*
  * A private symbol for subclasses to set key names of attributes which should
@@ -17,7 +17,7 @@ export const attributeElementKeys = Symbol('attributeElementKeys');
  * able to convert to and from Refract/Javascript.
  */
 export class ElementType {
-  constructor(element, content=null, meta={}, attributes={}) {
+  constructor(element, content = null, meta = {}, attributes = {}) {
     this.element = element;
     this.meta = meta;
     this.attributes = attributes;
@@ -30,7 +30,7 @@ export class ElementType {
     return this.content;
   }
 
-  toRefract(options={}) {
+  toRefract(options = {}) {
     const attributes = this.convertAttributesToRefract('toRefract');
     const initial = {
       element: this.element,
@@ -84,7 +84,7 @@ export class ElementType {
     this.attributes = dom.attributes;
     this.content = dom.content;
 
-    this.convertAttributesToElements(convertFromRefract);
+    this.convertAttributesToElements(registry.fromRefract);
 
     return this;
   }
@@ -95,7 +95,7 @@ export class ElementType {
     this.attributes = tuple[2];
     this.content = tuple[3];
 
-    this.convertAttributesToElements(convertFromCompactRefract);
+    this.convertAttributesToElements(registry.fromCompactRefract);
 
     return this;
   }
@@ -147,6 +147,10 @@ class Collection extends ElementType {
     return this.content.length;
   }
 
+  /*
+   * This defines an iterator that allows instances of this class to be
+   * iterated over, e.g. by using a for...of loop.
+   */
   get [Symbol.iterator]() {
     return this.content[Symbol.iterator];
   }
@@ -173,9 +177,9 @@ class Collection extends ElementType {
     this.meta = dom.meta;
     this.attributes = dom.attributes;
     this.content = (dom.content || []).map((content) =>
-      convertFromRefract(content));
+      registry.fromRefract(content));
 
-    this.convertAttributesToElements(convertFromRefract);
+    this.convertAttributesToElements(registry.fromRefract);
 
     return this;
   }
@@ -185,9 +189,9 @@ class Collection extends ElementType {
     this.meta = tuple[1];
     this.attributes = tuple[2];
     this.content = (tuple[3] || []).map((content) =>
-      convertFromCompactRefract(content));
+      registry.fromCompactRefract(content));
 
-    this.convertAttributesToElements(convertFromCompactRefract);
+    this.convertAttributesToElements(registry.fromCompactRefract);
 
     return this;
   }
@@ -197,7 +201,7 @@ class Collection extends ElementType {
   }
 
   set(index, value) {
-    this.content[index] = convertToType(value);
+    this.content[index] = registry.toType(value);
     return this;
   }
 
@@ -216,7 +220,7 @@ class Collection extends ElementType {
   }
 
   push(value) {
-    this.content.push(convertToType(value));
+    this.content.push(registry.toType(value));
     return this;
   }
 
@@ -225,14 +229,14 @@ class Collection extends ElementType {
   }
 
   findElements(condition, options={}) {
-    const recursive = options.recursive === undefined ? false : options.recursive;
+    const recursive = !!options.recursive;
     const results = options.results === undefined ? [] : options.results;
 
     this.content.forEach((el) => {
       // We use duck-typing here to support any registered class that
       // may contain other elements.
       if (recursive && (el.findElements !== undefined)) {
-          el.findElements(condition, {results, recursive});
+        el.findElements(condition, {results, recursive});
       }
       if (condition(el)) {
         results.push(el);
@@ -241,16 +245,28 @@ class Collection extends ElementType {
     return results;
   }
 
-  find(condition, options) {
+  /*
+   * Recusively search all descendents using a condition function.
+   */
+  find(condition) {
     const newArray = new Collection();
-    newArray.content = this.findElements(condition, options);
+    newArray.content = this.findElements(condition, {recursive: true});
+    return newArray;
+  }
+
+  /*
+   * Search all direct descendents using a condition function.
+   */
+  children(condition) {
+    const newArray = new Collection();
+    newArray.content = this.findElements(condition, {recursive: false});
     return newArray;
   }
 }
 
 export class ArrayType extends Collection {
   constructor(content=[], meta={}, attributes={}) {
-    const converted = content.map((value) => convertToType(value));
+    const converted = content.map((value) => registry.toType(value));
 
     super('array', converted, meta, attributes);
   }
@@ -259,7 +275,7 @@ export class ArrayType extends Collection {
 export class ObjectType extends Collection {
   constructor(content={}, meta={}, attributes={}) {
     const converted = Object.keys(content).map((key) => {
-      const element = convertToType(content[key]);
+      const element = registry.toType(content[key]);
       element.meta.name = key;
       return element;
     });
@@ -280,20 +296,20 @@ export class ObjectType extends Collection {
   }
 
   set(name, value) {
-    const location = this.content.map(i => i.meta.name).indexOf(name);
+    const location = this.content.map(item => item.meta.name).indexOf(name);
 
-    value = convertToType(value);
+    let converted = registry.toType(value);
     // TODO: Should we mutate or copy here? Of course it doesn't matter
     //       for non-refracted elements as they get copied anyway, but
     //       if the input is already refracted and we add it to multiple
     //       objects with a different name suddenly we have a problem.
     //       We have the same problem in the constructor above.
-    value.meta.name = name;
+    converted.meta.name = name;
 
     if (location !== -1) {
-      this.content.splice(location, 1, value);
+      this.content.splice(location, 1, converted);
     } else {
-      this.content.push(value);
+      this.content.push(converted);
     }
 
     return this;
@@ -311,29 +327,3 @@ export class ObjectType extends Collection {
     return this.content.map((value) => [value.meta.name, value.get()]);
   }
 }
-
-/*
- * The type registry allows you to register your own classes to be instantiated
- * when a particular refract element is encountered, and allows you to specify
- * which elements get instantiated for existing Javascript objects.
- */
-export const TypeRegistry = {
-  // A mapping of element name => type class used when loading from refract.
-  elementMap: {
-    'null': NullType,
-    'string': StringType,
-    'number': NumberType,
-    'boolean': BooleanType,
-    'array': ArrayType,
-    'object': ObjectType
-  },
-  // How to convert existing Javascript variables into refract types.
-  typeDetection: [
-    [_.isNull, NullType],
-    [_.isString, StringType],
-    [_.isNumber, NumberType],
-    [_.isBoolean, BooleanType],
-    [_.isArray, ArrayType],
-    [_.isObject, ObjectType]
-  ]
-};
