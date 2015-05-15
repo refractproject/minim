@@ -84,7 +84,8 @@ export class ElementType {
     this.attributes = dom.attributes;
     this.content = dom.content;
 
-    this.convertAttributesToElements(registry.fromRefract);
+    this.convertAttributesToElements((attribute) =>
+      registry.fromRefract(attribute));
 
     return this;
   }
@@ -95,7 +96,8 @@ export class ElementType {
     this.attributes = tuple[2];
     this.content = tuple[3];
 
-    this.convertAttributesToElements(registry.fromCompactRefract);
+    this.convertAttributesToElements((attribute) =>
+      registry.fromCompactRefract(attribute));
 
     return this;
   }
@@ -179,7 +181,8 @@ class Collection extends ElementType {
     this.content = (dom.content || []).map((content) =>
       registry.fromRefract(content));
 
-    this.convertAttributesToElements(registry.fromRefract);
+    this.convertAttributesToElements((attribute) =>
+      registry.fromRefract(attribute));
 
     return this;
   }
@@ -191,7 +194,8 @@ class Collection extends ElementType {
     this.content = (tuple[3] || []).map((content) =>
       registry.fromCompactRefract(content));
 
-    this.convertAttributesToElements(registry.fromCompactRefract);
+    this.convertAttributesToElements((attribute) =>
+      registry.fromCompactRefract(attribute));
 
     return this;
   }
