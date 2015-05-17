@@ -1,6 +1,6 @@
 # Minim
 
-[![Build Status](https://travis-ci.org/smizell/minim.svg)](https://travis-ci.org/smizell/minim)
+[![Build Status](https://travis-ci.org/refractproject/minim.svg?branch=master)](https://travis-ci.org/refractproject/minim)
 
 A library for interacting with [Refract elements](https://github.com/refractproject/refract-spec)
 
