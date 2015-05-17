@@ -19,6 +19,7 @@ JSON provides additional types, which include objects, arrays, booleans, and nul
 Refract is a JSON structure for JSON documents to make a more flexible document object model. In Refract, each element has three components:
 
 1. Name of the element
+1. Metadata
 1. Attributes
 1. Content (which can be of different types depending on the element)
 
@@ -27,6 +28,7 @@ An element ends up looking like this:
 ```javascript
 var el = {
   element: 'string',
+  meta: {},
   attributes: {},
   content: 'bar'
 };
@@ -47,20 +49,24 @@ The `refract` variable above has the following JSON value.
 ```json
 {
   "element": "array",
+  "meta": {},
   "attributes": {},
   "content": [
     {
       "element": "number",
+      "meta": {},
       "attributes": {},
       "content": 1
     },
     {
       "element": "number",
+      "meta": {},
       "attributes": {},
       "content": 2
     },
     {
       "element": "number",
+      "meta": {},
       "attributes": {},
       "content": 3
     }
@@ -76,18 +82,18 @@ If the JSON above is used, it can be converted back to Minim types to make a rou
 var arrayType = minim.convertFromDom(aboveJson);
 ```
 
+### Element Attributes
+
+Each Minim type provides the following attributes:
+
+- element (string) - The name of the element type.
+- meta (object) - The element's metadata
+- attributes (object) - The element's attributes
+- content - The element's content, e.g. a list of other elements.
+
 ### Element Methods
 
 Each Minim type provides the following the methods.
-
-#### elementType
-
-The `elementType` method returns the type of the Minim element.
-
-```javascript
-var arrayType = minim.convertToType([1, 2, 3]);
-var elementType = arrayType.elementType(); // array
-```
 
 #### toValue
 
@@ -113,7 +119,7 @@ The `toCompactRefract` method returns the Compact Refract value of the Minim ele
 
 ```javascript
 var stringType = minim.convertToType("foobar");
-var compact = stringType.toCompactRefract(); // ['string', {}, 'foobar']
+var compact = stringType.toCompactRefract(); // ['string', {}, {}, 'foobar']
 ```
 
 ### Element Types
@@ -206,6 +212,18 @@ var value = boolType.get() // get() returns 4
 
 This is a type for representing arrays.
 
+##### Iteration
+
+The array type is iterable.
+
+```js
+const arrayType = new minim.ArrayType(['a', 'b', 'c']);
+
+for (let item of arrayType) {
+  console.log(item);
+}
+```
+
 ##### get
 
 The `get` method returns the item of the `ArrayType` instance at the given index.
@@ -270,18 +288,31 @@ console.log(arrayType.toValue()); // ['a', 'b', 'c', 'd']
 
 ##### find
 
-The `find` method traverses the element tree and returns an `ArrayType` of all elements that match the conditional function given.
+The `find` method traverses the entire descendent element tree and returns an `ArrayType` of all elements that match the conditional function given.
 
 ```javascript
 var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
 var numbers = arrayType.find(function(el) {
-  return el.elementType() == 'number'
+  return el.elementType() === 'number'
 }).toValue(); // [1, 2, 3]
 ```
 
+##### children
+
+The `children` method traverses direct descendants and returns an `ArrayType` of all elements that match the condition function given.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
+var numbers = arrayType.children(function(el) {
+  return el.elementType() === 'number';
+}).toValue(); // [3]
+```
+
+Because only children are tested with the condition function, the values `[1, 2]` are seen as an `array` type whose content is never tested. Thus, the only direct child which is a number type is `3`.
+
 #### ObjectType
 
-This is a type for representing objects.
+This is a type for representing objects. Objects store their items as an ordered array, so they inherit most of the methods above from the `ArrayType`.
 
 ##### get
 
@@ -308,7 +339,7 @@ The `keys` method returns an array of keys.
 
 ```javascript
 var objectType = new minim.ObjectType({ foo: 'bar' });
-var value = objectType.keys() // ['foo']
+var keys = objectType.keys() // ['foo']
 ```
 
 ##### values
@@ -317,7 +348,40 @@ The `values` method returns an array of keys.
 
 ```javascript
 var objectType = new minim.ObjectType({ foo: 'bar' });
-var value = objectType.values() // ['bar']
+var values = objectType.values() // ['bar']
+```
+
+##### items
+
+The `items` method returns an array of key value pairs which can make iteration simpler.
+
+```js
+const objectType = new minim.ObjectType({ foo: 'bar' });
+
+for (let [key, value] of objectType.items()) {
+  console.log(key, value); // foo, bar
+}
+```
+
+### Element Registry
+
+Minim allows you to register custom types for elements. For example, if the element type name you wish to handle is called `category` and it should be handled like an array:
+
+```javascript
+var minim = require('minim');
+
+// Register your custom type
+minim.registry.register('category', minim.ArrayType);
+
+// Load serialized refract elements that include the type!
+var elements = minim.fromCompactRefract(['category', {}, {}, [
+  ['string', {}, {}, 'hello, world']
+]]);
+
+console.log(elements.get(0).content); // hello, world
+
+// Unregister your custom type
+minim.registry.unregister('category');
 ```
 
 ### Chaining
