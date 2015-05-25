@@ -12,6 +12,78 @@ import registry from './registry';
 export const attributeElementKeys = Symbol('attributeElementKeys');
 export const storedElement = Symbol('storedElement');
 
+export class Meta {
+  constructor(meta = {}) {
+    this.meta = {};
+
+    for (let key of Object.keys(meta)) {
+      this.meta[key] = registry.toType(meta[key]);
+    }
+  }
+
+  toObject() {
+    let meta = {};
+
+    for (let key of Object.keys(this.meta)) {
+      meta[key] = this.meta[key].toValue();
+    }
+
+    return meta;
+  }
+
+  getProperty(name, value) {
+    if (!this.meta[name]) {
+      this.meta[name] = registry.toType(value);
+    }
+
+    return this.meta[name];
+  }
+
+  setProperty(name, value) {
+    this.meta[name] = registry.toType(value);
+  }
+
+  get id() {
+    return this.getProperty('id', '');
+  }
+
+  set id(value) {
+    this.setProperty('id', value);
+  }
+
+  get class() {
+    return this.getProperty('class', []);
+  }
+
+  set class(value) {
+    this.setProperty('class', value);
+  }
+
+  get name() {
+    return this.getProperty('name', '');
+  }
+
+  set name(value) {
+    this.setProperty('name', value);
+  }
+
+  get title() {
+    return this.getProperty('title', '');
+  }
+
+  set title(value) {
+    this.setProperty('title', value);
+  }
+
+  get description() {
+    return this.getProperty('description', '');
+  }
+
+  set description(value) {
+    this.setProperty('description', value);
+  }
+}
+
 /*
  * ElementType is the base element from which all other elements are built.
  * It has no specific information about how to handle the content, but is
@@ -19,7 +91,7 @@ export const storedElement = Symbol('storedElement');
  */
 export class ElementType {
   constructor(content = null, meta = {}, attributes = {}) {
-    this.meta = meta;
+    this.meta = new Meta(meta);
     this.attributes = attributes;
     this.content = content;
     this[attributeElementKeys] = [];
@@ -46,7 +118,7 @@ export class ElementType {
     const attributes = this.convertAttributesToRefract('toRefract');
     const initial = {
       element: this.element,
-      meta: this.meta,
+      meta: this.meta.toObject(),
       attributes,
       content: this.content
     };
@@ -55,7 +127,7 @@ export class ElementType {
 
   toCompactRefract() {
     const attributes = this.convertAttributesToRefract('toCompactRefract');
-    return [this.element, this.meta, attributes, this.content];
+    return [this.element, this.meta.toObject(), attributes, this.content];
   }
 
   /*
@@ -91,7 +163,7 @@ export class ElementType {
   }
 
   fromRefract(dom) {
-    this.meta = dom.meta;
+    this.meta = new Meta(dom.meta);
     this.attributes = dom.attributes;
     this.content = dom.content;
 
@@ -106,7 +178,7 @@ export class ElementType {
   }
 
   fromCompactRefract(tuple) {
-    this.meta = tuple[1];
+    this.meta = new Meta(tuple[1]);
     this.attributes = tuple[2];
     this.content = tuple[3];
 
@@ -127,6 +199,10 @@ export class ElementType {
   set(content) {
     this.content = content;
     return this;
+  }
+
+  equals(value) {
+    return _.isEqual(this.toValue(), value);
   }
 }
 
@@ -209,11 +285,11 @@ class Collection extends ElementType {
     const attributes = this.convertAttributesToRefract('toCompactRefract');
     const compactDoms = this.content.map((el) =>
       el.toCompactRefract());
-    return [this.element, this.meta, attributes, compactDoms];
+    return [this.element, this.meta.toObject(), attributes, compactDoms];
   }
 
   fromRefract(dom) {
-    this.meta = dom.meta;
+    this.meta = new Meta(dom.meta);
     this.attributes = dom.attributes;
     this.content = (dom.content || []).map((content) =>
       registry.fromRefract(content));
@@ -221,17 +297,25 @@ class Collection extends ElementType {
     this.convertAttributesToElements((attribute) =>
       registry.fromRefract(attribute));
 
+    if (this.element !== dom.element) {
+      this.element = dom.element;
+    }
+
     return this;
   }
 
   fromCompactRefract(tuple) {
-    this.meta = tuple[1];
+    this.meta = new Meta(tuple[1]);
     this.attributes = tuple[2];
     this.content = (tuple[3] || []).map((content) =>
       registry.fromCompactRefract(content));
 
     this.convertAttributesToElements((attribute) =>
       registry.fromCompactRefract(attribute));
+
+    if (this.element !== tuple[0]) {
+      this.element = tuple[0];
+    }
 
     return this;
   }
@@ -302,6 +386,47 @@ class Collection extends ElementType {
     newArray.content = this.findElements(condition, {recursive: false});
     return newArray;
   }
+
+  /*
+   * Search the tree recursively and find the element with the matching ID
+   */
+  getById(id) {
+    return this.find(item => item.meta.id.toValue() === id).first();
+  }
+
+  /*
+   * Return the first item in the collection
+   */
+  first() {
+    return this.get(0);
+  }
+
+  /*
+   * Return the second item in the collection
+   */
+  second() {
+    return this.get(1);
+  }
+
+  /*
+   * Return the last item in the collection
+   */
+  last() {
+    return this.get(this.length - 1);
+  }
+
+  /*
+   * Looks for matching children using deep equality
+   */
+  contains(value) {
+    for (let item of this.content) {
+      if (_.isEqual(item.toValue(), value)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
 
 export class ArrayType extends Collection {
@@ -337,19 +462,19 @@ export class ObjectType extends Collection {
 
   toValue() {
     return this.content.reduce((results, el) => {
-      results[el.meta.name] = el.toValue();
+      results[el.meta.name.toValue()] = el.toValue();
       return results;
     }, {});
   }
 
   get(name) {
     return name === undefined ? this : _.first(
-      this.content.filter((value) => value.meta.name === name)
+      this.content.filter((value) => value.meta.name.toValue() === name)
     );
   }
 
   set(name, value) {
-    const location = this.content.map(item => item.meta.name).indexOf(name);
+    const location = this.content.map(item => item.meta.name.toValue()).indexOf(name);
 
     let refractedContent = registry.toType(value);
     // TODO: Should we mutate or copy here? Of course it doesn't matter
@@ -369,14 +494,24 @@ export class ObjectType extends Collection {
   }
 
   keys() {
-    return this.content.map((value) => value.meta.name);
+    return this.content.map((value) => value.meta.name.toValue());
   }
 
   values() {
     return this.content.map((value) => value.get());
   }
 
+  hasKey(value) {
+    for (let item of this.content) {
+      if (item.meta.name.equals(value)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   items() {
-    return this.content.map((value) => [value.meta.name, value.get()]);
+    return this.content.map((value) => [value.meta.name.toValue(), value.get()]);
   }
 }
