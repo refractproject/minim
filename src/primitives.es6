@@ -10,6 +10,7 @@ import registry from './registry';
  * be converted from refract elements rather than simple types.
  */
 export const attributeElementKeys = Symbol('attributeElementKeys');
+export const storedElement = Symbol('storedElement');
 
 /*
  * ElementType is the base element from which all other elements are built.
@@ -17,13 +18,24 @@ export const attributeElementKeys = Symbol('attributeElementKeys');
  * able to convert to and from Refract/Javascript.
  */
 export class ElementType {
-  constructor(element, content = null, meta = {}, attributes = {}) {
-    this.element = element;
+  constructor(content = null, meta = {}, attributes = {}) {
     this.meta = meta;
     this.attributes = attributes;
     this.content = content;
-
     this[attributeElementKeys] = [];
+  }
+
+  get element() {
+    // Returns 'element' so we don't have undefined as element
+    return this[storedElement] || 'element';
+  }
+
+  set element(element) {
+    this[storedElement] = element;
+  }
+
+  primitive() {
+    return;
   }
 
   toValue() {
@@ -79,7 +91,6 @@ export class ElementType {
   }
 
   fromRefract(dom) {
-    this.element = dom.element;
     this.meta = dom.meta;
     this.attributes = dom.attributes;
     this.content = dom.content;
@@ -87,17 +98,24 @@ export class ElementType {
     this.convertAttributesToElements((attribute) =>
       registry.fromRefract(attribute));
 
+    if (this.element !== dom.element) {
+      this.element = dom.element;
+    }
+
     return this;
   }
 
   fromCompactRefract(tuple) {
-    this.element = tuple[0];
     this.meta = tuple[1];
     this.attributes = tuple[2];
     this.content = tuple[3];
 
     this.convertAttributesToElements((attribute) =>
       registry.fromCompactRefract(attribute));
+
+    if (this.element !== tuple[0]) {
+      this.element = tuple[0];
+    }
 
     return this;
   }
@@ -113,8 +131,13 @@ export class ElementType {
 }
 
 export class NullType extends ElementType {
-  constructor(meta, attributes) {
-    super('null', meta, attributes, null);
+  constructor(...args) {
+    super(...args);
+    this.element = 'null';
+  }
+
+  primitive() {
+    return 'null';
   }
 
   set() {
@@ -123,8 +146,13 @@ export class NullType extends ElementType {
 }
 
 export class StringType extends ElementType {
-  constructor(content, meta, attributes) {
-    super('string', content, meta, attributes);
+  constructor(...args) {
+    super(...args);
+    this.element = 'string';
+  }
+
+  primitive() {
+    return 'string';
   }
 
   get length() {
@@ -133,14 +161,24 @@ export class StringType extends ElementType {
 }
 
 export class NumberType extends ElementType {
-  constructor(content, meta, attributes) {
-    super('number', content, meta, attributes);
+  constructor(...args) {
+    super(...args);
+    this.element = 'number';
+  }
+
+  primitive() {
+    return 'number';
   }
 }
 
 export class BooleanType extends ElementType {
-  constructor(content, meta, attributes) {
-    super('boolean', content, meta, attributes);
+  constructor(...args) {
+    super(...args);
+    this.element = 'boolean';
+  }
+
+  primitive() {
+    return 'boolean';
   }
 }
 
@@ -175,7 +213,6 @@ class Collection extends ElementType {
   }
 
   fromRefract(dom) {
-    this.element = dom.element;
     this.meta = dom.meta;
     this.attributes = dom.attributes;
     this.content = (dom.content || []).map((content) =>
@@ -188,7 +225,6 @@ class Collection extends ElementType {
   }
 
   fromCompactRefract(tuple) {
-    this.element = tuple[0];
     this.meta = tuple[1];
     this.attributes = tuple[2];
     this.content = (tuple[3] || []).map((content) =>
@@ -270,20 +306,33 @@ class Collection extends ElementType {
 
 export class ArrayType extends Collection {
   constructor(content=[], meta={}, attributes={}) {
-    const converted = content.map((value) => registry.toType(value));
+    // Allow for content to be given that is not refracted
+    const refractedContent = content.map((value) => registry.toType(value));
 
-    super('array', converted, meta, attributes);
+    super(refractedContent, meta, attributes);
+    this.element = 'array';
+  }
+
+  primitive() {
+    return 'array';
   }
 }
 
 export class ObjectType extends Collection {
   constructor(content={}, meta={}, attributes={}) {
-    const converted = Object.keys(content).map((key) => {
+    // Allow for content to be given that is not refracted
+    const refractedContent = Object.keys(content).map((key) => {
       const element = registry.toType(content[key]);
       element.meta.name = key;
       return element;
     });
-    super('object', converted, meta, attributes);
+
+    super(refractedContent, meta, attributes);
+    this.element = 'object';
+  }
+
+  primitive() {
+    return 'object';
   }
 
   toValue() {
@@ -302,18 +351,18 @@ export class ObjectType extends Collection {
   set(name, value) {
     const location = this.content.map(item => item.meta.name).indexOf(name);
 
-    let converted = registry.toType(value);
+    let refractedContent = registry.toType(value);
     // TODO: Should we mutate or copy here? Of course it doesn't matter
     //       for non-refracted elements as they get copied anyway, but
     //       if the input is already refracted and we add it to multiple
     //       objects with a different name suddenly we have a problem.
     //       We have the same problem in the constructor above.
-    converted.meta.name = name;
+    refractedContent.meta.name = name;
 
     if (location !== -1) {
-      this.content.splice(location, 1, converted);
+      this.content.splice(location, 1, refractedContent);
     } else {
-      this.content.push(converted);
+      this.content.push(refractedContent);
     }
 
     return this;

@@ -41,6 +41,18 @@ describe('Minim registry', () => {
 
       expect(converted).to.equal(myType);
     });
+
+    it('should allow for roundtrip conversions', () => {
+      registry.register('foo', minim.StringType);
+
+      // Full version
+      const fullVersion = registry.fromRefract({ element: 'foo', meta: {}, attributes: {}, content: 'test' }).toRefract();
+      expect(fullVersion).to.deep.equal({ element: 'foo', meta: {}, attributes: {}, content: 'test' });
+
+      // Compact version
+      const compactValue = registry.fromCompactRefract(['foo', {}, {}, 'test']).toCompactRefract();
+      expect(compactValue).to.deep.equal(['foo', {}, {}, 'test']);
+    });
   });
 
   describe('#getElementClass', () => {

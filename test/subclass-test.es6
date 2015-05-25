@@ -5,11 +5,22 @@ describe('Minim type subclasses', () => {
   class MyType extends minim.StringType {
     constructor(...args) {
       super(...args);
-
       this.element = 'myType';
       this[minim.attributeElementKeys] = ['headers'];
     }
   }
+
+  context('when initializing', () => {
+    const myType = new MyType();
+
+    it('can overwrite the element name', () => {
+      expect(myType.element).to.equal('myType');
+    });
+
+    it('returns the correct primitive type', () => {
+      expect(myType.primitive()).to.equal('string');
+    });
+  });
 
   describe('deserializing attributes', () => {
     const myType = new MyType().fromRefract({
