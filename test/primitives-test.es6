@@ -3,6 +3,28 @@ import minim from '../lib/minim';
 
 describe('Minim Primitives', () => {
   describe('ElementType', () => {
+    context('when initializing', () => {
+      let el;
+
+      before(() => {
+        el = new minim.ElementType({}, {
+          id: 'foobar',
+          class: ['a', 'b'],
+          name: 'name',
+          title: 'Title',
+          description: 'Description'
+        });
+      });
+
+      it('should initialize the correct meta data', () => {
+        expect(el.meta.id.get()).to.equal('foobar');
+        expect(el.meta.class.toValue()).to.deep.equal(['a', 'b']);
+        expect(el.meta.name.get()).to.equal('name');
+        expect(el.meta.title.get()).to.equal('Title');
+        expect(el.meta.description.get()).to.equal('Description');
+      });
+    });
+
     describe('#element', () => {
       context('when getting an element that has not been set', () => {
         let el;
@@ -28,6 +50,31 @@ describe('Minim Primitives', () => {
           expect(el.element).to.equal('foobar');
         });
       })
+    });
+
+    describe('#equals', () => {
+      let el;
+
+      before(() => {
+        el = new minim.ElementType({
+          foo: 'bar'
+        }, {
+          id: 'foobar'
+        });
+      });
+
+      it('returns true when they are equal', () => {
+        expect(el.meta.id.equals('foobar')).to.be.true;
+      });
+
+      it('returns false when they are not equal', () => {
+        expect(el.meta.id.equals('not-equal')).to.be.false;
+      });
+
+      it('does a deep equality check', () => {
+        expect(el.equals({ foo: 'bar'})).to.be.true;
+        expect(el.equals({ foo: 'baz'})).to.be.false;
+      });
     });
   });
 
@@ -444,6 +491,9 @@ describe('Minim Primitives', () => {
                 content: [
                   {
                     element: 'string',
+                    meta: {
+                      id: 'nested-id'
+                    },
                     content: 'bar'
                   }, {
                     element: 'number',
@@ -455,11 +505,13 @@ describe('Minim Primitives', () => {
           }
         ]
       };
+
+      let doc;
       let strings;
       let recursiveStrings;
 
       before(() => {
-        const doc = minim.convertFromRefract(refract);
+        doc = minim.convertFromRefract(refract);
         strings = doc.children(el => el.element === 'string');
         recursiveStrings = doc.find(el => el.element === 'string');
       });
@@ -481,6 +533,49 @@ describe('Minim Primitives', () => {
 
         it('returns the correct values', () => {
           expect(recursiveStrings.toValue()).to.deep.equal(['foobar', 'hello world', 'baz', 'bar']);
+        });
+      });
+
+      describe('#first', () => {
+        it('returns the first item', () => {
+          expect(doc.first()).to.deep.equal(doc.content[0]);
+        });
+      });
+
+      describe('#second', () => {
+        it('returns the first item', () => {
+          expect(doc.second()).to.deep.equal(doc.content[1]);
+        });
+      });
+
+      describe('#last', () => {
+        it('returns the first item', () => {
+          expect(doc.last()).to.deep.equal(doc.content[2]);
+        });
+      });
+
+      describe('#getById', () => {
+        it('returns the item for the ID given', () => {
+          expect(doc.getById('nested-id').toValue()).to.equal('bar');
+        });
+      });
+
+      describe('#contains', () => {
+        it('uses deep equality', () => {
+          expect(doc.get(2).contains(['not', 'there'])).to.be.false;
+          expect(doc.get(2).contains(['bar', 4])).to.be.true;
+        });
+
+        context('when given a value that is in the array', () => {
+          it('returns true', () => {
+            expect(doc.contains('foobar')).to.be.true;
+          });
+        });
+
+        context('when given a value that is not in the array', () => {
+          it('returns false', () => {
+            expect(doc.contains('not-there')).to.be.false;
+          });
         });
       });
     });
@@ -798,6 +893,13 @@ describe('Minim Primitives', () => {
     describe('#values', () => {
       it('gets the values of all properties', () => {
         expect(objectType.values()).to.deep.equal(['bar', 1]);
+      });
+    });
+
+    describe('#hasKey', function() {
+      it('checks to see if a key exists', () => {
+        expect(objectType.hasKey('foo')).to.be.true;
+        expect(objectType.hasKey('does-not-exist')).to.be.false;
       });
     });
 

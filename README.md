@@ -122,6 +122,15 @@ var stringType = minim.convertToType("foobar");
 var compact = stringType.toCompactRefract(); // ['string', {}, {}, 'foobar']
 ```
 
+#### equals
+
+Allows for testing equality with the content of the element.
+
+```javascript
+var stringType = minim.convertToType("foobar");
+stringType.equals('abcd'); // returns false
+```
+
 ### Element Types
 
 Minim supports the following primitive types and the
@@ -309,6 +318,50 @@ var numbers = arrayType.children(function(el) {
 ```
 
 Because only children are tested with the condition function, the values `[1, 2]` are seen as an `array` type whose content is never tested. Thus, the only direct child which is a number type is `3`.
+
+##### getById
+
+Search the entire tree to find a matching ID.
+
+```javascript
+elTree.getById('some-id');
+```
+
+##### contains
+
+Test to see if a collection contains the value given. Does a deep equality check.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
+arrayType.contains('a'); // returns true
+```
+
+##### first
+
+Returns the first element in the collection.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
+arrayType.first(); // returns the element for "a"
+```
+
+##### second
+
+Returns the second element in the collection.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
+arrayType.second(); // returns the element for "[1, 2]"
+```
+
+##### last
+
+Returns the last element in the collection.
+
+```javascript
+var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
+arrayType.last(); // returns the element for "3"
+```
 
 #### ObjectType
 

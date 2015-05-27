@@ -42,7 +42,7 @@ describe('Minim registry', () => {
       expect(converted).to.equal(myType);
     });
 
-    it('should allow for roundtrip conversions', () => {
+    it('should allow for roundtrip conversions for value types', () => {
       registry.register('foo', minim.StringType);
 
       // Full version
@@ -52,6 +52,38 @@ describe('Minim registry', () => {
       // Compact version
       const compactValue = registry.fromCompactRefract(['foo', {}, {}, 'test']).toCompactRefract();
       expect(compactValue).to.deep.equal(['foo', {}, {}, 'test']);
+    });
+
+    it('should allow for roundtrip conversions for collection types', () => {
+      registry.register('foo', minim.ArrayType);
+
+      const fullRefractSample = {
+        element: 'foo',
+        meta: {},
+        attributes: {},
+        content: [
+          {
+            element: 'string',
+            meta: {},
+            attributes: {},
+            content: 'bar'
+          }
+        ]
+      }
+
+      const compactRefractSample = [
+        'foo', {}, {}, [
+          ['string', {}, {}, 'bar']
+        ]
+      ]
+
+      // Full version
+      const fullVersion = registry.fromRefract(fullRefractSample).toRefract();
+      expect(fullVersion).to.deep.equal(fullRefractSample);
+
+      // Compact version
+      const compactValue = registry.fromCompactRefract(compactRefractSample).toCompactRefract();
+      expect(compactValue).to.deep.equal(compactRefractSample);
     });
   });
 
