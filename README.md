@@ -250,7 +250,7 @@ The `map` method may be used to map over an array. Each item given is a Minim in
 ```javascript
 var arrayType = new minim.ArrayType(['a', 'b', 'c']);
 var newArray = arrayType.map(function(item) {
-  return item.elementType();
+  return item.element;
 }); // newArray is now ['string', 'string', 'string']
 ```
 
@@ -293,7 +293,7 @@ The `find` method traverses the entire descendent element tree and returns an `A
 ```javascript
 var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
 var numbers = arrayType.find(function(el) {
-  return el.elementType() === 'number'
+  return el.element === 'number'
 }).toValue(); // [1, 2, 3]
 ```
 
@@ -304,7 +304,7 @@ The `children` method traverses direct descendants and returns an `ArrayType` of
 ```javascript
 var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
 var numbers = arrayType.children(function(el) {
-  return el.elementType() === 'number';
+  return el.element === 'number';
 }).toValue(); // [3]
 ```
 
