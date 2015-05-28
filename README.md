@@ -139,27 +139,9 @@ Minim supports the following primitive types and the
 
 This is a type for representing the `null` value.
 
-##### get
-
-The `get` method returns the value of the `NullType` instance.
-
-```javascript
-var nullType = new minim.NullType();
-var value = nullType.get() // get() returns null
-```
-
 #### StringType
 
 This is a type for representing string values.
-
-##### get
-
-The `get` method returns the value of the `StringType` instance.
-
-```javascript
-var stringType = new minim.StringType('foobar');
-var value = stringType.get() // get() returns 'foobar'
-```
 
 ##### set
 
@@ -175,15 +157,6 @@ var value = stringType.get() // get() returns 'foobar'
 
 This is a type for representing number values.
 
-##### get
-
-The `get` method returns the value of the `NumberType` instance.
-
-```javascript
-var numberType = new minim.NumberType(4);
-var value = numberType.get() // get() returns 4
-```
-
 ##### set
 
 The `set` method sets the value of the `NumberType` instance.
@@ -197,15 +170,6 @@ var value = numberType.get() // get() returns 4
 #### BoolType
 
 This is a type for representing boolean values.
-
-##### get
-
-The `get` method returns the value of the `BoolType` instance.
-
-```javascript
-var boolType = new minim.BoolType(true);
-var value = boolType.get() // get() returns true
-```
 
 ##### set
 
@@ -369,11 +333,32 @@ This is a type for representing objects. Objects store their items as an ordered
 
 ##### get
 
-The `get` method returns the item of the `ObjectType` instance at the given index.
+The `get` method returns the value of the `ObjectType` instance at the given name.
+See `getKey` and `getMember` for ways to get more instances around a key-value pair.
 
 ```javascript
 var objectType = new minim.ObjectType({ foo: 'bar' });
-var value = objectType.get('foo') // get('foo') returns 'bar'
+var value = objectType.get('foo') // returns string instance for 'bar'
+```
+
+##### getKey
+
+The `getKey` method returns the key element of a key-value pair.
+
+```javascript
+var objectType = new minim.ObjectType({ foo: 'bar' });
+var key = objectType.getKey('foo') // returns the key element instance
+```
+
+##### getMember
+
+The `getMember` method returns the entire member for a key-value pair.
+
+```javascript
+var objectType = new minim.ObjectType({ foo: 'bar' });
+var member = objectType.getMember('foo') // returns the member element
+var key = member.key; // returns what getKey('foo') returns
+var value = member.value; // returns what get('foo') returns
 ```
 
 ##### set
@@ -414,6 +399,22 @@ const objectType = new minim.ObjectType({ foo: 'bar' });
 for (let [key, value] of objectType.items()) {
   console.log(key, value); // foo, bar
 }
+```
+
+##### map, filter, and forEach
+
+The `map`, `filter`, and `forEach` methods work similar to the `ArrayType` map function, but the callback receive the value, key, and member element instances.
+
+See `getMember` to see more on how to interact with member elements.
+
+```js
+const objectType = new minim.ObjectType({ foo: 'bar' });
+const values = objectType.map((value, key, member) => {
+  // key is an instance for foo
+  // value is an instance for bar
+  // member is an instance for the member element
+  return [key.toValue(), value.toValue()]; // ['foo', 'bar']
+});
 ```
 
 ### Element Registry
