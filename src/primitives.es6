@@ -59,10 +59,6 @@ export class Meta {
     this.setProperty('class', value);
   }
 
-  get name() {
-    return this.getProperty('name', '');
-  }
-
   set name(value) {
     this.setProperty('name', value);
   }
@@ -192,10 +188,6 @@ export class ElementType {
     return this;
   }
 
-  get() {
-    return this.content;
-  }
-
   set(content) {
     this.content = content;
     return this;
@@ -321,7 +313,7 @@ class Collection extends ElementType {
   }
 
   get(index) {
-    return index === undefined ? this : this.content[index];
+    return this.content[index];
   }
 
   set(index, value) {
@@ -443,13 +435,94 @@ export class ArrayType extends Collection {
   }
 }
 
+export class MemberType extends ElementType {
+  constructor(key, value, ...rest) {
+    const content = {
+      key: registry.toType(key),
+      value: registry.toType(value)
+    };
+
+    super(content, ...rest);
+    this.element = 'member';
+  }
+
+  get key() {
+    return this.content.key;
+  }
+
+  set key(key) {
+    this.content.key = registry.toType(key);
+  }
+
+  get value() {
+    return this.content.value;
+  }
+
+  set value(value) {
+    this.content.value = registry.toType(value);
+  }
+
+  toRefract() {
+    return {
+      element: this.element,
+      attributes: this.attributes,
+      meta: this.meta.toObject(),
+      content: {
+        key: this.key.toRefract(),
+        value: this.value.toRefract()
+      }
+    };
+  }
+
+  toCompactRefract() {
+    return [this.element, this.meta.toObject(), this.attributes, {
+      key: this.key.toCompactRefract(),
+      value: this.value.toCompactRefract()
+    }];
+  }
+
+  fromRefract(dom) {
+    this.meta = new Meta(dom.meta);
+    this.attributes = dom.attributes;
+    this.content = {
+      key: registry.fromRefract(dom.content.key),
+      value: registry.fromRefract(dom.content.value)
+    };
+
+    this.convertAttributesToElements((attribute) =>
+      registry.fromRefract(attribute));
+
+    if (this.element !== dom.element) {
+      this.element = dom.element;
+    }
+
+    return this;
+  }
+
+  fromCompactRefract(tuple) {
+    this.meta = new Meta(tuple[1]);
+    this.attributes = tuple[2];
+    this.content = {
+      key: registry.fromCompactRefract(tuple[3].key),
+      value: registry.fromCompactRefract(tuple[3].value)
+    };
+
+    this.convertAttributesToElements((attribute) =>
+      registry.fromCompactRefract(attribute));
+
+    if (this.element !== tuple[0]) {
+      this.element = tuple[0];
+    }
+
+    return this;
+  }
+}
+
 export class ObjectType extends Collection {
   constructor(content={}, meta={}, attributes={}) {
     // Allow for content to be given that is not refracted
     const refractedContent = Object.keys(content).map((key) => {
-      const element = registry.toType(content[key]);
-      element.meta.name = key;
-      return element;
+      return new MemberType(key, content[key]);
     });
 
     super(refractedContent, meta, attributes);
@@ -462,48 +535,62 @@ export class ObjectType extends Collection {
 
   toValue() {
     return this.content.reduce((results, el) => {
-      results[el.meta.name.toValue()] = el.toValue();
+      results[el.key.toValue()] = el.value.toValue();
       return results;
     }, {});
   }
 
   get(name) {
-    return name === undefined ? this : _.first(
-      this.content.filter((value) => value.meta.name.toValue() === name)
+    if (name === undefined) { return undefined; }
+
+    const member = _.first(
+      this.content.filter(item => item.key.toValue() === name)
+    ) || {};
+
+    return member.value;
+  }
+
+  getMember(name) {
+    if (name === undefined) { return undefined; }
+
+    return _.first(
+      this.content.filter(item => item.key.toValue() === name)
     );
   }
 
+  getKey(name) {
+    let member = this.getMember(name);
+
+    if (member) {
+      return member.key;
+    }
+
+    return undefined;
+  }
+
   set(name, value) {
-    const location = this.content.map(item => item.meta.name.toValue()).indexOf(name);
+    let member = this.getMember(name);
 
-    let refractedContent = registry.toType(value);
-    // TODO: Should we mutate or copy here? Of course it doesn't matter
-    //       for non-refracted elements as they get copied anyway, but
-    //       if the input is already refracted and we add it to multiple
-    //       objects with a different name suddenly we have a problem.
-    //       We have the same problem in the constructor above.
-    refractedContent.meta.name = name;
-
-    if (location !== -1) {
-      this.content.splice(location, 1, refractedContent);
+    if (member) {
+      member.value = value;
     } else {
-      this.content.push(refractedContent);
+      this.content.push(new MemberType(name, value));
     }
 
     return this;
   }
 
   keys() {
-    return this.content.map((value) => value.meta.name.toValue());
+    return this.content.map(item => item.key.toValue());
   }
 
   values() {
-    return this.content.map((value) => value.get());
+    return this.content.map(item => item.value.toValue());
   }
 
   hasKey(value) {
     for (let item of this.content) {
-      if (item.meta.name.equals(value)) {
+      if (item.key.equals(value)) {
         return true;
       }
     }
@@ -512,6 +599,27 @@ export class ObjectType extends Collection {
   }
 
   items() {
-    return this.content.map((value) => [value.meta.name.toValue(), value.get()]);
+    return this.content.map(item => [item.key.toValue(), item.value.toValue()]);
+  }
+
+  map(cb) {
+    return this.content.map((item) => {
+      return cb(item.value, item.key, item);
+    });
+  }
+
+  filter(cb) {
+    // Create a new object with new member elements
+    let obj = new ObjectType([], this.meta, this.attributes);
+    obj.content = this.content.filter((item) => {
+      return cb(item.value, item.key, item);
+    });
+    return obj;
+  }
+
+  forEach(cb) {
+    return this.content.forEach((item) => {
+      return cb(item.value, item.key, item);
+    });
   }
 }

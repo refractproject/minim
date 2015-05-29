@@ -9,7 +9,8 @@ registry
   .register('number', primitives.NumberType)
   .register('boolean', primitives.BooleanType)
   .register('array', primitives.ArrayType)
-  .register('object', primitives.ObjectType);
+  .register('object', primitives.ObjectType)
+  .register('member', primitives.MemberType);
 
 // Add instance detection functions to convert existing objects into
 // the corresponding refract types.
