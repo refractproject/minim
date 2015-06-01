@@ -9,7 +9,8 @@ describe('Minim Primitives', () => {
       before(() => {
         el = new minim.ElementType({}, {
           id: 'foobar',
-          class: ['a', 'b'],
+          'class': ['a', 'b'],
+          name: 'MyName',
           title: 'Title',
           description: 'Description'
         });
@@ -18,6 +19,7 @@ describe('Minim Primitives', () => {
       it('should initialize the correct meta data', () => {
         expect(el.meta.id.toValue()).to.equal('foobar');
         expect(el.meta.class.toValue()).to.deep.equal(['a', 'b']);
+        expect(el.meta.name.toValue()).to.deep.equal('MyName');
         expect(el.meta.title.toValue()).to.equal('Title');
         expect(el.meta.description.toValue()).to.equal('Description');
       });
