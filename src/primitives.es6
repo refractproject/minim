@@ -59,6 +59,10 @@ export class Meta {
     this.setProperty('class', value);
   }
 
+  get name() {
+    return this.getProperty('name', '');
+  }
+
   set name(value) {
     this.setProperty('name', value);
   }
