@@ -1,12 +1,13 @@
-import {expect} from './spec-helper';
-import minim from '../lib/minim';
+var _ = require('lodash');
+var expect = require('./spec-helper').expect;
+var minim = require('../lib/minim');
 
-describe('Minim Primitives', () => {
-  describe('ElementType', () => {
-    context('when initializing', () => {
-      let el;
+describe('Minim Primitives', function() {
+  describe('ElementType', function() {
+    context('when initializing', function() {
+      var el;
 
-      before(() => {
+      before(function() {
         el = new minim.ElementType({}, {
           id: 'foobar',
           class: ['a', 'b'],
@@ -15,7 +16,7 @@ describe('Minim Primitives', () => {
         });
       });
 
-      it('should initialize the correct meta data', () => {
+      it('should initialize the correct meta data', function() {
         expect(el.meta.id.toValue()).to.equal('foobar');
         expect(el.meta.class.toValue()).to.deep.equal(['a', 'b']);
         expect(el.meta.title.toValue()).to.equal('Title');
@@ -23,37 +24,37 @@ describe('Minim Primitives', () => {
       });
     });
 
-    describe('#element', () => {
-      context('when getting an element that has not been set', () => {
-        let el;
+    describe('#element', function() {
+      context('when getting an element that has not been set', function() {
+        var el;
 
-        before(() => {
+        before(function() {
           el = new minim.ElementType();
         });
 
-        it('returns base element', () => {
+        it('returns base element', function() {
           expect(el.element).to.equal('element');
         });
       });
 
-      context('when setting the element', () => {
-        let el;
+      context('when setting the element', function() {
+        var el;
 
-        before(() => {
+        before(function() {
           el = new minim.ElementType();
           el.element = 'foobar';
         });
 
-        it('sets the element correctly', () => {
+        it('sets the element correctly', function() {
           expect(el.element).to.equal('foobar');
         });
       })
     });
 
-    describe('#equals', () => {
-      let el;
+    describe('#equals', function() {
+      var el;
 
-      before(() => {
+      before(function() {
         el = new minim.ElementType({
           foo: 'bar'
         }, {
@@ -61,31 +62,31 @@ describe('Minim Primitives', () => {
         });
       });
 
-      it('returns true when they are equal', () => {
+      it('returns true when they are equal', function() {
         expect(el.meta.id.equals('foobar')).to.be.true;
       });
 
-      it('returns false when they are not equal', () => {
+      it('returns false when they are not equal', function() {
         expect(el.meta.id.equals('not-equal')).to.be.false;
       });
 
-      it('does a deep equality check', () => {
+      it('does a deep equality check', function() {
         expect(el.equals({ foo: 'bar'})).to.be.true;
         expect(el.equals({ foo: 'baz'})).to.be.false;
       });
     });
   });
 
-  describe('convertToType', () => {
+  describe('convertToType', function() {
     function typeCheck(name, val) {
-      let returnedType;
+      var returnedType;
 
-      context('when given ' + name, () => {
-        before(() => {
+      context('when given ' + name, function() {
+        before(function() {
           returnedType = minim.convertToType(val);
         });
 
-        it('returns ' + name, () => {
+        it('returns ' + name, function() {
           expect(returnedType.element).to.equal(name);
         });
       });
@@ -101,28 +102,28 @@ describe('Minim Primitives', () => {
     });
   });
 
-  describe('convertFromType', () => {
+  describe('convertFromType', function() {
     function typeCheck(name, el) {
-      context('when given ' + name, () => {
-        let returnedType;
+      context('when given ' + name, function() {
+        var returnedType;
 
-        before(() => {
+        before(function() {
           returnedType = minim.convertFromRefract(el);
         });
 
-        it('returns ' + name + ' element', () => {
+        it('returns ' + name + ' element', function() {
           expect(returnedType.element).to.equal(name);
         });
 
-        it('has the correct value', () => {
+        it('has the correct value', function() {
           expect(returnedType.toValue()).to.equal(el.content);
         });
       });
 
-      context('when given compact ' + name, () => {
-        let returnedType;
+      context('when given compact ' + name, function() {
+        var returnedType;
 
-        before(() => {
+        before(function() {
           // NOTE: If this is ever giving you issues, remember that it
           //       does NOT handle nested long-form elements.
           returnedType = minim.convertFromCompactRefract([
@@ -130,11 +131,11 @@ describe('Minim Primitives', () => {
           ]);
         });
 
-        it('returns ' + name + ' element', () => {
+        it('returns ' + name + ' element', function() {
           expect(returnedType.element).to.equal(name);
         });
 
-        it('has the correct value', () => {
+        it('has the correct value', function() {
           expect(returnedType.toValue()).to.equal(el.content);
         });
       });
@@ -160,8 +161,8 @@ describe('Minim Primitives', () => {
       content: true
     });
 
-    context('when given array', () => {
-      const el = {
+    context('when given array', function() {
+      var el = {
         element: 'array',
         content: [
           {
@@ -173,23 +174,23 @@ describe('Minim Primitives', () => {
           }
         ]
       };
-      let returnedType;
+      var returnedType;
 
-      before(() => {
+      before(function() {
         returnedType = minim.convertFromRefract(el);
       });
 
-      it('returns array element', () => {
+      it('returns array element', function() {
         expect(returnedType.element).to.equal('array');
       });
 
-      it('has the correct values', () => {
+      it('has the correct values', function() {
         expect(returnedType.toValue()).to.deep.equal([1, 2]);
       });
     });
 
-    context('when given object', () => {
-      const el = {
+    context('when given object', function() {
+      var el = {
         element: 'object',
         meta: {},
         attributes: {},
@@ -232,17 +233,17 @@ describe('Minim Primitives', () => {
           }
         ]
       };
-      let returnedType;
+      var returnedType;
 
-      before(() => {
+      before(function() {
         returnedType = minim.convertFromRefract(el);
       });
 
-      it('returns object element', () => {
+      it('returns object element', function() {
         expect(returnedType.element).to.equal('object');
       });
 
-      it('has the correct values', () => {
+      it('has the correct values', function() {
         expect(returnedType.toValue()).to.deep.equal({
           foo: 'bar',
           z: 2
@@ -251,247 +252,247 @@ describe('Minim Primitives', () => {
     });
   });
 
-  describe('NullType', () => {
-    let nullType;
+  describe('NullType', function() {
+    var nullType;
 
-    before(() => {
+    before(function() {
       nullType = new minim.NullType();
     });
 
-    describe('#element', () => {
-      it('is null', () => {
+    describe('#element', function() {
+      it('is null', function() {
         expect(nullType.element).to.equal('null');
       });
     });
 
-    describe('#primitive', () => {
-      it('returns null as the Refract primitive', () => {
+    describe('#primitive', function() {
+      it('returns null as the Refract primitive', function() {
         expect(nullType.primitive()).to.equal('null');
       });
     });
 
-    describe('#toValue', () => {
-      it('returns null', () => {
+    describe('#toValue', function() {
+      it('returns null', function() {
         expect(nullType.toValue()).to.equal(null);
       });
     });
 
-    describe('#toRefract', () => {
-      const expected = {
+    describe('#toRefract', function() {
+      var expected = {
         element: 'null',
         meta: {},
         attributes: {},
         content: null
       };
 
-      it('returns a null DOM object', () => {
+      it('returns a null DOM object', function() {
         expect(nullType.toRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#toCompactRefract', () => {
-      const expected = ['null', {}, {}, null];
-      it('returns a null Compact DOM object', () => {
+    describe('#toCompactRefract', function() {
+      var expected = ['null', {}, {}, null];
+      it('returns a null Compact DOM object', function() {
         expect(nullType.toCompactRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#get', () => {
-      it('returns the null value', () => {
+    describe('#get', function() {
+      it('returns the null value', function() {
         expect(nullType.toValue()).to.equal(null);
       });
     });
 
-    describe('#set', () => {
-      it('cannot set the value', () => {
+    describe('#set', function() {
+      it('cannot set the value', function() {
         expect(nullType.set('foobar')).to.be.an.instanceof(Error);
       });
     });
   });
 
-  describe('StringType', () => {
-    let stringType;
+  describe('StringType', function() {
+    var stringType;
 
-    before(() => {
+    before(function() {
       stringType = new minim.StringType('foobar');
     });
 
-    describe('#element', () => {
-      it('is a string', () => {
+    describe('#element', function() {
+      it('is a string', function() {
         expect(stringType.element).to.equal('string');
       });
     });
 
-    describe('#primitive', () => {
-      it('returns string as the Refract primitive', () => {
+    describe('#primitive', function() {
+      it('returns string as the Refract primitive', function() {
         expect(stringType.primitive()).to.equal('string');
       });
     });
 
-    describe('#toValue', () => {
-      it('returns the string', () => {
+    describe('#toValue', function() {
+      it('returns the string', function() {
         expect(stringType.toValue()).to.equal('foobar');
       });
     });
 
-    describe('#toRefract', () => {
-      const expected = {
+    describe('#toRefract', function() {
+      var expected = {
         element: 'string',
         meta: {},
         attributes: {},
         content: 'foobar'
       };
 
-      it('returns a string DOM object', () => {
+      it('returns a string DOM object', function() {
         expect(stringType.toRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#toCompactRefract', () => {
-      const expected = ['string', {}, {}, 'foobar'];
+    describe('#toCompactRefract', function() {
+      var expected = ['string', {}, {}, 'foobar'];
 
-      it('returns a string Compact DOM object', () => {
+      it('returns a string Compact DOM object', function() {
         expect(stringType.toCompactRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#get', () => {
-      it('returns the string value', () => {
+    describe('#get', function() {
+      it('returns the string value', function() {
         expect(stringType.toValue()).to.equal('foobar');
       });
     });
 
-    describe('#set', () => {
-      it('sets the value of the string', () => {
+    describe('#set', function() {
+      it('sets the value of the string', function() {
         stringType.set('hello world');
         expect(stringType.toValue()).to.equal('hello world');
       });
     });
   });
 
-  describe('NumberType', () => {
-    let numberType;
+  describe('NumberType', function() {
+    var numberType;
 
-    before(() => {
+    before(function() {
       numberType = new minim.NumberType(4);
     });
 
-    describe('#element', () => {
-      it('is a number', () => {
+    describe('#element', function() {
+      it('is a number', function() {
         expect(numberType.element).to.equal('number');
       });
     });
 
-    describe('#primitive', () => {
-      it('returns number as the Refract primitive', () => {
+    describe('#primitive', function() {
+      it('returns number as the Refract primitive', function() {
         expect(numberType.primitive()).to.equal('number');
       });
     });
 
-    describe('#toValue', () => {
-      it('returns the number', () => {
+    describe('#toValue', function() {
+      it('returns the number', function() {
         expect(numberType.toValue()).to.equal(4);
       });
     });
 
-    describe('#toRefract', () => {
-      const expected = {
+    describe('#toRefract', function() {
+      var expected = {
         element: 'number',
         meta: {},
         attributes: {},
         content: 4
       };
 
-      it('returns a number DOM object', () => {
+      it('returns a number DOM object', function() {
         expect(numberType.toRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#toCompactRefract', () => {
-      const expected = ['number', {}, {}, 4];
+    describe('#toCompactRefract', function() {
+      var expected = ['number', {}, {}, 4];
 
-      it('returns a number Compact DOM object', () => {
+      it('returns a number Compact DOM object', function() {
         expect(numberType.toCompactRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#get', () => {
-      it('returns the number value', () => {
+    describe('#get', function() {
+      it('returns the number value', function() {
         expect(numberType.toValue()).to.equal(4);
       });
     });
 
-    describe('#set', () => {
-      it('sets the value of the number', () => {
+    describe('#set', function() {
+      it('sets the value of the number', function() {
         numberType.set(10);
         expect(numberType.toValue()).to.equal(10);
       });
     });
   });
 
-  describe('BoolType', () => {
-    let boolType;
+  describe('BoolType', function() {
+    var boolType;
 
-    before(() => {
+    before(function() {
       boolType = new minim.BooleanType(true);
     });
 
-    describe('#element', () => {
-      it('is a boolean', () => {
+    describe('#element', function() {
+      it('is a boolean', function() {
         expect(boolType.element).to.equal('boolean');
       });
     });
 
-    describe('#primitive', () => {
-      it('returns boolean as the Refract primitive', () => {
+    describe('#primitive', function() {
+      it('returns boolean as the Refract primitive', function() {
         expect(boolType.primitive()).to.equal('boolean');
       });
     });
 
-    describe('#toValue', () => {
-      it('returns the boolean', () => {
+    describe('#toValue', function() {
+      it('returns the boolean', function() {
         expect(boolType.toValue()).to.equal(true);
       });
     });
 
-    describe('#toRefract', () => {
-      const expected = {
+    describe('#toRefract', function() {
+      var expected = {
         element: 'boolean',
         meta: {},
         attributes: {},
         content: true
       };
 
-      it('returns a boolean DOM object', () => {
+      it('returns a boolean DOM object', function() {
         expect(boolType.toRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#toCompactRefract', () => {
-      const expected = ['boolean', {}, {}, true];
+    describe('#toCompactRefract', function() {
+      var expected = ['boolean', {}, {}, true];
 
-      it('returns a boolean Compact DOM object', () => {
+      it('returns a boolean Compact DOM object', function() {
         expect(boolType.toCompactRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#get', () => {
-      it('returns the boolean value', () => {
+    describe('#get', function() {
+      it('returns the boolean value', function() {
         expect(boolType.toValue()).to.equal(true);
       });
     });
 
-    describe('#set', () => {
-      it('sets the value of the boolean', () => {
+    describe('#set', function() {
+      it('sets the value of the boolean', function() {
         boolType.set(false);
         expect(boolType.toValue()).to.equal(false);
       });
     });
   });
 
-  describe('Collection', () => {
-    describe('searching', () => {
-      const refract = {
+  describe('Collection', function() {
+    describe('searching', function() {
+      var refract = {
         element: 'array',
         content: [
           {
@@ -529,74 +530,78 @@ describe('Minim Primitives', () => {
         ]
       };
 
-      let doc;
-      let strings;
-      let recursiveStrings;
+      var doc;
+      var strings;
+      var recursiveStrings;
 
-      before(() => {
+      before(function() {
         doc = minim.convertFromRefract(refract);
-        strings = doc.children(el => el.element === 'string');
-        recursiveStrings = doc.find(el => el.element === 'string');
+        strings = doc.children(function(el) {
+          return el.element === 'string';
+        });
+        recursiveStrings = doc.find(function(el) {
+          return el.element === 'string';
+        });
       });
 
-      describe('#children', () => {
-        it('returns the correct number of items', () => {
+      describe('#children', function() {
+        it('returns the correct number of items', function() {
           expect(strings.length).to.equal(2);
         });
 
-        it('returns the correct values', () => {
+        it('returns the correct values', function() {
           expect(strings.toValue()).to.deep.equal(['foobar', 'hello world']);
         });
       });
 
-      describe('#find', () => {
-        it('returns the correct number of items', () => {
+      describe('#find', function() {
+        it('returns the correct number of items', function() {
           expect(recursiveStrings.length).to.equal(4);
         });
 
-        it('returns the correct values', () => {
+        it('returns the correct values', function() {
           expect(recursiveStrings.toValue()).to.deep.equal(['foobar', 'hello world', 'baz', 'bar']);
         });
       });
 
-      describe('#first', () => {
-        it('returns the first item', () => {
+      describe('#first', function() {
+        it('returns the first item', function() {
           expect(doc.first()).to.deep.equal(doc.content[0]);
         });
       });
 
-      describe('#second', () => {
-        it('returns the first item', () => {
+      describe('#second', function() {
+        it('returns the first item', function() {
           expect(doc.second()).to.deep.equal(doc.content[1]);
         });
       });
 
-      describe('#last', () => {
-        it('returns the first item', () => {
+      describe('#last', function() {
+        it('returns the first item', function() {
           expect(doc.last()).to.deep.equal(doc.content[2]);
         });
       });
 
-      describe('#getById', () => {
-        it('returns the item for the ID given', () => {
+      describe('#getById', function() {
+        it('returns the item for the ID given', function() {
           expect(doc.getById('nested-id').toValue()).to.equal('bar');
         });
       });
 
-      describe('#contains', () => {
-        it('uses deep equality', () => {
+      describe('#contains', function() {
+        it('uses deep equality', function() {
           expect(doc.get(2).contains(['not', 'there'])).to.be.false;
           expect(doc.get(2).contains(['bar', 4])).to.be.true;
         });
 
-        context('when given a value that is in the array', () => {
-          it('returns true', () => {
+        context('when given a value that is in the array', function() {
+          it('returns true', function() {
             expect(doc.contains('foobar')).to.be.true;
           });
         });
 
-        context('when given a value that is not in the array', () => {
-          it('returns false', () => {
+        context('when given a value that is not in the array', function() {
+          it('returns false', function() {
             expect(doc.contains('not-there')).to.be.false;
           });
         });
@@ -604,55 +609,57 @@ describe('Minim Primitives', () => {
     });
   });
 
-  describe('ArrayType', () => {
-    let arrayType;
+  describe('ArrayType', function() {
+    var arrayType;
 
     function setArray() {
       arrayType = new minim.ArrayType(['a', true, null, 1]);
     }
 
-    before(() => {
+    before(function() {
       setArray();
     });
 
-    beforeEach(() => {
+    beforeEach(function() {
       setArray();
     });
 
-    describe('.content', () => {
-      let correctTypes;
-      let storedTypes;
+    describe('.content', function() {
+      var correctTypes;
+      var storedTypes;
 
-      before(() => {
+      before(function() {
         correctTypes = ['string', 'boolean', 'null', 'number'];
-        storedTypes = arrayType.content.map(el => el.element);
+        storedTypes = arrayType.content.map(function(el) {
+          return el.element;
+        });
       });
 
-      it('stores the correct types', () => {
+      it('stores the correct types', function() {
         expect(storedTypes).to.deep.equal(correctTypes);
       });
     });
 
-    describe('#element', () => {
-      it('is an array', () => {
+    describe('#element', function() {
+      it('is an array', function() {
         expect(arrayType.element).to.equal('array');
       });
     });
 
-    describe('#primitive', () => {
-      it('returns array as the Refract primitive', () => {
+    describe('#primitive', function() {
+      it('returns array as the Refract primitive', function() {
         expect(arrayType.primitive()).to.equal('array');
       });
     });
 
-    describe('#toValue', () => {
-      it('returns the array', () => {
+    describe('#toValue', function() {
+      it('returns the array', function() {
         expect(arrayType.toValue()).to.deep.equal(['a', true, null, 1]);
       });
     });
 
-    describe('#toRefract', () => {
-      const expected = {
+    describe('#toRefract', function() {
+      var expected = {
         element: 'array',
         meta: {},
         attributes: {},
@@ -681,50 +688,52 @@ describe('Minim Primitives', () => {
         ]
       };
 
-      it('returns an array DOM object', () => {
+      it('returns an array DOM object', function() {
         expect(arrayType.toRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#toCompactRefract', () => {
-      const expected = ['array', {}, {}, [['string', {}, {}, 'a'], ['boolean', {}, {}, true], ['null', {}, {}, null], ['number', {}, {}, 1]]];
+    describe('#toCompactRefract', function() {
+      var expected = ['array', {}, {}, [['string', {}, {}, 'a'], ['boolean', {}, {}, true], ['null', {}, {}, null], ['number', {}, {}, 1]]];
 
-      it('returns an array Compact DOM object', () => {
+      it('returns an array Compact DOM object', function() {
         expect(arrayType.toCompactRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#get', () => {
-      context('when an index is given', () => {
-        it('returns the item from the array', () => {
+    describe('#get', function() {
+      context('when an index is given', function() {
+        it('returns the item from the array', function() {
           expect(arrayType.get(0).toValue()).to.equal('a');
         });
       });
 
-      context('when no index is given', () => {
-        it('is undefined', () => {
+      context('when no index is given', function() {
+        it('is undefined', function() {
           expect(arrayType.get()).to.be.undefined;
         });
       });
     });
 
-    describe('#set', () => {
-      it('sets the value of the array', () => {
+    describe('#set', function() {
+      it('sets the value of the array', function() {
         arrayType.set(0, 'hello world');
         expect(arrayType.get(0).toValue()).to.equal('hello world');
       });
     });
 
-    describe('#map', () => {
-      it('allows for mapping the content of the array', () => {
-        const newArray = arrayType.map(item => item.toValue());
+    describe('#map', function() {
+      it('allows for mapping the content of the array', function() {
+        var newArray = arrayType.map(function(item) {
+          return item.toValue();
+        });
         expect(newArray).to.deep.equal(['a', true, null, 1]);
       });
     });
 
-    describe('#filter', () => {
-      it('allows for filtering the content', () => {
-        const newArray = arrayType.filter((item) => {
+    describe('#filter', function() {
+      it('allows for filtering the content', function() {
+        var newArray = arrayType.filter(function(item) {
           var ref;
           return (ref = item.toValue()) === 'a' || ref === 1;
         });
@@ -732,19 +741,19 @@ describe('Minim Primitives', () => {
       });
     });
 
-    describe('#forEach', () => {
-      it('iterates over each item', () => {
+    describe('#forEach', function() {
+      it('iterates over each item', function() {
         var results;
         results = [];
-        arrayType.forEach((item) => {
+        arrayType.forEach(function(item) {
           return results.push(item);
         });
         expect(results.length).to.equal(4);
       });
     });
 
-    describe('#length', () => {
-      it('returns the length of the content', () => {
+    describe('#length', function() {
+      it('returns the length of the content', function() {
         expect(arrayType.length).to.equal(4);
       });
     });
@@ -754,34 +763,34 @@ describe('Minim Primitives', () => {
       expect(instance.get(4).toValue()).to.equal('foobar');
     };
 
-    describe('#push', () => {
-      it('adds a new item to the array', () => {
+    describe('#push', function() {
+      it('adds a new item to the array', function() {
         arrayType.push('foobar');
         itAddsToArray(arrayType);
       });
     });
 
-    describe('#add', () => {
-      it('adds a new item to the array', () => {
+    describe('#add', function() {
+      it('adds a new item to the array', function() {
         arrayType.add('foobar');
         itAddsToArray(arrayType);
       });
     });
 
-    describe('#[Symbol.iterator]', () => {
-      it('can be used in a for ... of loop', () => {
-        const items = [];
-        for (let item of arrayType) {
-          items.push(item);
-        }
-
-        expect(items).to.have.length(4);
-      });
-    });
+    // describe('#[Symbol.iterator]', function() {
+    //   it('can be used in a for ... of loop', function() {
+    //     var items = [];
+    //     for (let item of arrayType) {
+    //       items.push(item);
+    //     }
+    //
+    //     expect(items).to.have.length(4);
+    //   });
+    // });
   });
 
-  describe('ObjectType', () => {
-    let objectType;
+  describe('ObjectType', function() {
+    var objectType;
 
     function setObject() {
       objectType = new minim.ObjectType({
@@ -790,41 +799,43 @@ describe('Minim Primitives', () => {
       });
     }
 
-    before(() => {
+    before(function() {
       setObject();
     });
 
-    beforeEach(() => {
+    beforeEach(function() {
       setObject();
     });
 
-    describe('.content', () => {
-      let correctTypes, storedTypes;
+    describe('.content', function() {
+      var correctTypes, storedTypes;
 
-      before(() => {
+      before(function() {
         correctTypes = ['string', 'number'];
-        storedTypes = objectType.content.map(el => el.value.element);
+        storedTypes = objectType.content.map(function(el) {
+          return el.value.element;
+        });
       });
 
-      it('has the correct types', () => {
+      it('has the correct types', function() {
         expect(storedTypes).to.deep.equal(correctTypes);
       });
     });
 
-    describe('#element', () => {
-      it('is a string type', () => {
+    describe('#element', function() {
+      it('is a string type', function() {
         expect(objectType.element).to.equal('object');
       });
     });
 
-    describe('#primitive', () => {
-      it('returns object as the Refract primitive', () => {
+    describe('#primitive', function() {
+      it('returns object as the Refract primitive', function() {
         expect(objectType.primitive()).to.equal('object');
       });
     });
 
-    describe('#toValue', () => {
-      it('returns the object', () => {
+    describe('#toValue', function() {
+      it('returns the object', function() {
         expect(objectType.toValue()).to.deep.equal({
           foo: 'bar',
           z: 1
@@ -832,8 +843,8 @@ describe('Minim Primitives', () => {
       });
     });
 
-    describe('#toRefract', () => {
-      const expected = {
+    describe('#toRefract', function() {
+      var expected = {
         element: 'object',
         meta: {},
         attributes: {},
@@ -879,13 +890,13 @@ describe('Minim Primitives', () => {
         ]
       };
 
-      it('returns an object DOM object', () => {
+      it('returns an object DOM object', function() {
         expect(objectType.toRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#toCompactRefract', () => {
-      const expected = [
+    describe('#toCompactRefract', function() {
+      var expected = [
         'object', {}, {}, [
           ['member', {}, {}, {
             key: ['string', {}, {}, 'foo'],
@@ -898,100 +909,103 @@ describe('Minim Primitives', () => {
         ]
       ];
 
-      it('returns a object Compact DOM object', () => {
+      it('returns a object Compact DOM object', function() {
         expect(objectType.toCompactRefract()).to.deep.equal(expected);
       });
     });
 
-    describe('#get', () => {
-      context('when a property name is given', () => {
-        it('returns the value of the name given', () => {
+    describe('#get', function() {
+      context('when a property name is given', function() {
+        it('returns the value of the name given', function() {
           expect(objectType.get('foo').toValue()).to.equal('bar');
         });
       });
 
-      context('when a property name is not given', () => {
-        it('is undefined', () => {
+      context('when a property name is not given', function() {
+        it('is undefined', function() {
           expect(objectType.get()).to.be.undefined;
         });
       });
     });
 
-    describe('#getMember', () => {
-      context('when a property name is given', () => {
-        it('returns the correct member object', () => {
+    describe('#getMember', function() {
+      context('when a property name is given', function() {
+        it('returns the correct member object', function() {
           expect(objectType.getMember('foo').value.toValue()).to.equal('bar');
         });
       });
 
-      context('when a property name is not given', () => {
-        it('is undefined', () => {
+      context('when a property name is not given', function() {
+        it('is undefined', function() {
           expect(objectType.getMember()).to.be.undefined;
         });
       });
     });
 
-    describe('#getKey', () => {
-      context('when a property name is given', () => {
-        it('returns the correct key object', () => {
+    describe('#getKey', function() {
+      context('when a property name is given', function() {
+        it('returns the correct key object', function() {
           expect(objectType.getKey('foo').toValue()).to.equal('foo');
         });
       });
 
-      context('when a property name given that does not exist', () => {
-        it('returns undefined', () => {
+      context('when a property name given that does not exist', function() {
+        it('returns undefined', function() {
           expect(objectType.getKey('not-defined')).to.be.undefined;
         });
       });
 
-      context('when a property name is not given', () => {
-        it('returns undefined', () => {
+      context('when a property name is not given', function() {
+        it('returns undefined', function() {
           expect(objectType.getKey()).to.be.undefined;
         });
       });
     });
 
-    describe('#set', () => {
-      it('sets the value of the name given', () => {
+    describe('#set', function() {
+      it('sets the value of the name given', function() {
         expect(objectType.get('foo').toValue()).to.equal('bar');
         objectType.set('foo', 'hello world');
         expect(objectType.get('foo').toValue()).to.equal('hello world');
       });
 
-      it('sets a value that has not been defined yet', () => {
+      it('sets a value that has not been defined yet', function() {
         objectType.set('bar', 'hello world');
         expect(objectType.get('bar').toValue()).to.equal('hello world');
       });
     });
 
-    describe('#keys', () => {
-      it('gets the keys of all properties', () => {
+    describe('#keys', function() {
+      it('gets the keys of all properties', function() {
         expect(objectType.keys()).to.deep.equal(['foo', 'z']);
       });
     });
 
-    describe('#values', () => {
-      it('gets the values of all properties', () => {
+    describe('#values', function() {
+      it('gets the values of all properties', function() {
         expect(objectType.values()).to.deep.equal(['bar', 1]);
       });
     });
 
     describe('#hasKey', function() {
-      it('checks to see if a key exists', () => {
+      it('checks to see if a key exists', function() {
         expect(objectType.hasKey('foo')).to.be.true;
         expect(objectType.hasKey('does-not-exist')).to.be.false;
       });
     });
 
-    describe('#items', () => {
-      it('provides a list of name/value pairs to iterate', () => {
-        const keys = [];
-        const values = [];
+    describe('#items', function() {
+      it('provides a list of name/value pairs to iterate', function() {
+        var keys = [];
+        var values = [];
 
-        for (let [key, value] of objectType.items()) {
+        _.forEach(objectType.items(), function(item) {
+          var key = item[0];
+          var value = item[1];
+
           keys.push(key);
           values.push(value);
-        }
+        });
 
         expect(keys).to.have.members(['foo', 'z']);
         expect(values).to.have.length(2);
@@ -999,8 +1013,8 @@ describe('Minim Primitives', () => {
     });
 
     function itHascollectionMethod(method) {
-      describe('#' + method, () => {
-        it('responds to #' + method, () => {
+      describe('#' + method, function() {
+        it('responds to #' + method, function() {
           expect(objectType).to.respondTo(method);
         });
       });
@@ -1012,104 +1026,104 @@ describe('Minim Primitives', () => {
     itHascollectionMethod('push');
     itHascollectionMethod('add');
 
-    describe('#map', () => {
-      it('provides the keys', () => {
-        const keys = objectType.map((value, key, member) => {
+    describe('#map', function() {
+      it('provides the keys', function() {
+        var keys = objectType.map(function(value, key, member) {
           return key.toValue();
         });
         expect(keys).to.deep.equal(['foo', 'z']);
       });
 
-      it('provides the values', () => {
-        const values = objectType.map((value, key, member) => {
+      it('provides the values', function() {
+        var values = objectType.map(function(value, key, member) {
           return value.toValue();
         });
         expect(values).to.deep.equal(['bar', 1]);
       });
 
-      it('provides the members', () => {
-        const keys = objectType.map((value, key, member) => {
+      it('provides the members', function() {
+        var keys = objectType.map(function(value, key, member) {
           return member.key.toValue();
         });
         expect(keys).to.deep.equal(['foo', 'z']);
       });
     });
 
-    describe('#filter', () => {
-      it('allows for filtering on keys', () => {
-        const foo = objectType.filter((value, key, member) => {
+    describe('#filter', function() {
+      it('allows for filtering on keys', function() {
+        var foo = objectType.filter(function(value, key, member) {
           return key.equals('foo');
         });
         expect(foo.keys()).to.deep.equal(['foo']);
       });
 
-      it('allows for filtering on values', () => {
-        const foo = objectType.filter((value, key, member) => {
+      it('allows for filtering on values', function() {
+        var foo = objectType.filter(function(value, key, member) {
           return value.equals('bar');
         });
         expect(foo.keys()).to.deep.equal(['foo']);
       });
 
-      it('allows for filtering on members', () => {
-        const foo = objectType.filter((value, key, member) => {
+      it('allows for filtering on members', function() {
+        var foo = objectType.filter(function(value, key, member) {
           return member.value.equals('bar');
         });
         expect(foo.keys()).to.deep.equal(['foo']);
       });
     });
 
-    describe('#forEach', () => {
-      it('provides the keys', () => {
-        let keys = [];
-        objectType.forEach((value, key, member) => {
+    describe('#forEach', function() {
+      it('provides the keys', function() {
+        var keys = [];
+        objectType.forEach(function(value, key, member) {
           return keys.push(key.toValue());
         });
         expect(keys).to.deep.equal(['foo', 'z']);
       });
 
-      it('provides the values', () => {
-        let values = [];
-        objectType.forEach((value, key, member) => {
+      it('provides the values', function() {
+        var values = [];
+        objectType.forEach(function(value, key, member) {
           return values.push(value.toValue());
         });
         expect(values).to.deep.equal(['bar', 1]);
       });
 
-      it('provides the members', () => {
-        let keys = [];
-        objectType.forEach((value, key, member) => {
+      it('provides the members', function() {
+        var keys = [];
+        objectType.forEach(function(value, key, member) {
           return keys.push(member.key.toValue());
         });
         expect(keys).to.deep.equal(['foo', 'z']);
       });
     });
 
-    describe('#[Symbol.iterator]', () => {
-      it('can be used in a for ... of loop', () => {
-        const items = [];
-        for (let item of objectType) {
-          items.push(item);
-        }
-
-        expect(items).to.have.length(2);
-      });
-    });
+    // describe('#[Symbol.iterator]', function() {
+    //   it('can be used in a for ... of loop', function() {
+    //     var items = [];
+    //     for (let item of objectType) {
+    //       items.push(item);
+    //     }
+    //
+    //     expect(items).to.have.length(2);
+    //   });
+    // });
   });
 
-  describe('MemberType', () => {
-    const member = new minim.MemberType('foo', 'bar', {}, { foo: 'bar' });
+  describe('MemberType', function() {
+    var member = new minim.MemberType('foo', 'bar', {}, { foo: 'bar' });
 
-    it('correctly sets the key and value', () => {
+    it('correctly sets the key and value', function() {
       expect(member.key.toValue()).to.equal('foo');
       expect(member.value.toValue()).to.equal('bar');
     });
 
-    it('correctly sets the attributes', () => {
+    it('correctly sets the attributes', function() {
       expect(member.attributes.foo).to.equal('bar');
     });
 
-    describe('#toRefract', () => {
-      it('returns the correct Refract value', () => {
+    describe('#toRefract', function() {
+      it('returns the correct Refract value', function() {
         expect(member.toRefract()).to.deep.equal({
           element: 'member',
           meta: {},
@@ -1132,8 +1146,8 @@ describe('Minim Primitives', () => {
       });
     });
 
-    describe('#toCompactRefract', () => {
-      it('returns the correct compact Refract value', () => {
+    describe('#toCompactRefract', function() {
+      it('returns the correct compact Refract value', function() {
         expect(member.toCompactRefract()).to.deep.equal([
           'member', {}, { foo: 'bar' }, {
             key: ['string', {}, {}, 'foo'],
