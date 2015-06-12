@@ -2,40 +2,40 @@ var _ = require('lodash');
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
 
-describe('Minim type subclasses', function() {
+describe('Minim subclasses', function() {
   // TODO: Provide better interface for extending elements
-  var MyType = function() {
-    minim.StringType.apply(this, arguments);
-    this.element = 'myType';
+  var MyElement = function() {
+    minim.StringElement.apply(this, arguments);
+    this.element = 'myElement';
     this._attributeElementKeys = ['headers'];
   }
 
-  MyType.prototype = _.create(minim.StringType.prototype, {
+  MyElement.prototype = _.create(minim.StringElement.prototype, {
     ownMethod: function() {
       return 'It works!';
     }
   });
 
   it('can extend the base element with its own method', function() {
-    var myType = new MyType();
-    expect(myType.ownMethod()).to.equal('It works!');
+    var myElement = new MyElement();
+    expect(myElement.ownMethod()).to.equal('It works!');
   });
 
   context('when initializing', function() {
-    var myType = new MyType();
+    var myElement = new MyElement();
 
     it('can overwrite the element name', function() {
-      expect(myType.element).to.equal('myType');
+      expect(myElement.element).to.equal('myElement');
     });
 
-    it('returns the correct primitive type', function() {
-      expect(myType.primitive()).to.equal('string');
+    it('returns the correct primitive element', function() {
+      expect(myElement.primitive()).to.equal('string');
     });
   });
 
   describe('deserializing attributes', function() {
-    var myType = new MyType().fromRefract({
-      element: 'myType',
+    var myElement = new MyElement().fromRefract({
+      element: 'myElement',
       attributes: {
         headers: {
           element: 'array',
@@ -54,23 +54,23 @@ describe('Minim type subclasses', function() {
     });
 
     it('should create headers element instance', function() {
-      expect(myType.attributes.headers).to.be.instanceof(minim.ArrayType);
+      expect(myElement.attributes.headers).to.be.instanceof(minim.ArrayElement);
     });
 
     it('should leave foo alone', function() {
-      expect(myType.attributes.foo).to.be.a('string');
+      expect(myElement.attributes.foo).to.be.a('string');
     });
   });
 
   describe('serializing attributes', function() {
-    var myType = new MyType();
-    myType.attributes.headers = new minim.ArrayType(['application/json']);
-    myType.attributes.headers.content[0].meta.name = 'Content-Type';
+    var myElement = new MyElement();
+    myElement.attributes.headers = new minim.ArrayElement(['application/json']);
+    myElement.attributes.headers.content[0].meta.name = 'Content-Type';
 
     it('should serialize headers element', function() {
-      var refracted = myType.toCompactRefract();
+      var refracted = myElement.toCompactRefract();
 
-      expect(refracted).to.deep.equal(['myType', {}, {
+      expect(refracted).to.deep.equal(['myElement', {}, {
         headers: ['array', {}, {}, [
             ['string', {name: 'Content-Type'}, {}, 'application/json']
         ]]
