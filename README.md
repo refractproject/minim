@@ -82,6 +82,24 @@ If the JSON above is used, it can be converted back to Minim types to make a rou
 var arrayType = minim.convertFromDom(aboveJson);
 ```
 
+### Extending elements
+
+You can extend elements using the `extend` static method.
+
+```javascript
+var NewElement = StringType.extend({
+  constructor: function() {
+    this.__super();
+  },
+
+  customMethod: function() {
+    // custom code here
+  }
+})
+```
+
+See the [Uptown](https://github.com/smizell/uptown) library for usage with `.extend`.
+
 ### Element Attributes
 
 Each Minim type provides the following attributes:
