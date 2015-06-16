@@ -1,14 +1,14 @@
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
-var TypeRegistry = require('../lib/base').TypeRegistry;
+var ElementRegistry = require('../lib/base').ElementRegistry;
 
 describe('Minim registry', function() {
-  var registry = new TypeRegistry();
+  var registry = new ElementRegistry();
 
   describe('#register', function() {
     it('should add to the element map', function() {
-      registry.register('test', minim.ObjectType);
-      expect(registry.elementMap.test).to.equal(minim.ObjectType);
+      registry.register('test', minim.ObjectElement);
+      expect(registry.elementMap.test).to.equal(minim.ObjectElement);
     });
   });
 
@@ -21,29 +21,29 @@ describe('Minim registry', function() {
 
   describe('#detect', function() {
     var test = function() { return true; }
-    registry.typeDetection = [[test, minim.NullType]];
+    registry.elementDetection = [[test, minim.NullElement]];
 
     it('should prepend by default', function() {
-      registry.detect(test, minim.StringType);
-      expect(registry.typeDetection[0][1]).to.equal(minim.StringType);
+      registry.detect(test, minim.StringElement);
+      expect(registry.elementDetection[0][1]).to.equal(minim.StringElement);
     });
 
     it('should be able to append', function() {
-      registry.detect(test, minim.ObjectType, false);
-      expect(registry.typeDetection[2][1]).to.equal(minim.ObjectType);
+      registry.detect(test, minim.ObjectElement, false);
+      expect(registry.elementDetection[2][1]).to.equal(minim.ObjectElement);
     });
   });
 
-  describe('#toType', function() {
+  describe('#toElement', function() {
     it('should handle values that are ElementClass subclass instances', function() {
-      var myType = new minim.StringType();
-      var converted = registry.toType(myType);
+      var myElement = new minim.StringElement();
+      var converted = registry.toElement(myElement);
 
-      expect(converted).to.equal(myType);
+      expect(converted).to.equal(myElement);
     });
 
-    it('should allow for roundtrip conversions for value types', function() {
-      registry.register('foo', minim.StringType);
+    it('should allow for roundtrip conversions for values', function() {
+      registry.register('foo', minim.StringElement);
 
       // Full version
       var fullVersion = registry.fromRefract({ element: 'foo', meta: {}, attributes: {}, content: 'test' }).toRefract();
@@ -54,8 +54,8 @@ describe('Minim registry', function() {
       expect(compactValue).to.deep.equal(['foo', {}, {}, 'test']);
     });
 
-    it('should allow for roundtrip conversions for collection types', function() {
-      registry.register('foo', minim.ArrayType);
+    it('should allow for roundtrip conversions for collection elements', function() {
+      registry.register('foo', minim.ArrayElement);
 
       var fullRefractSample = {
         element: 'foo',
@@ -89,7 +89,7 @@ describe('Minim registry', function() {
 
   describe('#getElementClass', function() {
     it('should return ElementClass for unknown elements', function() {
-      expect(registry.getElementClass('unknown')).to.equal(minim.ElementType);
+      expect(registry.getElementClass('unknown')).to.equal(minim.BaseElement);
     });
   });
 });

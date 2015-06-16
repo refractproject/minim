@@ -21,7 +21,7 @@ Refract is a JSON structure for JSON documents to make a more flexible document 
 1. Name of the element
 1. Metadata
 1. Attributes
-1. Content (which can be of different types depending on the element)
+1. Content (which can be of different elements depending on the element)
 
 An element ends up looking like this:
 
@@ -36,12 +36,12 @@ var el = {
 
 ## Usage
 
-### Converting to Types
+### Converting Javascript Values into Elements
 
 ```javascript
 var minim = require('minim');
-var arrayType = minim.convertToType([1, 2, 3]);
-var refract = arrayType.toRefract();
+var arrayElement = minim.convertToElement([1, 2, 3]);
+var refract = arrayElement.toRefract();
 ```
 
 The `refract` variable above has the following JSON value.
@@ -74,12 +74,14 @@ The `refract` variable above has the following JSON value.
 }
 ```
 
-### Converting from Types
+### Converting Serialized Refract into Elements
 
-If the JSON above is used, it can be converted back to Minim types to make a roundtrip.
+Serialized Refract can be converted back to Minim elements to make a roundtrip.
 
 ```javascript
-var arrayType = minim.convertFromDom(aboveJson);
+var arrayElement1 = minim.convertToElement([1, 2, 3]);
+var refracted = arrayElement1.toRefract();
+var arrayElement2 = minim.convertFromRefract(refracted);
 ```
 
 ### Extending elements
@@ -87,7 +89,7 @@ var arrayType = minim.convertFromDom(aboveJson);
 You can extend elements using the `extend` static method.
 
 ```javascript
-var NewElement = StringType.extend({
+var NewElement = StringElement.extend({
   constructor: function() {
     this.__super();
   },
@@ -102,24 +104,24 @@ See the [Uptown](https://github.com/smizell/uptown) library for usage with `.ext
 
 ### Element Attributes
 
-Each Minim type provides the following attributes:
+Each Minim element provides the following attributes:
 
-- element (string) - The name of the element type.
+- element (string) - The name of the element
 - meta (object) - The element's metadata
 - attributes (object) - The element's attributes
 - content - The element's content, e.g. a list of other elements.
 
 ### Element Methods
 
-Each Minim type provides the following the methods.
+Each Minim element provides the following the methods.
 
 #### toValue
 
 The `toValue` method returns the JSON value of the Minim element.
 
 ```javascript
-var arrayType = minim.convertToType([1, 2, 3]);
-var arrayValue = arrayType.toValue(); // [1, 2, 3]
+var arrayElement = minim.convertToElement([1, 2, 3]);
+var arrayValue = arrayElement.toValue(); // [1, 2, 3]
 ```
 
 #### toRefract
@@ -127,8 +129,8 @@ var arrayValue = arrayType.toValue(); // [1, 2, 3]
 The `toRefract` method returns the Refract value of the Minim element.
 
 ```javascript
-var arrayType = minim.convertToType([1, 2, 3]);
-var refract = arrayType.toRefract(); // See converting to types above
+var arrayElement = minim.convertToElement([1, 2, 3]);
+var refract = arrayElement.toRefract(); // See converting to elements above
 ```
 
 #### toCompactRefract
@@ -136,8 +138,8 @@ var refract = arrayType.toRefract(); // See converting to types above
 The `toCompactRefract` method returns the Compact Refract value of the Minim element.
 
 ```javascript
-var stringType = minim.convertToType("foobar");
-var compact = stringType.toCompactRefract(); // ['string', {}, {}, 'foobar']
+var stringElement = minim.convertToElement("foobar");
+var compact = stringElement.toCompactRefract(); // ['string', {}, {}, 'foobar']
 ```
 
 #### equals
@@ -145,93 +147,95 @@ var compact = stringType.toCompactRefract(); // ['string', {}, {}, 'foobar']
 Allows for testing equality with the content of the element.
 
 ```javascript
-var stringType = minim.convertToType("foobar");
-stringType.equals('abcd'); // returns false
+var stringElement = minim.convertToElement("foobar");
+stringElement.equals('abcd'); // returns false
 ```
 
-### Element Types
+### Minim Elements
 
-Minim supports the following primitive types and the
+Minim supports the following primitive elements
 
-#### NullType
+#### NullElement
 
-This is a type for representing the `null` value.
+This is an element for representing the `null` value.
 
-#### StringType
+#### StringElement
 
-This is a type for representing string values.
+This is an element for representing string values.
 
 ##### set
 
-The `set` method sets the value of the `StringType` instance.
+The `set` method sets the value of the `StringElement` instance.
 
 ```javascript
-var stringType = new minim.StringType();
-stringType.set('foobar');
-var value = stringType.get() // get() returns 'foobar'
+var stringElement = new minim.StringElement();
+stringElement.set('foobar');
+var value = stringElement.get() // get() returns 'foobar'
 ```
 
-#### NumberType
+#### NumberElement
 
-This is a type for representing number values.
+This is an element for representing number values.
 
 ##### set
 
-The `set` method sets the value of the `NumberType` instance.
+The `set` method sets the value of the `NumberElement` instance.
 
 ```javascript
-var numberType = new minim.NumberType();
-numberType.set(4);
-var value = numberType.get() // get() returns 4
+var numberElement = new minim.NumberElement();
+numberElement.set(4);
+var value = numberElement.get() // get() returns 4
 ```
 
-#### BoolType
+#### BooleanElement
 
-This is a type for representing boolean values.
+This is an element for representing boolean values.
 
 ##### set
 
-The `set` method sets the value of the `BoolType` instance.
+The `set` method sets the value of the `BooleanElement` instance.
 
 ```javascript
-var boolType = new minim.BoolType();
-boolType.set(true);
-var value = boolType.get() // get() returns 4
+var booleanElement = new minim.BooleanElement();
+booleanElement.set(true);
+var value = booleanElement.get() // get() returns 4
 ```
 
-#### ArrayType
+#### ArrayElement
 
-This is a type for representing arrays.
+This is an element for representing arrays.
 
 ##### Iteration
 
-The array type is iterable.
+**NOTE**: Not usable at this point
+
+The array element is iterable.
 
 ```js
-const arrayType = new minim.ArrayType(['a', 'b', 'c']);
+const arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
 
-for (let item of arrayType) {
+for (let item of arrayElement) {
   console.log(item);
 }
 ```
 
 ##### get
 
-The `get` method returns the item of the `ArrayType` instance at the given index.
+The `get` method returns the item of the `ArrayElement` instance at the given index.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', 'b', 'c']);
-var value = arrayType.get(0) // get(0) returns 'a'
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var value = arrayElement.get(0) // get(0) returns 'a'
 ```
 
 ##### set
 
-The `set` method sets the value of the `ArrayType` instance.
+The `set` method sets the value of the `ArrayElement` instance.
 
 ```javascript
-var arrayType = new minim.ArrayType();
-arrayType.set(0, 'z');
-var value = arrayType.get(0) // get(0) returns 'z'
+var arrayElement = new minim.ArrayElement();
+arrayElement.set(0, 'z');
+var value = arrayElement.get(0) // get(0) returns 'z'
 ```
 
 ##### map
@@ -239,8 +243,8 @@ var value = arrayType.get(0) // get(0) returns 'z'
 The `map` method may be used to map over an array. Each item given is a Minim instance.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', 'b', 'c']);
-var newArray = arrayType.map(function(item) {
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var newArray = arrayElement.map(function(item) {
   return item.element;
 }); // newArray is now ['string', 'string', 'string']
 ```
@@ -250,8 +254,8 @@ var newArray = arrayType.map(function(item) {
 The `filter` method may be used to filter a Minim array. This method returns a Minim array itself rather than a JavaScript array instance.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', 'b', 'c']);
-var newArray = arrayType.filter(function(item) {
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var newArray = arrayElement.filter(function(item) {
   return item.get() === 'a'
 }); // newArray.toValue() is now ['a']
 ```
@@ -261,8 +265,8 @@ var newArray = arrayType.filter(function(item) {
 The `forEach` method may be used to iterate over a Minim array.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', 'b', 'c']);
-arrayType.forEach(function(item) {
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+arrayElement.forEach(function(item) {
   console.log(item.toValue())
 }); // logs each value to console
 ```
@@ -272,34 +276,34 @@ arrayType.forEach(function(item) {
 The `push` method may be used to add items to a Minim array.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', 'b', 'c']);
-arrayType.push('d');
-console.log(arrayType.toValue()); // ['a', 'b', 'c', 'd']
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+arrayElement.push('d');
+console.log(arrayElement.toValue()); // ['a', 'b', 'c', 'd']
 ```
 
 ##### find
 
-The `find` method traverses the entire descendent element tree and returns an `ArrayType` of all elements that match the conditional function given.
+The `find` method traverses the entire descendent element tree and returns an `ArrayElement` of all elements that match the conditional function given.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
-var numbers = arrayType.find(function(el) {
+var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var numbers = arrayElement.find(function(el) {
   return el.element === 'number'
 }).toValue(); // [1, 2, 3]
 ```
 
 ##### children
 
-The `children` method traverses direct descendants and returns an `ArrayType` of all elements that match the condition function given.
+The `children` method traverses direct descendants and returns an `ArrayElement` of all elements that match the condition function given.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
-var numbers = arrayType.children(function(el) {
+var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var numbers = arrayElement.children(function(el) {
   return el.element === 'number';
 }).toValue(); // [3]
 ```
 
-Because only children are tested with the condition function, the values `[1, 2]` are seen as an `array` type whose content is never tested. Thus, the only direct child which is a number type is `3`.
+Because only children are tested with the condition function, the values `[1, 2]` are seen as an `array` type whose content is never tested. Thus, the only direct child which is a number element is `3`.
 
 ##### getById
 
@@ -314,8 +318,8 @@ elTree.getById('some-id');
 Test to see if a collection contains the value given. Does a deep equality check.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
-arrayType.contains('a'); // returns true
+var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+arrayElement.contains('a'); // returns true
 ```
 
 ##### first
@@ -323,8 +327,8 @@ arrayType.contains('a'); // returns true
 Returns the first element in the collection.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
-arrayType.first(); // returns the element for "a"
+var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+arrayElement.first(); // returns the element for "a"
 ```
 
 ##### second
@@ -332,8 +336,8 @@ arrayType.first(); // returns the element for "a"
 Returns the second element in the collection.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
-arrayType.second(); // returns the element for "[1, 2]"
+var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+arrayElement.second(); // returns the element for "[1, 2]"
 ```
 
 ##### last
@@ -341,22 +345,22 @@ arrayType.second(); // returns the element for "[1, 2]"
 Returns the last element in the collection.
 
 ```javascript
-var arrayType = new minim.ArrayType(['a', [1, 2], 'b', 3]);
-arrayType.last(); // returns the element for "3"
+var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+arrayElement.last(); // returns the element for "3"
 ```
 
-#### ObjectType
+#### ObjectElement
 
-This is a type for representing objects. Objects store their items as an ordered array, so they inherit most of the methods above from the `ArrayType`.
+This is an element for representing objects. Objects store their items as an ordered array, so they inherit most of the methods above from the `ArrayElement`.
 
 ##### get
 
-The `get` method returns the value of the `ObjectType` instance at the given name.
+The `get` method returns the value of the `ObjectElement` instance at the given name.
 See `getKey` and `getMember` for ways to get more instances around a key-value pair.
 
 ```javascript
-var objectType = new minim.ObjectType({ foo: 'bar' });
-var value = objectType.get('foo') // returns string instance for 'bar'
+var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var value = objectElement.get('foo') // returns string instance for 'bar'
 ```
 
 ##### getKey
@@ -364,8 +368,8 @@ var value = objectType.get('foo') // returns string instance for 'bar'
 The `getKey` method returns the key element of a key-value pair.
 
 ```javascript
-var objectType = new minim.ObjectType({ foo: 'bar' });
-var key = objectType.getKey('foo') // returns the key element instance
+var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var key = objectElement.getKey('foo') // returns the key element instance
 ```
 
 ##### getMember
@@ -373,20 +377,20 @@ var key = objectType.getKey('foo') // returns the key element instance
 The `getMember` method returns the entire member for a key-value pair.
 
 ```javascript
-var objectType = new minim.ObjectType({ foo: 'bar' });
-var member = objectType.getMember('foo') // returns the member element
+var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var member = objectElement.getMember('foo') // returns the member element
 var key = member.key; // returns what getKey('foo') returns
 var value = member.value; // returns what get('foo') returns
 ```
 
 ##### set
 
-The `set` method sets the value of the `ObjectType` instance.
+The `set` method sets the value of the `ObjectElement` instance.
 
 ```javascript
-var objectType = new minim.ObjectType();
-objectType.set('foo', 'hello world');
-var value = objectType.get('foo') // get('foo') returns 'hello world'
+var objectElement = new minim.ObjectElement();
+objectElement.set('foo', 'hello world');
+var value = objectElement.get('foo') // get('foo') returns 'hello world'
 ```
 
 ##### keys
@@ -394,8 +398,8 @@ var value = objectType.get('foo') // get('foo') returns 'hello world'
 The `keys` method returns an array of keys.
 
 ```javascript
-var objectType = new minim.ObjectType({ foo: 'bar' });
-var keys = objectType.keys() // ['foo']
+var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var keys = objectElement.keys() // ['foo']
 ```
 
 ##### values
@@ -403,8 +407,8 @@ var keys = objectType.keys() // ['foo']
 The `values` method returns an array of keys.
 
 ```javascript
-var objectType = new minim.ObjectType({ foo: 'bar' });
-var values = objectType.values() // ['bar']
+var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var values = objectElement.values() // ['bar']
 ```
 
 ##### items
@@ -412,22 +416,22 @@ var values = objectType.values() // ['bar']
 The `items` method returns an array of key value pairs which can make iteration simpler.
 
 ```js
-const objectType = new minim.ObjectType({ foo: 'bar' });
+const objectElement = new minim.ObjectElement({ foo: 'bar' });
 
-for (let [key, value] of objectType.items()) {
+for (let [key, value] of objectElement.items()) {
   console.log(key, value); // foo, bar
 }
 ```
 
 ##### map, filter, and forEach
 
-The `map`, `filter`, and `forEach` methods work similar to the `ArrayType` map function, but the callback receive the value, key, and member element instances.
+The `map`, `filter`, and `forEach` methods work similar to the `ArrayElement` map function, but the callback receive the value, key, and member element instances.
 
 See `getMember` to see more on how to interact with member elements.
 
 ```js
-const objectType = new minim.ObjectType({ foo: 'bar' });
-const values = objectType.map((value, key, member) => {
+const objectElement = new minim.ObjectElement({ foo: 'bar' });
+const values = objectElement.map((value, key, member) => {
   // key is an instance for foo
   // value is an instance for bar
   // member is an instance for the member element
@@ -437,22 +441,22 @@ const values = objectType.map((value, key, member) => {
 
 ### Element Registry
 
-Minim allows you to register custom types for elements. For example, if the element type name you wish to handle is called `category` and it should be handled like an array:
+Minim allows you to register custom elements. For example, if the element name you wish to handle is called `category` and it should be handled like an array:
 
 ```javascript
 var minim = require('minim');
 
-// Register your custom type
-minim.registry.register('category', minim.ArrayType);
+// Register your custom element
+minim.registry.register('category', minim.ArrayElement);
 
-// Load serialized refract elements that include the type!
+// Load serialized refract elements that includes the new element
 var elements = minim.fromCompactRefract(['category', {}, {}, [
   ['string', {}, {}, 'hello, world']
 ]]);
 
 console.log(elements.get(0).content); // hello, world
 
-// Unregister your custom type
+// Unregister your custom element
 minim.registry.unregister('category');
 ```
 
@@ -461,7 +465,7 @@ minim.registry.unregister('category');
 Methods may also be chained when using getters and setters.
 
 ```javascript
-var objectType = new minim.ObjectType()
+var objectElement = new minim.ObjectElement()
   .set('name', 'John Doe')
   .set('email', 'john@example.com')
   .set('id', 4)
