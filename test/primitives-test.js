@@ -541,6 +541,9 @@ describe('Minim Primitives', function() {
             content: [
               {
                 element: 'string',
+                meta: {
+                  'class': ['test-class']
+                },
                 content: 'baz'
               }, {
                 element: 'boolean',
@@ -591,11 +594,43 @@ describe('Minim Primitives', function() {
 
       describe('#find', function() {
         it('returns the correct number of items', function() {
-          expect(recursiveStrings.length).to.equal(4);
+          expect(recursiveStrings).to.have.lengthOf(4);
         });
 
         it('returns the correct values', function() {
           expect(recursiveStrings.toValue()).to.deep.equal(['foobar', 'hello world', 'baz', 'bar']);
+        });
+      });
+
+      describe('#findByElement', function() {
+        var items;
+
+        before(function() {
+          items = doc.findByElement('number');
+        });
+
+        it('returns the correct number of items', function() {
+          expect(items).to.have.lengthOf(1);
+        });
+
+        it('returns the correct values', function() {
+          expect(items.toValue()).to.deep.equal([4]);
+        });
+      });
+
+      describe('#findByClass', function() {
+        var items;
+
+        before(function() {
+          items = doc.findByClass('test-class');
+        });
+
+        it('returns the correct number of items', function() {
+          expect(items).to.have.lengthOf(1);
+        });
+
+        it('returns the correct values', function() {
+          expect(items.toValue()).to.deep.equal(['baz']);
         });
       });
 
