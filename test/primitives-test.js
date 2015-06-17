@@ -75,6 +75,41 @@ describe('Minim Primitives', function() {
         expect(el.equals({ foo: 'baz'})).to.be.false;
       });
     });
+
+    describe('convenience methods', function() {
+      var meta = {
+        id: 'foobar',
+        'class': ['a'],
+        title: 'A Title',
+        description: 'A Description'
+      };
+
+      context('when the meta is already set', function() {
+        var el = new minim.BaseElement(null, _.clone(meta));
+
+        _.forEach(_.keys(meta), function(key) {
+          it('provides a convenience method for ' + key, function() {
+            expect(el[key].toValue()).to.deep.equal(meta[key]);
+          });
+        });
+      });
+
+      context('when meta is set with getters and setters', function() {
+        var el = new minim.BaseElement(null);
+
+        _.forEach(_.keys(meta), function(key) {
+          el[key] = meta[key];
+
+          it('works for getters and setters for ' + key, function() {
+            expect(el[key].toValue()).to.deep.equal(meta[key]);
+          });
+
+          it('stores the correct data in meta for ' + key, function() {
+            expect(el.meta[key].toValue()).to.deep.equal(meta[key])
+          });
+        });
+      });
+    });
   });
 
   describe('convertToElement', function() {
