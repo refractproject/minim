@@ -599,6 +599,22 @@ describe('Minim Primitives', function() {
         });
       });
 
+      describe('#findByElement', function() {
+        var items
+
+        before(function() {
+          items = doc.findByElement('number');
+        });
+
+        it('returns the correct number of items', function() {
+          expect(items.length).to.equal(1);
+        });
+
+        it('returns the correct values', function() {
+          expect(items.toValue()).to.deep.equal([4]);
+        });
+      });
+
       describe('#first', function() {
         it('returns the first item', function() {
           expect(doc.first()).to.deep.equal(doc.content[0]);
