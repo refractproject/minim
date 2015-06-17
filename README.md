@@ -292,6 +292,14 @@ var numbers = arrayElement.find(function(el) {
 }).toValue(); // [1, 2, 3]
 ```
 
+##### findByClass
+
+The `findByClass` method traverses the entire descendent element tree and returns `ArrayElement` of all elements that match the given element name.
+
+##### findByElement
+
+The `findByElement` method traverses the entire descendent element tree and returns `ArrayElement` of all elements that match the given class.
+
 ##### children
 
 The `children` method traverses direct descendants and returns an `ArrayElement` of all elements that match the condition function given.
