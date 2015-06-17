@@ -294,11 +294,11 @@ var numbers = arrayElement.find(function(el) {
 
 ##### findByClass
 
-The `findByClass` method traverses the entire descendent element tree and returns `ArrayElement` of all elements that match the given element name.
+The `findByClass` method traverses the entire descendent element tree and returns an `ArrayElement` of all elements that match the given element name.
 
 ##### findByElement
 
-The `findByElement` method traverses the entire descendent element tree and returns `ArrayElement` of all elements that match the given class.
+The `findByElement` method traverses the entire descendent element tree and returns an `ArrayElement` of all elements that match the given class.
 
 ##### children
 

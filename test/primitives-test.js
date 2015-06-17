@@ -594,7 +594,7 @@ describe('Minim Primitives', function() {
 
       describe('#find', function() {
         it('returns the correct number of items', function() {
-          expect(recursiveStrings.length).to.equal(4);
+          expect(recursiveStrings).to.have.lengthOf(4);
         });
 
         it('returns the correct values', function() {
@@ -610,7 +610,7 @@ describe('Minim Primitives', function() {
         });
 
         it('returns the correct number of items', function() {
-          expect(items.length).to.equal(1);
+          expect(items).to.have.lengthOf(1);
         });
 
         it('returns the correct values', function() {
@@ -626,7 +626,7 @@ describe('Minim Primitives', function() {
         });
 
         it('returns the correct number of items', function() {
-          expect(items.length).to.equal(1);
+          expect(items).to.have.lengthOf(1);
         });
 
         it('returns the correct values', function() {
