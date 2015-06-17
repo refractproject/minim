@@ -541,6 +541,9 @@ describe('Minim Primitives', function() {
             content: [
               {
                 element: 'string',
+                meta: {
+                  'class': ['test-class']
+                },
                 content: 'baz'
               }, {
                 element: 'boolean',
@@ -600,7 +603,7 @@ describe('Minim Primitives', function() {
       });
 
       describe('#findByElement', function() {
-        var items
+        var items;
 
         before(function() {
           items = doc.findByElement('number');
@@ -612,6 +615,22 @@ describe('Minim Primitives', function() {
 
         it('returns the correct values', function() {
           expect(items.toValue()).to.deep.equal([4]);
+        });
+      });
+
+      describe('#findByClass', function() {
+        var items;
+
+        before(function() {
+          items = doc.findByClass('test-class');
+        });
+
+        it('returns the correct number of items', function() {
+          expect(items.length).to.equal(1);
+        });
+
+        it('returns the correct values', function() {
+          expect(items.toValue()).to.deep.equal(['baz']);
         });
       });
 
