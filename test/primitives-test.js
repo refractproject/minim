@@ -17,10 +17,10 @@ describe('Minim Primitives', function() {
       });
 
       it('should initialize the correct meta data', function() {
-        expect(el.meta.id.toValue()).to.equal('foobar');
-        expect(el.meta.class.toValue()).to.deep.equal(['a', 'b']);
-        expect(el.meta.title.toValue()).to.equal('Title');
-        expect(el.meta.description.toValue()).to.equal('Description');
+        expect(el.id.toValue()).to.equal('foobar');
+        expect(el.class.toValue()).to.deep.equal(['a', 'b']);
+        expect(el.title.toValue()).to.equal('Title');
+        expect(el.description.toValue()).to.equal('Description');
       });
     });
 
@@ -63,11 +63,11 @@ describe('Minim Primitives', function() {
       });
 
       it('returns true when they are equal', function() {
-        expect(el.meta.id.equals('foobar')).to.be.true;
+        expect(el.id.equals('foobar')).to.be.true;
       });
 
       it('returns false when they are not equal', function() {
-        expect(el.meta.id.equals('not-equal')).to.be.false;
+        expect(el.id.equals('not-equal')).to.be.false;
       });
 
       it('does a deep equality check', function() {
@@ -105,7 +105,7 @@ describe('Minim Primitives', function() {
           });
 
           it('stores the correct data in meta for ' + key, function() {
-            expect(el.meta[key].toValue()).to.deep.equal(meta[key])
+            expect(el.meta.get(key).toValue()).to.deep.equal(meta[key])
           });
         });
       });

@@ -65,7 +65,7 @@ describe('Minim subclasses', function() {
   describe('serializing attributes', function() {
     var myElement = new MyElement();
     myElement.attributes.headers = new minim.ArrayElement(['application/json']);
-    myElement.attributes.headers.content[0].meta.name = 'Content-Type';
+    myElement.attributes.headers.content[0].meta.set('name', 'Content-Type');
 
     it('should serialize headers element', function() {
       var refracted = myElement.toCompactRefract();
