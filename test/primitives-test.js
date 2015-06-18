@@ -1196,7 +1196,7 @@ describe('Minim Primitives', function() {
     });
 
     it('correctly sets the attributes', function() {
-      expect(member.attributes.foo).to.equal('bar');
+      expect(member.attributes.get('foo').toValue()).to.equal('bar');
     });
 
     describe('#toRefract', function() {

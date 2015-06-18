@@ -54,18 +54,18 @@ describe('Minim subclasses', function() {
     });
 
     it('should create headers element instance', function() {
-      expect(myElement.attributes.headers).to.be.instanceof(minim.ArrayElement);
+      expect(myElement.attributes.get('headers')).to.be.instanceof(minim.ArrayElement);
     });
 
     it('should leave foo alone', function() {
-      expect(myElement.attributes.foo).to.be.a('string');
+      expect(myElement.attributes.get('foo').toValue()).to.be.a('string');
     });
   });
 
   describe('serializing attributes', function() {
     var myElement = new MyElement();
-    myElement.attributes.headers = new minim.ArrayElement(['application/json']);
-    myElement.attributes.headers.content[0].meta.set('name', 'Content-Type');
+    myElement.attributes.set('headers', new minim.ArrayElement(['application/json']));
+    myElement.attributes.get('headers').content[0].meta.set('name', 'Content-Type');
 
     it('should serialize headers element', function() {
       var refracted = myElement.toCompactRefract();
