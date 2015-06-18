@@ -225,7 +225,16 @@ The `get` method returns the item of the `ArrayElement` instance at the given in
 
 ```javascript
 var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
-var value = arrayElement.get(0) // get(0) returns 'a'
+var value = arrayElement.get(0) // get(0) returns item for 'a'
+```
+
+##### getValue
+
+The `getValue` method returns the value of the item of the `ArrayElement` instance at the given index.
+
+```javascript
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var value = arrayElement.getValue(0) // get(0) returns 'a'
 ```
 
 ##### set
@@ -363,12 +372,21 @@ This is an element for representing objects. Objects store their items as an ord
 
 ##### get
 
-The `get` method returns the value of the `ObjectElement` instance at the given name.
+The `get` method returns the `ObjectElement` instance at the given name.
 See `getKey` and `getMember` for ways to get more instances around a key-value pair.
 
 ```javascript
 var objectElement = new minim.ObjectElement({ foo: 'bar' });
 var value = objectElement.get('foo') // returns string instance for 'bar'
+```
+
+##### getValue
+
+The `getValue` method returns the value of the `ObjectElement` instance at the given name.
+
+```javascript
+var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var value = objectElement.getValue('foo') // returns 'bar'
 ```
 
 ##### getKey

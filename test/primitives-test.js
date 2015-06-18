@@ -785,6 +785,20 @@ describe('Minim Primitives', function() {
       });
     });
 
+    describe('#getValue', function() {
+      context('when an index is given', function() {
+        it('returns the item from the array', function() {
+          expect(arrayElement.getValue(0)).to.equal('a');
+        });
+      });
+
+      context('when no index is given', function() {
+        it('is undefined', function() {
+          expect(arrayElement.getValue()).to.be.undefined;
+        });
+      });
+    });
+
     describe('#set', function() {
       it('sets the value of the array', function() {
         arrayElement.set(0, 'hello world');
@@ -995,6 +1009,20 @@ describe('Minim Primitives', function() {
       context('when a property name is not given', function() {
         it('is undefined', function() {
           expect(objectElement.get()).to.be.undefined;
+        });
+      });
+    });
+
+    describe('#getValue', function() {
+      context('when a property name is given', function() {
+        it('returns the value of the name given', function() {
+          expect(objectElement.getValue('foo')).to.equal('bar');
+        });
+      });
+
+      context('when a property name is not given', function() {
+        it('is undefined', function() {
+          expect(objectElement.getValue()).to.be.undefined;
         });
       });
     });
