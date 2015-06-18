@@ -1044,6 +1044,12 @@ describe('Minim Primitives', function() {
         objectElement.set('bar', 'hello world');
         expect(objectElement.get('bar').toValue()).to.equal('hello world');
       });
+
+      it('accepts an object', function() {
+        var obj = new minim.ObjectElement();
+        obj.set({ foo: 'bar' });
+        expect(obj.get('foo').toValue()).to.equal('bar');
+      });
     });
 
     describe('#keys', function() {
