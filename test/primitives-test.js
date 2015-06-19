@@ -17,10 +17,10 @@ describe('Minim Primitives', function() {
       });
 
       it('should initialize the correct meta data', function() {
-        expect(el.meta.id.toValue()).to.equal('foobar');
-        expect(el.meta.class.toValue()).to.deep.equal(['a', 'b']);
-        expect(el.meta.title.toValue()).to.equal('Title');
-        expect(el.meta.description.toValue()).to.equal('Description');
+        expect(el.meta.get('id').toValue()).to.equal('foobar');
+        expect(el.meta.get('class').toValue()).to.deep.equal(['a', 'b']);
+        expect(el.meta.get('title').toValue()).to.equal('Title');
+        expect(el.meta.get('description').toValue()).to.equal('Description');
       });
     });
 
@@ -63,11 +63,11 @@ describe('Minim Primitives', function() {
       });
 
       it('returns true when they are equal', function() {
-        expect(el.meta.id.equals('foobar')).to.be.true;
+        expect(el.id.equals('foobar')).to.be.true;
       });
 
       it('returns false when they are not equal', function() {
-        expect(el.meta.id.equals('not-equal')).to.be.false;
+        expect(el.id.equals('not-equal')).to.be.false;
       });
 
       it('does a deep equality check', function() {
@@ -105,7 +105,7 @@ describe('Minim Primitives', function() {
           });
 
           it('stores the correct data in meta for ' + key, function() {
-            expect(el.meta[key].toValue()).to.deep.equal(meta[key])
+            expect(el.meta.get(key).toValue()).to.deep.equal(meta[key])
           });
         });
       });
@@ -785,6 +785,20 @@ describe('Minim Primitives', function() {
       });
     });
 
+    describe('#getValue', function() {
+      context('when an index is given', function() {
+        it('returns the item from the array', function() {
+          expect(arrayElement.getValue(0)).to.equal('a');
+        });
+      });
+
+      context('when no index is given', function() {
+        it('is undefined', function() {
+          expect(arrayElement.getValue()).to.be.undefined;
+        });
+      });
+    });
+
     describe('#set', function() {
       it('sets the value of the array', function() {
         arrayElement.set(0, 'hello world');
@@ -999,6 +1013,20 @@ describe('Minim Primitives', function() {
       });
     });
 
+    describe('#getValue', function() {
+      context('when a property name is given', function() {
+        it('returns the value of the name given', function() {
+          expect(objectElement.getValue('foo')).to.equal('bar');
+        });
+      });
+
+      context('when a property name is not given', function() {
+        it('is undefined', function() {
+          expect(objectElement.getValue()).to.be.undefined;
+        });
+      });
+    });
+
     describe('#getMember', function() {
       context('when a property name is given', function() {
         it('returns the correct member object', function() {
@@ -1043,6 +1071,12 @@ describe('Minim Primitives', function() {
       it('sets a value that has not been defined yet', function() {
         objectElement.set('bar', 'hello world');
         expect(objectElement.get('bar').toValue()).to.equal('hello world');
+      });
+
+      it('accepts an object', function() {
+        var obj = new minim.ObjectElement();
+        obj.set({ foo: 'bar' });
+        expect(obj.get('foo').toValue()).to.equal('bar');
       });
     });
 
@@ -1190,7 +1224,7 @@ describe('Minim Primitives', function() {
     });
 
     it('correctly sets the attributes', function() {
-      expect(member.attributes.foo).to.equal('bar');
+      expect(member.attributes.get('foo').toValue()).to.equal('bar');
     });
 
     describe('#toRefract', function() {
