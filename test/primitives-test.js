@@ -17,10 +17,10 @@ describe('Minim Primitives', function() {
       });
 
       it('should initialize the correct meta data', function() {
-        expect(el.id.toValue()).to.equal('foobar');
-        expect(el.class.toValue()).to.deep.equal(['a', 'b']);
-        expect(el.title.toValue()).to.equal('Title');
-        expect(el.description.toValue()).to.equal('Description');
+        expect(el.meta.get('id').toValue()).to.equal('foobar');
+        expect(el.meta.get('class').toValue()).to.deep.equal(['a', 'b']);
+        expect(el.meta.get('title').toValue()).to.equal('Title');
+        expect(el.meta.get('description').toValue()).to.equal('Description');
       });
     });
 
