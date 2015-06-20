@@ -24,6 +24,28 @@ describe('Minim Primitives', function() {
       });
     });
 
+    describe('#attributes', function() {
+      var element;
+
+      var refract = {
+        element: 'element',
+        meta: {},
+        attributes: {
+          foo: 'bar'
+        },
+        content: null
+      }
+
+      before(function() {
+        element = new minim.BaseElement();
+        element.attributes.set('foo', 'bar');
+      });
+
+      it('retains the correct values', function() {
+        expect(element.toRefract()).to.deep.equal(refract);
+      });
+    });
+
     describe('#element', function() {
       context('when getting an element that has not been set', function() {
         var el;
