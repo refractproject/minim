@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "lodash": "^2.4.1",
-    "uptown": "^0.3.0"
+    "uptown": "^0.4.0"
   }
 }
