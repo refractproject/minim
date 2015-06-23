@@ -332,6 +332,22 @@ describe('ObjectElement', function() {
     });
   });
 
+  describe('#find', function() {
+    it('allows for searching based on the keys', function() {
+      var search = objectElement.find(function(value, key) {
+        return key.toValue() === 'z';
+      });
+      expect(search.toValue()).to.deep.equal([1]);
+    });
+
+    it('allows for searching based on the member', function() {
+      var search = objectElement.find(function(value, key, member) {
+        return member.key.toValue() === 'z';
+      });
+      expect(search.toValue()).to.deep.equal([1]);
+    });
+  });
+
   // describe('#[Symbol.iterator]', function() {
   //   it('can be used in a for ... of loop', function() {
   //     var items = [];
