@@ -123,6 +123,14 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#getIndex', function() {
+      var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+
+      it('returns the correct item', function() {
+        expect(numbers.getIndex(1).toValue()).to.equal(2);
+      });
+    });
+
     describe('#set', function() {
       it('sets the value of the array', function() {
         arrayElement.set(0, 'hello world');
@@ -146,6 +154,28 @@ describe('ArrayElement', function() {
           return (ref = item.toValue()) === 'a' || ref === 1;
         });
         expect(newArray.toValue()).to.deep.equal(['a', 1]);
+      });
+    });
+
+    describe('#reduce', function() {
+      var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+
+      context('when no beginning value is given', function() {
+        it('correctly reduces the array', function() {
+          var total = numbers.reduce(function(result, item) {
+            return result.toValue() + item.toValue();
+          });
+          expect(total.toValue()).to.equal(10);
+        });
+      });
+
+      context('when a beginning value is given', function() {
+        it('correctly reduces the array', function() {
+          var total = numbers.reduce(function(result, item) {
+            return result.toValue() + item.toValue();
+          }, 20);
+          expect(total.toValue()).to.equal(30);
+        });
       });
     });
 

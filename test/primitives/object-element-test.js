@@ -306,6 +306,40 @@ describe('ObjectElement', function() {
     });
   });
 
+  describe('#reduce', function() {
+    var numbers = new minim.ObjectElement({
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4
+    });
+
+    it('allows for reducing on keys', function() {
+      var letters = numbers.reduce(function(result, item, key) {
+        return result.push(key);
+      }, []);
+      expect(letters.toValue()).to.deep.equal(['a', 'b', 'c', 'd']);
+    });
+
+    context('when no beginning value is given', function() {
+      it('correctly reduces the object', function() {
+        var total = numbers.reduce(function(result, item) {
+          return result.toValue() + item.toValue();
+        });
+        expect(total.toValue()).to.equal(10);
+      });
+    });
+
+    context('when a beginning value is given', function() {
+      it('correctly reduces the object', function() {
+        var total = numbers.reduce(function(result, item) {
+          return result.toValue() + item.toValue();
+        }, 20);
+        expect(total.toValue()).to.equal(30);
+      });
+    });
+  });
+
   describe('#forEach', function() {
     it('provides the keys', function() {
       var keys = [];
