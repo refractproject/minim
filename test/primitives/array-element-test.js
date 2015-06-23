@@ -225,6 +225,15 @@ describe('ArrayElement', function() {
     //     expect(items).to.have.length(4);
     //   });
     // });
+
+    describe('#clone', function() {
+      it('creates a deep clone of the element', function() {
+        var clone = arrayElement.clone();
+        expect(clone).to.be.instanceOf(minim.ArrayElement);
+        expect(clone).to.not.equal(arrayElement);
+        expect(clone.toRefract()).to.deep.equal(arrayElement.toRefract());
+      });
+    });
   });
 
   describe('searching', function() {

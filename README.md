@@ -151,6 +151,15 @@ var stringElement = minim.convertToElement("foobar");
 stringElement.equals('abcd'); // returns false
 ```
 
+#### clone
+
+Creates a clone of the given instance.
+
+```javascript
+var stringElement = minim.convertToElement("foobar");
+var stringElementClone = stringElement.clone();
+```
+
 ### Minim Elements
 
 Minim supports the following primitive elements

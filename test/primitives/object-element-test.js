@@ -382,6 +382,15 @@ describe('ObjectElement', function() {
     });
   });
 
+  describe('#clone', function() {
+    it('creates a deep clone of the element', function() {
+      var clone = objectElement.clone();
+      expect(clone).to.be.instanceOf(minim.ObjectElement);
+      expect(clone).to.not.equal(objectElement);
+      expect(clone.toRefract()).to.deep.equal(objectElement.toRefract());
+    });
+  });
+
   // describe('#[Symbol.iterator]', function() {
   //   it('can be used in a for ... of loop', function() {
   //     var items = [];
