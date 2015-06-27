@@ -181,12 +181,16 @@ describe('ArrayElement', function() {
 
     describe('#forEach', function() {
       it('iterates over each item', function() {
-        var results;
-        results = [];
-        arrayElement.forEach(function(item) {
-          return results.push(item);
+        var indexes = [];
+        var results = [];
+
+        arrayElement.forEach(function(item, index) {
+          indexes.push(index.toValue());
+          results.push(item);
         });
+
         expect(results.length).to.equal(4);
+        expect(indexes).to.deep.equal([0, 1, 2, 3]);
       });
     });
 
