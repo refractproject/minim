@@ -128,6 +128,12 @@ describe('ArrayElement', function() {
         arrayElement.set(0, 'hello world');
         expect(arrayElement.get(0).toValue()).to.equal('hello world');
       });
+
+      it('sets the parent to children', function() {
+        var item = new minim.StringElement('foobar');
+        arrayElement.set(0, item);
+        expect(item.parents).to.include(arrayElement);
+      });
     });
 
     describe('#map', function() {
@@ -175,6 +181,12 @@ describe('ArrayElement', function() {
       it('adds a new item to the array', function() {
         arrayElement.push('foobar');
         itAddsToArray(arrayElement);
+      });
+
+      it('sets the parent to children', function() {
+        var item = new minim.StringElement('foobar');
+        arrayElement.push(item);
+        expect(item.parents).to.include(arrayElement);
       });
     });
 

@@ -21,6 +21,10 @@ describe('BaseElement', function() {
       expect(el.meta.get('title').toValue()).to.equal('Title');
       expect(el.meta.get('description').toValue()).to.equal('Description');
     });
+
+    it('has empty parents', function() {
+      expect(el.parents).to.deep.equal([]);
+    });
   });
 
   describe('#attributes', function() {
