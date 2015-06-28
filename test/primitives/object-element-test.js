@@ -207,6 +207,13 @@ describe('ObjectElement', function() {
       obj.set({ foo: 'bar' });
       expect(obj.get('foo').toValue()).to.equal('bar');
     });
+
+    it('sets the parent to children', function() {
+      var item = new minim.StringElement('foobar');
+      var obj = new minim.ObjectElement();
+      obj.set('foo', item);
+      expect(item.parents).to.include(obj);
+    });
   });
 
   describe('#keys', function() {
