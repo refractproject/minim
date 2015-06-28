@@ -134,6 +134,20 @@ describe('ArrayElement', function() {
         arrayElement.set(0, item);
         expect(item.parents).to.include(arrayElement);
       });
+
+      it('triggers swap on the parents', function(done) {
+        var arr = new minim.ArrayElement([1]);
+        arr.on('swap', done);
+        arr.set(1, 2);
+      });
+
+      context('when a value is changed directly', function() {
+        it('triggers swap on the parents', function(done) {
+          var arr = new minim.ArrayElement([1]);
+          arr.on('swap', done);
+          arr.get(0).set(2);
+        });
+      });
     });
 
     describe('#map', function() {
@@ -187,6 +201,12 @@ describe('ArrayElement', function() {
         var item = new minim.StringElement('foobar');
         arrayElement.push(item);
         expect(item.parents).to.include(arrayElement);
+      });
+
+      it('triggers swap on the parents', function(done) {
+        var arr = new minim.ArrayElement([1]);
+        arr.on('swap', done);
+        arr.push(2);
       });
     });
 
