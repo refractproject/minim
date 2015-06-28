@@ -237,6 +237,18 @@ var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
 var value = arrayElement.getValue(0) // get(0) returns 'a'
 ```
 
+##### getIn
+
+The `getIn` method returns the value of the item at the given path.
+
+```javascript
+var arrayElement = new minim.ArrayElement([{
+  a: [1, 2, 3]
+}]);
+var value = arrayElement.getIn([0, 'a', 1]) // returns the element for 2
+```
+
+
 ##### set
 
 The `set` method sets the value of the `ArrayElement` instance.

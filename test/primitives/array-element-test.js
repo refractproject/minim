@@ -123,6 +123,16 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#getIn', function() {
+      var arr = new minim.ArrayElement([
+        {
+          a: [1, 2, 3]
+        }
+      ]);
+
+      expect(arr.getIn([0, 'a', 1]).toValue()).to.equal(2);
+    });
+
     describe('#set', function() {
       it('sets the value of the array', function() {
         arrayElement.set(0, 'hello world');
