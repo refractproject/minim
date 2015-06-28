@@ -36,6 +36,7 @@
     "sinon-chai": "^2.7.0"
   },
   "dependencies": {
+    "event-emitter": "^0.3.3",
     "lodash": "^2.4.1",
     "uptown": "^0.4.0"
   }

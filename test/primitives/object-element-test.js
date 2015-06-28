@@ -214,6 +214,40 @@ describe('ObjectElement', function() {
       obj.set('foo', item);
       expect(item.parents).to.include(obj);
     });
+
+    it('triggers swap', function(done) {
+      var obj = new minim.ObjectElement();
+      obj.on('swap', done);
+      obj.set('foo', 'bar');
+    });
+
+    it('triggers swap on the parents', function(done) {
+      var obj = new minim.ObjectElement({
+        a: {
+          b: {
+            c: false
+          }
+        }
+      });
+
+      obj.on('swap', done);
+      obj.get('a').get('b').set('c', true);
+    });
+
+    context('when a value is changed directly', function() {
+      it('triggers swap on the parents', function(done) {
+        var obj = new minim.ObjectElement({
+          a: {
+            b: {
+              c: false
+            }
+          }
+        });
+
+        obj.on('swap', done);
+        obj.get('a').get('b').get('c').set(true);
+      });
+    });
   });
 
   describe('#keys', function() {
