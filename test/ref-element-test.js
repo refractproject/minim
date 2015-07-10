@@ -63,4 +63,19 @@ describe('RefElement', function() {
       expect(ref.toCompactRefract()).to.deep.equal(expectedRefract);
     });
   });
+
+  context('when getting the referenced instance', function() {
+    var instance;
+    var ref;
+
+    before(function() {
+      instance = new minim.StringElement('foo', { id: 'bar' });
+      ref = new minim.RefElement('bar');
+      ref.instance = instance;
+    });
+
+    it('returns the correct instance', function() {
+      expect(ref.instance).to.equal(instance);
+    });
+  });
 });
