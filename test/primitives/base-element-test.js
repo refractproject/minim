@@ -97,6 +97,28 @@ describe('BaseElement', function() {
     });
   });
 
+  describe('#toRef', function() {
+    var original;
+    var ref;
+
+    before(function() {
+      original = new minim.StringElement('foo', { id: 'bar' });
+      ref = original.toRef();
+    });
+
+    it('returns a ref element', function() {
+      expect(ref.element).to.equal('ref');
+    });
+
+    it('sets the referenced instance', function() {
+      expect(ref.instance).to.equal(original);
+    });
+
+    it('sets the HREF as the original element ID', function() {
+      expect(ref.content.href).to.equal('bar');
+    });
+  });
+
   describe('convenience methods', function() {
     var meta = {
       id: 'foobar',

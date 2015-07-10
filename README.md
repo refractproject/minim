@@ -151,6 +151,18 @@ var stringElement = minim.convertToElement("foobar");
 stringElement.equals('abcd'); // returns false
 ```
 
+#### toRef
+
+Converts an element to a referenced element. The `ref` element provides an
+`instance` property that contains the original element;
+
+```javascript
+var stringElement = new minim.StringElement('foo', { id: 'bar' });
+var ref = stringElement.toRef()
+ref.toCompactRefract(); // ['ref', {}, {}, { href: 'bar' }]
+ref.instance === stringElement // true
+```
+
 ### Minim Elements
 
 Minim supports the following primitive elements
