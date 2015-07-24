@@ -84,11 +84,11 @@ describe('BaseElement', function() {
     });
 
     it('returns true when they are equal', function() {
-      expect(el.id.equals('foobar')).to.be.true;
+      expect(el.meta.get('id').equals('foobar')).to.be.true;
     });
 
     it('returns false when they are not equal', function() {
-      expect(el.id.equals('not-equal')).to.be.false;
+      expect(el.meta.get('id').equals('not-equal')).to.be.false;
     });
 
     it('does a deep equality check', function() {
@@ -110,7 +110,11 @@ describe('BaseElement', function() {
 
       _.forEach(_.keys(meta), function(key) {
         it('provides a convenience method for ' + key, function() {
-          expect(el[key].toValue()).to.deep.equal(meta[key]);
+          if (key === 'class') {
+            expect(el[key].toValue()).to.deep.equal(meta[key]);
+          } else {
+            expect(el[key]).to.deep.equal(meta[key]);
+          }
         });
       });
     });
@@ -122,7 +126,11 @@ describe('BaseElement', function() {
         el[key] = meta[key];
 
         it('works for getters and setters for ' + key, function() {
-          expect(el[key].toValue()).to.deep.equal(meta[key]);
+          if (key === 'class') {
+            expect(el[key].toValue()).to.deep.equal(meta[key]);
+          } else {
+            expect(el[key]).to.deep.equal(meta[key]);
+          }
         });
 
         it('stores the correct data in meta for ' + key, function() {
