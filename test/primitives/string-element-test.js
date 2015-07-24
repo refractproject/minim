@@ -60,4 +60,13 @@ describe('StringElement', function() {
       expect(stringElement.toValue()).to.equal('hello world');
     });
   });
+
+  describe('#clone', function() {
+    it('creates a deep clone of the element', function() {
+      var clone = stringElement.clone();
+      expect(clone).to.be.instanceOf(minim.StringElement);
+      expect(clone).to.not.equal(stringElement);
+      expect(clone.toRefract()).to.deep.equal(stringElement.toRefract());
+    });
+  });
 });

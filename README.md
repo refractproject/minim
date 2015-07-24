@@ -161,6 +161,15 @@ var stringElement = minim.convertToElement("foobar");
 stringElement.equals('abcd'); // returns false
 ```
 
+#### clone
+
+Creates a clone of the given instance.
+
+```javascript
+var stringElement = minim.convertToElement("foobar");
+var stringElementClone = stringElement.clone();
+```
+
 ### Minim Elements
 
 Minim supports the following primitive elements
@@ -247,6 +256,15 @@ var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
 var value = arrayElement.getValue(0) // get(0) returns 'a'
 ```
 
+##### getIndex
+
+The `getIndex` method returns the item of the array at a given index.
+
+```javascript
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var value = arrayElement.getIndex(0) // returns the item for 'a'
+```
+
 ##### set
 
 The `set` method sets the value of the `ArrayElement` instance.
@@ -277,6 +295,26 @@ var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
 var newArray = arrayElement.filter(function(item) {
   return item.get() === 'a'
 }); // newArray.toValue() is now ['a']
+```
+
+##### reduce
+
+The `reduce` method may be used to reduce over a Minim array or object. The method takes a function and an optional beginning value.
+
+```javascript
+var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+var total = numbers.reduce(function(result, item) {
+  return result.toValue() + item.toValue();
+}); // total.toValue() === 10
+```
+
+The `reduce` method also takes an initial value, which can either be a value or Minim element.
+
+```javascript
+var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+var total = numbers.reduce(function(result, item) {
+  return result.toValue() + item.toValue();
+}, 10); // total.toValue() === 20
 ```
 
 ##### forEach
