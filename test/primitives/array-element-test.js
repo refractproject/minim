@@ -231,17 +231,6 @@ describe('ArrayElement', function() {
       });
     });
 
-    // describe('#[Symbol.iterator]', function() {
-    //   it('can be used in a for ... of loop', function() {
-    //     var items = [];
-    //     for (let item of ArrayElement) {
-    //       items.push(item);
-    //     }
-    //
-    //     expect(items).to.have.length(4);
-    //   });
-    // });
-
     describe('#clone', function() {
       it('creates a deep clone of the element', function() {
         var clone = arrayElement.clone();
@@ -250,6 +239,30 @@ describe('ArrayElement', function() {
         expect(clone.toRefract()).to.deep.equal(arrayElement.toRefract());
       });
     });
+
+    if (typeof Symbol !== 'undefined') {
+      describe('#[Symbol.iterator]', function() {
+        it('can be used in a for ... of loop', function() {
+          // We know the runtime supports Symbol but don't know if it supports
+          // the actual `for ... of` loop syntax. Here we simulate it by
+          // directly manipulating the iterator the same way that `for ... of`
+          // does.
+          var items = [];
+          var iterator = arrayElement[Symbol.iterator]();
+          var result;
+
+          do {
+            result = iterator.next();
+
+            if (!result.done) {
+              items.push(result.value);
+            }
+          } while (!result.done);
+
+          expect(items).to.have.length(4);
+        });
+      });
+    }
   });
 
   describe('searching', function() {
