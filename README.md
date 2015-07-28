@@ -226,9 +226,7 @@ This is an element for representing arrays.
 
 ##### Iteration
 
-**NOTE**: Not usable at this point
-
-The array element is iterable.
+The array element is iterable if the environment supports the [iteration protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable). You can then use the element in `for ... of` loops, use the spread operator, `yield*`, and destructuring assignment.
 
 ```js
 const arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
