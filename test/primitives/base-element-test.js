@@ -23,6 +23,25 @@ describe('BaseElement', function() {
     });
   });
 
+  describe('when initializing with value', function() {
+    var el;
+
+    it('should properly serialize falsey string', function() {
+      el = new minim.BaseElement('');
+      expect(el.toValue()).to.equal('');
+    });
+
+    it('should properly serialize falsey number', function() {
+      el = new minim.BaseElement(0);
+      expect(el.toValue()).to.equal(0);
+    });
+
+    it('should properly serialize falsey boolean', function() {
+      el = new minim.BaseElement(false);
+      expect(el.toValue()).to.equal(false);
+    });
+  });
+
   describe('#attributes', function() {
     var element;
 

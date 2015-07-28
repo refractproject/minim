@@ -306,6 +306,47 @@ describe('ObjectElement', function() {
     });
   });
 
+  describe('#reduce', function() {
+    var numbers = new minim.ObjectElement({
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4
+    });
+
+    it('allows for reducing on keys', function() {
+      var letters = numbers.reduce(function(result, item, key) {
+        return result.push(key);
+      }, []);
+      expect(letters.toValue()).to.deep.equal(['a', 'b', 'c', 'd']);
+    });
+
+    it('sends member and object elements', function () {
+      numbers.reduce(function(result, item, key, member, obj) {
+        expect(obj.content).to.contain(member);
+        expect(obj).to.equal(numbers);
+      });
+    });
+
+    context('when no beginning value is given', function() {
+      it('correctly reduces the object', function() {
+        var total = numbers.reduce(function(result, item) {
+          return result.toValue() + item.toValue();
+        });
+        expect(total.toValue()).to.equal(10);
+      });
+    });
+
+    context('when a beginning value is given', function() {
+      it('correctly reduces the object', function() {
+        var total = numbers.reduce(function(result, item) {
+          return result.toValue() + item.toValue();
+        }, 20);
+        expect(total.toValue()).to.equal(30);
+      });
+    });
+  });
+
   describe('#forEach', function() {
     it('provides the keys', function() {
       var keys = [];
@@ -329,6 +370,31 @@ describe('ObjectElement', function() {
         return keys.push(member.key.toValue());
       });
       expect(keys).to.deep.equal(['foo', 'z']);
+    });
+  });
+
+  describe('#find', function() {
+    it('allows for searching based on the keys', function() {
+      var search = objectElement.find(function(value, key) {
+        return key.toValue() === 'z';
+      });
+      expect(search.toValue()).to.deep.equal([1]);
+    });
+
+    it('allows for searching based on the member', function() {
+      var search = objectElement.find(function(value, key, member) {
+        return member.key.toValue() === 'z';
+      });
+      expect(search.toValue()).to.deep.equal([1]);
+    });
+  });
+
+  describe('#clone', function() {
+    it('creates a deep clone of the element', function() {
+      var clone = objectElement.clone();
+      expect(clone).to.be.instanceOf(minim.ObjectElement);
+      expect(clone).to.not.equal(objectElement);
+      expect(clone.toRefract()).to.deep.equal(objectElement.toRefract());
     });
   });
 

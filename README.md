@@ -161,6 +161,15 @@ var stringElement = minim.convertToElement("foobar");
 stringElement.equals('abcd'); // returns false
 ```
 
+#### clone
+
+Creates a clone of the given instance.
+
+```javascript
+var stringElement = minim.convertToElement("foobar");
+var stringElementClone = stringElement.clone();
+```
+
 ### Minim Elements
 
 Minim supports the following primitive elements
@@ -247,6 +256,15 @@ var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
 var value = arrayElement.getValue(0) // get(0) returns 'a'
 ```
 
+##### getIndex
+
+The `getIndex` method returns the item of the array at a given index.
+
+```javascript
+var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var value = arrayElement.getIndex(0) // returns the item for 'a'
+```
+
 ##### set
 
 The `set` method sets the value of the `ArrayElement` instance.
@@ -278,6 +296,50 @@ var newArray = arrayElement.filter(function(item) {
   return item.get() === 'a'
 }); // newArray.toValue() is now ['a']
 ```
+
+##### reduce
+
+The `reduce` method may be used to reduce over a Minim array or object. The method takes a function and an optional beginning value.
+
+```javascript
+var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+var total = numbers.reduce(function(result, item) {
+  return result.toValue() + item.toValue();
+}); // total.toValue() === 10
+```
+
+The `reduce` method also takes an initial value, which can either be a value or Minim element.
+
+```javascript
+var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+var total = numbers.reduce(function(result, item) {
+  return result.toValue() + item.toValue();
+}, 10); // total.toValue() === 20
+```
+
+The `reduce` method also works with objects:
+
+```javascript
+var objNumbers = new minim.ObjectElement({a: 1, b:2, c:3, d:4});
+var total = objNumbers.reduce(function(result, item) {
+  return result.toValue() + item.toValue();
+}, 10); // total.toValue() === 20
+```
+
+The function passed to `reduce` can accept up to five optional parameters and depends on whether you are using an array element or object element:
+
+**Array**
+1. `result`: the reduced value thus far
+2. `item`: the current item in the array
+3. `index`: the zero-based index of the current item in the array
+4. `arrayElement`: the array element which contains `item` (e.g. `numbers` above)
+
+**Object**
+1. `result`: the reduced value thus far
+2. `item`: the value element of the current item in the object
+3. `key`: the key element of the current item in the object
+4. `memberElement`: the member element which contains `key` and `value`
+5. `objectElement`: the object element which contains `memberElement` (e.g. `objNumbers` above)
 
 ##### forEach
 
@@ -459,9 +521,9 @@ for (let [key, value] of objectElement.items()) {
 }
 ```
 
-##### map, filter, and forEach
+##### map, filter, reduce, and forEach
 
-The `map`, `filter`, and `forEach` methods work similar to the `ArrayElement` map function, but the callback receive the value, key, and member element instances.
+The `map`, `filter`, and `forEach` methods work similar to the `ArrayElement` map function, but the callback receives the value, key, and member element instances. The `reduce` method receives the reduced value, value, key, member, and object element instances.
 
 See `getMember` to see more on how to interact with member elements.
 

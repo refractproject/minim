@@ -123,6 +123,14 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#getIndex', function() {
+      var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+
+      it('returns the correct item', function() {
+        expect(numbers.getIndex(1).toValue()).to.equal(2);
+      });
+    });
+
     describe('#set', function() {
       it('sets the value of the array', function() {
         arrayElement.set(0, 'hello world');
@@ -149,14 +157,52 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#reduce', function() {
+      var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+
+      it('sends index and array elements', function () {
+        var sum = numbers.reduce(function(result, item, index, array) {
+          expect(index).to.be.below(numbers.length);
+          expect(array).to.equal(numbers);
+
+          return result.toValue() + index;
+        }, 0);
+
+        // Sum of indexes should be 0 + 1 + 2 + 3 = 6
+        expect(sum.toValue()).to.equal(6);
+      });
+
+      context('when no beginning value is given', function() {
+        it('correctly reduces the array', function() {
+          var total = numbers.reduce(function(result, item) {
+            return result.toValue() + item.toValue();
+          });
+          expect(total.toValue()).to.equal(10);
+        });
+      });
+
+      context('when a beginning value is given', function() {
+        it('correctly reduces the array', function() {
+          var total = numbers.reduce(function(result, item) {
+            return result.toValue() + item.toValue();
+          }, 20);
+          expect(total.toValue()).to.equal(30);
+        });
+      });
+    });
+
     describe('#forEach', function() {
       it('iterates over each item', function() {
-        var results;
-        results = [];
-        arrayElement.forEach(function(item) {
-          return results.push(item);
+        var indexes = [];
+        var results = [];
+
+        arrayElement.forEach(function(item, index) {
+          indexes.push(index.toValue());
+          results.push(item);
         });
+
         expect(results.length).to.equal(4);
+        expect(indexes).to.deep.equal([0, 1, 2, 3]);
       });
     });
 
@@ -195,6 +241,15 @@ describe('ArrayElement', function() {
     //     expect(items).to.have.length(4);
     //   });
     // });
+
+    describe('#clone', function() {
+      it('creates a deep clone of the element', function() {
+        var clone = arrayElement.clone();
+        expect(clone).to.be.instanceOf(minim.ArrayElement);
+        expect(clone).to.not.equal(arrayElement);
+        expect(clone.toRefract()).to.deep.equal(arrayElement.toRefract());
+      });
+    });
   });
 
   describe('searching', function() {
