@@ -160,6 +160,18 @@ describe('ArrayElement', function() {
     describe('#reduce', function() {
       var numbers = new minim.ArrayElement([1, 2, 3, 4]);
 
+      it('sends index and array elements', function () {
+        var sum = numbers.reduce(function(result, item, index, array) {
+          expect(index).to.be.below(numbers.length);
+          expect(array).to.equal(numbers);
+
+          return result.toValue() + index;
+        }, 0);
+
+        // Sum of indexes should be 0 + 1 + 2 + 3 = 6
+        expect(sum.toValue()).to.equal(6);
+      });
+
       context('when no beginning value is given', function() {
         it('correctly reduces the array', function() {
           var total = numbers.reduce(function(result, item) {

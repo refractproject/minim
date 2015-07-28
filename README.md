@@ -307,6 +307,30 @@ var total = numbers.reduce(function(result, item) {
 }, 10); // total.toValue() === 20
 ```
 
+The `reduce` method also works with objects:
+
+```javascript
+var objNumbers = new minim.ObjectElement({a: 1, b:2, c:3, d:4});
+var total = objNumbers.reduce(function(result, item) {
+  return result.toValue() + item.toValue();
+}, 10); // total.toValue() === 20
+```
+
+The function passed to `reduce` can accept up to five optional parameters and depends on whether you are using an array element or object element:
+
+**Array**
+1. `result`: the reduced value thus far
+2. `item`: the current item in the array
+3. `index`: the zero-based index of the current item in the array
+4. `arrayElement`: the array element which contains `item` (e.g. `numbers` above)
+
+**Object**
+1. `result`: the reduced value thus far
+2. `item`: the value element of the current item in the object
+3. `key`: the key element of the current item in the object
+4. `memberElement`: the member element which contains `key` and `value`
+5. `objectElement`: the object element which contains `memberElement` (e.g. `objNumbers` above)
+
 ##### forEach
 
 The `forEach` method may be used to iterate over a Minim array.
@@ -487,9 +511,9 @@ for (let [key, value] of objectElement.items()) {
 }
 ```
 
-##### map, filter, and forEach
+##### map, filter, reduce, and forEach
 
-The `map`, `filter`, and `forEach` methods work similar to the `ArrayElement` map function, but the callback receive the value, key, and member element instances.
+The `map`, `filter`, and `forEach` methods work similar to the `ArrayElement` map function, but the callback receives the value, key, and member element instances. The `reduce` method receives the reduced value, value, key, member, and object element instances.
 
 See `getMember` to see more on how to interact with member elements.
 

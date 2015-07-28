@@ -321,6 +321,13 @@ describe('ObjectElement', function() {
       expect(letters.toValue()).to.deep.equal(['a', 'b', 'c', 'd']);
     });
 
+    it('sends member and object elements', function () {
+      numbers.reduce(function(result, item, key, member, obj) {
+        expect(obj.content).to.contain(member);
+        expect(obj).to.equal(numbers);
+      });
+    });
+
     context('when no beginning value is given', function() {
       it('correctly reduces the object', function() {
         var total = numbers.reduce(function(result, item) {
