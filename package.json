@@ -4,12 +4,14 @@
   "description": "A library for interacting with JSON through Refract elements",
   "main": "lib/minim.js",
   "scripts": {
-    "lint": "eslint lib",
     "coverage": "istanbul cover _mocha -- -R spec --recursive",
-    "precoveralls": "npm run coverage",
     "coveralls": "coveralls <coverage/lcov.info",
-    "test": "mocha -R spec --recursive",
-    "prepublish": "npm run lint"
+    "frontendtests": "karma start",
+    "lint": "eslint lib",
+    "nodejstests": "mocha -R spec --recursive",
+    "precoveralls": "npm run coverage",
+    "prepublish": "npm run lint",
+    "test": "npm run nodejstests && npm run frontendtests"
   },
   "repository": {
     "type": "git",
@@ -17,8 +19,8 @@
   },
   "keywords": [
     "JSON",
-    "Refract",
-    "MSON"
+    "MSON",
+    "Refract"
   ],
   "author": "Stephen Mizell",
   "license": "MIT",
@@ -31,6 +33,12 @@
     "coveralls": "^2.11.2",
     "eslint": "^0.21.2",
     "istanbul": "^0.3.14",
+    "karma": "^0.13.3",
+    "karma-browserify": "^4.2.1",
+    "karma-chai": "^0.1.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "karma-sinon": "^1.0.4",
     "mocha": "^2.2.4",
     "mocha-sinon": "^1.1.4",
     "sinon-chai": "^2.7.0"
