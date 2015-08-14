@@ -9,7 +9,7 @@ describe('BaseElement', function() {
     before(function() {
       el = new minim.BaseElement({}, {
         id: 'foobar',
-        class: ['a', 'b'],
+        classes: ['a', 'b'],
         title: 'Title',
         description: 'Description'
       });
@@ -17,7 +17,7 @@ describe('BaseElement', function() {
 
     it('should initialize the correct meta data', function() {
       expect(el.meta.get('id').toValue()).to.equal('foobar');
-      expect(el.meta.get('class').toValue()).to.deep.equal(['a', 'b']);
+      expect(el.meta.get('classes').toValue()).to.deep.equal(['a', 'b']);
       expect(el.meta.get('title').toValue()).to.equal('Title');
       expect(el.meta.get('description').toValue()).to.equal('Description');
     });
@@ -119,7 +119,7 @@ describe('BaseElement', function() {
   describe('convenience methods', function() {
     var meta = {
       id: 'foobar',
-      'class': ['a'],
+      classes: ['a'],
       title: 'A Title',
       description: 'A Description'
     };
@@ -129,7 +129,7 @@ describe('BaseElement', function() {
 
       _.forEach(_.keys(meta), function(key) {
         it('provides a convenience method for ' + key, function() {
-          if (key === 'class') {
+          if (key === 'classes') {
             expect(el[key].toValue()).to.deep.equal(meta[key]);
           } else {
             expect(el[key]).to.deep.equal(meta[key]);
@@ -145,7 +145,7 @@ describe('BaseElement', function() {
         el[key] = meta[key];
 
         it('works for getters and setters for ' + key, function() {
-          if (key === 'class') {
+          if (key === 'classes') {
             expect(el[key].toValue()).to.deep.equal(meta[key]);
           } else {
             expect(el[key]).to.deep.equal(meta[key]);

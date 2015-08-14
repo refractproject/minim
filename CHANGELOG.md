@@ -1,3 +1,8 @@
+# Unreleased
+
+- Rename the `class` metadata property to `classes`. The convenience property
+  is also now called `classes`, e.g. `element.classes.contains('abc')`.
+
 # 0.9.0 - 2015-07-28
 
 - Allow the iterator protocol to be used with arrays and objects if the runtime

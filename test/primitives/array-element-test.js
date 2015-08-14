@@ -281,7 +281,7 @@ describe('ArrayElement', function() {
             {
               element: 'string',
               meta: {
-                'class': ['test-class']
+                'classes': ['test-class']
               },
               content: 'baz'
             }, {
