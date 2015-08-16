@@ -1,6 +1,6 @@
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
-var ElementRegistry = require('../lib/base').ElementRegistry;
+var ElementRegistry = require('../lib/registry').ElementRegistry;
 
 describe('Minim registry', function() {
   var registry = new ElementRegistry();
