@@ -4,6 +4,7 @@ var ElementRegistry = require('../lib/base').ElementRegistry;
 
 describe('Minim registry', function() {
   var registry = new ElementRegistry();
+  registry.BaseElement = minim.BaseElement;
 
   describe('#register', function() {
     it('should add to the element map', function() {
