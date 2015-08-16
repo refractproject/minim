@@ -3,17 +3,20 @@ var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
 
 describe('Minim subclasses', function() {
-  // TODO: Provide better interface for extending elements
-  var MyElement = function() {
-    minim.StringElement.apply(this, arguments);
-    this.element = 'myElement';
-    this._attributeElementKeys = ['headers'];
-  }
+  var MyElement;
 
-  MyElement.prototype = _.create(minim.StringElement.prototype, {
-    ownMethod: function() {
-      return 'It works!';
-    }
+  before(function() {
+    MyElement = minim.StringElement.extend({
+      constructor: function() {
+        minim.StringElement.apply(this, arguments);
+        this.element = 'myElement';
+        this._attributeElementKeys = ['headers'];
+      },
+
+      ownMethod: function() {
+        return 'It works!';
+      }
+    });
   });
 
   it('can extend the base element with its own method', function() {
@@ -22,7 +25,11 @@ describe('Minim subclasses', function() {
   });
 
   context('when initializing', function() {
-    var myElement = new MyElement();
+    var myElement;
+
+    before(function() {
+      myElement = new MyElement();
+    });
 
     it('can overwrite the element name', function() {
       expect(myElement.element).to.equal('myElement');
@@ -34,23 +41,27 @@ describe('Minim subclasses', function() {
   });
 
   describe('deserializing attributes', function() {
-    var myElement = new MyElement().fromRefract({
-      element: 'myElement',
-      attributes: {
-        headers: {
-          element: 'array',
-          content: [
-            {
-              element: 'string',
-              meta: {
-                name: 'Content-Type'
-              },
-              content: 'application/json'
-            }
-          ]
-        },
-        foo: 'bar'
-      }
+    var myElement;
+
+    before(function() {
+      myElement = new MyElement().fromRefract({
+        element: 'myElement',
+        attributes: {
+          headers: {
+            element: 'array',
+            content: [
+              {
+                element: 'string',
+                meta: {
+                  name: 'Content-Type'
+                },
+                content: 'application/json'
+              }
+            ]
+          },
+          foo: 'bar'
+        }
+      });
     });
 
     it('should create headers element instance', function() {
@@ -63,9 +74,13 @@ describe('Minim subclasses', function() {
   });
 
   describe('serializing attributes', function() {
-    var myElement = new MyElement();
-    myElement.attributes.set('headers', new minim.ArrayElement(['application/json']));
-    myElement.attributes.get('headers').content[0].meta.set('name', 'Content-Type');
+    var myElement;
+
+    before(function() {
+      myElement = new MyElement();
+      myElement.attributes.set('headers', new minim.ArrayElement(['application/json']));
+      myElement.attributes.get('headers').content[0].meta.set('name', 'Content-Type');
+    });
 
     it('should serialize headers element', function() {
       var refracted = myElement.toCompactRefract();
