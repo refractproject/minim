@@ -1,5 +1,6 @@
 # Unreleased
 
+- Change interface to allow for custom registries.
 - Rename the `class` metadata property to `classes`. The convenience property
   is also now called `classes`, e.g. `element.classes.contains('abc')`.
 
