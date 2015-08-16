@@ -39,7 +39,7 @@ var el = {
 ### Converting Javascript Values into Elements
 
 ```javascript
-var minim = require('minim');
+var minim = require('minim').init();
 var arrayElement = minim.convertToElement([1, 2, 3]);
 var refract = arrayElement.toRefract();
 ```
@@ -540,7 +540,7 @@ const values = objectElement.map((value, key, member) => {
 Minim allows you to register custom elements. For example, if the element name you wish to handle is called `category` and it should be handled like an array:
 
 ```javascript
-var minim = require('minim');
+var minim = require('minim').init();
 
 // Register your custom element
 minim.registry.register('category', minim.ArrayElement);
@@ -554,6 +554,14 @@ console.log(elements.get(0).content); // hello, world
 
 // Unregister your custom element
 minim.registry.unregister('category');
+```
+
+You may also pass in a registries that may have been initialized elsewhere.
+
+```javascript
+var ElementRegistry = require('minim').ElementRegistry;
+var registry = new ElementRegistry();
+var minim = require('minim').init(registry);
 ```
 
 ### Chaining

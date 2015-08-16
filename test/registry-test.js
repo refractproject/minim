@@ -1,5 +1,5 @@
 var expect = require('./spec-helper').expect;
-var ElementRegistry = require('../lib/registry').ElementRegistry;
+var ElementRegistry = require('../lib/minim').ElementRegistry;
 
 describe('Minim registry', function() {
   var registry;
