@@ -1,4 +1,4 @@
-# Unreleased
+# 0.10.0 - 2015-08-18
 
 - Rename the `class` metadata property to `classes`. The convenience property
   is also now called `classes`, e.g. `element.classes.contains('abc')`.

@@ -115,11 +115,11 @@ Additionally, convenience attributes are exposed on the element:
 
 - id (string) - Shortcut for `.meta.get('id').toValue()`.
 - name (string) - Shortcut for `.meta.get('name').toValue()`.
-- class (ArrayElement) - Shortcut for `.meta.get('class')`.
+- classes (ArrayElement) - Shortcut for `.meta.get('classes')`.
 - title (string) - Shortcut for `.meta.get('title').toValue()`.
 - description (string) - Shortcut for `.meta.get('description').toValue()`.
 
-Note that simple types like `string` are exposed through their `.toValue()` result, while more complex types like the array for the `class` attribute are exposed as `ArrayElement` or `ObjectElement` instances.
+Note that simple types like `string` are exposed through their `.toValue()` result, while more complex types like the array for the `classes` attribute are exposed as `ArrayElement` or `ObjectElement` instances.
 
 ### Element Methods
 
