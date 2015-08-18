@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
-var minim = require('../../lib/minim');
+var minim = require('../../lib/minim').init();
 
 describe('MemberElement', function() {
   var member = new minim.MemberElement('foo', 'bar', {}, { foo: 'bar' });

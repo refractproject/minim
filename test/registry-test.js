@@ -1,9 +1,14 @@
 var expect = require('./spec-helper').expect;
-var minim = require('../lib/minim');
-var ElementRegistry = require('../lib/base').ElementRegistry;
+var ElementRegistry = require('../lib/minim').ElementRegistry;
 
 describe('Minim registry', function() {
-  var registry = new ElementRegistry();
+  var registry;
+  var minim;
+
+  before(function() {
+    registry = new ElementRegistry();
+    minim = require('../lib/base').init(registry);
+  });
 
   describe('#register', function() {
     it('should add to the element map', function() {
@@ -20,17 +25,25 @@ describe('Minim registry', function() {
   });
 
   describe('#detect', function() {
-    var test = function() { return true; }
-    registry.elementDetection = [[test, minim.NullElement]];
+    var detectRegistry;
+    var test;
+
+    before(function() {
+      test = function() { return true; }
+
+      // Need a custom registry so we don't cause other tests to fail
+      detectRegistry = new ElementRegistry();
+      detectRegistry.elementDetection = [[test, minim.NullElement]];
+    });
 
     it('should prepend by default', function() {
-      registry.detect(test, minim.StringElement);
-      expect(registry.elementDetection[0][1]).to.equal(minim.StringElement);
+      detectRegistry.detect(test, minim.StringElement);
+      expect(detectRegistry.elementDetection[0][1]).to.equal(minim.StringElement);
     });
 
     it('should be able to append', function() {
-      registry.detect(test, minim.ObjectElement, false);
-      expect(registry.elementDetection[2][1]).to.equal(minim.ObjectElement);
+      detectRegistry.detect(test, minim.ObjectElement, false);
+      expect(detectRegistry.elementDetection[2][1]).to.equal(minim.ObjectElement);
     });
   });
 
