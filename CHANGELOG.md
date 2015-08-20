@@ -1,3 +1,8 @@
+# Unreleased
+
+- Add a `.toValue()` method to member elements which returns a tuple of the
+  key and value.
+
 # 0.10.0 - 2015-08-18
 
 - Rename the `class` metadata property to `classes`. The convenience property
