@@ -14,6 +14,12 @@ describe('MemberElement', function() {
     expect(member.attributes.get('foo').toValue()).to.equal('bar');
   });
 
+  describe('#toValue', function () {
+    it('returns a tuple of (key, value)', function () {
+      expect(member.toValue()).to.deep.equal(['foo', 'bar']);
+    });
+  });
+
   describe('#toRefract', function() {
     it('returns the correct Refract value', function() {
       expect(member.toRefract()).to.deep.equal({
