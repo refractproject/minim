@@ -15,8 +15,8 @@ describe('MemberElement', function() {
   });
 
   describe('#toValue', function () {
-    it('returns a tuple of (key, value)', function () {
-      expect(member.toValue()).to.deep.equal(['foo', 'bar']);
+    it('returns a hash with key and value', function () {
+      expect(member.toValue()).to.deep.equal({ key: 'foo', value: 'bar' });
     });
   });
 

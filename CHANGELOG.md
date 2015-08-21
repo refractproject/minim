@@ -1,7 +1,7 @@
 # Unreleased
 
-- Add a `.toValue()` method to member elements which returns a tuple of the
-  key and value.
+- Add a `.toValue()` method to member elements which returns a hash with the key
+  and value and their respective values.
 
 # 0.10.0 - 2015-08-18
 
