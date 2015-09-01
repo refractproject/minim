@@ -2,11 +2,13 @@ var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim');
 
+var NumberElement = minim.getElementClass('number');
+
 describe('NumberElement', function() {
   var numberElement;
 
   before(function() {
-    numberElement = new minim.NumberElement(4);
+    numberElement = new NumberElement(4);
   });
 
   describe('#element', function() {
@@ -64,7 +66,7 @@ describe('NumberElement', function() {
   describe('#clone', function() {
     it('creates a deep clone of the element', function() {
       var clone = numberElement.clone();
-      expect(clone).to.be.instanceOf(minim.NumberElement);
+      expect(clone).to.be.instanceOf(NumberElement);
       expect(clone).to.not.equal(numberElement);
       expect(clone.toRefract()).to.deep.equal(numberElement.toRefract());
     });

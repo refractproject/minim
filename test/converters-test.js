@@ -9,7 +9,7 @@ describe('Minim Converters', function() {
 
       context('when given ' + name, function() {
         before(function() {
-          returnedElement = minim.convertToElement(val);
+          returnedElement = minim.toElement(val);
         });
 
         it('returns ' + name, function() {
@@ -34,7 +34,7 @@ describe('Minim Converters', function() {
         var returnedElement;
 
         before(function() {
-          returnedElement = minim.convertFromRefract(el);
+          returnedElement = minim.fromRefract(el);
         });
 
         it('returns ' + name + ' element', function() {
@@ -52,7 +52,7 @@ describe('Minim Converters', function() {
         before(function() {
           // NOTE: If this is ever giving you issues, remember that it
           //       does NOT handle nested long-form elements.
-          returnedElement = minim.convertFromCompactRefract([
+          returnedElement = minim.fromCompactRefract([
             el.element, el.metadata, el.attributes, el.content
           ]);
         });
@@ -103,7 +103,7 @@ describe('Minim Converters', function() {
       var returnedElement;
 
       before(function() {
-        returnedElement = minim.convertFromRefract(el);
+        returnedElement = minim.fromRefract(el);
       });
 
       it('returns array element', function() {
@@ -162,7 +162,7 @@ describe('Minim Converters', function() {
       var returnedElement;
 
       before(function() {
-        returnedElement = minim.convertFromRefract(el);
+        returnedElement = minim.fromRefract(el);
       });
 
       it('returns object element', function() {

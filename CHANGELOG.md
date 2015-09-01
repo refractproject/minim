@@ -1,7 +1,16 @@
 # Unreleased
 
-- Add a `.toValue()` method to member elements which returns a hash with the key
-  and value and their respective values.
+- **BREAKING** The `minim` module is now an instance of an `ElementRegistry`. The registry has been updated to allow loading namespaces via the `use` method. List of changes:
+
+ * `minim.convertToElement` is now `minim.toElement`
+ * `minim.convertFromRefract` is now `minim.fromRefract`
+ * `minim.convertFromCompactRefract` is now `minim.fromCompactRefract`
+ * `minim.*Element` are removed (except for `BaseElement`). These should be accessed via `minim.getElementClass('name')` now.
+ * The `minim` module is now just a simple instance of `ElementRegistry`.
+ * The `ElementRegistry` has a new method `use` which loads a namespace and is chainable, e.g. `minim.use(namespace1).use(namespace2)`.
+ * An `ElementRegistry` can be initialized without any default elements by passing `false` to the constructor. They can be initialized later via the `useDefault` method.
+ - Add a `.toValue()` method to member elements which returns a hash with the key
+   and value and their respective values.
 
 # 0.10.0 - 2015-08-18
 

@@ -2,11 +2,13 @@ var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim');
 
+var BooleanElement = minim.getElementClass('boolean');
+
 describe('BooleanElement', function() {
   var booleanElement;
 
   before(function() {
-    booleanElement = new minim.BooleanElement(true);
+    booleanElement = new BooleanElement(true);
   });
 
   describe('#element', function() {
@@ -64,7 +66,7 @@ describe('BooleanElement', function() {
   describe('#clone', function() {
     it('creates a deep clone of the element', function() {
       var clone = booleanElement.clone();
-      expect(clone).to.be.instanceOf(minim.BooleanElement);
+      expect(clone).to.be.instanceOf(BooleanElement);
       expect(clone).to.not.equal(booleanElement);
       expect(clone.toRefract()).to.deep.equal(booleanElement.toRefract());
     });
