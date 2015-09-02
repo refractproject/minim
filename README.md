@@ -39,7 +39,7 @@ var el = {
 ### Converting Javascript Values into Elements
 
 ```javascript
-var minim = require('minim');
+var minim = require('minim').namespace();
 var arrayElement = minim.toElement([1, 2, 3]);
 var refract = arrayElement.toRefract();
 ```
@@ -536,12 +536,12 @@ const values = objectElement.map((value, key, member) => {
 });
 ```
 
-### Element Registry
+### Customizing Namespaces
 
 Minim allows you to register custom elements. For example, if the element name you wish to handle is called `category` and it should be handled like an array:
 
 ```javascript
-var minim = require('minim');
+var minim = require('minim').namespace();
 var ArrayElement = minim.getElementClass('array');
 
 // Register your custom element
@@ -556,6 +556,27 @@ console.log(elements.get(0).content); // hello, world
 
 // Unregister your custom element
 minim.unregister('category');
+```
+
+#### Creating Namespace Plugins
+
+It is also possible to create plugin modules that define elements for custom namespaces. Plugin modules should export a single `namespace` function that takes an `options` object which contains an existing namespace to which you can add your elements:
+
+```javascript
+var minim = require('minim').namespace();
+
+// Define your plugin module (normally done in a separate file)
+var plugin = {
+  namespace: function(options) {
+    var base = options.base;
+    var ArrayElement = base.getElementClass('array');
+
+    base.register('category', ArrayElement);
+  }
+}
+
+// Load the plugin
+minim.use(plugin);
 ```
 
 ### Chaining

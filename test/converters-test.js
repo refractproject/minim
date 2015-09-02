@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var expect = require('./spec-helper').expect;
-var minim = require('../lib/minim');
+var minim = require('../lib/minim').namespace();
 
 describe('Minim Converters', function() {
   describe('convertToElement', function() {

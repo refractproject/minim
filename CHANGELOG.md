@@ -1,15 +1,32 @@
 # Unreleased
 
-- **BREAKING** The `minim` module is now an instance of an `ElementRegistry`. The registry has been updated to allow loading namespaces via the `use` method. List of changes:
+- **BREAKING** The public interface of the `minim` module has changed significantly. List of changes:
 
- * `minim.convertToElement` is now `minim.toElement`
- * `minim.convertFromRefract` is now `minim.fromRefract`
- * `minim.convertFromCompactRefract` is now `minim.fromCompactRefract`
- * `minim.*Element` are removed (except for `BaseElement`). These should be accessed via `minim.getElementClass('name')` now.
- * The `minim` module is now just a simple instance of `ElementRegistry`.
- * The `ElementRegistry` has a new method `use` which loads a namespace and is chainable, e.g. `minim.use(namespace1).use(namespace2)`.
- * An `ElementRegistry` can be initialized without any default elements by passing `false` to the constructor. They can be initialized later via the `useDefault` method.
- - Add a `.toValue()` method to member elements which returns a hash with the key
+  - `ElementRegistry` has been renamed to `Namespace`.
+  - `minim` has only one public method, called `namespace`, which creates a new `Namespace` instance.
+  - `minim.convertToElement` is now `namespace.toElement`
+  - `minim.convertFromRefract` is now `namespace.fromRefract`
+  - `minim.convertFromCompactRefract` is now `namespace.fromCompactRefract`
+  - `minim.*Element` are removed (except for `namespace.BaseElement`). These should be accessed via `namespace.getElementClass('name')` now.
+  - The `Namespace` has a new method `use` which loads a plugin namespace and is chainable, e.g. `namespace.use(plugin1).use(plugin2)`.
+  - A `Namespace` can be initialized without any default elements by passing `false` to the constructor. They can be initialized later via the `useDefault` method.
+
+  Before:
+
+  ```js
+  var minim = require('minim');
+  minim.convertToElement([1, 2, 3]);
+  ```
+
+  After:
+
+  ```js
+  var minim = require('minim');
+  var namespace = minim.namespace();
+  namespace.toElement([1, 2, 3]);
+  ```
+
+- Add a `.toValue()` method to member elements which returns a hash with the key
    and value and their respective values.
 
 # 0.10.0 - 2015-08-18
