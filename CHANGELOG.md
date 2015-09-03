@@ -9,7 +9,7 @@
   - `minim.convertFromCompactRefract` is now `namespace.fromCompactRefract`
   - `minim.*Element` are removed (except for `namespace.BaseElement`). These should be accessed via `namespace.getElementClass('name')` now.
   - The `Namespace` has a new method `use` which loads a plugin namespace and is chainable, e.g. `namespace.use(plugin1).use(plugin2)`.
-  - A `Namespace` can be initialized without any default elements by passing `false` to the constructor. They can be initialized later via the `useDefault` method.
+  - A `Namespace` can be initialized without any default elements by passing an options object with `noDefault` set to `false` to the constructor. They can be initialized later via the `useDefault` method.
 
   Before:
 

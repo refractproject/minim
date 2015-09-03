@@ -32,11 +32,11 @@ describe('Minim namespace', function() {
     });
 
     it('can be created empty', function() {
-      expect((new Namespace(true)).elementMap).to.deep.equal({});
+      expect((new Namespace({noDefault: true})).elementMap).to.deep.equal({});
     });
 
     it('can be added after instantiation', function() {
-      var testnamespace = new Namespace(true);
+      var testnamespace = new Namespace({noDefault: true});
       testnamespace.useDefault();
       expect(testnamespace.elementMap).to.not.be.empty();
     });

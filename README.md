@@ -572,6 +572,8 @@ var plugin = {
     var ArrayElement = base.getElementClass('array');
 
     base.register('category', ArrayElement);
+
+    return base;
   }
 }
 
