@@ -39,8 +39,8 @@ var el = {
 ### Converting Javascript Values into Elements
 
 ```javascript
-var minim = require('minim');
-var arrayElement = minim.convertToElement([1, 2, 3]);
+var minim = require('minim').namespace();
+var arrayElement = minim.toElement([1, 2, 3]);
 var refract = arrayElement.toRefract();
 ```
 
@@ -79,9 +79,9 @@ The `refract` variable above has the following JSON value.
 Serialized Refract can be converted back to Minim elements to make a roundtrip.
 
 ```javascript
-var arrayElement1 = minim.convertToElement([1, 2, 3]);
+var arrayElement1 = minim.toElement([1, 2, 3]);
 var refracted = arrayElement1.toRefract();
-var arrayElement2 = minim.convertFromRefract(refracted);
+var arrayElement2 = minim.fromRefract(refracted);
 ```
 
 ### Extending elements
@@ -89,6 +89,7 @@ var arrayElement2 = minim.convertFromRefract(refracted);
 You can extend elements using the `extend` static method.
 
 ```javascript
+var StringElement = minim.getElementClass('string');
 var NewElement = StringElement.extend({
   constructor: function() {
     this.__super();
@@ -130,7 +131,7 @@ Each Minim element provides the following the methods.
 The `toValue` method returns the JSON value of the Minim element.
 
 ```javascript
-var arrayElement = minim.convertToElement([1, 2, 3]);
+var arrayElement = minim.toElement([1, 2, 3]);
 var arrayValue = arrayElement.toValue(); // [1, 2, 3]
 ```
 
@@ -139,7 +140,7 @@ var arrayValue = arrayElement.toValue(); // [1, 2, 3]
 The `toRefract` method returns the Refract value of the Minim element.
 
 ```javascript
-var arrayElement = minim.convertToElement([1, 2, 3]);
+var arrayElement = minim.toElement([1, 2, 3]);
 var refract = arrayElement.toRefract(); // See converting to elements above
 ```
 
@@ -148,7 +149,7 @@ var refract = arrayElement.toRefract(); // See converting to elements above
 The `toCompactRefract` method returns the Compact Refract value of the Minim element.
 
 ```javascript
-var stringElement = minim.convertToElement("foobar");
+var stringElement = minim.toElement("foobar");
 var compact = stringElement.toCompactRefract(); // ['string', {}, {}, 'foobar']
 ```
 
@@ -157,7 +158,7 @@ var compact = stringElement.toCompactRefract(); // ['string', {}, {}, 'foobar']
 Allows for testing equality with the content of the element.
 
 ```javascript
-var stringElement = minim.convertToElement("foobar");
+var stringElement = minim.toElement("foobar");
 stringElement.equals('abcd'); // returns false
 ```
 
@@ -166,7 +167,7 @@ stringElement.equals('abcd'); // returns false
 Creates a clone of the given instance.
 
 ```javascript
-var stringElement = minim.convertToElement("foobar");
+var stringElement = minim.toElement("foobar");
 var stringElementClone = stringElement.clone();
 ```
 
@@ -187,7 +188,7 @@ This is an element for representing string values.
 The `set` method sets the value of the `StringElement` instance.
 
 ```javascript
-var stringElement = new minim.StringElement();
+var stringElement = minim.toElement('');
 stringElement.set('foobar');
 var value = stringElement.get() // get() returns 'foobar'
 ```
@@ -201,7 +202,7 @@ This is an element for representing number values.
 The `set` method sets the value of the `NumberElement` instance.
 
 ```javascript
-var numberElement = new minim.NumberElement();
+var numberElement = minim.toElement(0);
 numberElement.set(4);
 var value = numberElement.get() // get() returns 4
 ```
@@ -215,9 +216,9 @@ This is an element for representing boolean values.
 The `set` method sets the value of the `BooleanElement` instance.
 
 ```javascript
-var booleanElement = new minim.BooleanElement();
+var booleanElement = minim.toElement(false);
 booleanElement.set(true);
-var value = booleanElement.get() // get() returns 4
+var value = booleanElement.get() // get() returns true
 ```
 
 #### ArrayElement
@@ -229,7 +230,7 @@ This is an element for representing arrays.
 The array element is iterable if the environment supports the [iteration protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable). You can then use the element in `for ... of` loops, use the spread operator, `yield*`, and destructuring assignment.
 
 ```js
-const arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+const arrayElement = minim.toElement(['a', 'b', 'c']);
 
 for (let item of arrayElement) {
   console.log(item);
@@ -241,7 +242,7 @@ for (let item of arrayElement) {
 The `get` method returns the item of the `ArrayElement` instance at the given index.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var arrayElement = minim.toElement(['a', 'b', 'c']);
 var value = arrayElement.get(0) // get(0) returns item for 'a'
 ```
 
@@ -250,7 +251,7 @@ var value = arrayElement.get(0) // get(0) returns item for 'a'
 The `getValue` method returns the value of the item of the `ArrayElement` instance at the given index.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var arrayElement = minim.toElement(['a', 'b', 'c']);
 var value = arrayElement.getValue(0) // get(0) returns 'a'
 ```
 
@@ -259,7 +260,7 @@ var value = arrayElement.getValue(0) // get(0) returns 'a'
 The `getIndex` method returns the item of the array at a given index.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var arrayElement = minim.toElement(['a', 'b', 'c']);
 var value = arrayElement.getIndex(0) // returns the item for 'a'
 ```
 
@@ -268,7 +269,7 @@ var value = arrayElement.getIndex(0) // returns the item for 'a'
 The `set` method sets the value of the `ArrayElement` instance.
 
 ```javascript
-var arrayElement = new minim.ArrayElement();
+var arrayElement = minim.toElement([]);
 arrayElement.set(0, 'z');
 var value = arrayElement.get(0) // get(0) returns 'z'
 ```
@@ -278,7 +279,7 @@ var value = arrayElement.get(0) // get(0) returns 'z'
 The `map` method may be used to map over an array. Each item given is a Minim instance.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var arrayElement =minim.toElement(['a', 'b', 'c']);
 var newArray = arrayElement.map(function(item) {
   return item.element;
 }); // newArray is now ['string', 'string', 'string']
@@ -289,7 +290,7 @@ var newArray = arrayElement.map(function(item) {
 The `filter` method may be used to filter a Minim array. This method returns a Minim array itself rather than a JavaScript array instance.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var arrayElement = minim.toElement(['a', 'b', 'c']);
 var newArray = arrayElement.filter(function(item) {
   return item.get() === 'a'
 }); // newArray.toValue() is now ['a']
@@ -300,7 +301,7 @@ var newArray = arrayElement.filter(function(item) {
 The `reduce` method may be used to reduce over a Minim array or object. The method takes a function and an optional beginning value.
 
 ```javascript
-var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+var numbers = minim.toElement([1, 2, 3, 4]);
 var total = numbers.reduce(function(result, item) {
   return result.toValue() + item.toValue();
 }); // total.toValue() === 10
@@ -309,7 +310,7 @@ var total = numbers.reduce(function(result, item) {
 The `reduce` method also takes an initial value, which can either be a value or Minim element.
 
 ```javascript
-var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+var numbers = minim.toElement([1, 2, 3, 4]);
 var total = numbers.reduce(function(result, item) {
   return result.toValue() + item.toValue();
 }, 10); // total.toValue() === 20
@@ -318,7 +319,7 @@ var total = numbers.reduce(function(result, item) {
 The `reduce` method also works with objects:
 
 ```javascript
-var objNumbers = new minim.ObjectElement({a: 1, b:2, c:3, d:4});
+var objNumbers = minim.toElement({a: 1, b:2, c:3, d:4});
 var total = objNumbers.reduce(function(result, item) {
   return result.toValue() + item.toValue();
 }, 10); // total.toValue() === 20
@@ -344,7 +345,7 @@ The function passed to `reduce` can accept up to five optional parameters and de
 The `forEach` method may be used to iterate over a Minim array.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var arrayElement = minim.toElement(['a', 'b', 'c']);
 arrayElement.forEach(function(item) {
   console.log(item.toValue())
 }); // logs each value to console
@@ -355,7 +356,7 @@ arrayElement.forEach(function(item) {
 The `push` method may be used to add items to a Minim array.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', 'b', 'c']);
+var arrayElement = minim.toElement(['a', 'b', 'c']);
 arrayElement.push('d');
 console.log(arrayElement.toValue()); // ['a', 'b', 'c', 'd']
 ```
@@ -365,7 +366,7 @@ console.log(arrayElement.toValue()); // ['a', 'b', 'c', 'd']
 The `find` method traverses the entire descendent element tree and returns an `ArrayElement` of all elements that match the conditional function given.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
 var numbers = arrayElement.find(function(el) {
   return el.element === 'number'
 }).toValue(); // [1, 2, 3]
@@ -384,7 +385,7 @@ The `findByElement` method traverses the entire descendent element tree and retu
 The `children` method traverses direct descendants and returns an `ArrayElement` of all elements that match the condition function given.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
 var numbers = arrayElement.children(function(el) {
   return el.element === 'number';
 }).toValue(); // [3]
@@ -405,7 +406,7 @@ elTree.getById('some-id');
 Test to see if a collection contains the value given. Does a deep equality check.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
 arrayElement.contains('a'); // returns true
 ```
 
@@ -414,7 +415,7 @@ arrayElement.contains('a'); // returns true
 Returns the first element in the collection.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
 arrayElement.first(); // returns the element for "a"
 ```
 
@@ -423,7 +424,7 @@ arrayElement.first(); // returns the element for "a"
 Returns the second element in the collection.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
 arrayElement.second(); // returns the element for "[1, 2]"
 ```
 
@@ -432,7 +433,7 @@ arrayElement.second(); // returns the element for "[1, 2]"
 Returns the last element in the collection.
 
 ```javascript
-var arrayElement = new minim.ArrayElement(['a', [1, 2], 'b', 3]);
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
 arrayElement.last(); // returns the element for "3"
 ```
 
@@ -446,7 +447,7 @@ The `get` method returns the `ObjectElement` instance at the given name.
 See `getKey` and `getMember` for ways to get more instances around a key-value pair.
 
 ```javascript
-var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var objectElement = minim.toElement({ foo: 'bar' });
 var value = objectElement.get('foo') // returns string instance for 'bar'
 ```
 
@@ -455,7 +456,7 @@ var value = objectElement.get('foo') // returns string instance for 'bar'
 The `getValue` method returns the value of the `ObjectElement` instance at the given name.
 
 ```javascript
-var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var objectElement = minim.toElement({ foo: 'bar' });
 var value = objectElement.getValue('foo') // returns 'bar'
 ```
 
@@ -464,7 +465,7 @@ var value = objectElement.getValue('foo') // returns 'bar'
 The `getKey` method returns the key element of a key-value pair.
 
 ```javascript
-var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var objectElement = minim.toElement({ foo: 'bar' });
 var key = objectElement.getKey('foo') // returns the key element instance
 ```
 
@@ -473,7 +474,7 @@ var key = objectElement.getKey('foo') // returns the key element instance
 The `getMember` method returns the entire member for a key-value pair.
 
 ```javascript
-var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var objectElement = minim.toElement({ foo: 'bar' });
 var member = objectElement.getMember('foo') // returns the member element
 var key = member.key; // returns what getKey('foo') returns
 var value = member.value; // returns what get('foo') returns
@@ -484,7 +485,7 @@ var value = member.value; // returns what get('foo') returns
 The `set` method sets the value of the `ObjectElement` instance.
 
 ```javascript
-var objectElement = new minim.ObjectElement();
+var objectElement = minim.toElement({});
 objectElement.set('foo', 'hello world');
 var value = objectElement.get('foo') // get('foo') returns 'hello world'
 ```
@@ -494,7 +495,7 @@ var value = objectElement.get('foo') // get('foo') returns 'hello world'
 The `keys` method returns an array of keys.
 
 ```javascript
-var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var objectElement = minim.toElement({ foo: 'bar' });
 var keys = objectElement.keys() // ['foo']
 ```
 
@@ -503,7 +504,7 @@ var keys = objectElement.keys() // ['foo']
 The `values` method returns an array of keys.
 
 ```javascript
-var objectElement = new minim.ObjectElement({ foo: 'bar' });
+var objectElement = minim.toElement({ foo: 'bar' });
 var values = objectElement.values() // ['bar']
 ```
 
@@ -512,7 +513,7 @@ var values = objectElement.values() // ['bar']
 The `items` method returns an array of key value pairs which can make iteration simpler.
 
 ```js
-const objectElement = new minim.ObjectElement({ foo: 'bar' });
+const objectElement = minim.toElement({ foo: 'bar' });
 
 for (let [key, value] of objectElement.items()) {
   console.log(key, value); // foo, bar
@@ -526,7 +527,7 @@ The `map`, `filter`, and `forEach` methods work similar to the `ArrayElement` ma
 See `getMember` to see more on how to interact with member elements.
 
 ```js
-const objectElement = new minim.ObjectElement({ foo: 'bar' });
+const objectElement = minim.toElement({ foo: 'bar' });
 const values = objectElement.map((value, key, member) => {
   // key is an instance for foo
   // value is an instance for bar
@@ -535,15 +536,16 @@ const values = objectElement.map((value, key, member) => {
 });
 ```
 
-### Element Registry
+### Customizing Namespaces
 
 Minim allows you to register custom elements. For example, if the element name you wish to handle is called `category` and it should be handled like an array:
 
 ```javascript
-var minim = require('minim');
+var minim = require('minim').namespace();
+var ArrayElement = minim.getElementClass('array');
 
 // Register your custom element
-minim.registry.register('category', minim.ArrayElement);
+minim.register('category', ArrayElement);
 
 // Load serialized refract elements that includes the new element
 var elements = minim.fromCompactRefract(['category', {}, {}, [
@@ -553,7 +555,30 @@ var elements = minim.fromCompactRefract(['category', {}, {}, [
 console.log(elements.get(0).content); // hello, world
 
 // Unregister your custom element
-minim.registry.unregister('category');
+minim.unregister('category');
+```
+
+#### Creating Namespace Plugins
+
+It is also possible to create plugin modules that define elements for custom namespaces. Plugin modules should export a single `namespace` function that takes an `options` object which contains an existing namespace to which you can add your elements:
+
+```javascript
+var minim = require('minim').namespace();
+
+// Define your plugin module (normally done in a separate file)
+var plugin = {
+  namespace: function(options) {
+    var base = options.base;
+    var ArrayElement = base.getElementClass('array');
+
+    base.register('category', ArrayElement);
+
+    return base;
+  }
+}
+
+// Load the plugin
+minim.use(plugin);
 ```
 
 ### Chaining
@@ -561,7 +586,7 @@ minim.registry.unregister('category');
 Methods may also be chained when using getters and setters.
 
 ```javascript
-var objectElement = new minim.ObjectElement()
+var objectElement = minim.toElement({})
   .set('name', 'John Doe')
   .set('email', 'john@example.com')
   .set('id', 4)

@@ -1,12 +1,14 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
-var minim = require('../../lib/minim');
+var minim = require('../../lib/minim').namespace();
+
+var StringElement = minim.getElementClass('string');
 
 describe('StringElement', function() {
   var stringElement;
 
   before(function() {
-    stringElement = new minim.StringElement('foobar');
+    stringElement = new StringElement('foobar');
   });
 
   describe('#element', function() {
@@ -64,7 +66,7 @@ describe('StringElement', function() {
   describe('#clone', function() {
     it('creates a deep clone of the element', function() {
       var clone = stringElement.clone();
-      expect(clone).to.be.instanceOf(minim.StringElement);
+      expect(clone).to.be.instanceOf(StringElement);
       expect(clone).to.not.equal(stringElement);
       expect(clone.toRefract()).to.deep.equal(stringElement.toRefract());
     });

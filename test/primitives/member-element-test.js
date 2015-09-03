@@ -1,9 +1,11 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
-var minim = require('../../lib/minim');
+var minim = require('../../lib/minim').namespace();
+
+var MemberElement = minim.getElementClass('member');
 
 describe('MemberElement', function() {
-  var member = new minim.MemberElement('foo', 'bar', {}, { foo: 'bar' });
+  var member = new MemberElement('foo', 'bar', {}, { foo: 'bar' });
 
   it('correctly sets the key and value', function() {
     expect(member.key.toValue()).to.equal('foo');

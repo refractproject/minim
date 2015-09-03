@@ -1,13 +1,15 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
-var minim = require('../../lib/minim');
+var minim = require('../../lib/minim').namespace();
+
+var ArrayElement = minim.getElementClass('array');
 
 describe('ArrayElement', function() {
   context('value methods', function() {
     var arrayElement;
 
     function setArray() {
-      arrayElement = new minim.ArrayElement(['a', true, null, 1]);
+      arrayElement = new ArrayElement(['a', true, null, 1]);
     }
 
     before(function() {
@@ -124,7 +126,7 @@ describe('ArrayElement', function() {
     });
 
     describe('#getIndex', function() {
-      var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+      var numbers = new ArrayElement([1, 2, 3, 4]);
 
       it('returns the correct item', function() {
         expect(numbers.getIndex(1).toValue()).to.equal(2);
@@ -158,7 +160,7 @@ describe('ArrayElement', function() {
     });
 
     describe('#reduce', function() {
-      var numbers = new minim.ArrayElement([1, 2, 3, 4]);
+      var numbers = new ArrayElement([1, 2, 3, 4]);
 
       it('sends index and array elements', function () {
         var sum = numbers.reduce(function(result, item, index, array) {
@@ -234,7 +236,7 @@ describe('ArrayElement', function() {
     describe('#clone', function() {
       it('creates a deep clone of the element', function() {
         var clone = arrayElement.clone();
-        expect(clone).to.be.instanceOf(minim.ArrayElement);
+        expect(clone).to.be.instanceOf(ArrayElement);
         expect(clone).to.not.equal(arrayElement);
         expect(clone.toRefract()).to.deep.equal(arrayElement.toRefract());
       });
@@ -312,7 +314,7 @@ describe('ArrayElement', function() {
     var recursiveStrings;
 
     before(function() {
-      doc = minim.convertFromRefract(refract);
+      doc = minim.fromRefract(refract);
       strings = doc.children(function(el) {
         return el.element === 'string';
       });

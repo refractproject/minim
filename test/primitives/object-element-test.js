@@ -1,12 +1,14 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
-var minim = require('../../lib/minim');
+var minim = require('../../lib/minim').namespace();
+
+var ObjectElement = minim.getElementClass('object');
 
 describe('ObjectElement', function() {
   var objectElement;
 
   function setObject() {
-    objectElement = new minim.ObjectElement({
+    objectElement = new ObjectElement({
       foo: 'bar',
       z: 1
     });
@@ -203,7 +205,7 @@ describe('ObjectElement', function() {
     });
 
     it('accepts an object', function() {
-      var obj = new minim.ObjectElement();
+      var obj = new ObjectElement();
       obj.set({ foo: 'bar' });
       expect(obj.get('foo').toValue()).to.equal('bar');
     });
@@ -307,7 +309,7 @@ describe('ObjectElement', function() {
   });
 
   describe('#reduce', function() {
-    var numbers = new minim.ObjectElement({
+    var numbers = new ObjectElement({
       a: 1,
       b: 2,
       c: 3,
@@ -392,7 +394,7 @@ describe('ObjectElement', function() {
   describe('#clone', function() {
     it('creates a deep clone of the element', function() {
       var clone = objectElement.clone();
-      expect(clone).to.be.instanceOf(minim.ObjectElement);
+      expect(clone).to.be.instanceOf(ObjectElement);
       expect(clone).to.not.equal(objectElement);
       expect(clone.toRefract()).to.deep.equal(objectElement.toRefract());
     });
