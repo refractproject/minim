@@ -1,4 +1,4 @@
-# Unreleased
+# 0.11.0 - 2015-09-07
 
 - **BREAKING** The public interface of the `minim` module has changed significantly. List of changes:
 
