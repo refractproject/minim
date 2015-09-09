@@ -1,3 +1,11 @@
+# Unreleased
+
+- Add an `elements` property to the `Namespace` class which returns an object of PascalCased element name keys to registered element class values. This allows for ES6 use cases like:
+
+  ```js
+  const {StringElement, ArrayElement, ObjectElement} = namespace.elements;
+  ```
+
 # 0.11.0 - 2015-09-07
 
 - **BREAKING** The public interface of the `minim` module has changed significantly. List of changes:
