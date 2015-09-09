@@ -147,4 +147,31 @@ describe('Minim namespace', function() {
       expect(namespace.getElementClass('unknown')).to.equal(namespace.BaseElement);
     });
   });
+
+  describe('#elements', function() {
+    it('should contain registered element classes', function () {
+      var elements = namespace.elements;
+
+      var elementValues = Object.keys(elements).map(function (name) {
+        return elements[name];
+      });
+      elementValues.shift();
+
+      var mapValues = Object.keys(namespace.elementMap).map(function (name) {
+        return namespace.elementMap[name];
+      });
+
+      expect(elementValues).to.deep.equal(mapValues);
+    });
+
+    it('should use pascal casing', function () {
+      for (var name in namespace.elements) {
+        expect(name[0]).to.equal(name[0].toUpperCase());
+      }
+    });
+
+    it('should contain the base element', function () {
+      expect(namespace.elements.BaseElement).to.equal(namespace.BaseElement);
+    });
+  });
 });
