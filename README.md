@@ -84,6 +84,19 @@ var refracted = arrayElement1.toRefract();
 var arrayElement2 = minim.fromRefract(refracted);
 ```
 
+Serialized values in compact and embedded forms can also be loaded into Minim.
+
+```javascript
+// Both return a string element where the content is `foobar`
+var stringElement1 = minim.fromCompactRefract(['string', {}, {}, 'foobar']);
+var stringElement2 = minim.fromEmbeddedRefract({
+  _refract: {
+    element: 'string',
+    content: 'foobar'
+  }
+});
+```
+
 ### Extending elements
 
 You can extend elements using the `extend` static method.
@@ -151,6 +164,25 @@ The `toCompactRefract` method returns the Compact Refract value of the Minim ele
 ```javascript
 var stringElement = minim.toElement("foobar");
 var compact = stringElement.toCompactRefract(); // ['string', {}, {}, 'foobar']
+```
+
+#### toEmbeddedRefract
+
+The `toEmbeddedRefract` method returns the Embedded Refract value of the Minim element.
+
+```javascript
+var stringElement = minim.toElement("foobar");
+stringElement.attributes.set('a', 'b');
+var embedded = stringElement.toEmbeddedRefract();
+// Serializes to:
+//
+// {
+//   _refract: {
+//     element: 'string',
+//     attributes: { a: 'b' },
+//     content: 'foobar'
+//   }
+// }
 ```
 
 #### equals
