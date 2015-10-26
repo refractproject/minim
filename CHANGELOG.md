@@ -1,5 +1,6 @@
 # Unreleased
 
+- Allow `load` to be used for plugins where a namespace is not being used
 - Add an `elements` property to the `Namespace` class which returns an object of PascalCased element name keys to registered element class values. This allows for ES6 use cases like:
 
   ```js
