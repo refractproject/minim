@@ -43,7 +43,7 @@ describe('Minim namespace', function() {
   });
 
   describe('#use', function() {
-    it('can load a plugin module', function() {
+    it('can load a plugin module using the namespace property', function() {
       var plugin = {
         namespace: function(options) {
           var base = options.base;
@@ -56,6 +56,21 @@ describe('Minim namespace', function() {
       namespace.use(plugin);
 
       expect(namespace.elementMap).to.have.property('null2', NullElement);
+    });
+
+    it('can load a plugin module using the load property', function() {
+      var plugin = {
+        load: function(options) {
+          var base = options.base;
+
+          // Register a new element
+          base.register('null3', NullElement);
+        }
+      };
+
+      namespace.use(plugin);
+
+      expect(namespace.elementMap).to.have.property('null3', NullElement);
     });
   });
 

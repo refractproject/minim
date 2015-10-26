@@ -613,6 +613,23 @@ var plugin = {
 minim.use(plugin);
 ```
 
+The `load` property may be used in addition to the `namespace` property when a plugin is not implementing a namespace.
+
+```javascript
+var minim = require('minim').namespace();
+
+// Define your plugin module (normally done in a separate file)
+var plugin = {
+  load: function(options) {
+    // Plugin code here
+    return base;
+  }
+}
+
+// Load the plugin
+minim.use(plugin);
+```
+
 ### Chaining
 
 Methods may also be chained when using getters and setters.
