@@ -11,6 +11,7 @@ describe('Minim subclasses', function() {
     StringElement.apply(this, arguments);
     this.element = 'myElement';
     this._attributeElementKeys = ['headers'];
+    this._attributeElementArrayKeys = ['sourceMap'];
   }
 
   MyElement.prototype = _.create(StringElement.prototype, {
@@ -52,7 +53,13 @@ describe('Minim subclasses', function() {
             }
           ]
         },
-        foo: 'bar'
+        foo: 'bar',
+        sourceMap: [
+          {
+            element: 'string',
+            content: 'test'
+          }
+        ]
       }
     });
 
@@ -63,12 +70,22 @@ describe('Minim subclasses', function() {
     it('should leave foo alone', function() {
       expect(myElement.attributes.get('foo').toValue()).to.be.a('string');
     });
+
+    it('should create array of source map elements', function() {
+      var sourceMaps = myElement.attributes.get('sourceMap');
+      expect(sourceMaps).to.have.length(1);
+      expect(sourceMaps.first()).to.be.instanceOf(StringElement);
+      expect(sourceMaps.first().toValue()).to.equal('test');
+    });
   });
 
   describe('serializing attributes', function() {
     var myElement = new MyElement();
+
     myElement.attributes.set('headers', new ArrayElement(['application/json']));
     myElement.attributes.get('headers').content[0].meta.set('name', 'Content-Type');
+
+    myElement.attributes.set('sourceMap', ['string1', 'string2']);
 
     it('should serialize headers element', function() {
       var refracted = myElement.toCompactRefract();
@@ -76,7 +93,11 @@ describe('Minim subclasses', function() {
       expect(refracted).to.deep.equal(['myElement', {}, {
         headers: ['array', {}, {}, [
             ['string', {name: 'Content-Type'}, {}, 'application/json']
-        ]]
+        ]],
+        sourceMap: [
+          ['string', {}, {}, 'string1'],
+          ['string', {}, {}, 'string2']
+        ]
       }, null]);
     });
   });

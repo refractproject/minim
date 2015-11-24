@@ -1,5 +1,9 @@
-# Unreleased
+# 0.12.0 - 2015-11-23
 
+- Provide a way for elements to mark attributes as unrefracted arrays of
+  refracted elements. Subclassed elements can push onto the
+  `_attributeElementArrayKeys` property to use this feature. **Note**: in the
+  future this feature may go away.
 - Allow `load` to be used for plugins where a namespace is not being used
 - Add an `elements` property to the `Namespace` class which returns an object of PascalCased element name keys to registered element class values. This allows for ES6 use cases like:
 
