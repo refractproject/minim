@@ -100,5 +100,10 @@ describe('Minim subclasses', function() {
         ]
       }, null]);
     });
+
+    it('should round-trip', function() {
+      const refracted = myElement.toCompactRefract();
+      expect(myElement.fromCompactRefract(refracted).toCompactRefract()).to.deep.equal(refracted);
+    });
   });
 });

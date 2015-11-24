@@ -1,3 +1,7 @@
+# 0.12.1 - 2015-11-24
+
+- Fix a bug when loading refracted attributes from compact refract.
+
 # 0.12.0 - 2015-11-23
 
 - Provide a way for elements to mark attributes as unrefracted arrays of
