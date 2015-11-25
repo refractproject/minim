@@ -1,3 +1,7 @@
+# 0.12.2 - 2015-11-24
+
+- Fix a bug related to setting the default key names that should be treated as refracted elements in element attributes. This is now accomplished via the namespace: `namespace._elementAttributeKeys.push('my-value');`. This fixes bugs related to overwriting the `namespace.BaseElement`.
+
 # 0.12.1 - 2015-11-24
 
 - Fix a bug when loading refracted attributes from compact refract.
