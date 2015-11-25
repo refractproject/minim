@@ -3,11 +3,11 @@ var minim = require('../lib/minim');
 var Namespace = require('../lib/namespace');
 
 describe('Minim namespace', function() {
-  var namespace = new Namespace();
-
+  var namespace;
   var ArrayElement, NullElement, ObjectElement, StringElement;
 
   beforeEach(function() {
+    namespace = new Namespace();
     namespace.elementMap = {};
     namespace.elementDetection = [];
     namespace.useDefault();
@@ -24,6 +24,16 @@ describe('Minim namespace', function() {
 
   it('gets returned from minim.namespace()', function() {
     expect(minim.namespace()).to.be.an.instanceof(Namespace);
+  });
+
+  it('can set default refracted attributes', function() {
+    namespace._attributeElementKeys.push('foo');
+    namespace._attributeElementArrayKeys.push('bar');
+
+    var instance = new StringElement('');
+
+    expect(instance._attributeElementKeys).to.deep.equal(['foo']);
+    expect(instance._attributeElementArrayKeys).to.deep.equal(['bar']);
   });
 
   describe('default elements', function() {
