@@ -97,6 +97,8 @@ var stringElement2 = minim.fromEmbeddedRefract({
 });
 ```
 
+Note that due to optional refracting in `meta`, anything that looks like an element in the given serialization will be loaded as such.
+
 ### Extending elements
 
 You can extend elements using the `extend` static method.
@@ -152,6 +154,8 @@ var arrayValue = arrayElement.toValue(); // [1, 2, 3]
 
 The `toRefract` method returns the Refract value of the Minim element.
 
+Note that if any element in `meta` has metadata or attributes defined that would be lost by calling `toValue()` then that element is also converted to refract.
+
 ```javascript
 var arrayElement = minim.toElement([1, 2, 3]);
 var refract = arrayElement.toRefract(); // See converting to elements above
@@ -160,6 +164,8 @@ var refract = arrayElement.toRefract(); // See converting to elements above
 #### toCompactRefract
 
 The `toCompactRefract` method returns the Compact Refract value of the Minim element.
+
+Note that if any element in `meta` has metadata or attributes defined that would be lost by calling `toValue()` then that element is also converted to compact refract.
 
 ```javascript
 var stringElement = minim.toElement("foobar");
