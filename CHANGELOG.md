@@ -1,4 +1,4 @@
-# Unreleased
+# 0.12.3 - 2015-11-30
 
 - When an element in `meta` has its own metadata or attributes defined then it will now be refracted when calling `toRefract` or `toCompactRefract`.
 - When loading from refract or compact refract, if an item in `meta` looks like an element it will be loaded as such. This may cause false positives.
