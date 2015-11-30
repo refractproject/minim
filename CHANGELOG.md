@@ -1,3 +1,8 @@
+# Unreleased
+
+- When an element in `meta` has its own metadata or attributes defined then it will now be refracted when calling `toRefract` or `toCompactRefract`.
+- When loading from refract or compact refract, if an item in `meta` looks like an element it will be loaded as such. This may cause false positives.
+
 # 0.12.2 - 2015-11-24
 
 - Fix a bug related to setting the default key names that should be treated as refracted elements in element attributes. This is now accomplished via the namespace: `namespace._elementAttributeKeys.push('my-value');`. This fixes bugs related to overwriting the `namespace.BaseElement`.
