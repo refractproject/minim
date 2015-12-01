@@ -159,7 +159,7 @@ describe('BaseElement', function() {
     });
   });
 
-  describe.skip('hyperlinking', function() {
+  describe('hyperlinking', function() {
     context('when converting from Refract with links', function() {
       var el;
 
@@ -170,7 +170,7 @@ describe('BaseElement', function() {
             links: [
               {
                 element: 'link',
-                attribtues: {
+                attributes: {
                   relation: 'foo',
                   href: '/bar'
                 }
@@ -184,10 +184,8 @@ describe('BaseElement', function() {
       it('correctly loads the links', function() {
         var link = el.meta.get('links').first();
         expect(link.element).to.equal('link');
-        // console.log(JSON.stringify(el.meta.get('links').toRefract(), null, 2));
-        // var link = el.meta.get('links').first();
-        // expect(expect(link.relation)).to.equal('foo');
-        // expect(expect(link.href)).to.equal('/bar');
+        expect(link.relation).to.equal('foo');
+        expect(link.href).to.equal('/bar');
       });
     })
   });
