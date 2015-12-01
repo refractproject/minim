@@ -19,6 +19,11 @@ describe('Link Element', function() {
       expect(link.attributes.get('href').toValue()).to.equal('/bar');
     });
 
+    it('provides convenience methods', function() {
+      expect(link.relation).to.equal('foo');
+      expect(link.href).to.equal('/bar');
+    });
+
     it('returns the correct Refract value', function() {
       expect(link.toRefract()).to.deep.equal({
         element: 'link',
