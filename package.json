@@ -45,7 +45,7 @@
     "sinon-chai": "^2.7.0"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
+    "lodash": "^3.10.1",
     "uptown": "^0.4.0"
   }
 }

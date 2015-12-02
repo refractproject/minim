@@ -1,3 +1,9 @@
+# Unreleased
+
+- Added support for hyperlinks per [RFC 0008](https://github.com/refractproject/rfcs/blob/b6e390f7bbc960808ba053e172cccd9e4a81a04a/text/0008-add-hyperlinks.md)
+- Upgraded Lodash to 3.10.1
+- Refract elements will be automatically parsed when found in arrays in `meta`
+
 # 0.12.3 - 2015-11-30
 
 - When an element in `meta` has its own metadata or attributes defined then it will now be refracted when calling `toRefract` or `toCompactRefract`.
