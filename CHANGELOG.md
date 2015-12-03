@@ -1,4 +1,4 @@
-# Unreleased
+# 0.13.0 - 2015-12-03
 
 - Added support for hyperlinks per [RFC 0008](https://github.com/refractproject/rfcs/blob/b6e390f7bbc960808ba053e172cccd9e4a81a04a/text/0008-add-hyperlinks.md)
 - Upgraded Lodash to 3.10.1
