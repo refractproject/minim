@@ -42,14 +42,6 @@ describe('NumberElement', function() {
     });
   });
 
-  describe('#toCompactRefract', function() {
-    var expected = ['number', {}, {}, 4];
-
-    it('returns a number Compact element', function() {
-      expect(numberElement.toCompactRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the number value', function() {
       expect(numberElement.toValue()).to.equal(4);

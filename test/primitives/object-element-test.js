@@ -111,25 +111,6 @@ describe('ObjectElement', function() {
     });
   });
 
-  describe('#toCompactRefract', function() {
-    var expected = [
-      'object', {}, {}, [
-        ['member', {}, {}, {
-          key: ['string', {}, {}, 'foo'],
-          value: ['string', {}, {}, 'bar']
-        }],
-        ['member', {}, {}, {
-          key: ['string', {}, {}, 'z'],
-          value: ['number', {}, {}, 1]
-        }]
-      ]
-    ];
-
-    it('returns a object Compact element', function() {
-      expect(objectElement.toCompactRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     context('when a property name is given', function() {
       it('returns the value of the name given', function() {

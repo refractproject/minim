@@ -45,15 +45,4 @@ describe('MemberElement', function() {
       });
     });
   });
-
-  describe('#toCompactRefract', function() {
-    it('returns the correct compact Refract value', function() {
-      expect(member.toCompactRefract()).to.deep.equal([
-        'member', {}, { foo: 'bar' }, {
-          key: ['string', {}, {}, 'foo'],
-          value: ['string', {}, {}, 'bar'],
-        }
-      ]);
-    });
-  });
 })

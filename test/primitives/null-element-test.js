@@ -42,13 +42,6 @@ describe('NullElement', function() {
     });
   });
 
-  describe('#toCompactRefract', function() {
-    var expected = ['null', {}, {}, null];
-    it('returns a null Compact Element', function() {
-      expect(nullElement.toCompactRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the null value', function() {
       expect(nullElement.toValue()).to.equal(null);
