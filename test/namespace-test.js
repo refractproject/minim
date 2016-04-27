@@ -26,16 +26,6 @@ describe('Minim namespace', function() {
     expect(minim.namespace()).to.be.an.instanceof(Namespace);
   });
 
-  it('can set default refracted attributes', function() {
-    namespace._attributeElementKeys.push('foo');
-    namespace._attributeElementArrayKeys.push('bar');
-
-    var instance = new StringElement('');
-
-    expect(instance._attributeElementKeys).to.deep.equal(['foo']);
-    expect(instance._attributeElementArrayKeys).to.deep.equal(['bar']);
-  });
-
   describe('default elements', function() {
     it('are present by default', function() {
       expect(namespace.elementMap).to.not.be.empty();

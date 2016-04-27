@@ -10,8 +10,6 @@ describe('Minim subclasses', function() {
   var MyElement = function() {
     StringElement.apply(this, arguments);
     this.element = 'myElement';
-    this._attributeElementKeys = ['headers'];
-    this._attributeElementArrayKeys = ['sourceMap'];
   }
 
   MyElement.prototype = _.create(StringElement.prototype, {
@@ -87,48 +85,33 @@ describe('Minim subclasses', function() {
 
     myElement.attributes.set('sourceMap', ['string1', 'string2']);
 
-    it('should serialize headers element', function() {
-      var refracted = myElement.toRefract();
+    it('should serialize element to refract', function() {
+      const refracted = myElement.toRefract();
 
       expect(refracted).to.deep.equal({
         element: 'myElement',
         meta: {},
         attributes: {
-          headers: {
-            element: 'array',
-            meta: {},
-            attributes: {},
-            content: [
-              {
-                element: 'string',
-                meta: {
-                  name: 'Content-Type'
-                },
-                attributes: {},
-                content: 'application/json'
-              }
-            ]
-          },
-          sourceMap: [
+          headers: [
             {
               element: 'string',
-              meta: {},
               attributes: {},
-              content: 'string1'
-            },
-            {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'string2'
+              meta: {
+                name: 'Content-Type'
+              },
+              content: 'application/json'
             }
+          ],
+          sourceMap: [
+            'string1',
+            'string2'
           ]
         },
         content: null
       });
     });
 
-    it('should round-trip', function() {
+    it('should round-trip using refract', function() {
       const refracted = myElement.toRefract();
       expect(myElement.fromRefract(refracted).toRefract()).to.deep.equal(refracted);
     });
