@@ -88,22 +88,49 @@ describe('Minim subclasses', function() {
     myElement.attributes.set('sourceMap', ['string1', 'string2']);
 
     it('should serialize headers element', function() {
-      var refracted = myElement.toCompactRefract();
+      var refracted = myElement.toRefract();
 
-      expect(refracted).to.deep.equal(['myElement', {}, {
-        headers: ['array', {}, {}, [
-            ['string', {name: 'Content-Type'}, {}, 'application/json']
-        ]],
-        sourceMap: [
-          ['string', {}, {}, 'string1'],
-          ['string', {}, {}, 'string2']
-        ]
-      }, null]);
+      expect(refracted).to.deep.equal({
+        element: 'myElement',
+        meta: {},
+        attributes: {
+          headers: {
+            element: 'array',
+            meta: {},
+            attributes: {},
+            content: [
+              {
+                element: 'string',
+                meta: {
+                  name: 'Content-Type'
+                },
+                attributes: {},
+                content: 'application/json'
+              }
+            ]
+          },
+          sourceMap: [
+            {
+              element: 'string',
+              meta: {},
+              attributes: {},
+              content: 'string1'
+            },
+            {
+              element: 'string',
+              meta: {},
+              attributes: {},
+              content: 'string2'
+            }
+          ]
+        },
+        content: null
+      });
     });
 
     it('should round-trip', function() {
-      const refracted = myElement.toCompactRefract();
-      expect(myElement.fromCompactRefract(refracted).toCompactRefract()).to.deep.equal(refracted);
+      const refracted = myElement.toRefract();
+      expect(myElement.fromRefract(refracted).toRefract()).to.deep.equal(refracted);
     });
   });
 });

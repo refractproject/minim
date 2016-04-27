@@ -42,14 +42,6 @@ describe('StringElement', function() {
     });
   });
 
-  describe('#toCompactRefract', function() {
-    var expected = ['string', {}, {}, 'foobar'];
-
-    it('returns a string Compact element', function() {
-      expect(stringElement.toCompactRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the string value', function() {
       expect(stringElement.toValue()).to.equal('foobar');

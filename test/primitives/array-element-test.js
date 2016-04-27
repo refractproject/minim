@@ -89,14 +89,6 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#toCompactRefract', function() {
-      var expected = ['array', {}, {}, [['string', {}, {}, 'a'], ['boolean', {}, {}, true], ['null', {}, {}, null], ['number', {}, {}, 1]]];
-
-      it('returns an array Compact element', function() {
-        expect(arrayElement.toCompactRefract()).to.deep.equal(expected);
-      });
-    });
-
     describe('#get', function() {
       context('when an index is given', function() {
         it('returns the item from the array', function() {

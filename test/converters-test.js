@@ -45,26 +45,6 @@ describe('Minim Converters', function() {
           expect(returnedElement.toValue()).to.equal(el.content);
         });
       });
-
-      context('when given compact ' + name, function() {
-        var returnedElement;
-
-        before(function() {
-          // NOTE: If this is ever giving you issues, remember that it
-          //       does NOT handle nested long-form elements.
-          returnedElement = minim.fromCompactRefract([
-            el.element, el.metadata, el.attributes, el.content
-          ]);
-        });
-
-        it('returns ' + name + ' element', function() {
-          expect(returnedElement.element).to.equal(name);
-        });
-
-        it('has the correct value', function() {
-          expect(returnedElement.toValue()).to.equal(el.content);
-        });
-      });
     }
 
     elementCheck('null', {

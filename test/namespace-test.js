@@ -125,19 +125,15 @@ describe('Minim namespace', function() {
     it('should allow for roundtrip conversions for values', function() {
       namespace.register('foo', StringElement);
 
-      // Full version
-      var fullVersion = namespace.fromRefract({ element: 'foo', meta: {}, attributes: {}, content: 'test' }).toRefract();
-      expect(fullVersion).to.deep.equal({ element: 'foo', meta: {}, attributes: {}, content: 'test' });
-
-      // Compact version
-      var compactValue = namespace.fromCompactRefract(['foo', {}, {}, 'test']).toCompactRefract();
-      expect(compactValue).to.deep.equal(['foo', {}, {}, 'test']);
+      // Refract
+      var refracted = namespace.fromRefract({ element: 'foo', meta: {}, attributes: {}, content: 'test' }).toRefract();
+      expect(refracted).to.deep.equal({ element: 'foo', meta: {}, attributes: {}, content: 'test' });
     });
 
     it('should allow for roundtrip conversions for collection elements', function() {
       namespace.register('foo', ArrayElement);
 
-      var fullRefractSample = {
+      var refractSample = {
         element: 'foo',
         meta: {},
         attributes: {},
@@ -151,19 +147,9 @@ describe('Minim namespace', function() {
         ]
       }
 
-      var compactRefractSample = [
-        'foo', {}, {}, [
-          ['string', {}, {}, 'bar']
-        ]
-      ]
-
-      // Full version
-      var fullVersion = namespace.fromRefract(fullRefractSample).toRefract();
-      expect(fullVersion).to.deep.equal(fullRefractSample);
-
-      // Compact version
-      var compactValue = namespace.fromCompactRefract(compactRefractSample).toCompactRefract();
-      expect(compactValue).to.deep.equal(compactRefractSample);
+      // Refract
+      var refracted = namespace.fromRefract(refractSample).toRefract();
+      expect(refracted).to.deep.equal(refractSample);
     });
   });
 

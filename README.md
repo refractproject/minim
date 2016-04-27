@@ -84,11 +84,10 @@ var refracted = arrayElement1.toRefract();
 var arrayElement2 = minim.fromRefract(refracted);
 ```
 
-Serialized values in compact and embedded forms can also be loaded into Minim.
+Serialized values in embedded forms can also be loaded into Minim.
 
 ```javascript
-// Both return a string element where the content is `foobar`
-var stringElement1 = minim.fromCompactRefract(['string', {}, {}, 'foobar']);
+// It returns a string element where the content is `foobar`
 var stringElement2 = minim.fromEmbeddedRefract({
   _refract: {
     element: 'string',
@@ -159,17 +158,6 @@ Note that if any element in `meta` has metadata or attributes defined that would
 ```javascript
 var arrayElement = minim.toElement([1, 2, 3]);
 var refract = arrayElement.toRefract(); // See converting to elements above
-```
-
-#### toCompactRefract
-
-The `toCompactRefract` method returns the Compact Refract value of the Minim element.
-
-Note that if any element in `meta` has metadata or attributes defined that would be lost by calling `toValue()` then that element is also converted to compact refract.
-
-```javascript
-var stringElement = minim.toElement("foobar");
-var compact = stringElement.toCompactRefract(); // ['string', {}, {}, 'foobar']
 ```
 
 #### toEmbeddedRefract
@@ -586,9 +574,19 @@ var ArrayElement = minim.getElementClass('array');
 minim.register('category', ArrayElement);
 
 // Load serialized refract elements that includes the new element
-var elements = minim.fromCompactRefract(['category', {}, {}, [
-  ['string', {}, {}, 'hello, world']
-]]);
+var elements = minim.fromRefract({
+  element: 'category',
+  meta: {},
+  attributes: {},
+  content: [
+    {
+      element: 'string',
+      meta: {},
+      attributes: {},
+      content: 'hello, world'
+    }
+  ]
+});
 
 console.log(elements.get(0).content); // hello, world
 

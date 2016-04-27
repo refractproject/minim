@@ -65,24 +65,6 @@ describe('BooleanElement', function() {
     });
   });
 
-  describe('#toCompactRefract', function() {
-    var expected;
-
-    it('returns a boolean Compact element', function() {
-      expected = ['boolean', {}, {}, true]
-      expect(booleanElement.toCompactRefract()).to.deep.equal(expected);
-    });
-
-    it('includes extra metadata if present', function() {
-      expected = ['boolean', {
-        id: ['string', {}, {someExtraData: true}, 'abc']
-      }, {}, true];
-      booleanElement.meta.set('id', 'abc');
-      booleanElement.meta.get('id').attributes.set('someExtraData', true);
-      expect(booleanElement.toCompactRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#fromRefract', function() {
     it('can handle optionally refracted metadata', function() {
       booleanElement.fromRefract({
@@ -98,16 +80,6 @@ describe('BooleanElement', function() {
         attributes: {},
         content: true
       });
-
-      expect(booleanElement.meta.get('id').toValue()).to.equal('abc');
-    });
-  });
-
-  describe('#fromCompactRefract', function() {
-    it('can handle optionally refracted metadata', function() {
-      booleanElement.fromCompactRefract(['boolean', {
-        id: ['string', {}, {}, 'abc']
-      }, {}, true]);
 
       expect(booleanElement.meta.get('id').toValue()).to.equal('abc');
     });

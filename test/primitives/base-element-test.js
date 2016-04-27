@@ -210,7 +210,7 @@ describe('BaseElement', function() {
       context('when there are existing `links`', function() {
         var el;
 
-        context('full refract', function() {
+        context('refract', function() {
           before(function() {
             el = minim.fromRefract({
               element: 'string',
@@ -234,29 +234,6 @@ describe('BaseElement', function() {
             expect(el.links).to.have.length(1);
             expect(link.relation).to.equal('foo');
             expect(link.href).to.equal('/bar');
-          });
-        });
-
-        context('compact refract', function() {
-          before(function() {
-            el = minim.fromCompactRefract(['string', {
-              links: [['link', {}, {relation: 'foo', href: '/bar'}, null]]
-            }, {}, 'foobar']);
-          });
-
-          it('provides the links from meta', function() {
-            var link = el.links.first();
-            expect(el.links).to.have.length(1);
-            expect(link.relation).to.equal('foo');
-            expect(link.href).to.equal('/bar');
-          });
-
-          it('can round-trip properly', function() {
-            var refract = el.toRefract();
-            el.fromCompactRefract(el.toCompactRefract());
-            expect(el.toRefract()).to.deep.equal(refract);
-            expect(el.links).to.have.length(1);
-            expect(el.links.first().relation).to.equal('foo');
           });
         });
       });
