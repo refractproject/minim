@@ -3,6 +3,7 @@
 - **BREAKING** The public interface of the `minim` module has changed significantly. List of changes:
 
   - Removed `toCompactRefract` and `fromCompactRefract`
+  - Improved the default refract serialization such that when an element in `attributes` has its own metadata or attributes defined then it will now be refracted when calling `toRefract`
 
 # 0.13.0 - 2015-12-03
 
