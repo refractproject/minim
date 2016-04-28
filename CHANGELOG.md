@@ -1,4 +1,4 @@
-# Master
+# 0.14.0 - 2016-04-28
 
 - **BREAKING** The public interface of the `minim` module has changed significantly. List of changes:
 

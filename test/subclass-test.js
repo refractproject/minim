@@ -66,7 +66,7 @@ describe('Minim subclasses', function() {
     });
 
     it('should leave foo alone', function() {
-      expect(myElement.attributes.get('foo').toValue()).to.be.a('string');
+      expect(myElement.attributes.get('foo')).to.be.instanceof(StringElement);
     });
 
     it('should create array of source map elements', function() {
