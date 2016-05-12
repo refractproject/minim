@@ -36,7 +36,7 @@ var el = {
 
 ## Usage
 
-### Converting Javascript Values into Elements
+### Converting JavaScript Values into Elements
 
 ```javascript
 var minim = require('minim').namespace();
