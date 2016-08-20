@@ -1,3 +1,7 @@
+# 0.14.2 - 2016-08-19
+
+- Update Lodash version
+
 # 0.14.1 - 2016-08-17
 
 - Update Uptown to 0.4.1
