@@ -1,3 +1,8 @@
+# 0.15.0 - 2017-04-03
+
+- Getters of link element will now return an element
+- Meta convenience methods will now return an element
+
 # 0.14.2 - 2016-08-19
 
 - Update Lodash version
