@@ -129,11 +129,7 @@ describe('BaseElement', function() {
 
       _.forEach(_.keys(meta), function(key) {
         it('provides a convenience method for ' + key, function() {
-          if (key === 'classes') {
-            expect(el[key].toValue()).to.deep.equal(meta[key]);
-          } else {
-            expect(el[key]).to.deep.equal(meta[key]);
-          }
+          expect(el[key].toValue()).to.deep.equal(meta[key]);
         });
       });
     });
@@ -145,11 +141,7 @@ describe('BaseElement', function() {
         el[key] = meta[key];
 
         it('works for getters and setters for ' + key, function() {
-          if (key === 'classes') {
-            expect(el[key].toValue()).to.deep.equal(meta[key]);
-          } else {
-            expect(el[key]).to.deep.equal(meta[key]);
-          }
+          expect(el[key].toValue()).to.deep.equal(meta[key]);
         });
 
         it('stores the correct data in meta for ' + key, function() {
@@ -184,8 +176,8 @@ describe('BaseElement', function() {
       it('correctly loads the links', function() {
         var link = el.meta.get('links').first();
         expect(link.element).to.equal('link');
-        expect(link.relation).to.equal('foo');
-        expect(link.href).to.equal('/bar');
+        expect(link.relation.toValue()).to.equal('foo');
+        expect(link.href.toValue()).to.equal('/bar');
       });
     });
 
@@ -232,8 +224,8 @@ describe('BaseElement', function() {
           it('provides the links from meta', function() {
             var link = el.links.first();
             expect(el.links).to.have.length(1);
-            expect(link.relation).to.equal('foo');
-            expect(link.href).to.equal('/bar');
+            expect(link.relation.toValue()).to.equal('foo');
+            expect(link.href.toValue()).to.equal('/bar');
           });
         });
       });

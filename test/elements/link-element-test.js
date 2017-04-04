@@ -20,8 +20,8 @@ describe('Link Element', function() {
     });
 
     it('provides convenience methods', function() {
-      expect(link.relation).to.equal('foo');
-      expect(link.href).to.equal('/bar');
+      expect(link.relation.toValue()).to.equal('foo');
+      expect(link.href.toValue()).to.equal('/bar');
     });
 
     it('returns the correct Refract value', function() {
