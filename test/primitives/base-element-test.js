@@ -337,5 +337,27 @@ describe('BaseElement', function() {
       expect(result.element).to.equal('array');
       expect(result.toValue()).to.deep.equal(['key1', 'value2']);
     });
+
+    it('attaches parent tree to found objects', function () {
+      const StringElement = minim.getElementClass('string');
+      const ArrayElement = minim.getElementClass('array');
+
+      const hello = new StringElement('Hello World')
+      const array = new ArrayElement([hello]);
+      const element = new ArrayElement([array]);
+      array.id = 'Inner';
+      element.id = 'Outter';
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['Hello World']);
+
+      const helloElement = result.first();
+      const parentIDs = helloElement.parents.map(function (item) {
+        return item.id.toValue();
+      });
+      expect(parentIDs).to.deep.equal(['Outter', 'Inner']);
+    });
   });
 });

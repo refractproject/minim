@@ -197,11 +197,15 @@ var stringElementClone = stringElement.clone();
 
 #### recursiveFind
 
-Recursively find an element.
+Recursively find an element. Returns an ArrayElement containing all elements
+that match the given element name.
 
 ```javascript
 const strings = element.recursiveFind('string');
 ```
+
+**NOTE:** *The returned elements contain a `parents` property which includes
+all of the elements parent in the original Refract tree.*
 
 ### Minim Elements
 
