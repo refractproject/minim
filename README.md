@@ -195,6 +195,14 @@ var stringElement = minim.toElement("foobar");
 var stringElementClone = stringElement.clone();
 ```
 
+#### recursiveFind
+
+Recursively find an element.
+
+```javascript
+const strings = element.recursiveFind('string');
+```
+
 ### Minim Elements
 
 Minim supports the following primitive elements
