@@ -359,5 +359,30 @@ describe('BaseElement', function() {
       });
       expect(parentIDs).to.deep.equal(['Outter', 'Inner']);
     });
+
+    it('finds elements contained in given elements', function () {
+      const StringElement = minim.getElementClass('string');
+      const ArrayElement = minim.getElementClass('array');
+      const ObjectElement = minim.getElementClass('object');
+      const MemberElement = minim.getElementClass('member');
+
+      const object = new ObjectElement();
+      object.push(new MemberElement(
+        new StringElement('Three'),
+        new ArrayElement([
+          new StringElement('Four')
+        ])
+      ));
+
+      const element = new ArrayElement([
+        new StringElement('One'),
+        object
+      ]);
+
+      const result = element.findRecursive('member', 'array', 'string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['Four']);
+    });
   });
 });

@@ -195,13 +195,21 @@ var stringElement = minim.toElement("foobar");
 var stringElementClone = stringElement.clone();
 ```
 
-#### recursiveFind
+#### findRecursive
 
 Recursively find an element. Returns an ArrayElement containing all elements
 that match the given element name.
 
 ```javascript
-const strings = element.recursiveFind('string');
+const strings = element.findRecursive('string');
+```
+
+You can pass multiple element names to `findRecursive`. The method will
+search for the last given element name inside elements matching the other
+given element names.
+
+```javascript
+const stringInsideMembers = element.findRecursive('member', 'string');
 ```
 
 **NOTE:** *The returned elements contain a `parents` property which includes
