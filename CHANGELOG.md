@@ -1,5 +1,9 @@
 # Master
 
+## Breaking
+
+- Node 0.10 and 0.12 are no longer supported.
+
 ## Enhancements
 
 - Elements now provide a `findRecursive` method allowing you to recursively
