@@ -204,16 +204,52 @@ that match the given element name.
 const strings = element.findRecursive('string');
 ```
 
-You can pass multiple element names to `findRecursive`. The method will
-search for the last given element name inside elements matching the other
-given element names.
+You may pass multiple element names to `findRecursive`. When multiple element
+names are passed down, minim will only find an element that is found within
+the other given elements. For example, we can pass in `member` and `string` so
+that we are recursively looking for all `string` elements that are found within a
+`member` element:
 
 ```javascript
 const stringInsideMembers = element.findRecursive('member', 'string');
 ```
 
-**NOTE:** *The returned elements contain a `parents` property which includes
-all of the elements parent in the original Refract tree.*
+##### Parents
+
+Each returned element will include a new `parents` property which is an array
+element including the parents of the returned element.
+
+As an example, if I had an array element which contains a category element
+which in turn contains a string element with the content "Hello World". I can
+access the parent array and category element.
+
+```json
+{
+  "element": "array",
+  "content": [
+    {
+      "element": "category",
+      "content": [
+        {
+          "element": "string",
+          "content": "Hello World"
+        }
+      ]
+    }
+  ]
+}
+```
+
+```javascript
+const elements = element.findRecursive('string');
+const helloString = elements.first();
+
+// Array Element
+helloString.parents[0];
+
+// Category Element
+helloString.parents[1];
+```
 
 ### Minim Elements
 
