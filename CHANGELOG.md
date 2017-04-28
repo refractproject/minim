@@ -10,6 +10,7 @@
 
 - Elements now provide a `findRecursive` method allowing you to recursively
   find matching elements.
+- Added function for remove key in an Object element and Array element
 
 ### Array Element
 

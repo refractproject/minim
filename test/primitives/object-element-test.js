@@ -198,6 +198,24 @@ describe('ObjectElement', function() {
     });
   });
 
+  describe('#remove', function () {
+    it('removes the given key', function () {
+      var removed = objectElement.remove('z');
+
+      expect(removed.toValue()).to.deep.equal({ key: 'z', value: 1 });
+      expect(objectElement.keys()).to.deep.equal(['foo']);
+    });
+  });
+
+  describe('#remove non-existing item', function () {
+    it('should not change the object element', function () {
+      var removed = objectElement.remove('k');
+
+      expect(removed).to.deep.equal(null);
+      expect(objectElement.keys()).to.deep.equal(['foo', 'z']);
+    });
+  });
+
   describe('#values', function() {
     it('gets the values of all properties', function() {
       expect(objectElement.values()).to.deep.equal(['bar', 1]);

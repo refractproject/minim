@@ -355,6 +355,16 @@ arrayElement.set(0, 'z');
 var value = arrayElement.get(0) // get(0) returns 'z'
 ```
 
+##### remove
+
+The `remove` method removes an item (specified by index) from the `ArrayElement` instance.
+
+```javascript
+var arrayElement = minim.toElement(['a', 'b', 'c']);
+arrayElement.remove(0);
+var value = arrayElement.get(0) // returns 'b'
+```
+
 ##### map
 
 The `map` method may be used to map over an array. Each item given is a Minim instance.
@@ -617,6 +627,18 @@ The `keys` method returns an array of keys.
 var objectElement = minim.toElement({ foo: 'bar' });
 var keys = objectElement.keys() // ['foo']
 ```
+
+##### remove
+
+The `remove` method removes a key from the `ObjectElement` instance.
+
+```javascript
+var objectElement = minim.toElement({ foo: 'bar' });
+objectElement.remove('foo');
+var keys = objectElement.keys() // []
+```
+
+> You can use elementa.meta.remove() or element.attributes.remove() because of this.
 
 ##### values
 
