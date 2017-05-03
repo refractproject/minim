@@ -3,6 +3,8 @@
 ## Breaking
 
 - Node 0.10 and 0.12 are no longer supported.
+- Elements `name` property was removed. There is no longer a name property in
+  Refract specification.
 
 ## Enhancements
 
