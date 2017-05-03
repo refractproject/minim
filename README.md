@@ -431,6 +431,26 @@ arrayElement.forEach(function(item) {
 }); // logs each value to console
 ```
 
+##### shift
+
+The `shift` method may be used to remove an item from the start of a Minim array.
+
+```javascript
+var arrayElement = minim.toElement(['a', 'b', 'c']);
+var element = arrayElement.shift();
+console.log(element.toValue()); // a
+```
+
+##### unshift
+
+The `unshift` method may be used to inserts items to the start of a Minim array.
+
+```javascript
+var arrayElement = minim.toElement(['a', 'b', 'c']);
+arrayElement.unshift('d');
+console.log(arrayElement.toValue()); // ['d', 'a', 'b', 'c']
+```
+
 ##### push
 
 The `push` method may be used to add items to a Minim array.

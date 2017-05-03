@@ -211,8 +211,24 @@ describe('ArrayElement', function() {
       expect(instance.get(4).toValue()).to.equal('foobar');
     };
 
+    describe('#shift', function() {
+      it('removes an item from the start of an array', function() {
+        var shifted = arrayElement.shift();
+        expect(arrayElement.length).to.equal(3);
+        expect(shifted.toValue()).to.equal('a');
+      });
+    });
+
+    describe('#unshift', function() {
+      it('adds a new item to the start of the array', function() {
+        arrayElement.unshift('foobar');
+        expect(arrayElement.length).to.equal(5);
+        expect(arrayElement.get(0).toValue()).to.equal('foobar');
+      });
+    });
+
     describe('#push', function() {
-      it('adds a new item to the array', function() {
+      it('adds a new item to the end of the array', function() {
         arrayElement.push('foobar');
         itAddsToArray(arrayElement);
       });
