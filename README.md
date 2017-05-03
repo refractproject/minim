@@ -511,6 +511,24 @@ var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
 arrayElement.contains('a'); // returns true
 ```
 
+##### length
+
+Returns the amount of items in the array element.
+
+```javascript
+arrayElement.length;
+```
+
+##### isEmpty
+
+Returns whether the array element is empty.
+
+```javascript
+if (arrayElement.isEmpty) {
+  console.log("We have an empty array");
+}
+```
+
 ##### first
 
 Returns the first element in the collection.

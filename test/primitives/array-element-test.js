@@ -206,6 +206,16 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#isEmpty', function () {
+      it('returns empty when there are no elements', function() {
+        expect(new ArrayElement().isEmpty).to.be.true;
+      });
+
+      it('returns non empty when there are elements', function() {
+        expect(arrayElement.isEmpty).to.be.false;
+      });
+    });
+
     function itAddsToArray(instance) {
       expect(instance.length).to.equal(5);
       expect(instance.get(4).toValue()).to.equal('foobar');
