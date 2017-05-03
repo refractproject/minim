@@ -1,3 +1,14 @@
+# Master
+
+## Breaking
+
+- Node 0.10 and 0.12 are no longer supported.
+
+## Enhancements
+
+- Elements now provide a `findRecursive` method allowing you to recursively
+  find matching elements.
+
 # 0.15.0 - 2017-04-03
 
 - Getters of link element will now return an element

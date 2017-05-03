@@ -195,6 +195,63 @@ var stringElement = minim.toElement("foobar");
 var stringElementClone = stringElement.clone();
 ```
 
+#### findRecursive
+
+Recursively find an element. Returns an ArrayElement containing all elements
+that match the given element name.
+
+```javascript
+const strings = element.findRecursive('string');
+```
+
+You may pass multiple element names to `findRecursive`. When multiple element
+names are passed down, minim will only find an element that is found within
+the other given elements. For example, we can pass in `member` and `string` so
+that we are recursively looking for all `string` elements that are found within a
+`member` element:
+
+```javascript
+const stringInsideMembers = element.findRecursive('member', 'string');
+```
+
+##### Parents
+
+Each returned element will include a new `parents` property which is an array
+element including the parents of the returned element.
+
+As an example, if I had an array element which contains a category element
+which in turn contains a string element with the content "Hello World". I can
+access the parent array and category element. The parents are in closest parent
+order.
+
+```json
+{
+  "element": "array",
+  "content": [
+    {
+      "element": "category",
+      "content": [
+        {
+          "element": "string",
+          "content": "Hello World"
+        }
+      ]
+    }
+  ]
+}
+```
+
+```javascript
+const elements = element.findRecursive('string');
+const helloString = elements.first();
+
+// Category Element
+helloString.parents[0];
+
+// Array Element
+helloString.parents[1];
+```
+
 ### Minim Elements
 
 Minim supports the following primitive elements
@@ -373,6 +430,26 @@ var arrayElement = minim.toElement(['a', 'b', 'c']);
 arrayElement.forEach(function(item) {
   console.log(item.toValue())
 }); // logs each value to console
+```
+
+##### shift
+
+The `shift` method may be used to remove an item from the start of a Minim array.
+
+```javascript
+var arrayElement = minim.toElement(['a', 'b', 'c']);
+var element = arrayElement.shift();
+console.log(element.toValue()); // a
+```
+
+##### unshift
+
+The `unshift` method may be used to inserts items to the start of a Minim array.
+
+```javascript
+var arrayElement = minim.toElement(['a', 'b', 'c']);
+arrayElement.unshift('d');
+console.log(arrayElement.toValue()); // ['d', 'a', 'b', 'c']
 ```
 
 ##### push

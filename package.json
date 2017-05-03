@@ -31,7 +31,7 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "coveralls": "^2.11.2",
-    "eslint": "^0.21.2",
+    "eslint": "^3.0.0",
     "istanbul": "^0.3.14",
     "karma": "^0.13.3",
     "karma-browserify": "^4.2.1",
@@ -48,5 +48,8 @@
   "dependencies": {
     "lodash": "^4.15.0",
     "uptown": "^0.4.1"
+  },
+  "engines": {
+    "node": ">=4"
   }
 }

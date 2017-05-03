@@ -231,4 +231,158 @@ describe('BaseElement', function() {
       });
     });
   });
+
+  context('when querying', function() {
+    it('returns empty array when there are no matching elements', function() {
+      const element = new minim.BaseElement();
+      const result = element.findRecursive('string');
+
+      expect(result.length).to.equal(0);
+    });
+
+    it('finds direct element', function() {
+      const StringElement = minim.getElementClass('string');
+      const element = new minim.BaseElement(
+        new StringElement('Hello World')
+      );
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['Hello World']);
+    });
+
+    it('finds direct element inside array', function() {
+      const ArrayElement = minim.getElementClass('array');
+      const StringElement = minim.getElementClass('string');
+      const NumberElement = minim.getElementClass('number');
+      const element = new ArrayElement([
+        new StringElement('One'),
+        new NumberElement(2),
+        new StringElement('Three'),
+      ]);
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['One', 'Three']);
+    });
+
+    it('finds direct element inside object', function() {
+      const ObjectElement = minim.getElementClass('object');
+      const MemberElement = minim.getElementClass('member');
+      const StringElement = minim.getElementClass('string');
+      const NumberElement = minim.getElementClass('number');
+
+      const element = new ObjectElement();
+      element.push(new MemberElement(new StringElement('key1'), new NumberElement(1)));
+      element.push(new MemberElement(new NumberElement(2), new StringElement('value2')));
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['key1', 'value2']);
+    });
+
+    it('finds non-direct element inside element', function() {
+      const StringElement = minim.getElementClass('string');
+
+      const element = new minim.BaseElement(
+        new minim.BaseElement(
+          new StringElement('Hello World')
+        )
+      );
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['Hello World']);
+    });
+
+    it('finds non-direct element inside array', function() {
+      const StringElement = minim.getElementClass('string');
+      const ArrayElement = minim.getElementClass('array');
+
+      const element = new minim.BaseElement(
+        new ArrayElement([
+          new StringElement('Hello World')
+        ])
+      );
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['Hello World']);
+    });
+
+    it('finds non-direct element inside object', function() {
+      const ObjectElement = minim.getElementClass('object');
+      const ArrayElement = minim.getElementClass('array');
+      const MemberElement = minim.getElementClass('member');
+      const StringElement = minim.getElementClass('string');
+      const NumberElement = minim.getElementClass('number');
+
+      const element = new ObjectElement();
+      element.push(new MemberElement(
+        new ArrayElement([new StringElement('key1')]),
+        new NumberElement(1)
+      ));
+      element.push(new MemberElement(
+        new NumberElement(2),
+        new ArrayElement([new StringElement('value2')])
+      ));
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['key1', 'value2']);
+    });
+
+    it('attaches parent tree to found objects', function () {
+      const StringElement = minim.getElementClass('string');
+      const ArrayElement = minim.getElementClass('array');
+
+      const hello = new StringElement('Hello World')
+      const array = new ArrayElement([hello]);
+      const element = new ArrayElement([array]);
+      array.id = 'Inner';
+      element.id = 'Outter';
+
+      const result = element.findRecursive('string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['Hello World']);
+
+      const helloElement = result.first();
+      const parentIDs = helloElement.parents.map(function (item) {
+        return item.id.toValue();
+      });
+      expect(parentIDs).to.deep.equal(['Inner', 'Outter']);
+    });
+
+    it('finds elements contained in given elements', function () {
+      const StringElement = minim.getElementClass('string');
+      const ArrayElement = minim.getElementClass('array');
+      const ObjectElement = minim.getElementClass('object');
+      const MemberElement = minim.getElementClass('member');
+
+      const object = new ObjectElement();
+      object.push(new MemberElement(
+        new StringElement('Three'),
+        new ArrayElement([
+          new StringElement('Four')
+        ])
+      ));
+
+      const element = new ArrayElement([
+        new StringElement('One'),
+        object
+      ]);
+
+      const result = element.findRecursive('member', 'array', 'string');
+
+      expect(result.element).to.equal('array');
+      expect(result.toValue()).to.deep.equal(['Four']);
+    });
+  });
 });
