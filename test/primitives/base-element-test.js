@@ -233,11 +233,11 @@ describe('BaseElement', function() {
   });
 
   context('when querying', function() {
-    it('returns null when there are no matching elements', function() {
+    it('returns empty array when there are no matching elements', function() {
       const element = new minim.BaseElement();
       const result = element.findRecursive('string');
 
-      expect(result).to.equal(null);
+      expect(result.length).to.equal(0);
     });
 
     it('finds direct element', function() {
