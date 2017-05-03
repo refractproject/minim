@@ -221,7 +221,8 @@ element including the parents of the returned element.
 
 As an example, if I had an array element which contains a category element
 which in turn contains a string element with the content "Hello World". I can
-access the parent array and category element.
+access the parent array and category element. The parents are in closest parent
+order.
 
 ```json
 {
@@ -244,10 +245,10 @@ access the parent array and category element.
 const elements = element.findRecursive('string');
 const helloString = elements.first();
 
-// Array Element
+// Category Element
 helloString.parents[0];
 
-// Category Element
+// Array Element
 helloString.parents[1];
 ```
 

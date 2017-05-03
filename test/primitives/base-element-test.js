@@ -357,7 +357,7 @@ describe('BaseElement', function() {
       const parentIDs = helloElement.parents.map(function (item) {
         return item.id.toValue();
       });
-      expect(parentIDs).to.deep.equal(['Outter', 'Inner']);
+      expect(parentIDs).to.deep.equal(['Inner', 'Outter']);
     });
 
     it('finds elements contained in given elements', function () {
