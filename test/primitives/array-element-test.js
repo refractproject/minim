@@ -216,6 +216,15 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#remove', function () {
+      it('removes the specified item', function () {
+        var removed = arrayElement.remove(0);
+
+        expect(removed.toValue()).to.equal('a');
+        expect(arrayElement.length).to.equal(3);
+      });
+    });
+
     function itAddsToArray(instance) {
       expect(instance.length).to.equal(5);
       expect(instance.get(4).toValue()).to.equal('foobar');

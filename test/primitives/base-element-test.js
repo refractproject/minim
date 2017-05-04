@@ -151,6 +151,38 @@ describe('BaseElement', function() {
     });
   });
 
+  describe('removing meta properties', function() {
+    var el = minim.fromRefract({
+      element: 'string',
+      meta: {
+        id: 'foobar',
+        classes: ['a'],
+        title: 'A Title',
+        description: 'A Description'
+      }
+    });
+
+    it('should allow removing property', function () {
+      el.meta.remove('title');
+      expect(el.meta.keys()).to.deep.equal(['id', 'classes', 'description']);
+    });
+  });
+
+  describe('removing attribute properties', function() {
+    var el = minim.fromRefract({
+      element: 'string',
+      attributes: {
+        href: 'foobar',
+        relation: 'create'
+      }
+    });
+
+    it('should allow removing property', function () {
+      el.attributes.remove('href');
+      expect(el.attributes.keys()).to.deep.equal(['relation']);
+    });
+  });
+
   describe('hyperlinking', function() {
     context('when converting from Refract with links', function() {
       var el;
