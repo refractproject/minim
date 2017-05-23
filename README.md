@@ -195,34 +195,18 @@ var stringElement = minim.toElement("foobar");
 var stringElementClone = stringElement.clone();
 ```
 
-#### findRecursive
+##### parent
 
-Recursively find an element. Returns an ArrayElement containing all elements
-that match the given element name.
-
-```javascript
-const strings = element.findRecursive('string');
-```
-
-You may pass multiple element names to `findRecursive`. When multiple element
-names are passed down, minim will only find an element that is found within
-the other given elements. For example, we can pass in `member` and `string` so
-that we are recursively looking for all `string` elements that are found within a
-`member` element:
+Returns the elements parent element. This will be undefined if the element was
+not added as a child of another element.
 
 ```javascript
-const stringInsideMembers = element.findRecursive('member', 'string');
+var parent = element.parent;
 ```
 
-##### Parents
+##### parents
 
-Each returned element will include a new `parents` property which is an array
-element including the parents of the returned element.
-
-As an example, if I had an array element which contains a category element
-which in turn contains a string element with the content "Hello World". I can
-access the parent array and category element. The parents are in closest parent
-order.
+Returns the complete parent hierachy as an array.
 
 ```json
 {
@@ -242,14 +226,30 @@ order.
 ```
 
 ```javascript
-const elements = element.findRecursive('string');
-const helloString = elements.first();
-
 // Category Element
-helloString.parents[0];
+helloWorld.parents[0];
 
 // Array Element
-helloString.parents[1];
+helloWorld.parents[1];
+```
+
+#### findRecursive
+
+Recursively find an element. Returns an array containing all elements
+that match the given element name.
+
+```javascript
+const strings = element.findRecursive('string');
+```
+
+You may pass multiple element names to `findRecursive`. When multiple element
+names are passed down, minim will only find an element that is found within
+the other given elements. For example, we can pass in `member` and `string` so
+that we are recursively looking for all `string` elements that are found within a
+`member` element:
+
+```javascript
+const stringInsideMembers = element.findRecursive('member', 'string');
 ```
 
 ### Minim Elements
