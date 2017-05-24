@@ -1,3 +1,18 @@
+# Master
+
+## Breaking
+
+- `findRecursive` now returns an array instead of an `ArrayElement`.
+- The parents on the elements returned by `findRecursive` are no longer an
+  `ArrayElement`.
+
+## Enhancements
+
+- Element now contains a `parent` property which may be set to an elements
+  parent element.
+- Element has a `parents` property returning all of the parent elements of an
+  element.
+
 # 0.16.0 - 2017-05-04
 
 ## Breaking

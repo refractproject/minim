@@ -20,6 +20,25 @@ describe('ArrayElement', function() {
       setArray();
     });
 
+    describe('#constructor', function() {
+      it('sets content element parent to element', function() {
+        var element = new ArrayElement(['Hello World']);
+        var child = element.get(0);
+
+        expect(child.parent).to.equal(element);
+      });
+    });
+
+    describe('#fromRefract', function() {
+      it('sets content element parent to element', function() {
+        var element = minim.fromRefract({element: 'array', content: ['Hello World']});
+        var child = element.get(0);
+
+        expect(child.parent).to.equal(element);
+      });
+    });
+
+
     describe('.content', function() {
       var correctElementNames;
       var storedElementNames;
@@ -236,6 +255,11 @@ describe('ArrayElement', function() {
         expect(arrayElement.length).to.equal(3);
         expect(shifted.toValue()).to.equal('a');
       });
+
+      it('unsets removed items parent', function() {
+        var shifted = arrayElement.shift();
+        expect(shifted.parent).to.be.undefined;
+      });
     });
 
     describe('#unshift', function() {
@@ -244,6 +268,13 @@ describe('ArrayElement', function() {
         expect(arrayElement.length).to.equal(5);
         expect(arrayElement.get(0).toValue()).to.equal('foobar');
       });
+
+      it('sets parent of added element', function() {
+        arrayElement.unshift('foobar');
+        var element = arrayElement.get(0);
+
+        expect(element.parent).to.equal(arrayElement);
+      });
     });
 
     describe('#push', function() {
@@ -251,12 +282,27 @@ describe('ArrayElement', function() {
         arrayElement.push('foobar');
         itAddsToArray(arrayElement);
       });
+
+      it('sets parent of added element', function() {
+        arrayElement.push('foobar');
+        var element = arrayElement.get(4);
+
+        expect(element.parent).to.equal(arrayElement);
+      });
     });
 
     describe('#add', function() {
       it('adds a new item to the array', function() {
         arrayElement.add('foobar');
         itAddsToArray(arrayElement);
+      });
+
+
+      it('sets parent of added element', function() {
+        arrayElement.push('foobar');
+        var element = arrayElement.get(4);
+
+        expect(element.parent).to.equal(arrayElement);
       });
     });
 
