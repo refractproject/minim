@@ -23,12 +23,6 @@ describe('NumberElement', function() {
     });
   });
 
-  describe('#toValue', function() {
-    it('returns the number', function() {
-      expect(numberElement.toValue()).to.equal(4);
-    });
-  });
-
   describe('#toRefract', function() {
     var expected = {
       element: 'number',

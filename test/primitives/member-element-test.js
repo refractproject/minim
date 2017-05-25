@@ -16,12 +16,6 @@ describe('MemberElement', function() {
     expect(member.attributes.get('foo').toValue()).to.equal('bar');
   });
 
-  describe('#toValue', function () {
-    it('returns a hash with key and value', function () {
-      expect(member.toValue()).to.deep.equal({ key: 'foo', value: 'bar' });
-    });
-  });
-
   describe('#toRefract', function() {
     it('returns the correct Refract value', function() {
       expect(member.toRefract()).to.deep.equal({

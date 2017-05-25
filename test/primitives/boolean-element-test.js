@@ -23,12 +23,6 @@ describe('BooleanElement', function() {
     });
   });
 
-  describe('#toValue', function() {
-    it('returns the boolean', function() {
-      expect(booleanElement.toValue()).to.equal(true);
-    });
-  });
-
   describe('#toRefract', function() {
     var expected;
 

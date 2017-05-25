@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
+var KeyValuePair = require('../../lib/primitives/key-value-pair');
 
 describe('BaseElement', function() {
   context('when initializing', function() {
@@ -415,6 +416,44 @@ describe('BaseElement', function() {
 
       expect(result.element).to.equal('array');
       expect(result.toValue()).to.deep.equal(['Four']);
+    });
+  });
+
+  describe('#toValue', function () {
+    it('returns raw value', function () {
+      const element = new minim.BaseElement(1);
+
+      expect(element.toValue()).to.equal(1);
+    });
+
+    it('returns element value', function () {
+      const element = new minim.BaseElement(
+        new minim.BaseElement('Hello')
+      );
+
+      expect(element.toValue()).to.equal('Hello');
+    });
+
+    it('returns array of element value', function () {
+      const element = new minim.BaseElement([
+        new minim.BaseElement('Hello')
+      ]);
+
+      expect(element.toValue()).to.deep.equal(['Hello']);
+    });
+
+    it('returns KeyValuePair value', function () {
+      const element = new minim.BaseElement(
+        new KeyValuePair(
+          new minim.BaseElement('name'),
+          new minim.BaseElement('doe')
+        )
+      );
+
+      expect(element.toValue()).to.deep.equal({
+        key: 'name',
+        value: 'doe'
+      });
     });
   });
 });

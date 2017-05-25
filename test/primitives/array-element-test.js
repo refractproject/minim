@@ -48,12 +48,6 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#toValue', function() {
-      it('returns the array', function() {
-        expect(arrayElement.toValue()).to.deep.equal(['a', true, null, 1]);
-      });
-    });
-
     describe('#toRefract', function() {
       var expected = {
         element: 'array',

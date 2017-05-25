@@ -23,12 +23,6 @@ describe('StringElement', function() {
     });
   });
 
-  describe('#toValue', function() {
-    it('returns the string', function() {
-      expect(stringElement.toValue()).to.equal('foobar');
-    });
-  });
-
   describe('#toRefract', function() {
     var expected = {
       element: 'string',
