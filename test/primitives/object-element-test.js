@@ -59,58 +59,6 @@ describe('ObjectElement', function() {
     });
   });
 
-  describe('#toRefract', function() {
-    var expected = {
-      element: 'object',
-      meta: {},
-      attributes: {},
-      content: [
-        {
-          element: 'member',
-          meta: {},
-          attributes: {},
-          content: {
-            key: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'foo'
-            },
-            value: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'bar'
-            }
-          }
-        },
-        {
-          element: 'member',
-          meta: {},
-          attributes: {},
-          content: {
-            key: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'z'
-            },
-            value: {
-              element: 'number',
-              meta: {},
-              attributes: {},
-              content: 1
-            }
-          }
-        }
-      ]
-    };
-
-    it('returns an object element', function() {
-      expect(objectElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     context('when a property name is given', function() {
       it('returns the value of the name given', function() {

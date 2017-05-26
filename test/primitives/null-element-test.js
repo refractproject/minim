@@ -23,19 +23,6 @@ describe('NullElement', function() {
     });
   });
 
-  describe('#toRefract', function() {
-    var expected = {
-      element: 'null',
-      meta: {},
-      attributes: {},
-      content: null
-    };
-
-    it('returns a null element', function() {
-      expect(nullElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the null value', function() {
       expect(nullElement.toValue()).to.equal(null);

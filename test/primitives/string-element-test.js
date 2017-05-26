@@ -23,19 +23,6 @@ describe('StringElement', function() {
     });
   });
 
-  describe('#toRefract', function() {
-    var expected = {
-      element: 'string',
-      meta: {},
-      attributes: {},
-      content: 'foobar'
-    };
-
-    it('returns a string element', function() {
-      expect(stringElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the string value', function() {
       expect(stringElement.toValue()).to.equal('foobar');
@@ -46,15 +33,6 @@ describe('StringElement', function() {
     it('sets the value of the string', function() {
       stringElement.set('hello world');
       expect(stringElement.toValue()).to.equal('hello world');
-    });
-  });
-
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = stringElement.clone();
-      expect(clone).to.be.instanceOf(StringElement);
-      expect(clone).to.not.equal(stringElement);
-      expect(clone.toRefract()).to.deep.equal(stringElement.toRefract());
     });
   });
 });

@@ -48,41 +48,6 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#toRefract', function() {
-      var expected = {
-        element: 'array',
-        meta: {},
-        attributes: {},
-        content: [
-          {
-            element: 'string',
-            meta: {},
-            attributes: {},
-            content: 'a'
-          }, {
-            element: 'boolean',
-            meta: {},
-            attributes: {},
-            content: true
-          }, {
-            element: 'null',
-            meta: {},
-            attributes: {},
-            content: null
-          }, {
-            element: 'number',
-            meta: {},
-            attributes: {},
-            content: 1
-          }
-        ]
-      };
-
-      it('returns an array element', function() {
-        expect(arrayElement.toRefract()).to.deep.equal(expected);
-      });
-    });
-
     describe('#get', function() {
       context('when an index is given', function() {
         it('returns the item from the array', function() {

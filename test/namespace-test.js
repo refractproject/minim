@@ -104,45 +104,6 @@ describe('Minim namespace', function() {
     });
   });
 
-  describe('#toElement', function() {
-    it('should handle values that are ElementClass subclass instances', function() {
-      var myElement = new StringElement();
-      var converted = namespace.toElement(myElement);
-
-      expect(converted).to.equal(myElement);
-    });
-
-    it('should allow for roundtrip conversions for values', function() {
-      namespace.register('foo', StringElement);
-
-      // Refract
-      var refracted = namespace.fromRefract({ element: 'foo', meta: {}, attributes: {}, content: 'test' }).toRefract();
-      expect(refracted).to.deep.equal({ element: 'foo', meta: {}, attributes: {}, content: 'test' });
-    });
-
-    it('should allow for roundtrip conversions for collection elements', function() {
-      namespace.register('foo', ArrayElement);
-
-      var refractSample = {
-        element: 'foo',
-        meta: {},
-        attributes: {},
-        content: [
-          {
-            element: 'string',
-            meta: {},
-            attributes: {},
-            content: 'bar'
-          }
-        ]
-      }
-
-      // Refract
-      var refracted = namespace.fromRefract(refractSample).toRefract();
-      expect(refracted).to.deep.equal(refractSample);
-    });
-  });
-
   describe('#getElementClass', function() {
     it('should return ElementClass for unknown elements', function() {
       expect(namespace.getElementClass('unknown')).to.equal(namespace.BaseElement);

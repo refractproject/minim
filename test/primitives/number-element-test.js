@@ -23,19 +23,6 @@ describe('NumberElement', function() {
     });
   });
 
-  describe('#toRefract', function() {
-    var expected = {
-      element: 'number',
-      meta: {},
-      attributes: {},
-      content: 4
-    };
-
-    it('returns a number element', function() {
-      expect(numberElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the number value', function() {
       expect(numberElement.toValue()).to.equal(4);

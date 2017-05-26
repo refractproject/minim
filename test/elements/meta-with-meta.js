@@ -20,40 +20,7 @@ describe('Element whose meta has meta', function() {
   });
 
   it('returns the correct Refract value', function() {
-    expect(object.toRefract()).to.deep.equal({
-      element: 'object',
-      meta: {
-        baz: {
-          element: 'string',
-          meta: {
-            pqr: 1
-          },
-          attributes: {},
-          content: 'xyz'
-        }
-      },
-      attributes: {},
-      content: [
-        {
-          element: 'member',
-          meta: {},
-          attributes: {},
-          content: {
-            key: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'foo'
-            },
-            value: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'bar'
-            }
-          }
-        }
-      ]
-    });
+    const pqr = object.meta.get('baz').meta.getValue('pqr');
+    expect(pqr).to.equal(1);
   });
 });

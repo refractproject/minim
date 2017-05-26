@@ -15,28 +15,4 @@ describe('MemberElement', function() {
   it('correctly sets the attributes', function() {
     expect(member.attributes.get('foo').toValue()).to.equal('bar');
   });
-
-  describe('#toRefract', function() {
-    it('returns the correct Refract value', function() {
-      expect(member.toRefract()).to.deep.equal({
-        element: 'member',
-        meta: {},
-        attributes: { foo: 'bar' },
-        content: {
-          key: {
-            element: 'string',
-            meta: {},
-            attributes: {},
-            content: 'foo'
-          },
-          value: {
-            element: 'string',
-            meta: {},
-            attributes: {},
-            content: 'bar'
-          }
-        }
-      });
-    });
-  });
 })
