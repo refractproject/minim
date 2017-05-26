@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
-var KeyValuePair = require('../../lib/primitives/key-value-pair');
+var KeyValuePair = require('../../lib/key-value-pair');
 var JSONSerialiser = require('../../lib/serialisers/json');
 
 describe('JSON Serialiser', function() {
