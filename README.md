@@ -41,7 +41,7 @@ var el = {
 ```javascript
 var minim = require('minim').namespace();
 var arrayElement = minim.toElement([1, 2, 3]);
-var refract = arrayElement.toRefract();
+var refract = minim.toRefract(arrayElement);
 ```
 
 The `refract` variable above has the following JSON value.
@@ -80,7 +80,7 @@ Serialized Refract can be converted back to Minim elements to make a roundtrip.
 
 ```javascript
 var arrayElement1 = minim.toElement([1, 2, 3]);
-var refracted = arrayElement1.toRefract();
+var refracted = minim.toRefract(arrayElement1);
 var arrayElement2 = minim.fromRefract(refracted);
 ```
 
@@ -145,17 +145,6 @@ The `toValue` method returns the JSON value of the Minim element.
 ```javascript
 var arrayElement = minim.toElement([1, 2, 3]);
 var arrayValue = arrayElement.toValue(); // [1, 2, 3]
-```
-
-#### toRefract
-
-The `toRefract` method returns the Refract value of the Minim element.
-
-Note that if any element in `meta` has metadata or attributes defined that would be lost by calling `toValue()` then that element is also converted to refract.
-
-```javascript
-var arrayElement = minim.toElement([1, 2, 3]);
-var refract = arrayElement.toRefract(); // See converting to elements above
 ```
 
 #### toEmbeddedRefract
@@ -677,7 +666,22 @@ const values = objectElement.map((value, key, member) => {
 });
 ```
 
-### Customizing Namespaces
+### Namespace
+
+#### Namespace Methods
+
+##### `toRefract`
+
+The `toRefract` method returns the Refract value of the Minim element.
+
+Note that if any element in `meta` has metadata or attributes defined that would be lost by calling `toValue()` then that element is also converted to refract.
+
+```javascript
+var arrayElement = namespace.toElement([1, 2, 3]);
+var refract = namespace.toRefract();
+```
+
+#### Customizing Namespaces
 
 Minim allows you to register custom elements. For example, if the element name you wish to handle is called `category` and it should be handled like an array:
 
