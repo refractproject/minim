@@ -447,4 +447,67 @@ describe('BaseElement', function() {
       });
     });
   });
+
+  describe('#clone', function () {
+    it('clones an element', function () {
+      var element = new minim.BaseElement('hello');
+      var cloned = element.clone();
+
+      expect(cloned.content).to.equal(element.content);
+      expect(cloned).not.to.equal(element);
+    });
+
+    it('clones an element name', function () {
+      var element = new minim.BaseElement('hello');
+      element.element = 'test';
+      var cloned = element.clone();
+
+      expect(cloned.element).to.equal('test');
+    });
+
+    it('clones an element with child element', function () {
+      var child = new minim.BaseElement('child');
+      var element = new minim.BaseElement(child);
+      var cloned = element.clone();
+
+      expect(cloned.content).not.to.equal(child);
+      expect(cloned.content.content).to.equal('child');
+    });
+
+    it('clones an element with array of elements', function () {
+      var child = new minim.BaseElement('child');
+      var element = new minim.BaseElement([child]);
+      var cloned = element.clone();
+
+      expect(cloned.content[0]).not.to.equal(child);
+      expect(cloned.content[0].content).to.equal('child');
+    });
+
+    it('clones an element with key value pair', function () {
+      var child = new minim.BaseElement('name');
+      var element = new minim.elements.Member(child);
+      var cloned = element.clone();
+
+      expect(cloned.content.key).not.to.equal(child);
+      expect(cloned.content.key.content).to.equal('name');
+    });
+
+    it('clones meta values', function () {
+      var element = new minim.BaseElement();
+      element.title = 'Test';
+
+      var cloned = element.clone();
+
+      expect(cloned.title.toValue()).to.equal('Test');
+    });
+
+    it('clones attributes values', function () {
+      var element = new minim.BaseElement();
+      element.attributes.set('name', 'Test');
+
+      var cloned = element.clone();
+
+      expect(cloned.attributes.get('name').toValue()).to.equal('Test');
+    });
+  });
 });

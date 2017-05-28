@@ -34,13 +34,4 @@ describe('NullElement', function() {
       expect(nullElement.set('foobar')).to.be.an.instanceof(Error);
     });
   });
-
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = nullElement.clone();
-      expect(clone).to.be.instanceOf(NullElement);
-      expect(clone).to.not.equal(nullElement);
-      expect(clone.toRefract()).to.deep.equal(nullElement.toRefract());
-    });
-  });
 });

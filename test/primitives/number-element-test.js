@@ -35,13 +35,4 @@ describe('NumberElement', function() {
       expect(numberElement.toValue()).to.equal(10);
     });
   });
-
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = numberElement.clone();
-      expect(clone).to.be.instanceOf(NumberElement);
-      expect(clone).to.not.equal(numberElement);
-      expect(clone.toRefract()).to.deep.equal(numberElement.toRefract());
-    });
-  });
 });

@@ -35,13 +35,4 @@ describe('BooleanElement', function() {
       expect(booleanElement.toValue()).to.equal(false);
     });
   });
-
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = booleanElement.clone();
-      expect(clone).to.be.instanceOf(BooleanElement);
-      expect(clone).to.not.equal(booleanElement);
-      expect(clone.toRefract()).to.deep.equal(booleanElement.toRefract());
-    });
-  });
 });

@@ -219,15 +219,6 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#clone', function() {
-      it('creates a deep clone of the element', function() {
-        var clone = arrayElement.clone();
-        expect(clone).to.be.instanceOf(ArrayElement);
-        expect(clone).to.not.equal(arrayElement);
-        expect(clone.toRefract()).to.deep.equal(arrayElement.toRefract());
-      });
-    });
-
     if (typeof Symbol !== 'undefined') {
       describe('#[Symbol.iterator]', function() {
         it('can be used in a for ... of loop', function() {
