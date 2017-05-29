@@ -182,6 +182,12 @@ describe('ArrayElement', function() {
         expect(removed.toValue()).to.equal('a');
         expect(arrayElement.length).to.equal(3);
       });
+
+      it('removing unknown item', function () {
+        var removed = arrayElement.remove(10);
+
+        expect(removed).to.be.null;
+      });
     });
 
     function itAddsToArray(instance) {

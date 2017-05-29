@@ -35,4 +35,10 @@ describe('StringElement', function() {
       expect(stringElement.toValue()).to.equal('hello world');
     });
   });
+
+  describe('#length', function() {
+    it('returns the length of the string', function() {
+      expect(stringElement.length).to.equal(11);
+    });
+  });
 });

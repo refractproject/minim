@@ -1,11 +1,27 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
+var Namespace = require('../../lib/minim').Namespace;
 var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
 var JSONSerialiser = require('../../lib/serialisers/json');
 
 describe('JSON Serialiser', function() {
-  var serialiser = new JSONSerialiser(minim);
+  var serialiser;
+
+  beforeEach(function () {
+    serialiser = new JSONSerialiser(minim);
+  });
+
+  describe('initialisation', function() {
+    it('uses given namespace', function() {
+      expect(serialiser.namespace).to.equal(minim);
+    });
+
+    it('creates a default namespace when no namespace is given', function() {
+      serialiser = new JSONSerialiser();
+      expect(serialiser.namespace).to.be.instanceof(Namespace);
+    });
+  });
 
   describe('serialisation', function() {
     it('serialises a primitive element', function() {
@@ -134,6 +150,27 @@ describe('JSON Serialiser', function() {
         content: 'Hello World'
       });
     });
+
+    it('serialises an element with custom element attributes', function() {
+      var element = new minim.elements.String('Hello World')
+      element.attributes.set('thread', new minim.BaseElement(123));
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'string',
+        meta: {},
+        attributes: {
+          thread: {
+            element: 'element',
+            meta: {},
+            attributes: {},
+            content: 123
+          }
+        },
+        content: 'Hello World'
+      });
+    });
   });
 
   describe('deserialisation', function() {
@@ -210,6 +247,24 @@ describe('JSON Serialiser', function() {
       expect(element.key.content).to.equal('name');
       expect(element.value).to.be.instanceof(minim.elements.String);
       expect(element.value.content).to.equal('Doe');
+    });
+
+    it('deserialise from a JSON object containing a key-value pair without value', function() {
+      var element = serialiser.deserialise({
+        element: 'member',
+        content: {
+          key: {
+            element: 'string',
+            content: 'name',
+          }
+        }
+      });
+
+      expect(element).to.be.instanceof(minim.elements.Member);
+      expect(element.content).to.be.instanceof(KeyValuePair);
+      expect(element.key).to.be.instanceof(minim.elements.String);
+      expect(element.key.content).to.equal('name');
+      expect(element.value).to.be.undefined;
     });
 
     it('deserialise meta', function() {

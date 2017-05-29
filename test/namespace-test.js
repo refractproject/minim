@@ -1,6 +1,7 @@
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
 var Namespace = require('../lib/namespace');
+var JSONSerialiser = require('../lib/serialisers/json');
 
 describe('Minim namespace', function() {
   var namespace;
@@ -134,6 +135,51 @@ describe('Minim namespace', function() {
 
     it('should contain the base element', function () {
       expect(namespace.elements.BaseElement).to.equal(namespace.BaseElement);
+    });
+  });
+
+  describe('#toElement', function () {
+    it('returns element when given element', function () {
+      const element = new StringElement('hello');
+      const toElement = namespace.toElement(element);
+
+      expect(toElement).to.equal(element);
+    });
+
+    it('returns string element when given string', function () {
+      const element = namespace.toElement('hello');
+
+      expect(element).to.be.instanceof(StringElement);
+      expect(element.toValue()).to.equal('hello');
+    });
+  });
+
+  describe('serialisation', function () {
+    it('provides a convenience serialiser', function () {
+      expect(namespace.serialiser).to.be.instanceof(JSONSerialiser);
+      expect(namespace.serialiser.namespace).to.equal(namespace);
+    });
+
+    it('provides a convenience fromRefract', function () {
+      const element = namespace.fromRefract({
+        element: 'string',
+        content: 'hello'
+      });
+
+      expect(element).to.be.instanceof(StringElement);
+      expect(element.toValue()).to.equal('hello');
+    });
+
+    it('provides a convenience toRefract', function () {
+      const element = new StringElement('hello');
+      const object = namespace.toRefract(element);
+
+      expect(object).to.deep.equal({
+        element: 'string',
+        meta: {},
+        attributes: {},
+        content: 'hello'
+      });
     });
   });
 });

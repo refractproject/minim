@@ -43,6 +43,24 @@ describe('BaseElement', function() {
     });
   });
 
+  describe('#meta', function() {
+    var element;
+
+    before(function() {
+      element = new minim.BaseElement();
+      element.meta.set('title', 'test');
+    });
+
+    it('retains the correct values', function() {
+      expect(element.meta.getValue('title')).to.equal('test');
+    });
+
+    it('allows setting new attributes', function() {
+      element.meta = {'title': 'test2'};
+      expect(element.meta.getValue('title')).to.equal('test2');
+    });
+  });
+
   describe('#attributes', function() {
     var element;
 
@@ -53,6 +71,11 @@ describe('BaseElement', function() {
 
     it('retains the correct values', function() {
       expect(element.attributes.getValue('foo')).to.equal('bar');
+    });
+
+    it('allows setting new attributes', function() {
+      element.attributes = {'test': 'bar'};
+      expect(element.attributes.getValue('test')).to.equal('bar');
     });
   });
 
@@ -81,6 +104,13 @@ describe('BaseElement', function() {
         expect(el.element).to.equal('foobar');
       });
     })
+  });
+
+  describe('#primitive', function() {
+    it('returns undefined primitive', function() {
+      const element = new minim.BaseElement();
+      expect(element.primitive()).to.be.undefined;
+    });
   });
 
   describe('#equals', function() {
@@ -253,6 +283,16 @@ describe('BaseElement', function() {
           });
         });
       });
+    });
+
+    it('allows setting links', function() {
+      const element = new minim.BaseElement();
+      element.links = new minim.elements.Array([
+        new minim.elements.Link('el')
+      ]);
+
+      expect(element.links).to.be.instanceof(minim.elements.Array);
+      expect(element.links.length).to.equal(1);
     });
   });
 
