@@ -61,6 +61,20 @@ describe('JSON Serialiser', function() {
       });
     });
 
+    it('serialise an element with object content', function() {
+      var element = new minim.elements.BaseElement({ message: 'hello' });
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'element',
+        meta: {},
+        attributes: {},
+        content: {
+          message: 'hello'
+        }
+      });
+    });
+
     it('serialises an element containing a pair', function() {
       var name = new minim.elements.String('name')
       var doe = new minim.elements.String('Doe')
@@ -161,6 +175,18 @@ describe('JSON Serialiser', function() {
       expect(element).to.be.instanceof(minim.elements.Array);
       expect(element.content[0]).to.be.instanceof(minim.elements.String);
       expect(element.content[0].content).to.equal('Hello');
+    });
+
+    it('deserialises from a JSON object containing JSON object content', function() {
+      var element = serialiser.deserialise({
+        element: 'element',
+        content: {
+          message: 'hello'
+        }
+      });
+
+      expect(element).to.be.instanceof(minim.elements.BaseElement);
+      expect(element.content).to.deep.equal({ message: 'hello' });
     });
 
     it('deserialise from a JSON object containing a key-value pair', function() {
