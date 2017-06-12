@@ -241,6 +241,36 @@ helloString.parents[0];
 helloString.parents[1];
 ```
 
+#### children
+
+The `children` property returns an `ArrayElement` containing all of the direct children elements.
+
+```javascript
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
+var numbers = arrayElement.children(function(el) {
+  return el.element === 'number';
+}).toValue(); // [3]
+```
+
+#### recursiveChildren
+
+The `recursiveChildren` property returns an `ArrayElement` containing all of the children elements recursively.
+
+```javascript
+var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
+var children = arrayElement.recursiveChildren;
+children.toValue(); // ['a', 1, 2, 'b', 3]
+```
+
+##### Chaining
+
+```javascript
+var evenNumbers = array
+  .recursiveChildren
+  .findByElement('number')
+  .filter((element) => element.toValue() % 2)
+```
+
 ### Minim Elements
 
 Minim supports the following primitive elements
@@ -479,19 +509,6 @@ The `findByClass` method traverses the entire descendent element tree and return
 ##### findByElement
 
 The `findByElement` method traverses the entire descendent element tree and returns an `ArrayElement` of all elements that match the given element name.
-
-##### children
-
-The `children` method traverses direct descendants and returns an `ArrayElement` of all elements that match the condition function given.
-
-```javascript
-var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
-var numbers = arrayElement.children(function(el) {
-  return el.element === 'number';
-}).toValue(); // [3]
-```
-
-Because only children are tested with the condition function, the values `[1, 2]` are seen as an `array` type whose content is never tested. Thus, the only direct child which is a number element is `3`.
 
 ##### getById
 

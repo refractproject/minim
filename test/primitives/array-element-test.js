@@ -298,7 +298,7 @@ describe('ArrayElement', function() {
 
     before(function() {
       doc = minim.fromRefract(refract);
-      strings = doc.children(function(el) {
+      strings = doc.children.filter(function(el) {
         return el.element === 'string';
       });
       recursiveStrings = doc.find(function(el) {

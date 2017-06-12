@@ -7,6 +7,33 @@
   provides a convenience `toRefract(element)` and `fromRefract(object)`
   methods.
 
+- `ArrayElement` `children` method has been replaced by a `children` property
+  on all elements. You may now chain children in conjunction with `filter` to
+  get the existing behaviour.
+
+  Before:
+
+  ```js
+  const numbers = doc.children((element) => element.element == 'number');
+  ```
+
+  After:
+
+  ```js
+  const numbers = doc.children.filter((element) => element.element == 'number');
+  ```
+
+  *OR*
+
+  ```js
+  const numbers = doc.children.findByElement('number');
+  ```
+
+## Enhancements
+
+- All elements now contain a `children` and `recursiveChildren` properties that
+  return an ArrayElement of the respective children elements.
+
 # 0.16.0 - 2017-05-04
 
 ## Breaking
