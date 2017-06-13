@@ -1,3 +1,12 @@
+# Master
+
+## Breaking
+
+- `Element.toRefract()` and `Element.fromRefract()` have been removed. JSON
+  Serialisation is now decoupled from the Element model. A minim namespace
+  provides a convenience `toRefract(element)` and `fromRefract(object)`
+  methods.
+
 # 0.16.0 - 2017-05-04
 
 ## Breaking

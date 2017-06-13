@@ -23,25 +23,6 @@ describe('NumberElement', function() {
     });
   });
 
-  describe('#toValue', function() {
-    it('returns the number', function() {
-      expect(numberElement.toValue()).to.equal(4);
-    });
-  });
-
-  describe('#toRefract', function() {
-    var expected = {
-      element: 'number',
-      meta: {},
-      attributes: {},
-      content: 4
-    };
-
-    it('returns a number element', function() {
-      expect(numberElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the number value', function() {
       expect(numberElement.toValue()).to.equal(4);
@@ -52,15 +33,6 @@ describe('NumberElement', function() {
     it('sets the value of the number', function() {
       numberElement.set(10);
       expect(numberElement.toValue()).to.equal(10);
-    });
-  });
-
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = numberElement.clone();
-      expect(clone).to.be.instanceOf(NumberElement);
-      expect(clone).to.not.equal(numberElement);
-      expect(clone.toRefract()).to.deep.equal(numberElement.toRefract());
     });
   });
 });

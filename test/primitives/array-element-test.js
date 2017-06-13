@@ -48,47 +48,6 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#toValue', function() {
-      it('returns the array', function() {
-        expect(arrayElement.toValue()).to.deep.equal(['a', true, null, 1]);
-      });
-    });
-
-    describe('#toRefract', function() {
-      var expected = {
-        element: 'array',
-        meta: {},
-        attributes: {},
-        content: [
-          {
-            element: 'string',
-            meta: {},
-            attributes: {},
-            content: 'a'
-          }, {
-            element: 'boolean',
-            meta: {},
-            attributes: {},
-            content: true
-          }, {
-            element: 'null',
-            meta: {},
-            attributes: {},
-            content: null
-          }, {
-            element: 'number',
-            meta: {},
-            attributes: {},
-            content: 1
-          }
-        ]
-      };
-
-      it('returns an array element', function() {
-        expect(arrayElement.toRefract()).to.deep.equal(expected);
-      });
-    });
-
     describe('#get', function() {
       context('when an index is given', function() {
         it('returns the item from the array', function() {
@@ -223,6 +182,12 @@ describe('ArrayElement', function() {
         expect(removed.toValue()).to.equal('a');
         expect(arrayElement.length).to.equal(3);
       });
+
+      it('removing unknown item', function () {
+        var removed = arrayElement.remove(10);
+
+        expect(removed).to.be.null;
+      });
     });
 
     function itAddsToArray(instance) {
@@ -257,15 +222,6 @@ describe('ArrayElement', function() {
       it('adds a new item to the array', function() {
         arrayElement.add('foobar');
         itAddsToArray(arrayElement);
-      });
-    });
-
-    describe('#clone', function() {
-      it('creates a deep clone of the element', function() {
-        var clone = arrayElement.clone();
-        expect(clone).to.be.instanceOf(ArrayElement);
-        expect(clone).to.not.equal(arrayElement);
-        expect(clone.toRefract()).to.deep.equal(arrayElement.toRefract());
       });
     });
 

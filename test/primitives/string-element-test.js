@@ -23,25 +23,6 @@ describe('StringElement', function() {
     });
   });
 
-  describe('#toValue', function() {
-    it('returns the string', function() {
-      expect(stringElement.toValue()).to.equal('foobar');
-    });
-  });
-
-  describe('#toRefract', function() {
-    var expected = {
-      element: 'string',
-      meta: {},
-      attributes: {},
-      content: 'foobar'
-    };
-
-    it('returns a string element', function() {
-      expect(stringElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     it('returns the string value', function() {
       expect(stringElement.toValue()).to.equal('foobar');
@@ -55,12 +36,9 @@ describe('StringElement', function() {
     });
   });
 
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = stringElement.clone();
-      expect(clone).to.be.instanceOf(StringElement);
-      expect(clone).to.not.equal(stringElement);
-      expect(clone.toRefract()).to.deep.equal(stringElement.toRefract());
+  describe('#length', function() {
+    it('returns the length of the string', function() {
+      expect(stringElement.length).to.equal(11);
     });
   });
 });

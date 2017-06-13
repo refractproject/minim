@@ -1,6 +1,7 @@
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
 var Namespace = require('../lib/namespace');
+var JSONSerialiser = require('../lib/serialisers/json');
 
 describe('Minim namespace', function() {
   var namespace;
@@ -104,45 +105,6 @@ describe('Minim namespace', function() {
     });
   });
 
-  describe('#toElement', function() {
-    it('should handle values that are ElementClass subclass instances', function() {
-      var myElement = new StringElement();
-      var converted = namespace.toElement(myElement);
-
-      expect(converted).to.equal(myElement);
-    });
-
-    it('should allow for roundtrip conversions for values', function() {
-      namespace.register('foo', StringElement);
-
-      // Refract
-      var refracted = namespace.fromRefract({ element: 'foo', meta: {}, attributes: {}, content: 'test' }).toRefract();
-      expect(refracted).to.deep.equal({ element: 'foo', meta: {}, attributes: {}, content: 'test' });
-    });
-
-    it('should allow for roundtrip conversions for collection elements', function() {
-      namespace.register('foo', ArrayElement);
-
-      var refractSample = {
-        element: 'foo',
-        meta: {},
-        attributes: {},
-        content: [
-          {
-            element: 'string',
-            meta: {},
-            attributes: {},
-            content: 'bar'
-          }
-        ]
-      }
-
-      // Refract
-      var refracted = namespace.fromRefract(refractSample).toRefract();
-      expect(refracted).to.deep.equal(refractSample);
-    });
-  });
-
   describe('#getElementClass', function() {
     it('should return ElementClass for unknown elements', function() {
       expect(namespace.getElementClass('unknown')).to.equal(namespace.BaseElement);
@@ -173,6 +135,51 @@ describe('Minim namespace', function() {
 
     it('should contain the base element', function () {
       expect(namespace.elements.BaseElement).to.equal(namespace.BaseElement);
+    });
+  });
+
+  describe('#toElement', function () {
+    it('returns element when given element', function () {
+      const element = new StringElement('hello');
+      const toElement = namespace.toElement(element);
+
+      expect(toElement).to.equal(element);
+    });
+
+    it('returns string element when given string', function () {
+      const element = namespace.toElement('hello');
+
+      expect(element).to.be.instanceof(StringElement);
+      expect(element.toValue()).to.equal('hello');
+    });
+  });
+
+  describe('serialisation', function () {
+    it('provides a convenience serialiser', function () {
+      expect(namespace.serialiser).to.be.instanceof(JSONSerialiser);
+      expect(namespace.serialiser.namespace).to.equal(namespace);
+    });
+
+    it('provides a convenience fromRefract', function () {
+      const element = namespace.fromRefract({
+        element: 'string',
+        content: 'hello'
+      });
+
+      expect(element).to.be.instanceof(StringElement);
+      expect(element.toValue()).to.equal('hello');
+    });
+
+    it('provides a convenience toRefract', function () {
+      const element = new StringElement('hello');
+      const object = namespace.toRefract(element);
+
+      expect(object).to.deep.equal({
+        element: 'string',
+        meta: {},
+        attributes: {},
+        content: 'hello'
+      });
     });
   });
 });

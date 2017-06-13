@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
+var KeyValuePair = require('../../lib/key-value-pair');
 
 describe('BaseElement', function() {
   context('when initializing', function() {
@@ -42,17 +43,26 @@ describe('BaseElement', function() {
     });
   });
 
-  describe('#attributes', function() {
+  describe('#meta', function() {
     var element;
 
-    var refract = {
-      element: 'element',
-      meta: {},
-      attributes: {
-        foo: 'bar'
-      },
-      content: null
-    }
+    before(function() {
+      element = new minim.BaseElement();
+      element.meta.set('title', 'test');
+    });
+
+    it('retains the correct values', function() {
+      expect(element.meta.getValue('title')).to.equal('test');
+    });
+
+    it('allows setting new attributes', function() {
+      element.meta = {'title': 'test2'};
+      expect(element.meta.getValue('title')).to.equal('test2');
+    });
+  });
+
+  describe('#attributes', function() {
+    var element;
 
     before(function() {
       element = new minim.BaseElement();
@@ -60,7 +70,12 @@ describe('BaseElement', function() {
     });
 
     it('retains the correct values', function() {
-      expect(element.toRefract()).to.deep.equal(refract);
+      expect(element.attributes.getValue('foo')).to.equal('bar');
+    });
+
+    it('allows setting new attributes', function() {
+      element.attributes = {'test': 'bar'};
+      expect(element.attributes.getValue('test')).to.equal('bar');
     });
   });
 
@@ -89,6 +104,13 @@ describe('BaseElement', function() {
         expect(el.element).to.equal('foobar');
       });
     })
+  });
+
+  describe('#primitive', function() {
+    it('returns undefined primitive', function() {
+      const element = new minim.BaseElement();
+      expect(element.primitive()).to.be.undefined;
+    });
   });
 
   describe('#equals', function() {
@@ -262,6 +284,16 @@ describe('BaseElement', function() {
         });
       });
     });
+
+    it('allows setting links', function() {
+      const element = new minim.BaseElement();
+      element.links = new minim.elements.Array([
+        new minim.elements.Link('el')
+      ]);
+
+      expect(element.links).to.be.instanceof(minim.elements.Array);
+      expect(element.links.length).to.equal(1);
+    });
   });
 
   context('when querying', function() {
@@ -415,6 +447,107 @@ describe('BaseElement', function() {
 
       expect(result.element).to.equal('array');
       expect(result.toValue()).to.deep.equal(['Four']);
+    });
+  });
+
+  describe('#toValue', function () {
+    it('returns raw value', function () {
+      const element = new minim.BaseElement(1);
+
+      expect(element.toValue()).to.equal(1);
+    });
+
+    it('returns element value', function () {
+      const element = new minim.BaseElement(
+        new minim.BaseElement('Hello')
+      );
+
+      expect(element.toValue()).to.equal('Hello');
+    });
+
+    it('returns array of element value', function () {
+      const element = new minim.BaseElement([
+        new minim.BaseElement('Hello')
+      ]);
+
+      expect(element.toValue()).to.deep.equal(['Hello']);
+    });
+
+    it('returns KeyValuePair value', function () {
+      const element = new minim.BaseElement(
+        new KeyValuePair(
+          new minim.BaseElement('name'),
+          new minim.BaseElement('doe')
+        )
+      );
+
+      expect(element.toValue()).to.deep.equal({
+        key: 'name',
+        value: 'doe'
+      });
+    });
+  });
+
+  describe('#clone', function () {
+    it('clones an element', function () {
+      var element = new minim.BaseElement('hello');
+      var cloned = element.clone();
+
+      expect(cloned.content).to.equal(element.content);
+      expect(cloned).not.to.equal(element);
+    });
+
+    it('clones an element name', function () {
+      var element = new minim.BaseElement('hello');
+      element.element = 'test';
+      var cloned = element.clone();
+
+      expect(cloned.element).to.equal('test');
+    });
+
+    it('clones an element with child element', function () {
+      var child = new minim.BaseElement('child');
+      var element = new minim.BaseElement(child);
+      var cloned = element.clone();
+
+      expect(cloned.content).not.to.equal(child);
+      expect(cloned.content.content).to.equal('child');
+    });
+
+    it('clones an element with array of elements', function () {
+      var child = new minim.BaseElement('child');
+      var element = new minim.BaseElement([child]);
+      var cloned = element.clone();
+
+      expect(cloned.content[0]).not.to.equal(child);
+      expect(cloned.content[0].content).to.equal('child');
+    });
+
+    it('clones an element with key value pair', function () {
+      var child = new minim.BaseElement('name');
+      var element = new minim.elements.Member(child);
+      var cloned = element.clone();
+
+      expect(cloned.content.key).not.to.equal(child);
+      expect(cloned.content.key.content).to.equal('name');
+    });
+
+    it('clones meta values', function () {
+      var element = new minim.BaseElement();
+      element.title = 'Test';
+
+      var cloned = element.clone();
+
+      expect(cloned.title.toValue()).to.equal('Test');
+    });
+
+    it('clones attributes values', function () {
+      var element = new minim.BaseElement();
+      element.attributes.set('name', 'Test');
+
+      var cloned = element.clone();
+
+      expect(cloned.attributes.get('name').toValue()).to.equal('Test');
     });
   });
 });

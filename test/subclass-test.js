@@ -6,17 +6,17 @@ var ArrayElement = minim.getElementClass('array');
 var StringElement = minim.getElementClass('string');
 
 describe('Minim subclasses', function() {
-  // TODO: Provide better interface for extending elements
-  var MyElement = function() {
-    StringElement.apply(this, arguments);
-    this.element = 'myElement';
-  }
+  var MyElement = minim.elements.String.extend({
+    constructor: function() {
+      minim.elements.String.apply(this, arguments);
+      this.element = 'myElement';
+    },
 
-  MyElement.prototype = _.create(StringElement.prototype, {
     ownMethod: function() {
       return 'It works!';
     }
-  });
+  })
+  minim.register(MyElement);
 
   it('can extend the base element with its own method', function() {
     var myElement = new MyElement();
@@ -36,7 +36,7 @@ describe('Minim subclasses', function() {
   });
 
   describe('deserializing attributes', function() {
-    var myElement = new MyElement().fromRefract({
+    var myElement = minim.fromRefract({
       element: 'myElement',
       attributes: {
         headers: {
@@ -85,8 +85,8 @@ describe('Minim subclasses', function() {
 
     myElement.attributes.set('sourceMap', ['string1', 'string2']);
 
-    it('should serialize element to refract', function() {
-      const refracted = myElement.toRefract();
+    it('should serialize element to JSON', function() {
+      const refracted = minim.serialiser.serialise(myElement);
 
       expect(refracted).to.deep.equal({
         element: 'myElement',
@@ -111,9 +111,12 @@ describe('Minim subclasses', function() {
       });
     });
 
-    it('should round-trip using refract', function() {
-      const refracted = myElement.toRefract();
-      expect(myElement.fromRefract(refracted).toRefract()).to.deep.equal(refracted);
+    it('should round-trip using JSON serialiser', function() {
+      const object = minim.serialiser.serialise(myElement);
+      const element = minim.serialiser.deserialise(object);
+      const serialised = minim.serialiser.serialise(element);
+
+      expect(serialised).to.deep.equal(object);
     });
   });
 });

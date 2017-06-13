@@ -59,58 +59,6 @@ describe('ObjectElement', function() {
     });
   });
 
-  describe('#toRefract', function() {
-    var expected = {
-      element: 'object',
-      meta: {},
-      attributes: {},
-      content: [
-        {
-          element: 'member',
-          meta: {},
-          attributes: {},
-          content: {
-            key: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'foo'
-            },
-            value: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'bar'
-            }
-          }
-        },
-        {
-          element: 'member',
-          meta: {},
-          attributes: {},
-          content: {
-            key: {
-              element: 'string',
-              meta: {},
-              attributes: {},
-              content: 'z'
-            },
-            value: {
-              element: 'number',
-              meta: {},
-              attributes: {},
-              content: 1
-            }
-          }
-        }
-      ]
-    };
-
-    it('returns an object element', function() {
-      expect(objectElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
   describe('#get', function() {
     context('when a property name is given', function() {
       it('returns the value of the name given', function() {
@@ -387,15 +335,6 @@ describe('ObjectElement', function() {
         return member.key.toValue() === 'z';
       });
       expect(search.toValue()).to.deep.equal([1]);
-    });
-  });
-
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = objectElement.clone();
-      expect(clone).to.be.instanceOf(ObjectElement);
-      expect(clone).to.not.equal(objectElement);
-      expect(clone.toRefract()).to.deep.equal(objectElement.toRefract());
     });
   });
 

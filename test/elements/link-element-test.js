@@ -23,17 +23,5 @@ describe('Link Element', function() {
       expect(link.relation.toValue()).to.equal('foo');
       expect(link.href.toValue()).to.equal('/bar');
     });
-
-    it('returns the correct Refract value', function() {
-      expect(link.toRefract()).to.deep.equal({
-        element: 'link',
-        meta: {},
-        attributes: {
-          relation: 'foo',
-          href: '/bar'
-        },
-        content: []
-      });
-    });
   });
 });

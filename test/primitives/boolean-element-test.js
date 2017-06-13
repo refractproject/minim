@@ -23,68 +23,6 @@ describe('BooleanElement', function() {
     });
   });
 
-  describe('#toValue', function() {
-    it('returns the boolean', function() {
-      expect(booleanElement.toValue()).to.equal(true);
-    });
-  });
-
-  describe('#toRefract', function() {
-    var expected;
-
-    it('returns a boolean element', function() {
-      expected = {
-        element: 'boolean',
-        meta: {},
-        attributes: {},
-        content: true
-      };
-
-      expect(booleanElement.toRefract()).to.deep.equal(expected);
-    });
-
-    it('includes extra metadata if present', function() {
-      expected = {
-        element: 'boolean',
-        meta: {
-          id: {
-            element: 'string',
-            meta: {},
-            attributes: {
-              someExtraData: true
-            },
-            content: 'abc'
-          }
-        },
-        attributes: {},
-        content: true
-      };
-      booleanElement.meta.set('id', 'abc');
-      booleanElement.meta.get('id').attributes.set('someExtraData', true);
-      expect(booleanElement.toRefract()).to.deep.equal(expected);
-    });
-  });
-
-  describe('#fromRefract', function() {
-    it('can handle optionally refracted metadata', function() {
-      booleanElement.fromRefract({
-        element: 'boolean',
-        meta: {
-          id: {
-            element: 'string',
-            meta: {},
-            attributes: {},
-            content: 'abc'
-          }
-        },
-        attributes: {},
-        content: true
-      });
-
-      expect(booleanElement.meta.get('id').toValue()).to.equal('abc');
-    });
-  });
-
   describe('#get', function() {
     it('returns the boolean value', function() {
       expect(booleanElement.toValue()).to.equal(true);
@@ -95,15 +33,6 @@ describe('BooleanElement', function() {
     it('sets the value of the boolean', function() {
       booleanElement.set(false);
       expect(booleanElement.toValue()).to.equal(false);
-    });
-  });
-
-  describe('#clone', function() {
-    it('creates a deep clone of the element', function() {
-      var clone = booleanElement.clone();
-      expect(clone).to.be.instanceOf(BooleanElement);
-      expect(clone).to.not.equal(booleanElement);
-      expect(clone.toRefract()).to.deep.equal(booleanElement.toRefract());
     });
   });
 });
