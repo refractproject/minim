@@ -296,6 +296,89 @@ describe('BaseElement', function() {
     });
   });
 
+  describe('#children', function() {
+    const ArrayElement = minim.getElementClass('array');
+
+    it('returns empty array when content is primitive', function() {
+      const element = new minim.BaseElement('value');
+      const children = element.children;
+
+      expect(children).to.be.instanceof(ArrayElement);
+      expect(children.length).to.equal(0);
+    });
+
+    it('returns a direct child', function() {
+      const child = new minim.BaseElement('value');
+      const element = new minim.BaseElement(child);
+      const children = element.children;
+
+      expect(children).to.be.instanceof(ArrayElement);
+      expect(children.length).to.equal(1);
+      expect(children.get(0)).to.equal(child);
+    });
+
+    it('returns array of direct children', function() {
+      const child1 = new minim.BaseElement('value1');
+      const child2 = new minim.BaseElement('value2');
+
+      const element = new minim.BaseElement([child1, child2]);
+      const children = element.children;
+
+      expect(children).to.be.instanceof(ArrayElement);
+      expect(children.length).to.equal(2);
+      expect(children.get(0)).to.equal(child1);
+      expect(children.get(1)).to.equal(child2);
+    });
+
+    it('returns array of key pair item', function() {
+      const key = new minim.BaseElement('key');
+      const element = new minim.BaseElement(new KeyValuePair(key));
+
+      const children = element.children;
+
+      expect(children).to.be.instanceof(ArrayElement);
+      expect(children.length).to.equal(1);
+      expect(children.get(0)).to.equal(key);
+    });
+
+    it('returns array of key value pair items', function() {
+      const key = new minim.BaseElement('key');
+      const value = new minim.BaseElement('value');
+      const element = new minim.BaseElement(new KeyValuePair(key, value));
+
+      const children = element.children;
+
+      expect(children).to.be.instanceof(ArrayElement);
+      expect(children.length).to.equal(2);
+      expect(children.get(0)).to.equal(key);
+      expect(children.get(1)).to.equal(value);
+    });
+  });
+
+  describe('#recursiveChildren', function() {
+    const ArrayElement = minim.getElementClass('array');
+
+    it('returns empty array when content is primitive', function() {
+      const element = new minim.BaseElement('value');
+      const children = element.recursiveChildren;
+
+      expect(children).to.be.instanceof(ArrayElement);
+      expect(children.length).to.equal(0);
+    });
+
+    it('returns all direct recursive children', function() {
+      const childchild = new minim.BaseElement('value');
+      const child = new minim.BaseElement(childchild);
+      const element = new minim.BaseElement(child);
+      const children = element.recursiveChildren;
+
+      expect(children).to.be.instanceof(ArrayElement);
+      expect(children.length).to.equal(2);
+      expect(children.get(0)).to.equal(child);
+      expect(children.get(1)).to.equal(childchild);
+    });
+  });
+
   context('when querying', function() {
     it('returns empty array when there are no matching elements', function() {
       const element = new minim.BaseElement();
