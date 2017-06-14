@@ -3,12 +3,12 @@ var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
 
-describe('BaseElement', function() {
+describe('Element', function() {
   context('when initializing', function() {
     var el;
 
     before(function() {
-      el = new minim.BaseElement({}, {
+      el = new minim.Element({}, {
         id: 'foobar',
         classes: ['a', 'b'],
         title: 'Title',
@@ -28,17 +28,17 @@ describe('BaseElement', function() {
     var el;
 
     it('should properly serialize falsey string', function() {
-      el = new minim.BaseElement('');
+      el = new minim.Element('');
       expect(el.toValue()).to.equal('');
     });
 
     it('should properly serialize falsey number', function() {
-      el = new minim.BaseElement(0);
+      el = new minim.Element(0);
       expect(el.toValue()).to.equal(0);
     });
 
     it('should properly serialize falsey boolean', function() {
-      el = new minim.BaseElement(false);
+      el = new minim.Element(false);
       expect(el.toValue()).to.equal(false);
     });
   });
@@ -47,7 +47,7 @@ describe('BaseElement', function() {
     var element;
 
     before(function() {
-      element = new minim.BaseElement();
+      element = new minim.Element();
       element.meta.set('title', 'test');
     });
 
@@ -65,7 +65,7 @@ describe('BaseElement', function() {
     var element;
 
     before(function() {
-      element = new minim.BaseElement();
+      element = new minim.Element();
       element.attributes.set('foo', 'bar');
     });
 
@@ -84,7 +84,7 @@ describe('BaseElement', function() {
       var el;
 
       before(function() {
-        el = new minim.BaseElement();
+        el = new minim.Element();
       });
 
       it('returns base element', function() {
@@ -96,7 +96,7 @@ describe('BaseElement', function() {
       var el;
 
       before(function() {
-        el = new minim.BaseElement();
+        el = new minim.Element();
         el.element = 'foobar';
       });
 
@@ -108,7 +108,7 @@ describe('BaseElement', function() {
 
   describe('#primitive', function() {
     it('returns undefined primitive', function() {
-      const element = new minim.BaseElement();
+      const element = new minim.Element();
       expect(element.primitive()).to.be.undefined;
     });
   });
@@ -117,7 +117,7 @@ describe('BaseElement', function() {
     var el;
 
     before(function() {
-      el = new minim.BaseElement({
+      el = new minim.Element({
         foo: 'bar'
       }, {
         id: 'foobar'
@@ -147,7 +147,7 @@ describe('BaseElement', function() {
     };
 
     context('when the meta is already set', function() {
-      var el = new minim.BaseElement(null, _.clone(meta));
+      var el = new minim.Element(null, _.clone(meta));
 
       _.forEach(_.keys(meta), function(key) {
         it('provides a convenience method for ' + key, function() {
@@ -157,7 +157,7 @@ describe('BaseElement', function() {
     });
 
     context('when meta is set with getters and setters', function() {
-      var el = new minim.BaseElement(null);
+      var el = new minim.Element(null);
 
       _.forEach(_.keys(meta), function(key) {
         el[key] = meta[key];
@@ -286,7 +286,7 @@ describe('BaseElement', function() {
     });
 
     it('allows setting links', function() {
-      const element = new minim.BaseElement();
+      const element = new minim.Element();
       element.links = new minim.elements.Array([
         new minim.elements.Link('el')
       ]);
@@ -300,7 +300,7 @@ describe('BaseElement', function() {
     const ArrayElement = minim.getElementClass('array');
 
     it('returns empty array when content is primitive', function() {
-      const element = new minim.BaseElement('value');
+      const element = new minim.Element('value');
       const children = element.children;
 
       expect(children).to.be.instanceof(ArrayElement);
@@ -308,8 +308,8 @@ describe('BaseElement', function() {
     });
 
     it('returns a direct child', function() {
-      const child = new minim.BaseElement('value');
-      const element = new minim.BaseElement(child);
+      const child = new minim.Element('value');
+      const element = new minim.Element(child);
       const children = element.children;
 
       expect(children).to.be.instanceof(ArrayElement);
@@ -318,10 +318,10 @@ describe('BaseElement', function() {
     });
 
     it('returns array of direct children', function() {
-      const child1 = new minim.BaseElement('value1');
-      const child2 = new minim.BaseElement('value2');
+      const child1 = new minim.Element('value1');
+      const child2 = new minim.Element('value2');
 
-      const element = new minim.BaseElement([child1, child2]);
+      const element = new minim.Element([child1, child2]);
       const children = element.children;
 
       expect(children).to.be.instanceof(ArrayElement);
@@ -331,8 +331,8 @@ describe('BaseElement', function() {
     });
 
     it('returns array of key pair item', function() {
-      const key = new minim.BaseElement('key');
-      const element = new minim.BaseElement(new KeyValuePair(key));
+      const key = new minim.Element('key');
+      const element = new minim.Element(new KeyValuePair(key));
 
       const children = element.children;
 
@@ -342,9 +342,9 @@ describe('BaseElement', function() {
     });
 
     it('returns array of key value pair items', function() {
-      const key = new minim.BaseElement('key');
-      const value = new minim.BaseElement('value');
-      const element = new minim.BaseElement(new KeyValuePair(key, value));
+      const key = new minim.Element('key');
+      const value = new minim.Element('value');
+      const element = new minim.Element(new KeyValuePair(key, value));
 
       const children = element.children;
 
@@ -359,7 +359,7 @@ describe('BaseElement', function() {
     const ArrayElement = minim.getElementClass('array');
 
     it('returns empty array when content is primitive', function() {
-      const element = new minim.BaseElement('value');
+      const element = new minim.Element('value');
       const children = element.recursiveChildren;
 
       expect(children).to.be.instanceof(ArrayElement);
@@ -367,9 +367,9 @@ describe('BaseElement', function() {
     });
 
     it('returns all direct recursive children', function() {
-      const childchild = new minim.BaseElement('value');
-      const child = new minim.BaseElement(childchild);
-      const element = new minim.BaseElement(child);
+      const childchild = new minim.Element('value');
+      const child = new minim.Element(childchild);
+      const element = new minim.Element(child);
       const children = element.recursiveChildren;
 
       expect(children).to.be.instanceof(ArrayElement);
@@ -381,7 +381,7 @@ describe('BaseElement', function() {
 
   context('when querying', function() {
     it('returns empty array when there are no matching elements', function() {
-      const element = new minim.BaseElement();
+      const element = new minim.Element();
       const result = element.findRecursive('string');
 
       expect(result.length).to.equal(0);
@@ -389,7 +389,7 @@ describe('BaseElement', function() {
 
     it('finds direct element', function() {
       const StringElement = minim.getElementClass('string');
-      const element = new minim.BaseElement(
+      const element = new minim.Element(
         new StringElement('Hello World')
       );
 
@@ -434,8 +434,8 @@ describe('BaseElement', function() {
     it('finds non-direct element inside element', function() {
       const StringElement = minim.getElementClass('string');
 
-      const element = new minim.BaseElement(
-        new minim.BaseElement(
+      const element = new minim.Element(
+        new minim.Element(
           new StringElement('Hello World')
         )
       );
@@ -450,7 +450,7 @@ describe('BaseElement', function() {
       const StringElement = minim.getElementClass('string');
       const ArrayElement = minim.getElementClass('array');
 
-      const element = new minim.BaseElement(
+      const element = new minim.Element(
         new ArrayElement([
           new StringElement('Hello World')
         ])
@@ -535,32 +535,32 @@ describe('BaseElement', function() {
 
   describe('#toValue', function () {
     it('returns raw value', function () {
-      const element = new minim.BaseElement(1);
+      const element = new minim.Element(1);
 
       expect(element.toValue()).to.equal(1);
     });
 
     it('returns element value', function () {
-      const element = new minim.BaseElement(
-        new minim.BaseElement('Hello')
+      const element = new minim.Element(
+        new minim.Element('Hello')
       );
 
       expect(element.toValue()).to.equal('Hello');
     });
 
     it('returns array of element value', function () {
-      const element = new minim.BaseElement([
-        new minim.BaseElement('Hello')
+      const element = new minim.Element([
+        new minim.Element('Hello')
       ]);
 
       expect(element.toValue()).to.deep.equal(['Hello']);
     });
 
     it('returns KeyValuePair value', function () {
-      const element = new minim.BaseElement(
+      const element = new minim.Element(
         new KeyValuePair(
-          new minim.BaseElement('name'),
-          new minim.BaseElement('doe')
+          new minim.Element('name'),
+          new minim.Element('doe')
         )
       );
 
@@ -573,7 +573,7 @@ describe('BaseElement', function() {
 
   describe('#clone', function () {
     it('clones an element', function () {
-      var element = new minim.BaseElement('hello');
+      var element = new minim.Element('hello');
       var cloned = element.clone();
 
       expect(cloned.content).to.equal(element.content);
@@ -581,7 +581,7 @@ describe('BaseElement', function() {
     });
 
     it('clones an element name', function () {
-      var element = new minim.BaseElement('hello');
+      var element = new minim.Element('hello');
       element.element = 'test';
       var cloned = element.clone();
 
@@ -589,8 +589,8 @@ describe('BaseElement', function() {
     });
 
     it('clones an element with child element', function () {
-      var child = new minim.BaseElement('child');
-      var element = new minim.BaseElement(child);
+      var child = new minim.Element('child');
+      var element = new minim.Element(child);
       var cloned = element.clone();
 
       expect(cloned.content).not.to.equal(child);
@@ -598,8 +598,8 @@ describe('BaseElement', function() {
     });
 
     it('clones an element with array of elements', function () {
-      var child = new minim.BaseElement('child');
-      var element = new minim.BaseElement([child]);
+      var child = new minim.Element('child');
+      var element = new minim.Element([child]);
       var cloned = element.clone();
 
       expect(cloned.content[0]).not.to.equal(child);
@@ -607,7 +607,7 @@ describe('BaseElement', function() {
     });
 
     it('clones an element with key value pair', function () {
-      var child = new minim.BaseElement('name');
+      var child = new minim.Element('name');
       var element = new minim.elements.Member(child);
       var cloned = element.clone();
 
@@ -616,7 +616,7 @@ describe('BaseElement', function() {
     });
 
     it('clones meta values', function () {
-      var element = new minim.BaseElement();
+      var element = new minim.Element();
       element.title = 'Test';
 
       var cloned = element.clone();
@@ -625,7 +625,7 @@ describe('BaseElement', function() {
     });
 
     it('clones attributes values', function () {
-      var element = new minim.BaseElement();
+      var element = new minim.Element();
       element.attributes.set('name', 'Test');
 
       var cloned = element.clone();
