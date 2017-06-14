@@ -35,9 +35,9 @@
 
 - All elements now contain a `children` and `recursiveChildren` properties that
   return an ArrayElement of the respective children elements.
-
 - JSON Serialiser will no longer serialise empty `meta` and `attributes` into
   JSON objects.
+- Minim now contains a `RefElement`.
 
 # 0.16.0 - 2017-05-04
 
