@@ -38,6 +38,8 @@
 - JSON Serialiser will no longer serialise empty `meta` and `attributes` into
   JSON objects.
 - Minim now contains a `RefElement`.
+- Element now contains a `toRef()` function to create a ref element referencing
+  the element.
 
 # 0.16.0 - 2017-05-04
 

@@ -147,6 +147,20 @@ var arrayElement = minim.toElement([1, 2, 3]);
 var arrayValue = arrayElement.toValue(); // [1, 2, 3]
 ```
 
+#### toRef
+
+The `toRef` method returns a RefElement referencing the element.
+
+```javascript
+var ref = element.toRef();
+```
+
+`toRef` accepts an optional path.
+
+```javascript
+var ref = element.toRef('attributes');
+```
+
 #### toEmbeddedRefract
 
 The `toEmbeddedRefract` method returns the Embedded Refract value of the Minim element.
