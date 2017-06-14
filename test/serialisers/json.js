@@ -30,8 +30,6 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'string',
-        meta: {},
-        attributes: {},
         content: 'Hello'
       });
     });
@@ -45,12 +43,8 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'custom',
-        meta: {},
-        attributes: {},
         content: {
           element: 'string',
-          meta: {},
-          attributes: {},
           content: 'Hello'
         }
       });
@@ -64,13 +58,9 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'array',
-        meta: {},
-        attributes: {},
         content: [
           {
             element: 'string',
-            meta: {},
-            attributes: {},
             content: 'Hello'
           }
         ]
@@ -83,8 +73,6 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'element',
-        meta: {},
-        attributes: {},
         content: {
           message: 'hello'
         }
@@ -100,19 +88,13 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'member',
-        meta: {},
-        attributes: {},
         content: {
           key: {
             element: 'string',
-            meta: {},
-            attributes: {},
             content: 'name'
           },
           value: {
             element: 'string',
-            meta: {},
-            attributes: {},
             content: 'Doe'
           },
         }
@@ -130,7 +112,6 @@ describe('JSON Serialiser', function() {
         meta: {
           title: 'Name'
         },
-        attributes: {},
         content: 'Doe'
       });
     });
@@ -143,7 +124,6 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'string',
-        meta: {},
         attributes: {
           thread: 123
         },
@@ -159,12 +139,9 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'string',
-        meta: {},
         attributes: {
           thread: {
             element: 'element',
-            meta: {},
-            attributes: {},
             content: 123
           }
         },

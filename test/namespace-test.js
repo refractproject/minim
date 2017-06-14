@@ -176,8 +176,6 @@ describe('Minim namespace', function() {
 
       expect(object).to.deep.equal({
         element: 'string',
-        meta: {},
-        attributes: {},
         content: 'hello'
       });
     });

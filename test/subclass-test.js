@@ -90,12 +90,10 @@ describe('Minim subclasses', function() {
 
       expect(refracted).to.deep.equal({
         element: 'myElement',
-        meta: {},
         attributes: {
           headers: [
             {
               element: 'string',
-              attributes: {},
               meta: {
                 name: 'Content-Type'
               },
