@@ -55,6 +55,11 @@ describe('Element', function() {
       el = new minim.Element(false);
       expect(el.toValue()).to.equal(false);
     });
+
+    it('should set parent to null', function() {
+      var element = new minim.Element('');
+      expect(element.parent).to.be.null;
+    });
   });
 
   describe('#meta', function() {
@@ -717,6 +722,76 @@ describe('Element', function() {
       var element = new minim.Element();
 
       expect(function() { element.toRef(); }).to.throw();
+    });
+  });
+
+  describe('#parent', function () {
+    it('configures parent when setting element content to be an element', function () {
+      var element = new minim.Element('parent');
+      var child = new minim.Element('child');
+
+      element.content = child;
+
+      expect(child.parent).to.be.equal(element);
+    });
+
+    it('removes parent when unsetting element content from an element', function () {
+      var element = new minim.Element('parent');
+      var child = new minim.Element('child');
+
+      element.content = child;
+      element.content = null;
+
+      expect(child.parent).to.be.null;
+    });
+
+    it('configures parent when setting element content to be array of element', function () {
+      var element = new minim.Element('parent');
+      var child = new minim.Element('child');
+
+      element.content = [child];
+
+      expect(child.parent).to.be.equal(element);
+    });
+
+    it('removes parent when unsetting element content from array containing an element', function () {
+      var element = new minim.Element('parent');
+      var child = new minim.Element('child');
+
+      element.content = [child];
+      element.content = null;
+
+      expect(child.parent).to.be.null;
+    });
+
+    it('configures parent when setting element content to be key value pair', function () {
+      var element = new minim.Element('parent');
+      var key = new minim.Element('key');
+      var value = new minim.Element('value');
+
+      element.content = new KeyValuePair(key, value);
+
+      expect(key.parent).to.be.equal(element);
+      expect(value.parent).to.be.equal(element);
+    });
+
+    it('removes parent when unsetting element content from key value pair', function () {
+      var element = new minim.Element('parent');
+      var key = new minim.Element('key');
+      var value = new minim.Element('value');
+
+      element.content = new KeyValuePair(key, value);
+      element.content = null;
+
+      expect(key.parent).to.be.null;
+      expect(value.parent).to.be.null;
+    });
+
+    it('errors when setting parent for element that has a previous parent', function () {
+      var child = new minim.Element('child');
+      var parent = new minim.Element(child);
+
+      expect(function () { child.parent = new minim.Element(); }).to.throw();
     });
   });
 });
