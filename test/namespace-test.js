@@ -107,7 +107,7 @@ describe('Minim namespace', function() {
 
   describe('#getElementClass', function() {
     it('should return ElementClass for unknown elements', function() {
-      expect(namespace.getElementClass('unknown')).to.equal(namespace.BaseElement);
+      expect(namespace.getElementClass('unknown')).to.equal(namespace.Element);
     });
   });
 
@@ -134,7 +134,7 @@ describe('Minim namespace', function() {
     });
 
     it('should contain the base element', function () {
-      expect(namespace.elements.BaseElement).to.equal(namespace.BaseElement);
+      expect(namespace.elements.Element).to.equal(namespace.Element);
     });
   });
 

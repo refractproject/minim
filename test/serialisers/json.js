@@ -38,7 +38,7 @@ describe('JSON Serialiser', function() {
 
     it('serialises an element containing element', function() {
       var string = new minim.elements.String('Hello')
-      var element = new minim.BaseElement(string);
+      var element = new minim.Element(string);
       element.element = 'custom';
 
       var object = serialiser.serialise(element);
@@ -78,7 +78,7 @@ describe('JSON Serialiser', function() {
     });
 
     it('serialise an element with object content', function() {
-      var element = new minim.elements.BaseElement({ message: 'hello' });
+      var element = new minim.elements.Element({ message: 'hello' });
       var object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
@@ -153,7 +153,7 @@ describe('JSON Serialiser', function() {
 
     it('serialises an element with custom element attributes', function() {
       var element = new minim.elements.String('Hello World')
-      element.attributes.set('thread', new minim.BaseElement(123));
+      element.attributes.set('thread', new minim.Element(123));
 
       var object = serialiser.serialise(element);
 
@@ -193,7 +193,7 @@ describe('JSON Serialiser', function() {
         }
       });
 
-      expect(element).to.be.instanceof(minim.BaseElement);
+      expect(element).to.be.instanceof(minim.Element);
       expect(element.content).to.be.instanceof(minim.elements.String);
       expect(element.content.content).to.equal('Hello');
     });
@@ -222,7 +222,7 @@ describe('JSON Serialiser', function() {
         }
       });
 
-      expect(element).to.be.instanceof(minim.elements.BaseElement);
+      expect(element).to.be.instanceof(minim.elements.Element);
       expect(element.content).to.deep.equal({ message: 'hello' });
     });
 

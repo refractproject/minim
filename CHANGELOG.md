@@ -29,6 +29,8 @@
   const numbers = doc.children.findByElement('number');
   ```
 
+* `BaseElement` has been renamed to `Element`.
+
 ## Enhancements
 
 - All elements now contain a `children` and `recursiveChildren` properties that
