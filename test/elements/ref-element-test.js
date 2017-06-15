@@ -10,6 +10,12 @@ describe('Ref Element', function() {
     expect(element.element).to.equal('ref');
   });
 
+  it('has a default path of element', function() {
+    var element = new RefElement();
+
+    expect(element.path.toValue()).to.equal('element');
+  });
+
   it('can set the ref element path', function() {
     var element = new RefElement();
     element.path = 'attributes';

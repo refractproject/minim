@@ -643,7 +643,7 @@ describe('Element', function() {
       var ref = element.toRef();
 
       expect(ref).to.be.instanceof(RefElement);
-      expect(ref.path).to.be.undefined;
+      expect(ref.path.toValue()).to.be.equal('element');
       expect(ref.content).to.equal('example');
     });
 
