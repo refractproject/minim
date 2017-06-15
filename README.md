@@ -84,16 +84,6 @@ var refracted = minim.toRefract(arrayElement1);
 var arrayElement2 = minim.fromRefract(refracted);
 ```
 
-Serialized values in embedded forms can also be loaded into Minim.
-
-```javascript
-// It returns a string element where the content is `foobar`
-var stringElement2 = minim.fromEmbeddedRefract({
-  _refract: {
-    element: 'string',
-    content: 'foobar'
-  }
-});
 ```
 
 Note that due to optional refracting in `meta`, anything that looks like an element in the given serialization will be loaded as such.

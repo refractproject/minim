@@ -29,7 +29,9 @@
   const numbers = doc.children.findByElement('number');
   ```
 
-* `BaseElement` has been renamed to `Element`.
+- `BaseElement` has been renamed to `Element`.
+
+- Embedded Refract support has been removed.
 
 ## Enhancements
 
