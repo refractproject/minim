@@ -2,6 +2,7 @@ var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
+var RefElement = require('../../lib/minim').RefElement;
 
 describe('Element', function() {
   context('when initializing', function() {
@@ -631,6 +632,36 @@ describe('Element', function() {
       var cloned = element.clone();
 
       expect(cloned.attributes.get('name').toValue()).to.equal('Test');
+    });
+  });
+
+  describe('#toRef', function () {
+    it('can create ref element for an element', function () {
+      var element = new minim.Element();
+      element.id = 'example';
+
+      var ref = element.toRef();
+
+      expect(ref).to.be.instanceof(RefElement);
+      expect(ref.path.toValue()).to.be.equal('element');
+      expect(ref.content).to.equal('example');
+    });
+
+    it('can create a ref element with a path', function () {
+      var element = new minim.Element();
+      element.id = 'example';
+
+      var ref = element.toRef('attributes');
+
+      expect(ref).to.be.instanceof(RefElement);
+      expect(ref.path.toValue()).to.be.equal('attributes');
+      expect(ref.content).to.equal('example');
+    });
+
+    it('throws error when creating ref element from element without ID', function () {
+      var element = new minim.Element();
+
+      expect(function() { element.toRef(); }).to.throw();
     });
   });
 });
