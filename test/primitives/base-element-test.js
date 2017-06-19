@@ -6,22 +6,34 @@ var RefElement = require('../../lib/minim').RefElement;
 
 describe('Element', function() {
   context('when initializing', function() {
-    var el;
-
-    before(function() {
-      el = new minim.Element({}, {
+    it('should initialize the correct meta data', function() {
+      var element = new minim.Element({}, {
         id: 'foobar',
         classes: ['a', 'b'],
         title: 'Title',
         description: 'Description'
       });
+
+      expect(element.meta.get('id').toValue()).to.equal('foobar');
+      expect(element.meta.get('classes').toValue()).to.deep.equal(['a', 'b']);
+      expect(element.meta.get('title').toValue()).to.equal('Title');
+      expect(element.meta.get('description').toValue()).to.equal('Description');
     });
 
-    it('should initialize the correct meta data', function() {
-      expect(el.meta.get('id').toValue()).to.equal('foobar');
-      expect(el.meta.get('classes').toValue()).to.deep.equal(['a', 'b']);
-      expect(el.meta.get('title').toValue()).to.equal('Title');
-      expect(el.meta.get('description').toValue()).to.equal('Description');
+    it('should allow initialising with meta object', function() {
+      var meta = new minim.elements.Object();
+      meta.set('id', 'foobar');
+      var element = new minim.Element(null, meta);
+
+      expect(element.meta.get('id').toValue()).to.equal('foobar');
+    });
+
+    it('should allow initialising with attributes object', function() {
+      var attributes = new minim.elements.Object();
+      attributes.set('test', 'foobar');
+      var element = new minim.Element(null, null, attributes);
+
+      expect(element.attributes.get('test').toValue()).to.equal('foobar');
     });
   });
 
