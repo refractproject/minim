@@ -1,3 +1,9 @@
+# Master
+
+## Bug Fixes
+
+- When converting JavaScript values to Refract, objects are now supported.
+
 # 0.17.0 - 2017-06-16
 
 ## Breaking
