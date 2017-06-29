@@ -3,6 +3,7 @@ var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
 
 var ObjectElement = minim.getElementClass('object');
+var StringElement = minim.getElementClass('string');
 
 describe('ObjectElement', function() {
   var objectElement;
@@ -137,6 +138,15 @@ describe('ObjectElement', function() {
       var obj = new ObjectElement();
       obj.set({ foo: 'bar' });
       expect(obj.get('foo').toValue()).to.equal('bar');
+    });
+
+    it('should refract key and value from object', function() {
+      var obj = new ObjectElement();
+      obj.set('key', 'value');
+      var member = obj.getMember('key');
+
+      expect(member.key).to.be.instanceof(StringElement);
+      expect(member.value).to.be.instanceof(StringElement);
     });
   });
 
