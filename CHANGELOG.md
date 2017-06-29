@@ -5,6 +5,8 @@
 - Initialising an Element with given meta or attributes as ObjectElement is now
   supported.
 - When converting JavaScript values to Refract, objects are now supported.
+- JSON De-serialisation will now deserialise an array into an ArrayElement
+  instead of plain array.
 
 # 0.17.0 - 2017-06-16
 

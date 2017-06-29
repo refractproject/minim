@@ -191,6 +191,14 @@ describe('JSON Serialiser', function() {
       expect(element.content[0].content).to.equal('Hello');
     });
 
+    it('deserialise from a JSON array', function() {
+      var element = serialiser.deserialise([1]);
+
+      expect(element).to.be.instanceof(minim.elements.Array);
+      expect(element.content[0]).to.be.instanceof(minim.elements.Number);
+      expect(element.content[0].content).to.equal(1);
+    });
+
     it('deserialises from a JSON object containing JSON object content', function() {
       var element = serialiser.deserialise({
         element: 'element',
