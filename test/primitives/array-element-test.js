@@ -266,7 +266,15 @@ describe('ArrayElement', function() {
             {
               element: 'string',
               meta: {
-                'classes': ['test-class']
+                'classes': {
+                  element: 'array',
+                  content: [
+                    {
+                      element: 'string',
+                      content: 'test-class'
+                    },
+                  ],
+                },
               },
               content: 'baz'
             }, {
@@ -278,7 +286,10 @@ describe('ArrayElement', function() {
                 {
                   element: 'string',
                   meta: {
-                    id: 'nested-id'
+                    id: {
+                      element: 'string',
+                      content: 'nested-id',
+                    }
                   },
                   content: 'bar'
                 }, {

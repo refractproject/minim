@@ -190,10 +190,27 @@ describe('Element', function() {
     var el = minim.fromRefract({
       element: 'string',
       meta: {
-        id: 'foobar',
-        classes: ['a'],
-        title: 'A Title',
-        description: 'A Description'
+        id: {
+          element: 'string',
+          content: 'foobar',
+        },
+        classes: {
+          element: 'array',
+          content: [
+            {
+              element: 'string',
+              content: 'a'
+            }
+          ],
+        },
+        title: {
+          element: 'string',
+          content: 'A Title',
+        },
+        description: {
+          element: 'string',
+          content: 'A Description',
+        }
       }
     });
 
@@ -207,8 +224,14 @@ describe('Element', function() {
     var el = minim.fromRefract({
       element: 'string',
       attributes: {
-        href: 'foobar',
-        relation: 'create'
+        href: {
+          element: 'string',
+          content: 'foobar',
+        },
+        relation: {
+          element: 'string',
+          content: 'create',
+        }
       }
     });
 
@@ -226,15 +249,24 @@ describe('Element', function() {
         el = minim.fromRefract({
           element: 'string',
           meta: {
-            links: [
-              {
-                element: 'link',
-                attributes: {
-                  relation: 'foo',
-                  href: '/bar'
+            links: {
+              element: 'array',
+              content: [
+                {
+                  element: 'link',
+                  attributes: {
+                    relation: {
+                      element: 'string',
+                      content: 'foo',
+                    },
+                    href: {
+                      element: 'string',
+                      content: '/bar',
+                    }
+                  }
                 }
-              }
-            ]
+              ]
+            }
           },
           content: 'foobar'
         })
@@ -274,15 +306,24 @@ describe('Element', function() {
             el = minim.fromRefract({
               element: 'string',
               meta: {
-                links: [
-                  {
-                    element: 'link',
-                    attributes: {
-                      relation: 'foo',
-                      href: '/bar'
+                links: {
+                  element: 'array',
+                  content: [
+                    {
+                      element: 'link',
+                      attributes: {
+                        relation: {
+                          element: 'string',
+                          content: 'foo',
+                        },
+                        href: {
+                          element: 'string',
+                          content: '/bar',
+                        }
+                      }
                     }
-                  }
-                ]
+                  ]
+                }
               },
               content: 'foobar'
             });

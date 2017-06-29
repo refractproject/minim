@@ -45,19 +45,28 @@ describe('Minim subclasses', function() {
             {
               element: 'string',
               meta: {
-                name: 'Content-Type'
+                name: {
+                  element: 'string',
+                  content: 'Content-Type',
+                }
               },
               content: 'application/json'
             }
           ]
         },
-        foo: 'bar',
-        sourceMap: [
-          {
-            element: 'string',
-            content: 'test'
-          }
-        ]
+        foo: {
+          element: 'string',
+          content: 'bar',
+        },
+        sourceMap: {
+          element: 'sourceMap',
+          content: [
+            {
+              element: 'string',
+              content: 'test'
+            }
+          ]
+        }
       }
     });
 
@@ -71,9 +80,9 @@ describe('Minim subclasses', function() {
 
     it('should create array of source map elements', function() {
       var sourceMaps = myElement.attributes.get('sourceMap');
-      expect(sourceMaps).to.have.length(1);
-      expect(sourceMaps.first()).to.be.instanceOf(StringElement);
-      expect(sourceMaps.first().toValue()).to.equal('test');
+      expect(sourceMaps.content).to.have.length(1);
+      expect(sourceMaps.content[0]).to.be.instanceOf(StringElement);
+      expect(sourceMaps.content[0].toValue()).to.equal('test');
     });
   });
 
@@ -91,19 +100,34 @@ describe('Minim subclasses', function() {
       expect(refracted).to.deep.equal({
         element: 'myElement',
         attributes: {
-          headers: [
-            {
-              element: 'string',
-              meta: {
-                name: 'Content-Type'
+          headers: {
+            element: 'array',
+            content: [
+              {
+                element: 'string',
+                meta: {
+                  name: {
+                    element: 'string',
+                    content: 'Content-Type',
+                  },
+                },
+                content: 'application/json'
               },
-              content: 'application/json'
-            }
-          ],
-          sourceMap: [
-            'string1',
-            'string2'
-          ]
+            ],
+          },
+          sourceMap: {
+            element: 'array',
+            content: [
+              {
+                element: 'string',
+                content: 'string1',
+              },
+              {
+                element: 'string',
+                content: 'string2',
+              },
+            ],
+          },
         },
         content: null
       });
