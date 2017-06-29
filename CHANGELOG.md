@@ -5,6 +5,7 @@
 - Initialising an Element with given meta or attributes as ObjectElement is now
   supported.
 - When converting JavaScript values to Refract, objects are now supported.
+- Adds a special case to serialise sourceMap elements as values.
 
 # 0.17.0 - 2017-06-16
 
