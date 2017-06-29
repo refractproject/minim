@@ -1,5 +1,20 @@
 # Master
 
+## Breaking
+
+- JSON Serialisation now follows the JSON Refract serialisation rules defined at
+  https://github.com/refractproject/refract-spec/blob/master/formats/json-refract.md.
+
+  Existing serialiser is available during a transition period to aid migration
+  to the new format.
+
+    ```js
+    const JSONSerialiser = require('minim/serialisers/json-0.6');
+    const serialiser = new JSONSerialiser();
+    const element = serialiser.deserialise('Hello');
+    serialiser.serialise(element);
+    ```
+
 ## Enhancements
 
 - ArrayElement high-order functions, `map`, `filter` and `forEach` now accept
