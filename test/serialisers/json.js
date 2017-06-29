@@ -110,7 +110,10 @@ describe('JSON Serialiser', function() {
       expect(object).to.deep.equal({
         element: 'string',
         meta: {
-          title: 'Name'
+          title: {
+            element: 'string',
+            content: 'Name',
+          }
         },
         content: 'Doe'
       });
@@ -125,7 +128,10 @@ describe('JSON Serialiser', function() {
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
-          thread: 123
+          thread: {
+            element: 'number',
+            content: 123
+          },
         },
         content: 'Hello World'
       });
@@ -148,25 +154,13 @@ describe('JSON Serialiser', function() {
         content: 'Hello World'
       });
     });
-
-    it('serialises a sourceMap element as values', function() {
-      var element = new minim.elements.Element(
-        new minim.elements.Array(
-          [new minim.elements.Array([1,2])]
-        )
-      );
-      element.element = 'sourceMap';
-
-      var object = serialiser.serialise(element);
-
-      expect(object).to.deep.equal({
-        element: 'sourceMap',
-        content: [[1,2]]
-      });
-    });
   });
 
   describe('deserialisation', function() {
+    it('errors when deserialising value without element name', function() {
+      expect(function() { return serialiser.deserialise({}); }).to.throw();
+    });
+
     it('deserialise from a JSON object', function() {
       var element = serialiser.deserialise({
         element: 'string',
@@ -205,18 +199,6 @@ describe('JSON Serialiser', function() {
       expect(element).to.be.instanceof(minim.elements.Array);
       expect(element.content[0]).to.be.instanceof(minim.elements.String);
       expect(element.content[0].content).to.equal('Hello');
-    });
-
-    it('deserialises from a JSON object containing JSON object content', function() {
-      var element = serialiser.deserialise({
-        element: 'element',
-        content: {
-          message: 'hello'
-        }
-      });
-
-      expect(element).to.be.instanceof(minim.elements.Element);
-      expect(element.content).to.deep.equal({ message: 'hello' });
     });
 
     it('deserialise from a JSON object containing a key-value pair', function() {
@@ -264,21 +246,9 @@ describe('JSON Serialiser', function() {
       var element = serialiser.deserialise({
         element: 'string',
         meta: {
-          title: 'hello'
-        }
-      });
-
-      expect(element.title).to.be.instanceof(minim.elements.String);
-      expect(element.title.content).to.equal('hello');
-    });
-
-    it('deserialise refracted meta', function() {
-      var element = serialiser.deserialise({
-        element: 'string',
-        meta: {
           title: {
             element: 'string',
-            content: 'hello'
+            content: 'hello',
           }
         }
       });
@@ -287,21 +257,7 @@ describe('JSON Serialiser', function() {
       expect(element.title.content).to.equal('hello');
     });
 
-
     it('deserialise attributes', function() {
-      var element = serialiser.deserialise({
-        element: 'string',
-        attributes: {
-          thing: 'hello'
-        }
-      });
-
-      const attribute = element.attributes.get('thing');
-      expect(attribute).to.be.instanceof(minim.elements.String);
-      expect(attribute.content).to.equal('hello');
-    });
-
-    it('deserialise refracted attributes', function() {
       var element = serialiser.deserialise({
         element: 'string',
         attributes: {
@@ -318,28 +274,39 @@ describe('JSON Serialiser', function() {
     });
 
     it('deserialise string', function() {
-      var element = serialiser.deserialise('Hello');
+      var element = serialiser.deserialise({
+        element: 'string',
+        content: 'Hello',
+      });
 
       expect(element).to.be.instanceof(minim.elements.String);
       expect(element.content).to.equal('Hello');
     });
 
     it('deserialise number', function() {
-      var element = serialiser.deserialise(15);
+      var element = serialiser.deserialise({
+        element: 'number',
+        content: 15,
+      });
 
       expect(element).to.be.instanceof(minim.elements.Number);
       expect(element.content).to.equal(15);
     });
 
     it('deserialise boolean', function() {
-      var element = serialiser.deserialise(true);
+      var element = serialiser.deserialise({
+        element: 'boolean',
+        content: true
+      });
 
       expect(element).to.be.instanceof(minim.elements.Boolean);
       expect(element.content).to.equal(true);
     });
 
     it('deserialise null', function() {
-      var element = serialiser.deserialise(null);
+      var element = serialiser.deserialise({
+        element: 'null',
+      });
 
       expect(element).to.be.instanceof(minim.elements.Null);
     });
