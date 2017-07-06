@@ -148,6 +148,74 @@ describe('JSON Serialiser', function() {
         content: 'Hello World'
       });
     });
+
+    it('serialises enum inside attributes as array', function() {
+      var element = new minim.elements.String('Hello World');
+      var enumeration = new minim.Element([new minim.elements.String('North')]);
+      var array = new minim.elements.Array([enumeration]);
+      enumeration.element = 'enum';
+      element.attributes.set('samples', array);
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'string',
+        attributes: {
+          samples: [
+            [
+              {
+                'element': 'string',
+                'content': 'North'
+              }
+            ]
+          ]
+        },
+        content: 'Hello World'
+      });
+    });
+
+    it('serialises enum inside array inside attributes as array', function() {
+      var element = new minim.elements.String('Hello World')
+      var enumeration = new minim.Element([new minim.elements.String('North')]);
+      enumeration.element = 'enum';
+      element.attributes.set('directions', enumeration);
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'string',
+        attributes: {
+          directions: [
+            {
+              'element': 'string',
+              'content': 'North'
+            }
+          ]
+        },
+        content: 'Hello World'
+      });
+    });
+
+    it('always serialises items inside `default` attribute array', function() {
+      var element = new minim.elements.String('Hello World')
+      var values = new minim.elements.Array([new minim.elements.String('North')]);
+      element.attributes.set('default', values);
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'string',
+        attributes: {
+          default: [
+            {
+              'element': 'string',
+              'content': 'North'
+            }
+          ]
+        },
+        content: 'Hello World'
+      });
+    });
   });
 
   describe('deserialisation', function() {
