@@ -246,6 +246,25 @@ describe('JSON Serialiser', function() {
         content: [[1,2]]
       });
     });
+
+    it('serialises a dataStructure element inside an array', function() {
+      var element = new minim.elements.Element(
+        new minim.elements.String('Hello')
+      );
+      element.element = 'dataStructure';
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'dataStructure',
+        content: [
+          {
+            element: 'string',
+            content: 'Hello'
+          }
+        ]
+      });
+    });
   });
 
   describe('deserialisation', function() {
