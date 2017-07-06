@@ -265,6 +265,21 @@ describe('JSON Serialiser', function() {
         ]
       });
     });
+
+    it('serialises a element attribute called meta as metadata', function() {
+      var element = new minim.elements.Null();
+      element.attributes.set('metadata', 'example');
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'null',
+        attributes: {
+          meta: 'example'
+        },
+        content: null
+      });
+    });
   });
 
   describe('deserialisation', function() {
