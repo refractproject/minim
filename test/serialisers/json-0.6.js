@@ -216,6 +216,20 @@ describe('JSON Serialiser', function() {
         content: 'Hello World'
       });
     });
+
+    it('serialises a ref element', function() {
+      var element = new minim.elements.Ref('content');
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'ref',
+        content: {
+          path: 'element',
+          href: 'content',
+        }
+      });
+    });
   });
 
   describe('deserialisation', function() {
