@@ -230,6 +230,22 @@ describe('JSON Serialiser', function() {
         }
       });
     });
+
+    it('serialises a sourceMap element as values', function() {
+      var element = new minim.elements.Element(
+        new minim.elements.Array(
+          [new minim.elements.Array([1,2])]
+        )
+      );
+      element.element = 'sourceMap';
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'sourceMap',
+        content: [[1,2]]
+      });
+    });
   });
 
   describe('deserialisation', function() {
