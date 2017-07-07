@@ -1,3 +1,10 @@
+# Master
+
+## Enhancements
+
+- ArrayElement high-order functions, `map`, `filter` and `forEach` now accept
+  `thisArg` like the equivalent functionality in `Array`.
+
 # 0.17.1 - 2016-07-29
 
 ## Bug Fixes
