@@ -459,5 +459,12 @@ describe('JSON Serialiser', function() {
 
       expect(element).to.be.instanceof(minim.elements.Null);
     });
+
+    it('deserialises an array element from JS array', function() {
+      var element = serialiser.deserialise([1]);
+
+      expect(element).to.be.instanceof(minim.elements.Array);
+      expect(element.get(0)).to.be.instanceof(minim.elements.Number);
+    });
   });
 });
