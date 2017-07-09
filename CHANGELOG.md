@@ -1,3 +1,7 @@
+# Master
+
+- `Element.children` now returns `ElementSlice` instead of an `ArrayElement`.
+
 # 0.18.1
 
 ## Bug Fixes
