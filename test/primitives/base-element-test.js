@@ -413,11 +413,11 @@ describe('Element', function() {
   describe('#recursiveChildren', function() {
     const ArrayElement = minim.getElementClass('array');
 
-    it('returns empty array when content is primitive', function() {
+    it('returns empty element slice when content is primitive', function() {
       const element = new minim.Element('value');
       const children = element.recursiveChildren;
 
-      expect(children).to.be.instanceof(ArrayElement);
+      expect(children).to.be.instanceof(ElementSlice);
       expect(children.length).to.equal(0);
     });
 
@@ -427,7 +427,7 @@ describe('Element', function() {
       const element = new minim.Element(child);
       const children = element.recursiveChildren;
 
-      expect(children).to.be.instanceof(ArrayElement);
+      expect(children).to.be.instanceof(ElementSlice);
       expect(children.length).to.equal(2);
       expect(children.get(0)).to.equal(child);
       expect(children.get(1)).to.equal(childchild);

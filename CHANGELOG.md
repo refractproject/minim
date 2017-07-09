@@ -1,6 +1,9 @@
 # Master
 
 - `Element.children` now returns `ElementSlice` instead of an `ArrayElement`.
+- `Element.recursiveChildren` now returns `ElementSlice` instead of an `ArrayElement`.
+- `ArrayElement.filter` now returns `ElementSlice` instead of an
+  `ArrayElement`.
 
 # 0.18.1
 
