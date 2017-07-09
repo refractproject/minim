@@ -3,6 +3,7 @@ var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
 var RefElement = require('../../lib/minim').RefElement;
+var ElementSlice = require('../../lib/minim').ElementSlice;
 
 describe('Element', function() {
   context('when initializing', function() {
@@ -353,11 +354,11 @@ describe('Element', function() {
   describe('#children', function() {
     const ArrayElement = minim.getElementClass('array');
 
-    it('returns empty array when content is primitive', function() {
+    it('returns empty element slice when content is primitive', function() {
       const element = new minim.Element('value');
       const children = element.children;
 
-      expect(children).to.be.instanceof(ArrayElement);
+      expect(children).to.be.instanceof(ElementSlice);
       expect(children.length).to.equal(0);
     });
 
@@ -366,43 +367,43 @@ describe('Element', function() {
       const element = new minim.Element(child);
       const children = element.children;
 
-      expect(children).to.be.instanceof(ArrayElement);
+      expect(children).to.be.instanceof(ElementSlice);
       expect(children.length).to.equal(1);
       expect(children.get(0)).to.equal(child);
     });
 
-    it('returns array of direct children', function() {
+    it('returns element slice of direct children', function() {
       const child1 = new minim.Element('value1');
       const child2 = new minim.Element('value2');
 
       const element = new minim.Element([child1, child2]);
       const children = element.children;
 
-      expect(children).to.be.instanceof(ArrayElement);
+      expect(children).to.be.instanceof(ElementSlice);
       expect(children.length).to.equal(2);
       expect(children.get(0)).to.equal(child1);
       expect(children.get(1)).to.equal(child2);
     });
 
-    it('returns array of key pair item', function() {
+    it('returns element slice of key pair item', function() {
       const key = new minim.Element('key');
       const element = new minim.Element(new KeyValuePair(key));
 
       const children = element.children;
 
-      expect(children).to.be.instanceof(ArrayElement);
+      expect(children).to.be.instanceof(ElementSlice);
       expect(children.length).to.equal(1);
       expect(children.get(0)).to.equal(key);
     });
 
-    it('returns array of key value pair items', function() {
+    it('returns element slice of key value pair items', function() {
       const key = new minim.Element('key');
       const value = new minim.Element('value');
       const element = new minim.Element(new KeyValuePair(key, value));
 
       const children = element.children;
 
-      expect(children).to.be.instanceof(ArrayElement);
+      expect(children).to.be.instanceof(ElementSlice);
       expect(children.length).to.equal(2);
       expect(children.get(0)).to.equal(key);
       expect(children.get(1)).to.equal(value);
