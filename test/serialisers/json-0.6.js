@@ -101,6 +101,23 @@ describe('JSON Serialiser', function() {
       });
     });
 
+    it('serialises an element containing a pair without a value', function() {
+      var name = new minim.elements.String('name')
+      var element = new minim.elements.Member(name);
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'member',
+        content: {
+          key: {
+            element: 'string',
+            content: 'name'
+          },
+        }
+      });
+    });
+
     it('serialises an elements meta', function() {
       var doe = new minim.elements.String('Doe')
       doe.title = 'Name';

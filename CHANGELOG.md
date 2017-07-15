@@ -1,3 +1,10 @@
+# 0.18.1
+
+## Bug Fixes
+
+- Prevent JSON Serialisers from throwing exception when serialising a key value
+  pair without any value.
+
 # 0.18.0
 
 ## Breaking
