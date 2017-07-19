@@ -4,6 +4,8 @@
 - `Element.recursiveChildren` now returns `ElementSlice` instead of an `ArrayElement`.
 - `ArrayElement.filter` now returns `ElementSlice` instead of an
   `ArrayElement`.
+- `Element.findRecursive` now returns `ElementSlice` instead of an
+  `ArrayElement`.
 
 # 0.18.1
 

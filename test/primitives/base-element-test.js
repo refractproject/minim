@@ -435,11 +435,12 @@ describe('Element', function() {
   });
 
   context('when querying', function() {
-    it('returns empty array when there are no matching elements', function() {
+    it('returns empty slice when there are no matching elements', function() {
       const element = new minim.Element();
       const result = element.findRecursive('string');
 
-      expect(result.length).to.equal(0);
+      expect(result).to.be.instanceof(ElementSlice);
+      expect(result.isEmpty).to.be.true;
     });
 
     it('finds direct element', function() {
@@ -450,7 +451,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
     });
 
@@ -466,7 +467,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['One', 'Three']);
     });
 
@@ -482,7 +483,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['key1', 'value2']);
     });
 
@@ -497,7 +498,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
     });
 
@@ -513,7 +514,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
     });
 
@@ -536,7 +537,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['key1', 'value2']);
     });
 
@@ -552,10 +553,10 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
 
-      const helloElement = result.first();
+      const helloElement = result.get(0);
       const parentIDs = helloElement.parents.map(function (item) {
         return item.id.toValue();
       });
@@ -583,7 +584,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('member', 'array', 'string');
 
-      expect(result.element).to.equal('array');
+      expect(result).to.be.instanceof(ElementSlice);
       expect(result.toValue()).to.deep.equal(['Four']);
     });
   });
