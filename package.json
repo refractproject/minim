@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/refractproject/minim",
   "devDependencies": {
-    "chai": "^1.10.0",
+    "chai": "^4.0.0",
     "coveralls": "^2.11.2",
     "eslint": "^3.0.0",
     "istanbul": "^0.3.14",

@@ -29,7 +29,7 @@ describe('Minim namespace', function() {
 
   describe('default elements', function() {
     it('are present by default', function() {
-      expect(namespace.elementMap).to.not.be.empty();
+      expect(namespace.elementMap).not.to.be.empty;
     });
 
     it('can be created empty', function() {
@@ -39,7 +39,7 @@ describe('Minim namespace', function() {
     it('can be added after instantiation', function() {
       var testnamespace = new Namespace({noDefault: true});
       testnamespace.useDefault();
-      expect(testnamespace.elementMap).to.not.be.empty();
+      expect(testnamespace.elementMap).not.to.be.empty;
     });
   });
 
