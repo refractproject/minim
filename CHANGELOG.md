@@ -6,6 +6,8 @@
   instead of an `ArrayElement`.
 - The `first`, `second` and `last` methods on `ArrayElement` are now properties
   instead of methods.
+- `ObjectElement.filter` now returns an `ObjectSlice` instead of an
+  `ObjectElement`.
 
 # 0.18.1
 
