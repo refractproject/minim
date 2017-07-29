@@ -1,11 +1,9 @@
 # Master
 
-- `Element.children` now returns `ElementSlice` instead of an `ArrayElement`.
-- `Element.recursiveChildren` now returns `ElementSlice` instead of an `ArrayElement`.
-- `ArrayElement.filter` now returns `ElementSlice` instead of an
-  `ArrayElement`.
-- `Element.findRecursive` now returns `ElementSlice` instead of an
-  `ArrayElement`.
+- `Element.children` and `Element.recursiveChildren` now return `ElementSlice`
+  instead of an `ArrayElement`.
+- `ArrayElement.filter` and `ArrayElement.find*` now return `ElementSlice`
+  instead of an `ArrayElement`.
 - The `first`, `second` and `last` methods on `ArrayElement` are now properties
   instead of methods.
 
