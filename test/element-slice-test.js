@@ -142,4 +142,19 @@ describe('ElementSlice', function () {
     var slice = new ElementSlice([one]);
     expect(slice.getValue(0)).to.equal('one');
   });
+
+  describe('#first', function () {
+    it('returns the first item', function () {
+      var element = new Element();
+      var slice = new ElementSlice([element]);
+
+      expect(slice.first).to.equal(element);
+    });
+
+    it('returns undefined when there isnt any items', function () {
+      var slice = new ElementSlice();
+
+      expect(slice.first).to.be.undefined;
+    });
+  });
 });
