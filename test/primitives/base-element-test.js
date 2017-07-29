@@ -3,7 +3,7 @@ var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
 var RefElement = require('../../lib/minim').RefElement;
-var ElementSlice = require('../../lib/minim').ElementSlice;
+var ArraySlice = require('../../lib/minim').ArraySlice;
 
 describe('Element', function() {
   context('when initializing', function() {
@@ -358,7 +358,7 @@ describe('Element', function() {
       const element = new minim.Element('value');
       const children = element.children;
 
-      expect(children).to.be.instanceof(ElementSlice);
+      expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(0);
     });
 
@@ -367,7 +367,7 @@ describe('Element', function() {
       const element = new minim.Element(child);
       const children = element.children;
 
-      expect(children).to.be.instanceof(ElementSlice);
+      expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(1);
       expect(children.get(0)).to.equal(child);
     });
@@ -379,7 +379,7 @@ describe('Element', function() {
       const element = new minim.Element([child1, child2]);
       const children = element.children;
 
-      expect(children).to.be.instanceof(ElementSlice);
+      expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(2);
       expect(children.get(0)).to.equal(child1);
       expect(children.get(1)).to.equal(child2);
@@ -391,7 +391,7 @@ describe('Element', function() {
 
       const children = element.children;
 
-      expect(children).to.be.instanceof(ElementSlice);
+      expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(1);
       expect(children.get(0)).to.equal(key);
     });
@@ -403,7 +403,7 @@ describe('Element', function() {
 
       const children = element.children;
 
-      expect(children).to.be.instanceof(ElementSlice);
+      expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(2);
       expect(children.get(0)).to.equal(key);
       expect(children.get(1)).to.equal(value);
@@ -417,7 +417,7 @@ describe('Element', function() {
       const element = new minim.Element('value');
       const children = element.recursiveChildren;
 
-      expect(children).to.be.instanceof(ElementSlice);
+      expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(0);
     });
 
@@ -427,7 +427,7 @@ describe('Element', function() {
       const element = new minim.Element(child);
       const children = element.recursiveChildren;
 
-      expect(children).to.be.instanceof(ElementSlice);
+      expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(2);
       expect(children.get(0)).to.equal(child);
       expect(children.get(1)).to.equal(childchild);
@@ -439,7 +439,7 @@ describe('Element', function() {
       const element = new minim.Element();
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.isEmpty).to.be.true;
     });
 
@@ -451,7 +451,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
     });
 
@@ -467,7 +467,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['One', 'Three']);
     });
 
@@ -483,7 +483,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['key1', 'value2']);
     });
 
@@ -498,7 +498,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
     });
 
@@ -514,7 +514,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
     });
 
@@ -537,7 +537,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['key1', 'value2']);
     });
 
@@ -553,7 +553,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['Hello World']);
 
       const helloElement = result.get(0);
@@ -584,7 +584,7 @@ describe('Element', function() {
 
       const result = element.findRecursive('member', 'array', 'string');
 
-      expect(result).to.be.instanceof(ElementSlice);
+      expect(result).to.be.instanceof(ArraySlice);
       expect(result.toValue()).to.deep.equal(['Four']);
     });
   });
