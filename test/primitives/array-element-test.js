@@ -371,19 +371,19 @@ describe('ArrayElement', function() {
 
     describe('#first', function() {
       it('returns the first item', function() {
-        expect(doc.first()).to.deep.equal(doc.content[0]);
+        expect(doc.first).to.deep.equal(doc.content[0]);
       });
     });
 
     describe('#second', function() {
-      it('returns the first item', function() {
-        expect(doc.second()).to.deep.equal(doc.content[1]);
+      it('returns the second item', function() {
+        expect(doc.second).to.deep.equal(doc.content[1]);
       });
     });
 
     describe('#last', function() {
-      it('returns the first item', function() {
-        expect(doc.last()).to.deep.equal(doc.content[2]);
+      it('returns the last item', function() {
+        expect(doc.last).to.deep.equal(doc.content[2]);
       });
     });
 

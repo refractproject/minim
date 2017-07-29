@@ -274,7 +274,7 @@ describe('Element', function() {
       });
 
       it('correctly loads the links', function() {
-        var link = el.meta.get('links').first();
+        var link = el.meta.get('links').first;
         expect(link.element).to.equal('link');
         expect(link.relation.toValue()).to.equal('foo');
         expect(link.href.toValue()).to.equal('/bar');
@@ -331,7 +331,7 @@ describe('Element', function() {
           });
 
           it('provides the links from meta', function() {
-            var link = el.links.first();
+            var link = el.links.first;
             expect(el.links).to.have.length(1);
             expect(link.relation.toValue()).to.equal('foo');
             expect(link.href.toValue()).to.equal('/bar');

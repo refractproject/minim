@@ -6,6 +6,8 @@
   `ArrayElement`.
 - `Element.findRecursive` now returns `ElementSlice` instead of an
   `ArrayElement`.
+- The `first`, `second` and `last` methods on `ArrayElement` are now properties
+  instead of methods.
 
 # 0.18.1
 

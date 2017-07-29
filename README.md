@@ -236,7 +236,7 @@ order.
 
 ```javascript
 const elements = element.findRecursive('string');
-const helloString = elements.first();
+const helloString = elements.first;
 
 // Category Element
 helloString.parents[0];
@@ -555,7 +555,7 @@ Returns the first element in the collection.
 
 ```javascript
 var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
-arrayElement.first(); // returns the element for "a"
+arrayElement.first; // returns the element for "a"
 ```
 
 ##### second
@@ -564,7 +564,7 @@ Returns the second element in the collection.
 
 ```javascript
 var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
-arrayElement.second(); // returns the element for "[1, 2]"
+arrayElement.second; // returns the element for "[1, 2]"
 ```
 
 ##### last
@@ -573,7 +573,7 @@ Returns the last element in the collection.
 
 ```javascript
 var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
-arrayElement.last(); // returns the element for "3"
+arrayElement.last; // returns the element for "3"
 ```
 
 #### ObjectElement
