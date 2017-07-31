@@ -10,6 +10,9 @@
   instead of methods.
 - `ObjectElement.filter` now returns an `ObjectSlice` instead of an
   `ObjectElement`.
+- When providing multiple element names to `Element.findRecursive` you must
+  call `freeze` on the element beforehand so that the element has access to the
+  parent of the element.
 
 ## Enhancements
 

@@ -546,28 +546,6 @@ describe('Element', function() {
       expect(result.toValue()).to.deep.equal(['key1', 'value2']);
     });
 
-    it('attaches parent tree to found objects', function () {
-      const StringElement = minim.getElementClass('string');
-      const ArrayElement = minim.getElementClass('array');
-
-      const hello = new StringElement('Hello World')
-      const array = new ArrayElement([hello]);
-      const element = new ArrayElement([array]);
-      array.id = 'Inner';
-      element.id = 'Outter';
-
-      const result = element.findRecursive('string');
-
-      expect(result).to.be.instanceof(ArraySlice);
-      expect(result.toValue()).to.deep.equal(['Hello World']);
-
-      const helloElement = result.get(0);
-      const parentIDs = helloElement.parents.map(function (item) {
-        return item.id.toValue();
-      });
-      expect(parentIDs).to.deep.equal(['Inner', 'Outter']);
-    });
-
     it('finds elements contained in given elements', function () {
       const StringElement = minim.getElementClass('string');
       const ArrayElement = minim.getElementClass('array');
@@ -586,6 +564,8 @@ describe('Element', function() {
         new StringElement('One'),
         object
       ]);
+
+      element.freeze();
 
       const result = element.findRecursive('member', 'array', 'string');
 
