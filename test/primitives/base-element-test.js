@@ -793,5 +793,79 @@ describe('Element', function() {
 
       expect(function () { child.parent = new minim.Element(); }).to.throw();
     });
+
+    it('sets parent for elements pushed onto a content array', function () {
+      var child1 = new minim.Element('one');
+      var child2 = new minim.Element('two');
+      var child3 = new minim.Element('three');
+      var array = new minim.Element([child1]);
+
+      var result = array.content.push(child2, child3);
+
+      expect(result).to.equal(3);
+      expect(array.content).to.deep.equal([child1, child2, child3]);
+
+      expect(child1.parent).to.be.equal(array);
+      expect(child2.parent).to.be.equal(array);
+    });
+
+    it('sets parent for elements unshifted onto a content array', function () {
+      var child1 = new minim.Element('one');
+      var child2 = new minim.Element('two');
+      var child3 = new minim.Element('three');
+      var array = new minim.Element([child1]);
+
+      var result = array.content.unshift(child2, child3);
+
+      expect(result).to.equal(3);
+      expect(array.content).to.deep.equal([child2, child3, child1]);
+
+      expect(child1.parent).to.be.equal(array);
+      expect(child2.parent).to.be.equal(array);
+    });
+
+    it('removes parent for elements popped from a content array', function () {
+      var child = new minim.Element();
+      var array = new minim.Element([child]);
+
+      array.content.pop();
+
+      expect(child.parent).to.be.null;
+    });
+
+    it('removes parent for elements shifted from a content array', function () {
+      var child = new minim.Element();
+      var array = new minim.Element([child]);
+
+      array.content.shift();
+
+      expect(child.parent).to.be.null;
+    });
+
+    it('removes parent for elements spliced from a content array', function () {
+      var child1 = new minim.Element('one');
+      var child2 = new minim.Element('two');
+      var child3 = new minim.Element('three');
+      var array = new minim.Element([child1, child2, child3]);
+
+      var result = array.content.splice(1, 1);
+
+      expect(result).to.deep.equal([child2]);
+      expect(child2.parent).to.be.null;
+    });
+
+    it('adds parent for elements spliced into a content array', function () {
+      var child1 = new minim.Element('one');
+      var child2 = new minim.Element('two');
+      var child3 = new minim.Element('three');
+      var child4 = new minim.Element('four');
+      var array = new minim.Element([child1, child2, child3]);
+
+      var result = array.content.splice(1, 1, child4);
+
+      expect(result).to.deep.equal([child2]);
+      expect(array.content).to.deep.equal([child1, child4, child3]);
+      expect(child4.parent).to.be.equal(array);
+    });
   });
 });
