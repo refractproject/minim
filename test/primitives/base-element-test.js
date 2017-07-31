@@ -745,128 +745,132 @@ describe('Element', function() {
       expect(child.parent).to.be.null;
     });
 
-    it('configures parent when setting element content to be array of element', function () {
-      var element = new minim.Element('parent');
-      var child = new minim.Element('child');
+    if (global['Proxy']) {
+      it('configures parent when setting element content to be array of element', function () {
+        var element = new minim.Element('parent');
+        var child = new minim.Element('child');
 
-      element.content = [child];
+        element.content = [child];
 
-      expect(child.parent).to.be.equal(element);
-    });
+        expect(child.parent).to.be.equal(element);
+      });
 
-    it('removes parent when unsetting element content from array containing an element', function () {
-      var element = new minim.Element('parent');
-      var child = new minim.Element('child');
+      it('removes parent when unsetting element content from array containing an element', function () {
+        var element = new minim.Element('parent');
+        var child = new minim.Element('child');
 
-      element.content = [child];
-      element.content = null;
+        element.content = [child];
+        element.content = null;
 
-      expect(child.parent).to.be.null;
-    });
+        expect(child.parent).to.be.null;
+      });
 
-    it('configures parent when setting element content to be key value pair', function () {
-      var element = new minim.Element('parent');
-      var key = new minim.Element('key');
-      var value = new minim.Element('value');
+      it('configures parent when setting element content to be key value pair', function () {
+        var element = new minim.Element('parent');
+        var key = new minim.Element('key');
+        var value = new minim.Element('value');
 
-      element.content = new KeyValuePair(key, value);
+        element.content = new KeyValuePair(key, value);
 
-      expect(key.parent).to.be.equal(element);
-      expect(value.parent).to.be.equal(element);
-    });
+        expect(key.parent).to.be.equal(element);
+        expect(value.parent).to.be.equal(element);
+      });
 
-    it('removes parent when unsetting element content from key value pair', function () {
-      var element = new minim.Element('parent');
-      var key = new minim.Element('key');
-      var value = new minim.Element('value');
+      it('removes parent when unsetting element content from key value pair', function () {
+        var element = new minim.Element('parent');
+        var key = new minim.Element('key');
+        var value = new minim.Element('value');
 
-      element.content = new KeyValuePair(key, value);
-      element.content = null;
+        element.content = new KeyValuePair(key, value);
+        element.content = null;
 
-      expect(key.parent).to.be.null;
-      expect(value.parent).to.be.null;
-    });
+        expect(key.parent).to.be.null;
+        expect(value.parent).to.be.null;
+      });
 
-    it('errors when setting parent for element that has a previous parent', function () {
-      var child = new minim.Element('child');
-      var parent = new minim.Element(child);
+      it('errors when setting parent for element that has a previous parent', function () {
+        var child = new minim.Element('child');
+        var parent = new minim.Element(child);
 
-      expect(function () { child.parent = new minim.Element(); }).to.throw();
-    });
+        expect(function () { child.parent = new minim.Element(); }).to.throw();
+      });
 
-    it('sets parent for elements pushed onto a content array', function () {
-      var child1 = new minim.Element('one');
-      var child2 = new minim.Element('two');
-      var child3 = new minim.Element('three');
-      var array = new minim.Element([child1]);
+      it('sets parent for elements pushed onto a content array', function () {
+        var child1 = new minim.Element('one');
+        var child2 = new minim.Element('two');
+        var child3 = new minim.Element('three');
+        var array = new minim.Element([child1]);
 
-      var result = array.content.push(child2, child3);
+        var result = array.content.push(child2, child3);
 
-      expect(result).to.equal(3);
-      expect(array.content).to.deep.equal([child1, child2, child3]);
+        expect(result).to.equal(3);
+        expect(array.content).to.deep.equal([child1, child2, child3]);
 
-      expect(child1.parent).to.be.equal(array);
-      expect(child2.parent).to.be.equal(array);
-    });
+        expect(child1.parent).to.be.equal(array);
+        expect(child2.parent).to.be.equal(array);
+      });
 
-    it('sets parent for elements unshifted onto a content array', function () {
-      var child1 = new minim.Element('one');
-      var child2 = new minim.Element('two');
-      var child3 = new minim.Element('three');
-      var array = new minim.Element([child1]);
+      it('sets parent for elements unshifted onto a content array', function () {
+        var child1 = new minim.Element('one');
+        var child2 = new minim.Element('two');
+        var child3 = new minim.Element('three');
+        var array = new minim.Element([child1]);
 
-      var result = array.content.unshift(child2, child3);
+        var result = array.content.unshift(child2, child3);
 
-      expect(result).to.equal(3);
-      expect(array.content).to.deep.equal([child2, child3, child1]);
+        expect(result).to.equal(3);
+        expect(array.content).to.deep.equal([child2, child3, child1]);
 
-      expect(child1.parent).to.be.equal(array);
-      expect(child2.parent).to.be.equal(array);
-    });
+        console.log(array.content);
 
-    it('removes parent for elements popped from a content array', function () {
-      var child = new minim.Element();
-      var array = new minim.Element([child]);
+        expect(child2.parent).to.be.equal(array);
+        expect(child3.parent).to.be.equal(array);
+      });
 
-      array.content.pop();
+      it('removes parent for elements popped from a content array', function () {
+        var child = new minim.Element('xxx');
+        var array = new minim.Element([child]);
 
-      expect(child.parent).to.be.null;
-    });
+        array.content.pop();
 
-    it('removes parent for elements shifted from a content array', function () {
-      var child = new minim.Element();
-      var array = new minim.Element([child]);
+        expect(child.parent).to.be.null;
+      });
 
-      array.content.shift();
+      it('removes parent for elements shifted from a content array', function () {
+        var child = new minim.Element();
+        var array = new minim.Element([child]);
 
-      expect(child.parent).to.be.null;
-    });
+        array.content.shift();
 
-    it('removes parent for elements spliced from a content array', function () {
-      var child1 = new minim.Element('one');
-      var child2 = new minim.Element('two');
-      var child3 = new minim.Element('three');
-      var array = new minim.Element([child1, child2, child3]);
+        expect(child.parent).to.be.null;
+      });
 
-      var result = array.content.splice(1, 1);
+      it('removes parent for elements spliced from a content array', function () {
+        var child1 = new minim.Element('one');
+        var child2 = new minim.Element('two');
+        var child3 = new minim.Element('three');
+        var array = new minim.Element([child1, child2, child3]);
 
-      expect(result).to.deep.equal([child2]);
-      expect(child2.parent).to.be.null;
-    });
+        var result = array.content.splice(1, 1);
 
-    it('adds parent for elements spliced into a content array', function () {
-      var child1 = new minim.Element('one');
-      var child2 = new minim.Element('two');
-      var child3 = new minim.Element('three');
-      var child4 = new minim.Element('four');
-      var array = new minim.Element([child1, child2, child3]);
+        expect(result).to.deep.equal([child2]);
+        expect(child2.parent).to.be.null;
+      });
 
-      var result = array.content.splice(1, 1, child4);
+      it('adds parent for elements spliced into a content array', function () {
+        var child1 = new minim.Element('one');
+        var child2 = new minim.Element('two');
+        var child3 = new minim.Element('three');
+        var child4 = new minim.Element('four');
+        var array = new minim.Element([child1, child2, child3]);
 
-      expect(result).to.deep.equal([child2]);
-      expect(array.content).to.deep.equal([child1, child4, child3]);
-      expect(child4.parent).to.be.equal(array);
-    });
+        var result = array.content.splice(1, 1, child4);
+
+        expect(result).to.deep.equal([child2]);
+        expect(array.content).to.deep.equal([child1, child4, child3]);
+        expect(child4.parent).to.be.equal(array);
+      });
+    }
   });
 
   describe('#parents', function () {
