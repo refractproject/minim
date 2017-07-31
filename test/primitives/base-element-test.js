@@ -868,4 +868,15 @@ describe('Element', function() {
       expect(child4.parent).to.be.equal(array);
     });
   });
+
+  describe('#parents', function () {
+    it('configures parent when setting element content to be an element', function () {
+      var one = new minim.Element('bottom');
+      var two = new minim.Element(one);
+      var three = new minim.Element(two);
+
+      expect(one.parents).to.be.instanceof(ArraySlice);
+      expect(one.parents.elements).to.deep.equal([two, three]);
+    });
+  });
 });
