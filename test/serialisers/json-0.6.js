@@ -171,7 +171,9 @@ describe('JSON Serialiser', function() {
       enumeration.element = 'enum';
       enumeration.attributes.set('default', 'North');
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
-      enumeration.content = 'South';
+      enumeration.attributes.set('samples', ['North', 'East']);
+
+      //console.log(JSON.stringify(minim.toRefract(enumeration), null, 2));
 
       var object = serialiser.serialise(enumeration);
 
@@ -189,10 +191,55 @@ describe('JSON Serialiser', function() {
               {
                 element: 'string',
                 content: 'South',
-              },
+              }
             ],
+            [
+              {
+                element: 'string',
+                content: 'North'
+              }
+            ],
+            [
+              {
+                element:'string',
+                content: 'East'
+              }
+            ]
           ],
         },
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+          {
+            element: 'string',
+            content: 'East',
+          },
+          {
+            element: 'string',
+            content: 'South',
+          },
+          {
+            element: 'string',
+            content: 'West',
+          },
+        ],
+      });
+    });
+
+    it('serialises enum without content, samples & default', function() {
+      var enumeration = new minim.Element();
+      enumeration.element = 'enum';
+      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+
+      //console.log(JSON.stringify(minim.toRefract(enumeration), null, 2));
+
+      var object = serialiser.serialise(enumeration);
+
+      expect(object).to.deep.equal({
+        element: 'enum',
+        attributes: {},
         content: [
           {
             element: 'string',
@@ -512,57 +559,10 @@ describe('JSON Serialiser', function() {
       enumeration.element = 'enum';
       enumeration.attributes.set('default', 'North');
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
-      enumeration.content = 'South';
+      enumeration.attributes.set('samples', ['North', 'East']);
 
-      var object = serialiser.serialise(enumeration);
-
-      var enumeration = serialiser.deserialise({
-        element: 'enum',
-        attributes: {
-          default: [
-            {
-              element: 'string',
-              content: 'North',
-            },
-          ],
-          samples: [
-            [
-              {
-                element: 'string',
-                content: 'South',
-              },
-            ],
-          ],
-        },
-        content: [
-          {
-            element: 'string',
-            content: 'North',
-          },
-          {
-            element: 'string',
-            content: 'East',
-          },
-          {
-            element: 'string',
-            content: 'South',
-          },
-          {
-            element: 'string',
-            content: 'West',
-          },
-        ],
-      });
-
-      expect(enumeration.content).to.equal('South');
-
-      const defaultValue = enumeration.attributes.get('default');
-      expect(defaultValue).to.be.instanceof(minim.elements.String);
-      expect(defaultValue.content).to.equal('North');
-
-      const enumerations = enumeration.attributes.get('enumerations');
-      expect(enumerations).to.be.instanceof(minim.elements.Array);
-      expect(enumerations.toValue()).to.deep.equal(['North', 'East', 'South', 'West']);
+      var deserializedEnum = serialiser.deserialise(serialiser.serialise(enumeration));
+      expect(minim.toRefract(deserializedEnum)).to.deep.equal(minim.toRefract(enumeration));
     });
   });
 });
