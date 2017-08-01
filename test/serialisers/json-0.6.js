@@ -166,28 +166,51 @@ describe('JSON Serialiser', function() {
       });
     });
 
-    it('serialises enum inside attributes as array', function() {
-      var element = new minim.elements.String('Hello World');
-      var enumeration = new minim.Element([new minim.elements.String('North')]);
-      var array = new minim.elements.Array([enumeration]);
+    it('serialises enum', function() {
+      var enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
-      element.attributes.set('samples', array);
+      enumeration.attributes.set('default', 'North');
+      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+      enumeration.content = 'South';
 
-      var object = serialiser.serialise(element);
+      var object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
-        element: 'string',
+        element: 'enum',
         attributes: {
+          default: [
+            {
+              element: 'string',
+              content: 'North',
+            },
+          ],
           samples: [
             [
               {
-                'element': 'string',
-                'content': 'North'
-              }
-            ]
-          ]
+                element: 'string',
+                content: 'South',
+              },
+            ],
+          ],
         },
-        content: 'Hello World'
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+          {
+            element: 'string',
+            content: 'East',
+          },
+          {
+            element: 'string',
+            content: 'South',
+          },
+          {
+            element: 'string',
+            content: 'West',
+          },
+        ],
       });
     });
 
@@ -482,6 +505,64 @@ describe('JSON Serialiser', function() {
 
       expect(element).to.be.instanceof(minim.elements.Array);
       expect(element.get(0)).to.be.instanceof(minim.elements.Number);
+    });
+
+    it('deserialises enum', function() {
+      var enumeration = new minim.Element(new minim.elements.String('South'));
+      enumeration.element = 'enum';
+      enumeration.attributes.set('default', 'North');
+      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+      enumeration.content = 'South';
+
+      var object = serialiser.serialise(enumeration);
+
+      var enumeration = serialiser.deserialise({
+        element: 'enum',
+        attributes: {
+          default: [
+            {
+              element: 'string',
+              content: 'North',
+            },
+          ],
+          samples: [
+            [
+              {
+                element: 'string',
+                content: 'South',
+              },
+            ],
+          ],
+        },
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+          {
+            element: 'string',
+            content: 'East',
+          },
+          {
+            element: 'string',
+            content: 'South',
+          },
+          {
+            element: 'string',
+            content: 'West',
+          },
+        ],
+      });
+
+      expect(enumeration.content).to.equal('South');
+
+      const defaultValue = enumeration.attributes.get('default');
+      expect(defaultValue).to.be.instanceof(minim.elements.String);
+      expect(defaultValue.content).to.equal('North');
+
+      const enumerations = enumeration.attributes.get('enumerations');
+      expect(enumerations).to.be.instanceof(minim.elements.Array);
+      expect(enumerations.toValue()).to.deep.equal(['North', 'East', 'South', 'West']);
     });
   });
 });
