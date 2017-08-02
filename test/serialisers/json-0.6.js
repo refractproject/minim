@@ -166,28 +166,94 @@ describe('JSON Serialiser', function() {
       });
     });
 
-    it('serialises enum inside attributes as array', function() {
-      var element = new minim.elements.String('Hello World');
-      var enumeration = new minim.Element([new minim.elements.String('North')]);
-      var array = new minim.elements.Array([enumeration]);
+    it('serialises enum', function() {
+      var enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
-      element.attributes.set('samples', array);
+      enumeration.attributes.set('default', 'North');
+      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+      enumeration.attributes.set('samples', ['North', 'East']);
 
-      var object = serialiser.serialise(element);
+      var object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
-        element: 'string',
+        element: 'enum',
         attributes: {
+          default: [
+            {
+              element: 'string',
+              content: 'North',
+            },
+          ],
           samples: [
             [
               {
-                'element': 'string',
-                'content': 'North'
+                element: 'string',
+                content: 'South',
+              }
+            ],
+            [
+              {
+                element: 'string',
+                content: 'North'
+              }
+            ],
+            [
+              {
+                element:'string',
+                content: 'East'
               }
             ]
-          ]
+          ],
         },
-        content: 'Hello World'
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+          {
+            element: 'string',
+            content: 'East',
+          },
+          {
+            element: 'string',
+            content: 'South',
+          },
+          {
+            element: 'string',
+            content: 'West',
+          },
+        ],
+      });
+    });
+
+    it('serialises enum without content, samples & default', function() {
+      var enumeration = new minim.Element();
+      enumeration.element = 'enum';
+      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+
+      var object = serialiser.serialise(enumeration);
+
+      expect(object).to.deep.equal({
+        element: 'enum',
+        attributes: {},
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+          {
+            element: 'string',
+            content: 'East',
+          },
+          {
+            element: 'string',
+            content: 'South',
+          },
+          {
+            element: 'string',
+            content: 'West',
+          },
+        ],
       });
     });
 
@@ -482,6 +548,17 @@ describe('JSON Serialiser', function() {
 
       expect(element).to.be.instanceof(minim.elements.Array);
       expect(element.get(0)).to.be.instanceof(minim.elements.Number);
+    });
+
+    it('deserialises enum', function() {
+      var enumeration = new minim.Element(new minim.elements.String('South'));
+      enumeration.element = 'enum';
+      enumeration.attributes.set('default', 'North');
+      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+      enumeration.attributes.set('samples', ['North', 'East']);
+
+      var deserializedEnum = serialiser.deserialise(serialiser.serialise(enumeration));
+      expect(minim.toRefract(deserializedEnum)).to.deep.equal(minim.toRefract(enumeration));
     });
   });
 });
