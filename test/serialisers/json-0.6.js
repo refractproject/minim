@@ -173,8 +173,6 @@ describe('JSON Serialiser', function() {
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
       enumeration.attributes.set('samples', ['North', 'East']);
 
-      //console.log(JSON.stringify(minim.toRefract(enumeration), null, 2));
-
       var object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
@@ -232,8 +230,6 @@ describe('JSON Serialiser', function() {
       var enumeration = new minim.Element();
       enumeration.element = 'enum';
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
-
-      //console.log(JSON.stringify(minim.toRefract(enumeration), null, 2));
 
       var object = serialiser.serialise(enumeration);
 
