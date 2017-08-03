@@ -1,5 +1,7 @@
 # Master
 
+## Breaking
+
 - `Element.children` and `Element.recursiveChildren` now return `ArraySlice`
   instead of an `ArrayElement`.
 - `ArrayElement.filter` and `ArrayElement.find*` now return `ArraySlice`
@@ -8,6 +10,11 @@
   instead of methods.
 - `ObjectElement.filter` now returns an `ObjectSlice` instead of an
   `ObjectElement`.
+
+## Enhancements
+
+- `Element` now contains a `freeze` method to freeze and prevent an element
+  from being mutated, this also adds a parent property on all child elements.
 
 # 0.18.1
 
