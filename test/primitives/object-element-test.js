@@ -275,7 +275,7 @@ describe('ObjectElement', function() {
 
     it('allows for reducing on keys', function() {
       var letters = numbers.reduce(function(result, item, key) {
-        return result.push(key);
+        return result.push(key.clone());
       }, []);
       expect(letters.toValue()).to.deep.equal(['a', 'b', 'c', 'd']);
     });

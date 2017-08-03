@@ -207,44 +207,6 @@ that we are recursively looking for all `string` elements that are found within 
 const stringInsideMembers = element.findRecursive('member', 'string');
 ```
 
-##### Parents
-
-Each returned element will include a new `parents` property which is an array
-element including the parents of the returned element.
-
-As an example, if I had an array element which contains a category element
-which in turn contains a string element with the content "Hello World". I can
-access the parent array and category element. The parents are in closest parent
-order.
-
-```json
-{
-  "element": "array",
-  "content": [
-    {
-      "element": "category",
-      "content": [
-        {
-          "element": "string",
-          "content": "Hello World"
-        }
-      ]
-    }
-  ]
-}
-```
-
-```javascript
-const elements = element.findRecursive('string');
-const helloString = elements.first;
-
-// Category Element
-helloString.parents[0];
-
-// Array Element
-helloString.parents[1];
-```
-
 #### children
 
 The `children` property returns an `ArrayElement` containing all of the direct children elements.

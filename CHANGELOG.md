@@ -1,5 +1,7 @@
 # Master
 
+## Breaking
+
 - `Element.children` and `Element.recursiveChildren` now return `ArraySlice`
   instead of an `ArrayElement`.
 - `ArrayElement.filter` and `ArrayElement.find*` now return `ArraySlice`
@@ -8,6 +10,11 @@
   instead of methods.
 - `ObjectElement.filter` now returns an `ObjectSlice` instead of an
   `ObjectElement`.
+
+## Enhancements
+
+- Every element in an element tree will now have a `parent` providing access to
+  traverse up an element tree from a child.
 
 # 0.18.1
 
