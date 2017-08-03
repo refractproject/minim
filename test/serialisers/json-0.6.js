@@ -560,5 +560,18 @@ describe('JSON Serialiser', function() {
       var deserializedEnum = serialiser.deserialise(serialiser.serialise(enumeration));
       expect(minim.toRefract(deserializedEnum)).to.deep.equal(minim.toRefract(enumeration));
     });
+
+    it('deserialises data structure inside an array', function() {
+      var dataStructure = serialiser.deserialise({
+        element: 'dataStructure',
+        content: [
+          {
+            element: 'string'
+          }
+        ]
+      });
+
+      expect(dataStructure.content).to.be.instanceof(minim.elements.String);
+    });
   });
 });
