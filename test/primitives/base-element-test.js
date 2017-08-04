@@ -55,6 +55,11 @@ describe('Element', function() {
       el = new minim.Element(false);
       expect(el.toValue()).to.equal(false);
     });
+
+    it('should not be frozen', function() {
+      el = new minim.Element('');
+      expect(el.isFrozen).to.be.false;
+    });
   });
 
   describe('#meta', function() {
@@ -541,28 +546,6 @@ describe('Element', function() {
       expect(result.toValue()).to.deep.equal(['key1', 'value2']);
     });
 
-    it('attaches parent tree to found objects', function () {
-      const StringElement = minim.getElementClass('string');
-      const ArrayElement = minim.getElementClass('array');
-
-      const hello = new StringElement('Hello World')
-      const array = new ArrayElement([hello]);
-      const element = new ArrayElement([array]);
-      array.id = 'Inner';
-      element.id = 'Outter';
-
-      const result = element.findRecursive('string');
-
-      expect(result).to.be.instanceof(ArraySlice);
-      expect(result.toValue()).to.deep.equal(['Hello World']);
-
-      const helloElement = result.get(0);
-      const parentIDs = helloElement.parents.map(function (item) {
-        return item.id.toValue();
-      });
-      expect(parentIDs).to.deep.equal(['Inner', 'Outter']);
-    });
-
     it('finds elements contained in given elements', function () {
       const StringElement = minim.getElementClass('string');
       const ArrayElement = minim.getElementClass('array');
@@ -581,6 +564,8 @@ describe('Element', function() {
         new StringElement('One'),
         object
       ]);
+
+      element.freeze();
 
       const result = element.findRecursive('member', 'array', 'string');
 
@@ -624,6 +609,77 @@ describe('Element', function() {
         key: 'name',
         value: 'doe'
       });
+    });
+  });
+
+  describe('freezing an element', function () {
+    it('is frozen after being frozen', function () {
+      var element = new minim.Element('hello');
+      element.freeze();
+
+      expect(element.isFrozen).to.be.true;
+    });
+
+    it('freezes children when freezing', function () {
+      var element = new minim.Element([new minim.elements.String('hello')]);
+      element.freeze();
+
+      expect(element.content[0].isFrozen).to.be.true;
+    });
+
+    it('sets the parent of any children', function () {
+      var element = new minim.Element([new minim.elements.String('hello')]);
+      element.freeze();
+
+      expect(element.content[0].parent).to.equal(element);
+    });
+
+    it('sets the parent of meta elements', function () {
+      var element = new minim.Element();
+      element.title = 'Example';
+      element.freeze();
+
+      expect(element.meta.parent).to.equal(element);
+      expect(element.meta.content[0].parent).to.equal(element.meta);
+    });
+
+    it("doesn't allow modification of content array once frozen", function () {
+      var element = new minim.Element([new minim.elements.String('hello')]);
+      element.freeze();
+
+      expect(function() {
+        element.content.push(new minim.elements.String('hello'));
+      }).to.throw();
+    });
+
+    it("doesn't allow modification of meta once frozen", function () {
+      var element = new minim.Element();
+      element.freeze();
+
+      expect(function() {
+        element.id = 'Hello';
+      }).to.throw();
+    });
+
+    it("doesn't allow modification of attributes once frozen", function () {
+      var element = new minim.Element();
+      element.freeze();
+
+      expect(function() {
+        element.attributes.set('key', 'value');
+      }).to.throw();
+    });
+  });
+
+  describe('#parents', function () {
+    it('configures parent when setting element content to be an element', function () {
+      var one = new minim.Element('bottom');
+      var two = new minim.Element(one);
+      var three = new minim.Element(two);
+      three.freeze();
+
+      expect(one.parents).to.be.instanceof(ArraySlice);
+      expect(one.parents.elements).to.deep.equal([two, three]);
     });
   });
 
