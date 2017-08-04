@@ -1,7 +1,9 @@
-# Master
+# 0.19.0
 
 ## Breaking
 
+- Updated enum serialization/deserialization in the JSON 0.6 serializer to match
+  https://github.com/apiaryio/api-elements/pull/28
 - `Element.children` and `Element.recursiveChildren` now return `ArraySlice`
   instead of an `ArrayElement`.
 - `ArrayElement.filter` and `ArrayElement.find*` now return `ArraySlice`
@@ -16,8 +18,14 @@
 
 ## Enhancements
 
+- Introduced JSDoc documentation to public interfaces
 - `Element` now contains a `freeze` method to freeze and prevent an element
   from being mutated, this also adds a parent property on all child elements.
+
+## Bug Fixes
+
+- Handle serializing key-value pair without value
+- Deserialize `dataStructure` containing an array correctly
 
 # 0.18.1
 
