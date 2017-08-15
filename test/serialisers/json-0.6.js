@@ -556,15 +556,105 @@ describe('JSON Serialiser', function() {
       expect(element.get(0)).to.be.instanceof(minim.elements.Number);
     });
 
-    it('deserialises enum', function() {
-      var enumeration = new minim.Element(new minim.elements.String('South'));
-      enumeration.element = 'enum';
-      enumeration.attributes.set('default', 'North');
-      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
-      enumeration.attributes.set('samples', ['North', 'East']);
+    context('enum element', function() {
+      it('deserialises content', function() {
+        var element = serialiser.deserialise({
+          element: 'enum',
+          content: [
+            {
+              element: 'number',
+              content: 3,
+            },
+            {
+              element: 'number',
+              content: 4,
+            },
+          ],
+        });
 
-      var deserializedEnum = serialiser.deserialise(serialiser.serialise(enumeration));
-      expect(minim.toRefract(deserializedEnum)).to.deep.equal(minim.toRefract(enumeration));
+        expect(element.element).to.equal('enum');
+        expect(element.attributes.get('enumerations').toValue()).to.deep.equal([
+          3,
+          4,
+        ]);
+        expect(element.content).to.be.undefined;
+      });
+
+      it('deserialises with sample', function() {
+        var element = serialiser.deserialise({
+          element: 'enum',
+          attributes: {
+            samples: [
+              [
+                {
+                  element: 'number',
+                  content: 3,
+                },
+              ],
+            ],
+          }
+        });
+
+        expect(element.element).to.equal('enum');
+        expect(element.attributes.get('samples').toValue()).to.deep.equal([]);
+        expect(element.toValue()).to.equal(3);
+      });
+
+      it('deserialises with samples', function() {
+        var element = serialiser.deserialise({
+          element: 'enum',
+          attributes: {
+            samples: [
+              [
+                {
+                  element: 'number',
+                  content: 3,
+                },
+                {
+                  element: 'number',
+                  content: 4,
+                },
+              ],
+              [
+                {
+                  element: 'number',
+                  content: 5,
+                },
+                {
+                  element: 'number',
+                  content: 6,
+                },
+              ],
+            ],
+          }
+        });
+
+        expect(element.element).to.equal('enum');
+        expect(element.attributes.get('samples').toValue()).to.deep.equal([
+          4,
+          5,
+          6,
+        ]);
+        expect(element.toValue()).to.equal(3);
+      });
+
+      it('deserialises with default', function() {
+        var element = serialiser.deserialise({
+          element: 'enum',
+          attributes: {
+            default: [
+              {
+                element: 'number',
+                content: 3,
+              },
+            ],
+          }
+        });
+
+        expect(element.element).to.equal('enum');
+        expect(element.attributes.get('default').toValue()).to.equal(3);
+        expect(element.content).to.be.undefined;
+      });
     });
 
     it('deserialises data structure inside an array', function() {

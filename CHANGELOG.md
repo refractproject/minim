@@ -13,6 +13,9 @@
 
   These accessors will now return an empty frozen `ObjectElement` in these
   cases now to prevent mutation.
+- Fixes JSON 0.6 Deserialiser to correct deserialise enum elements.
+    - When multiple sample values were present additional values were being discarded.
+    - Deserialised enum content contained duplicate enumeration values.
 
 # 0.19.0
 
