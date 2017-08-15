@@ -669,6 +669,19 @@ describe('Element', function() {
         element.attributes.set('key', 'value');
       }).to.throw();
     });
+
+    it('returns frozen objects from meta/attributes accessors', function () {
+      // An elements meta and attributes are lazy loaded and created on access.
+      // This would cause problems because that means you cannot access
+      // meta/attributes on frozen elements because the accessor has
+      // side-effects of creation.
+
+      var element = new minim.Element();
+      element.freeze();
+
+      expect(element.meta.isFrozen).to.be.true;
+      expect(element.attributes.isFrozen).to.be.true;
+    });
   });
 
   describe('#parents', function () {

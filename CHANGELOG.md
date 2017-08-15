@@ -1,3 +1,14 @@
+# Master
+
+## Bug Fixes
+
+- While accessing meta or attributes of a frozen element that does not contain
+  meta or attributes, an exception was raised because these accessors would
+  lazy load and attempt to mutate the element.
+
+  These accessors will now return an empty frozen `ObjectElement` in these
+  cases now to prevent mutation.
+
 # 0.19.0
 
 ## Breaking
