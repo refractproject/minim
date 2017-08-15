@@ -1,5 +1,10 @@
 # Master
 
+## Enhancements
+
+- Serialisers will now throw TypeError with straight forward messages when you
+  try to serialise a non-element type.
+
 ## Bug Fixes
 
 - While accessing meta or attributes of a frozen element that does not contain

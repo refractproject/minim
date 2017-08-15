@@ -24,6 +24,12 @@ describe('JSON Serialiser', function() {
   });
 
   describe('serialisation', function() {
+    it('errors when serialising a non-element', function() {
+      expect(function(){
+        serialiser.serialise('Hello');
+      }).to.throw(TypeError, 'Given element `Hello` is not an Element instance');
+    });
+
     it('serialises a primitive element', function() {
       var element = new minim.elements.String('Hello')
       var object = serialiser.serialise(element);
