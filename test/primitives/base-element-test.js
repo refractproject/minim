@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
@@ -166,9 +165,9 @@ describe('Element', function() {
     };
 
     context('when the meta is already set', function() {
-      var el = new minim.Element(null, _.clone(meta));
+      var el = new minim.Element(null, meta);
 
-      _.forEach(_.keys(meta), function(key) {
+      Object.keys(meta).forEach(function (key) {
         it('provides a convenience method for ' + key, function() {
           expect(el[key].toValue()).to.deep.equal(meta[key]);
         });
@@ -178,7 +177,7 @@ describe('Element', function() {
     context('when meta is set with getters and setters', function() {
       var el = new minim.Element(null);
 
-      _.forEach(_.keys(meta), function(key) {
+      Object.keys(meta).forEach(function(key) {
         el[key] = meta[key];
 
         it('works for getters and setters for ' + key, function() {
