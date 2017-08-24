@@ -1,6 +1,7 @@
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
 var Element = minim.Element;
+var StringElement = minim.StringElement;
 var ArraySlice = minim.ArraySlice;
 
 describe('ArraySlice', function () {
@@ -57,6 +58,41 @@ describe('ArraySlice', function () {
     expect(filtered).to.be.instanceof(ArraySlice);
     expect(filtered.elements).to.deep.equal([one]);
   });
+
+  describe('#find', function () {
+    it('finds first element satisfied from callback', function () {
+      var one = new Element('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var element = slice.find(function (element) {
+        return element.toValue() === 'two';
+      });
+
+      expect(element).to.be.equal(two);
+    });
+
+    it('finds first element satisfied from element class', function () {
+      var one = new Element('one');
+      var two = new StringElement('two');
+      var slice = new ArraySlice([one, two]);
+
+      var element = slice.find(StringElement);
+
+      expect(element).to.be.equal(two);
+    });
+
+    it('finds first element satisfied from element name', function () {
+      var one = new Element('one');
+      var two = new StringElement('two');
+      var slice = new ArraySlice([one, two]);
+
+      var element = slice.find('string');
+
+      expect(element).to.be.equal(two);
+    });
+  });
+
 
   it('provides forEach', function () {
     var one = new Element('one');
