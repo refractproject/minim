@@ -46,17 +46,41 @@ describe('ArraySlice', function () {
     expect(mapped).to.deep.equal(['hello']);
   });
 
-  it('provides filter', function () {
-    var one = new Element('one');
-    var two = new Element('two');
-    var slice = new ArraySlice([one, two]);
+  context('#filter', function () {
+    it('filters elements satisfied from callback', function () {
+      var one = new Element('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
 
-    var filtered = slice.filter(function (element) {
-      return element.toValue() === 'one';
+      var filtered = slice.filter(function (element) {
+        return element.toValue() === 'one';
+      });
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([one]);
     });
 
-    expect(filtered).to.be.instanceof(ArraySlice);
-    expect(filtered.elements).to.deep.equal([one]);
+    it('filters elements satisfied from element class', function () {
+      var one = new StringElement('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.filter(StringElement);
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([one]);
+    });
+
+    it('filters elements satisfied from element name', function () {
+      var one = new StringElement('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.filter('string');
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([one]);
+    });
   });
 
   describe('#find', function () {
