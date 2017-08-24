@@ -117,6 +117,19 @@ describe('ArraySlice', function () {
     });
   });
 
+  it('provides flatMap', function () {
+    var element = new Element('flat mapping for this element');
+    var one = new Element('one');
+    one.attributes.set('default', element);
+    var two = new Element('two');
+    var slice = new ArraySlice([one, two]);
+
+    var titles = slice.flatMap(function (element) {
+      return element.attributes.get('default');
+    });
+
+    expect(titles).to.deep.equal([element]);
+  });
 
   it('provides forEach', function () {
     var one = new Element('one');
