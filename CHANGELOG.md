@@ -1,3 +1,11 @@
+# Master
+
+## Bug Fixes
+
+- Accessing lazy meta accessors on frozen elements such as `title` will now
+  return a frozen default value. Previously this would raise an exception
+  trying to mutate the element.
+
 # 0.19.1
 
 ## Enhancements
