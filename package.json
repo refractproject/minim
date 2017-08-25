@@ -1,6 +1,6 @@
 {
   "name": "minim",
-  "version": "0.19.1",
+  "version": "0.19.2",
   "description": "A library for interacting with JSON through Refract elements",
   "main": "lib/minim.js",
   "scripts": {
