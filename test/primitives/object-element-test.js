@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var expect = require('../spec-helper').expect;
 var minim = require('../../lib/minim').namespace();
 
@@ -192,7 +191,7 @@ describe('ObjectElement', function() {
       var keys = [];
       var values = [];
 
-      _.forEach(objectElement.items(), function(item) {
+      objectElement.items().forEach(function(item) {
         var key = item[0];
         var value = item[1];
 
