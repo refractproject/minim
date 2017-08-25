@@ -1,6 +1,7 @@
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim');
 var Element = minim.Element;
+var StringElement = minim.StringElement;
 var ArraySlice = minim.ArraySlice;
 
 describe('ArraySlice', function () {
@@ -45,17 +46,89 @@ describe('ArraySlice', function () {
     expect(mapped).to.deep.equal(['hello']);
   });
 
-  it('provides filter', function () {
+  context('#filter', function () {
+    it('filters elements satisfied from callback', function () {
+      var one = new Element('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.filter(function (element) {
+        return element.toValue() === 'one';
+      });
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([one]);
+    });
+
+    it('filters elements satisfied from element class', function () {
+      var one = new StringElement('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.filter(StringElement);
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([one]);
+    });
+
+    it('filters elements satisfied from element name', function () {
+      var one = new StringElement('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.filter('string');
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([one]);
+    });
+  });
+
+  describe('#find', function () {
+    it('finds first element satisfied from callback', function () {
+      var one = new Element('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var element = slice.find(function (element) {
+        return element.toValue() === 'two';
+      });
+
+      expect(element).to.be.equal(two);
+    });
+
+    it('finds first element satisfied from element class', function () {
+      var one = new Element('one');
+      var two = new StringElement('two');
+      var slice = new ArraySlice([one, two]);
+
+      var element = slice.find(StringElement);
+
+      expect(element).to.be.equal(two);
+    });
+
+    it('finds first element satisfied from element name', function () {
+      var one = new Element('one');
+      var two = new StringElement('two');
+      var slice = new ArraySlice([one, two]);
+
+      var element = slice.find('string');
+
+      expect(element).to.be.equal(two);
+    });
+  });
+
+  it('provides flatMap', function () {
+    var element = new Element('flat mapping for this element');
     var one = new Element('one');
+    one.attributes.set('default', element);
     var two = new Element('two');
     var slice = new ArraySlice([one, two]);
 
-    var filtered = slice.filter(function (element) {
-      return element.toValue() === 'one';
+    var titles = slice.flatMap(function (element) {
+      return element.attributes.get('default');
     });
 
-    expect(filtered).to.be.instanceof(ArraySlice);
-    expect(filtered.elements).to.deep.equal([one]);
+    expect(titles).to.deep.equal([element]);
   });
 
   it('provides forEach', function () {

@@ -1,5 +1,13 @@
 # Master
 
+## Enhancements
+
+- ArraySlice now provides a `find` method allowing you to find the first
+  element satisfying the given value.
+- ArraySlice.filter now accepts element names or element classes to filter.
+- ArraySlice now provides `flatMap` allowing you to map and then flatten the
+  results.
+
 ## Bug Fixes
 
 - Accessing lazy meta accessors on frozen elements such as `title` will now
