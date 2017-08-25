@@ -670,7 +670,7 @@ describe('Element', function() {
       }).to.throw();
     });
 
-    it('returns frozen objects from meta/attributes accessors', function () {
+    context('returns frozen objects from lazy accessors', function () {
       // An elements meta and attributes are lazy loaded and created on access.
       // This would cause problems because that means you cannot access
       // meta/attributes on frozen elements because the accessor has
@@ -679,8 +679,17 @@ describe('Element', function() {
       var element = new minim.Element();
       element.freeze();
 
-      expect(element.meta.isFrozen).to.be.true;
-      expect(element.attributes.isFrozen).to.be.true;
+      it('meta', function () {
+        expect(element.meta.isFrozen).to.be.true;
+      });
+
+      it('attributes', function () {
+        expect(element.attributes.isFrozen).to.be.true;
+      });
+
+      it('getMetaProperty', function () {
+        expect(element.getMetaProperty('title', '').isFrozen).to.be.true;
+      });
     });
   });
 
