@@ -126,7 +126,7 @@ Additionally, convenience attributes are exposed on the element:
 
 ### Element Methods
 
-Each Minim element provides the following the methods.
+Each Minim element provides the following methods.
 
 #### toValue
 
