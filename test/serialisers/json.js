@@ -333,5 +333,14 @@ describe('JSON Serialiser', function() {
 
       expect(element).to.be.instanceof(minim.elements.Null);
     });
+
+    it('deserialises an object without content', function() {
+      var object = serialiser.deserialise({
+        element: 'object',
+      });
+
+      expect(object).to.be.instanceof(minim.elements.Object);
+      expect(object.content).to.deep.equal([]);
+    });
   });
 });
