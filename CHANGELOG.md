@@ -1,3 +1,12 @@
+# Master
+
+## Bug Fixes
+
+- JSON deserialisers will now prevent overriding default element content
+  values with undefined. This could cause problems where internal state of
+  array or object element would have undefined as content and thus cause other
+  Element methods to later fail such as `toValue` or `get`.
+
 # 0.19.2
 
 ## Enhancements
