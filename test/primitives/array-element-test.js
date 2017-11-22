@@ -110,6 +110,16 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#reject', function() {
+      it('allows for rejecting the content', function() {
+        var newArray = arrayElement.reject(function(item) {
+          var ref;
+          return (ref = item.toValue()) === 'a' || ref === 1;
+        });
+        expect(newArray.toValue()).to.deep.equal([true, null]);
+      });
+    });
+
     describe('#reduce', function() {
       var numbers = new ArrayElement([1, 2, 3, 4]);
 
