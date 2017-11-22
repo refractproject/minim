@@ -264,6 +264,29 @@ describe('ObjectElement', function() {
     });
   });
 
+  describe('#reject', function() {
+    it('allows for rejecting on keys', function() {
+      var foo = objectElement.reject(function(value, key, member) {
+        return key.equals('foo');
+      });
+      expect(foo.keys()).to.deep.equal(['z']);
+    });
+
+    it('allows for rejecting on values', function() {
+      var foo = objectElement.reject(function(value, key, member) {
+        return value.equals('bar');
+      });
+      expect(foo.keys()).to.deep.equal(['z']);
+    });
+
+    it('allows for rejecting on members', function() {
+      var foo = objectElement.reject(function(value, key, member) {
+        return member.value.equals('bar');
+      });
+      expect(foo.keys()).to.deep.equal(['z']);
+    });
+  });
+
   describe('#reduce', function() {
     var numbers = new ObjectElement({
       a: 1,

@@ -52,6 +52,20 @@ describe('ObjectSlice', function () {
     expect(filtered.toValue()).to.deep.equal([{key: 'name', value: 'Doe'}]);
   });
 
+  it('provides reject', function () {
+    var slice = new ObjectSlice([
+      new MemberElement('name', 'Doe'),
+      new MemberElement('name', 'Bill'),
+    ]);
+
+    var filtered = slice.reject(function (value) {
+      return value.toValue() === 'Doe';
+    });
+
+    expect(filtered).to.be.instanceof(ObjectSlice);
+    expect(filtered.toValue()).to.deep.equal([{key: 'name', value: 'Bill'}]);
+  });
+
   it('provides keys', function () {
     var element = new MemberElement('name', 'Doe');
     var slice = new ObjectSlice([element]);

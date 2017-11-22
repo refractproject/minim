@@ -83,6 +83,43 @@ describe('ArraySlice', function () {
     });
   });
 
+  context('#reject', function () {
+    it('rejects elements satisfied from callback', function () {
+      var one = new Element('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.reject(function (element) {
+        return element.toValue() === 'one';
+      });
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([two]);
+    });
+
+    it('rejects elements satisfied from element class', function () {
+      var one = new StringElement('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.reject(StringElement);
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([two]);
+    });
+
+    it('rejects elements satisfied from element name', function () {
+      var one = new StringElement('one');
+      var two = new Element('two');
+      var slice = new ArraySlice([one, two]);
+
+      var filtered = slice.reject('string');
+
+      expect(filtered).to.be.instanceof(ArraySlice);
+      expect(filtered.elements).to.deep.equal([two]);
+    });
+  });
+
   describe('#find', function () {
     it('finds first element satisfied from callback', function () {
       var one = new Element('one');
