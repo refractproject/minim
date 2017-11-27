@@ -173,11 +173,23 @@ describe('JSON Serialiser', function() {
     });
 
     it('serialises enum', function() {
+      var defaultElement = new minim.Element(new minim.elements.String('North'));
+      defaultElement.element = 'default';
+
+      var sampleNorth = new minim.Element(new minim.elements.String('North'));
+      sampleNorth.element = 'enum';
+      var sampleEast = new minim.Element(new minim.elements.String('East'));
+      sampleEast.element = 'enum';
+      var samples = new minim.elements.Array([
+        sampleNorth,
+        sampleEast,
+      ]);
+
       var enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
-      enumeration.attributes.set('default', 'North');
+      enumeration.attributes.set('default', defaultElement);
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
-      enumeration.attributes.set('samples', ['North', 'East']);
+      enumeration.attributes.set('samples', samples);
 
       var object = serialiser.serialise(enumeration);
 
@@ -241,7 +253,6 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'enum',
-        attributes: {},
         content: [
           {
             element: 'string',
@@ -265,7 +276,7 @@ describe('JSON Serialiser', function() {
 
     it('serialises enum inside array inside attributes as array', function() {
       var element = new minim.elements.String('Hello World')
-      var enumeration = new minim.Element([new minim.elements.String('North')]);
+      var enumeration = new minim.Element(new minim.elements.String('North'));
       enumeration.element = 'enum';
       element.attributes.set('directions', enumeration);
 
@@ -630,12 +641,25 @@ describe('JSON Serialiser', function() {
         });
 
         expect(element.element).to.equal('enum');
-        expect(element.attributes.get('samples').toValue()).to.deep.equal([
+        expect(element.toValue()).to.equal(3);
+
+        var samples = element.attributes.get('samples');
+        expect(samples).to.be.instanceof(minim.elements.Array);
+
+        expect(samples.get(0).element).to.equal('enum');
+        expect(samples.get(0).content).to.be.instanceof(minim.elements.Number);
+
+        expect(samples.get(1).element).to.equal('enum');
+        expect(samples.get(1).content).to.be.instanceof(minim.elements.Number);
+
+        expect(samples.get(2).element).to.equal('enum');
+        expect(samples.get(2).content).to.be.instanceof(minim.elements.Number);
+
+        expect(samples.toValue()).to.deep.equal([
           4,
           5,
           6,
         ]);
-        expect(element.toValue()).to.equal(3);
       });
 
       it('deserialises with default', function() {
@@ -651,9 +675,93 @@ describe('JSON Serialiser', function() {
           }
         });
 
+        var defaultElement = element.attributes.get('default');
+
         expect(element.element).to.equal('enum');
-        expect(element.attributes.get('default').toValue()).to.equal(3);
+        expect(defaultElement.element).to.equal('enum');
+        expect(defaultElement.content).to.be.instanceof(minim.elements.Number);
+        expect(defaultElement.toValue()).to.equal(3);
         expect(element.content).to.be.undefined;
+      });
+
+      it('deserialises with samples, enumerations and default ', function() {
+        var element = serialiser.deserialise({
+          element: 'enum',
+          attributes: {
+            samples: [
+              [
+                {
+                  element: 'number',
+                  content: 3,
+                },
+                {
+                  element: 'number',
+                  content: 4,
+                },
+              ],
+              [
+                {
+                  element: 'number',
+                  content: 5,
+                },
+                {
+                  element: 'number',
+                  content: 6,
+                },
+              ],
+            ],
+            default: [
+              {
+                element: 'number',
+                content: 1337,
+              }
+            ]
+          },
+          content: [
+            {
+              element: 'number',
+              content: 3,
+            },
+            {
+              element: 'number',
+              content: 6,
+            },
+          ],
+        });
+
+        expect(element.element).to.equal('enum');
+        expect(element.toValue()).to.equal(3);
+
+        var samples = element.attributes.get('samples');
+        expect(samples).to.be.instanceof(minim.elements.Array);
+
+        expect(samples.get(0).element).to.equal('enum');
+        expect(samples.get(0).content).to.be.instanceof(minim.elements.Number);
+
+        expect(samples.get(1).element).to.equal('enum');
+        expect(samples.get(1).content).to.be.instanceof(minim.elements.Number);
+
+        expect(samples.get(2).element).to.equal('enum');
+        expect(samples.get(2).content).to.be.instanceof(minim.elements.Number);
+
+        expect(samples.toValue()).to.deep.equal([
+          4,
+          5,
+          6,
+        ]);
+
+        var defaultElement = element.attributes.get('default');
+        expect(defaultElement.element).to.equal('enum');
+        expect(defaultElement.content).to.be.instanceof(minim.elements.Number);
+        expect(defaultElement.toValue()).to.equal(1337);
+
+        var enumerations = element.attributes.get('enumerations');
+        expect(enumerations).to.be.instanceof(minim.elements.Array);
+
+        expect(enumerations.get(0)).to.be.instanceof(minim.elements.Number);
+        expect(enumerations.get(1)).to.be.instanceof(minim.elements.Number);
+
+        expect(enumerations.toValue()).to.deep.equal([3, 6]);
       });
     });
 
