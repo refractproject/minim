@@ -1,5 +1,12 @@
 # Master
 
+## Breaking
+
+- The Refract JSON 0.6 serialiser will de-serialise enum elements into the form
+  in the API Elements 1.0 specification. This is a breaking change on the
+  layout of the enum. Default and sample values will now be an `enum` element
+  themselves.
+
 ## Bug Fixes
 
 - JSON deserialisers will now prevent overriding default element content
