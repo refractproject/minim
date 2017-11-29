@@ -5,6 +5,7 @@
 - Adds a `reject` method to `ArrayElement`, `ObjectElement`, `ArraySlice`,
   and `ObjectSlice` which complements the `filter` method providing the ability
   to exclude vs filter matched elements.
+- Adds `EnumElement`.
 
 ## Breaking
 

@@ -176,20 +176,18 @@ describe('JSON Serialiser', function() {
       var defaultElement = new minim.Element(new minim.elements.String('North'));
       defaultElement.element = 'default';
 
-      var sampleNorth = new minim.Element(new minim.elements.String('North'));
-      sampleNorth.element = 'enum';
-      var sampleEast = new minim.Element(new minim.elements.String('East'));
-      sampleEast.element = 'enum';
+      var sampleNorth = new minim.elements.Enum(new minim.elements.String('North'));
+      var sampleEast = new minim.elements.Enum(new minim.elements.String('East'));
+
       var samples = new minim.elements.Array([
         sampleNorth,
         sampleEast,
       ]);
 
-      var enumeration = new minim.Element(new minim.elements.String('South'));
-      enumeration.element = 'enum';
+      var enumeration = new minim.elements.Enum(new minim.elements.String('South'));
       enumeration.attributes.set('default', defaultElement);
-      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
       enumeration.attributes.set('samples', samples);
+      enumeration.enumerations = ['North', 'East', 'South', 'West'];
 
       var object = serialiser.serialise(enumeration);
 
@@ -245,9 +243,8 @@ describe('JSON Serialiser', function() {
     });
 
     it('serialises enum without content, samples & default', function() {
-      var enumeration = new minim.Element();
-      enumeration.element = 'enum';
-      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+      var enumeration = new minim.elements.Enum();
+      enumeration.enumerations = ['North', 'East', 'South', 'West'];
 
       var object = serialiser.serialise(enumeration);
 
@@ -276,8 +273,7 @@ describe('JSON Serialiser', function() {
 
     it('serialises enum inside array inside attributes as array', function() {
       var element = new minim.elements.String('Hello World')
-      var enumeration = new minim.Element(new minim.elements.String('North'));
-      enumeration.element = 'enum';
+      var enumeration = new minim.elements.Enum(new minim.elements.String('North'));
       element.attributes.set('directions', enumeration);
 
       var object = serialiser.serialise(element);
@@ -583,8 +579,8 @@ describe('JSON Serialiser', function() {
           ],
         });
 
-        expect(element.element).to.equal('enum');
-        expect(element.attributes.get('enumerations').toValue()).to.deep.equal([
+        expect(element).to.be.instanceof(minim.elements.Enum);
+        expect(element.enumerations.toValue()).to.deep.equal([
           3,
           4,
         ]);
@@ -606,7 +602,7 @@ describe('JSON Serialiser', function() {
           }
         });
 
-        expect(element.element).to.equal('enum');
+        expect(element).to.be.instanceof(minim.elements.Enum);
         expect(element.attributes.get('samples').toValue()).to.deep.equal([]);
         expect(element.toValue()).to.equal(3);
       });
@@ -640,19 +636,19 @@ describe('JSON Serialiser', function() {
           }
         });
 
-        expect(element.element).to.equal('enum');
+        expect(element).to.be.instanceof(minim.elements.Enum);
         expect(element.toValue()).to.equal(3);
 
         var samples = element.attributes.get('samples');
         expect(samples).to.be.instanceof(minim.elements.Array);
 
-        expect(samples.get(0).element).to.equal('enum');
+        expect(samples.get(0)).to.be.instanceof(minim.elements.Enum);
         expect(samples.get(0).content).to.be.instanceof(minim.elements.Number);
 
-        expect(samples.get(1).element).to.equal('enum');
+        expect(samples.get(1)).to.be.instanceof(minim.elements.Enum);
         expect(samples.get(1).content).to.be.instanceof(minim.elements.Number);
 
-        expect(samples.get(2).element).to.equal('enum');
+        expect(samples.get(2)).to.be.instanceof(minim.elements.Enum);
         expect(samples.get(2).content).to.be.instanceof(minim.elements.Number);
 
         expect(samples.toValue()).to.deep.equal([
@@ -677,8 +673,8 @@ describe('JSON Serialiser', function() {
 
         var defaultElement = element.attributes.get('default');
 
-        expect(element.element).to.equal('enum');
-        expect(defaultElement.element).to.equal('enum');
+        expect(element).to.be.instanceof(minim.elements.Enum);
+        expect(defaultElement).to.be.instanceof(minim.elements.Enum);
         expect(defaultElement.content).to.be.instanceof(minim.elements.Number);
         expect(defaultElement.toValue()).to.equal(3);
         expect(element.content).to.be.undefined;
@@ -729,19 +725,19 @@ describe('JSON Serialiser', function() {
           ],
         });
 
-        expect(element.element).to.equal('enum');
+        expect(element).to.be.instanceof(minim.elements.Enum);
         expect(element.toValue()).to.equal(3);
 
         var samples = element.attributes.get('samples');
         expect(samples).to.be.instanceof(minim.elements.Array);
 
-        expect(samples.get(0).element).to.equal('enum');
+        expect(samples.get(0)).to.be.instanceof(minim.elements.Enum);
         expect(samples.get(0).content).to.be.instanceof(minim.elements.Number);
 
-        expect(samples.get(1).element).to.equal('enum');
+        expect(samples.get(1)).to.be.instanceof(minim.elements.Enum);
         expect(samples.get(1).content).to.be.instanceof(minim.elements.Number);
 
-        expect(samples.get(2).element).to.equal('enum');
+        expect(samples.get(2)).to.be.instanceof(minim.elements.Enum);
         expect(samples.get(2).content).to.be.instanceof(minim.elements.Number);
 
         expect(samples.toValue()).to.deep.equal([
@@ -751,7 +747,7 @@ describe('JSON Serialiser', function() {
         ]);
 
         var defaultElement = element.attributes.get('default');
-        expect(defaultElement.element).to.equal('enum');
+        expect(defaultElement).to.be.instanceof(minim.elements.Enum);
         expect(defaultElement.content).to.be.instanceof(minim.elements.Number);
         expect(defaultElement.toValue()).to.equal(1337);
 
