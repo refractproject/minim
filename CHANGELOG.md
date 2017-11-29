@@ -1,5 +1,11 @@
 # Master
 
+## Enhancements
+
+- Adds a `reject` method to `ArrayElement`, `ObjectElement`, `ArraySlice`,
+  and `ObjectSlice` which complements the `filter` method providing the ability
+  to exclude vs filter matched elements.
+
 ## Breaking
 
 - The Refract JSON 0.6 serialiser will de-serialise enum elements into the form
