@@ -1,3 +1,10 @@
+# Master
+
+## Bug Fixes
+
+- Prevent de-serialising `undefined` if the default element's content is not
+  null.
+
 # 0.20.0
 
 ## Enhancements
