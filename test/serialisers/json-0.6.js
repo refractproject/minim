@@ -73,6 +73,16 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
+    it('serialises an element containing an empty array', function() {
+      var element = new minim.elements.Array();
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'array',
+      });
+    });
+
     it('serialise an element with object content', function() {
       var element = new minim.elements.Element({ message: 'hello' });
       var object = serialiser.serialise(element);
