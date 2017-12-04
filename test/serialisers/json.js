@@ -73,6 +73,17 @@ describe('JSON Serialiser', function() {
       });
     });
 
+    it('serialises an element containing an empty array', function() {
+      var element = new minim.elements.Array();
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'array',
+      });
+    });
+
+
     it('serialise an element with object content', function() {
       var element = new minim.elements.Element({ message: 'hello' });
       var object = serialiser.serialise(element);
@@ -296,51 +307,109 @@ describe('JSON Serialiser', function() {
       expect(attribute.content).to.equal('hello');
     });
 
-    it('deserialise string', function() {
-      var element = serialiser.deserialise({
-        element: 'string',
-        content: 'Hello',
+    describe('deserialising base elements', function() {
+      it('deserialise string', function() {
+        var element = serialiser.deserialise({
+          element: 'string',
+          content: 'Hello',
+        });
+
+        expect(element).to.be.instanceof(minim.elements.String);
+        expect(element.content).to.equal('Hello');
       });
 
-      expect(element).to.be.instanceof(minim.elements.String);
-      expect(element.content).to.equal('Hello');
-    });
+      it('deserialise number', function() {
+        var element = serialiser.deserialise({
+          element: 'number',
+          content: 15,
+        });
 
-    it('deserialise number', function() {
-      var element = serialiser.deserialise({
-        element: 'number',
-        content: 15,
+        expect(element).to.be.instanceof(minim.elements.Number);
+        expect(element.content).to.equal(15);
       });
 
-      expect(element).to.be.instanceof(minim.elements.Number);
-      expect(element.content).to.equal(15);
-    });
+      it('deserialise boolean', function() {
+        var element = serialiser.deserialise({
+          element: 'boolean',
+          content: true
+        });
 
-    it('deserialise boolean', function() {
-      var element = serialiser.deserialise({
-        element: 'boolean',
-        content: true
+        expect(element).to.be.instanceof(minim.elements.Boolean);
+        expect(element.content).to.equal(true);
       });
 
-      expect(element).to.be.instanceof(minim.elements.Boolean);
-      expect(element.content).to.equal(true);
-    });
+      it('deserialise null', function() {
+        var element = serialiser.deserialise({
+          element: 'null',
+        });
 
-    it('deserialise null', function() {
-      var element = serialiser.deserialise({
-        element: 'null',
+        expect(element).to.be.instanceof(minim.elements.Null);
       });
 
-      expect(element).to.be.instanceof(minim.elements.Null);
-    });
+      it('deserialise an array', function() {
+        var object = serialiser.deserialise({
+          element: 'array',
+          content: [],
+        });
 
-    it('deserialises an object without content', function() {
-      var object = serialiser.deserialise({
-        element: 'object',
+        expect(object).to.be.instanceof(minim.elements.Array);
+        expect(object.content).to.deep.equal([]);
       });
 
-      expect(object).to.be.instanceof(minim.elements.Object);
-      expect(object.content).to.deep.equal([]);
+      it('deserialise an object', function() {
+        var object = serialiser.deserialise({
+          element: 'object',
+          content: [],
+        });
+
+        expect(object).to.be.instanceof(minim.elements.Object);
+        expect(object.content).to.deep.equal([]);
+      });
+
+      it('deserialise string without content', function() {
+        var element = serialiser.deserialise({
+          element: 'string',
+        });
+
+        expect(element).to.be.instanceof(minim.elements.String);
+        expect(element.content).to.be.undefined;
+      });
+
+      it('deserialise number without content', function() {
+        var element = serialiser.deserialise({
+          element: 'number',
+        });
+
+        expect(element).to.be.instanceof(minim.elements.Number);
+        expect(element.content).to.be.undefined;
+      });
+
+      it('deserialise boolean without content', function() {
+        var element = serialiser.deserialise({
+          element: 'boolean',
+        });
+
+        expect(element).to.be.instanceof(minim.elements.Boolean);
+        expect(element.content).to.be.undefined;
+      });
+
+      it('deserialise an array', function() {
+        var object = serialiser.deserialise({
+          element: 'array',
+        });
+
+        expect(object).to.be.instanceof(minim.elements.Array);
+        expect(object.content).to.deep.equal([]);
+      });
+
+      it('deserialise an object without content', function() {
+        var object = serialiser.deserialise({
+          element: 'object',
+        });
+
+        expect(object).to.be.instanceof(minim.elements.Object);
+        expect(object.content).to.deep.equal([]);
+      });
     });
   });
 });

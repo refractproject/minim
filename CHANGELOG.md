@@ -1,3 +1,12 @@
+# 0.20.1
+
+## Bug Fixes
+
+- Prevent de-serialising `undefined` if the default element's content is not
+  null.
+- No longer serialise an empty array in the JSON serialisers, instead the
+  content can be removed for consistency with other tools.
+
 # 0.20.0
 
 ## Enhancements
