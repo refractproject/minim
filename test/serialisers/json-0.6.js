@@ -80,6 +80,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'array',
+        content: []
       });
     });
 
