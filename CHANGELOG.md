@@ -1,3 +1,11 @@
+# Master
+
+## Bug Fixes
+
+- The JSON 0.6 serialiser will now serialise empty content arrays. A regression
+  caused in 0.20.1 because of the logic was applied to both Refract JSON 1.0
+  and 0.6 serialisers.
+
 # 0.20.1
 
 ## Bug Fixes
