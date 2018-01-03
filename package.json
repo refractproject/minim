@@ -4,6 +4,8 @@
   "description": "A library for interacting with JSON through Refract elements",
   "main": "lib/minim.js",
   "scripts": {
+    "prepare": "npm run build",
+    "build": "browserify -d -s minim -x lodash -o dist/minim.js lib/minim.js",
     "coverage": "istanbul cover _mocha -- -R spec --recursive",
     "coveralls": "coveralls <coverage/lcov.info",
     "frontendtests": "karma start",

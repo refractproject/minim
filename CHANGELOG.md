@@ -1,3 +1,9 @@
+# Master
+
+## Enhancements
+
+- Minim NPM package now contains a browser distribution in `dist/minim.js`.
+
 # 0.20.2
 
 ## Bug Fixes
