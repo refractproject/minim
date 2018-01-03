@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "lodash": "^4.15.0",
-    "uptown": "^0.4.1"
+    "uptown": "^1.0.1"
   },
   "engines": {
     "node": ">=4"
