@@ -3,6 +3,8 @@
 ## Enhancements
 
 - Minim NPM package now contains a browser distribution in `dist/minim.js`.
+- Performance improvements have been made to JSON Serialisation. The serialiser
+  can now serialise deep structures a little faster.
 
 # 0.20.2
 
