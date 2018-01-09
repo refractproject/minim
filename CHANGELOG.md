@@ -1,6 +1,6 @@
 # Master
 
-## Enhancements
+## 0.20.4
 
 - Further performance improvements have been made to JSON Serialisation. The
   serialiser can now deserialise deep structures substantially faster.
