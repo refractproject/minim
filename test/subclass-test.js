@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim').namespace();
@@ -6,16 +8,16 @@ var ArrayElement = minim.getElementClass('array');
 var StringElement = minim.getElementClass('string');
 
 describe('Minim subclasses', function() {
-  var MyElement = minim.elements.String.extend({
-    constructor: function() {
-      minim.elements.String.apply(this, arguments);
+  class MyElement extends minim.elements.String {
+    constructor(content, meta, attributes) {
+      super(content, meta, attributes)
       this.element = 'myElement';
-    },
+    }
 
-    ownMethod: function() {
+    ownMethod() {
       return 'It works!';
     }
-  })
+  }
   minim.register(MyElement);
 
   it('can extend the base element with its own method', function() {

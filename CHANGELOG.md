@@ -1,5 +1,11 @@
 # Master
 
+## Breaking
+
+- Minim no longer uses uptown for prototypical inheritance and instead ES6
+  classes are used. This means you can no longer use the `extend` method to
+  extend a element class.
+
 ## Enhancements
 
 - Further performance improvements have been made to JSON Serialisation. The

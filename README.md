@@ -90,22 +90,21 @@ Note that due to optional refracting in `meta`, anything that looks like an elem
 
 ### Extending elements
 
-You can extend elements using the `extend` static method.
+You can extend elements using subclassing.
 
 ```javascript
 var StringElement = minim.getElementClass('string');
-var NewElement = StringElement.extend({
-  constructor: function() {
-    this.__super();
-  },
 
-  customMethod: function() {
+class NewElement extends StringElement {
+  constructor() {
+    super();
+  }
+
+  customMethod() {
     // custom code here
   }
-})
+}
 ```
-
-See the [Uptown](https://github.com/smizell/uptown) library for usage with `.extend`.
 
 ### Element Attributes
 

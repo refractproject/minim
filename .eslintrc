@@ -18,11 +18,14 @@
             2,
             "always"
         ],
+        "prefer-const": "error",
+        "no-var": "error",
         "no-use-before-define": 0
     },
     "env": {
         "node": true,
         "browser": true,
-        "mocha": true
+        "mocha": true,
+        "es6": true
     }
 }
