@@ -3,13 +3,13 @@ var expect = require('../spec-helper').expect;
 var Namespace = require('../../lib/minim').Namespace;
 var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
-var JSONSerialiser = require('../../lib/serialisers/json-0.6');
+var JSON06Serialiser = require('../../lib/serialisers/json-0.6');
 
 describe('JSON 0.6 Serialiser', function() {
   var serialiser;
 
   beforeEach(function () {
-    serialiser = new JSONSerialiser(minim);
+    serialiser = new JSON06Serialiser(minim);
   });
 
   describe('initialisation', function() {
@@ -18,7 +18,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('creates a default namespace when no namespace is given', function() {
-      serialiser = new JSONSerialiser();
+      serialiser = new JSON06Serialiser();
       expect(serialiser.namespace).to.be.instanceof(Namespace);
     });
   });
@@ -280,6 +280,40 @@ describe('JSON 0.6 Serialiser', function() {
           {
             element: 'string',
             content: 'West',
+          },
+        ],
+      });
+    });
+
+    it('serialises enum with content', function () {
+      var enumeration = new minim.Element();
+      enumeration.element = 'enum';
+      enumeration.attributes.set('enumerations', []);
+      enumeration.content = [new minim.elements.String(null)];
+
+      var object = serialiser.serialise(enumeration);
+
+      expect(object).to.deep.equal({
+        element: 'enum',
+        attributes: {
+          samples: [
+            [
+              {
+                element: 'array',
+                content: [
+                  {
+                    element: 'string',
+                    content: null,
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+        content: [
+          {
+            element: 'string',
+            content: null,
           },
         ],
       });
