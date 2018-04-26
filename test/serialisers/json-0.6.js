@@ -185,7 +185,7 @@ describe('JSON 0.6 Serialiser', function() {
 
     it('serialises enum', function() {
       var defaultElement = new minim.Element(new minim.elements.String('North'));
-      defaultElement.element = 'default';
+      defaultElement.element = 'enum';
 
       var sampleNorth = new minim.Element(new minim.elements.String('North'));
       sampleNorth.element = 'enum';
@@ -250,6 +250,106 @@ describe('JSON 0.6 Serialiser', function() {
           {
             element: 'string',
             content: 'West',
+          },
+        ],
+      });
+    });
+
+    it('serialises enum with fixed values', function() {
+      var defaultElement = new minim.Element(new minim.elements.String('North'));
+      defaultElement.element = 'enum';
+      defaultElement.content.attributes.set('typeAttributes', ['fixed']);
+
+      var sampleNorth = new minim.Element(new minim.elements.String('North'));
+      sampleNorth.element = 'enum';
+      var sampleEast = new minim.Element(new minim.elements.String('East'));
+      sampleEast.element = 'enum';
+      var samples = new minim.elements.Array([
+        sampleNorth,
+        sampleEast,
+      ]);
+
+      sampleNorth.content.attributes.set('typeAttributes', ['fixed']);
+      sampleEast.content.attributes.set('typeAttributes', ['fixed']);
+
+      var enumeration = new minim.Element(new minim.elements.String('South'));
+      enumeration.element = 'enum';
+      enumeration.attributes.set('default', defaultElement);
+      enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
+      enumeration.attributes.set('samples', samples);
+
+      const enumerations = enumeration.attributes.get('enumerations');
+      enumerations.get(0).attributes.set('typeAttributes', ['fixed']);
+      enumerations.get(1).attributes.set('typeAttributes', ['fixed']);
+      enumerations.get(2).attributes.set('typeAttributes', ['fixed']);
+      enumerations.get(3).attributes.set('typeAttributes', ['fixed']);
+
+      var object = serialiser.serialise(enumeration);
+
+      expect(object).to.deep.equal({
+        element: 'enum',
+        attributes: {
+          default: [
+            {
+              element: 'string',
+              content: 'North',
+            },
+          ],
+          samples: [
+            [
+              {
+                element: 'string',
+                content: 'South',
+              }
+            ],
+            [
+              {
+                element: 'string',
+                content: 'North'
+              }
+            ],
+            [
+              {
+                element:'string',
+                content: 'East'
+              }
+            ]
+          ],
+        },
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+          {
+            element: 'string',
+            content: 'East',
+          },
+          {
+            element: 'string',
+            content: 'South',
+          },
+          {
+            element: 'string',
+            content: 'West',
+          },
+        ],
+      });
+    });
+
+    it('serialises enum with fixed content', function() {
+      var enumeration = new minim.Element(new minim.elements.String('South'));
+      enumeration.element = 'enum';
+      enumeration.content.attributes.set('typeAttributes', ['fixed']);
+
+      var object = serialiser.serialise(enumeration);
+
+      expect(object).to.deep.equal({
+        element: 'enum',
+        content: [
+          {
+            element: 'string',
+            content: 'South',
           },
         ],
       });
