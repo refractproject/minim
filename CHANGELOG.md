@@ -6,7 +6,7 @@
   now present in API Elements 1.0 enumerations. These are removed for
   consistent serialisation of the 0.6 serialiser.
 
-## 0.20.4
+# 0.20.4
 
 - Further performance improvements have been made to JSON Serialisation. The
   serialiser can now deserialise deep structures substantially faster.
