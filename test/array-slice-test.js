@@ -5,6 +5,12 @@ var StringElement = minim.StringElement;
 var ArraySlice = minim.ArraySlice;
 
 describe('ArraySlice', function () {
+  it('supports isMinim ducktyping check', function () {
+    var slice = new ArraySlice([new Element()]);
+
+    expect(slice.isMinim).to.be.true;
+  });
+
   it('can be created from an array of elements', function () {
     var element = new Element();
     var slice = new ArraySlice([element]);

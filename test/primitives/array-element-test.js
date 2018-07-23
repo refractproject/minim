@@ -5,6 +5,14 @@ var minim = require('../../lib/minim').namespace();
 var ArrayElement = minim.getElementClass('array');
 
 describe('ArrayElement', function() {
+  context('ducktyping', function () {
+    it('has isMinim: true property', function () {
+      const arrayElement = new ArrayElement([]);
+
+      expect(arrayElement.isMinim).to.be.true;
+    });
+  });
+
   context('value methods', function() {
     var arrayElement;
 

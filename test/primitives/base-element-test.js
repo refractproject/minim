@@ -189,6 +189,14 @@ describe('Element', function() {
         });
       });
     });
+
+    context('ducktyping', function() {
+      var el = new minim.Element(null);
+
+      it('has isMinim: true property', function () {
+        expect(el.isMinim).to.be.true;
+      });
+    });
   });
 
   describe('removing meta properties', function() {
