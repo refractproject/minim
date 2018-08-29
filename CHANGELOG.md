@@ -1,9 +1,12 @@
-# Master
+# 0.20.6
 
 ## Bug Fixes
 
 - JSON 0.6 deserialiser will now correct deserialise an API Categories `meta`
   attribute into `metadata`.
+
+- JSON Serialisers will now use elements from the given namespace during
+  serialisation checks and deserialisation.
 
 # 0.20.5
 
