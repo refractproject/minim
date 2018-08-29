@@ -862,6 +862,35 @@ describe('JSON 0.6 Serialiser', function() {
       expect(dataStructure.content).to.be.instanceof(minim.elements.String);
     });
 
+    it('deserialises category with meta attribute', function() {
+      var category = serialiser.deserialise({
+        element: 'category',
+        attributes: {
+          meta: [
+            {
+              element: 'member',
+              meta: {
+                classes: ['user']
+              },
+              content: {
+                key: 'HOST',
+                value: 'https://example.com'
+              }
+            }
+          ]
+        },
+        content: []
+      });
+
+      var metadata = category.attributes.get('metadata');
+      expect(metadata).to.be.instanceof(minim.elements.Object);
+
+      var member = metadata.getMember('HOST');
+      expect(member).to.be.instanceof(minim.elements.Member);
+      expect(member.classes.toValue()).to.deep.equal(['user']);
+      expect(member.value.toValue()).to.equal('https://example.com');
+    });
+
     describe('deserialising base elements', function() {
       it('deserialise string', function() {
         var element = serialiser.deserialise({
