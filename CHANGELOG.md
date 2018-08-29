@@ -1,3 +1,10 @@
+# Master
+
+## Bug Fixes
+
+- JSON 0.6 deserialiser will now correct deserialise an API Categories `meta`
+  attribute into `metadata`.
+
 # 0.20.5
 
 ## Bug Fixes
