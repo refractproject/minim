@@ -1,6 +1,8 @@
-# 0.20.6
+# Minim Changelog
 
-## Bug Fixes
+## 0.20.6
+
+### Bug Fixes
 
 - JSON 0.6 deserialiser will now correct deserialise an API Categories `meta`
   attribute into `metadata`.
@@ -8,69 +10,69 @@
 - JSON Serialisers will now use elements from the given namespace during
   serialisation checks and deserialisation.
 
-# 0.20.5
+## 0.20.5
 
-## Bug Fixes
+### Bug Fixes
 
 - JSON 0.6 enum serialisation will now remove `fixed` typeAttributes which are
   now present in API Elements 1.0 enumerations. These are removed for
   consistent serialisation of the 0.6 serialiser.
 
-# 0.20.4
+## 0.20.4
 
 - Further performance improvements have been made to JSON Serialisation. The
   serialiser can now deserialise deep structures substantially faster.
 
-# 0.20.3
+## 0.20.3
 
-## Enhancements
+### Enhancements
 
 - Minim NPM package now contains a browser distribution in `dist/minim.js`.
 - Performance improvements have been made to JSON Serialisation. The serialiser
   can now serialise deep structures a little faster.
 
-# 0.20.2
+## 0.20.2
 
-## Bug Fixes
+### Bug Fixes
 
 - The JSON 0.6 serialiser will now serialise empty content arrays. A regression
   caused in 0.20.1 because of the logic was applied to both Refract JSON 1.0
   and 0.6 serialisers.
 
-# 0.20.1
+## 0.20.1
 
-## Bug Fixes
+### Bug Fixes
 
 - Prevent de-serialising `undefined` if the default element's content is not
   null.
 - No longer serialise an empty array in the JSON serialisers, instead the
   content can be removed for consistency with other tools.
 
-# 0.20.0
+## 0.20.0
 
-## Enhancements
+### Enhancements
 
 - Adds a `reject` method to `ArrayElement`, `ObjectElement`, `ArraySlice`,
   and `ObjectSlice` which complements the `filter` method providing the ability
   to exclude vs filter matched elements.
 
-## Breaking
+### Breaking
 
 - The Refract JSON 0.6 serialiser will de-serialise enum elements into the form
   in the API Elements 1.0 specification. This is a breaking change on the
   layout of the enum. Default and sample values will now be an `enum` element
   themselves.
 
-## Bug Fixes
+### Bug Fixes
 
 - JSON deserialisers will now prevent overriding default element content
   values with undefined. This could cause problems where internal state of
   array or object element would have undefined as content and thus cause other
   Element methods to later fail such as `toValue` or `get`.
 
-# 0.19.2
+## 0.19.2
 
-## Enhancements
+### Enhancements
 
 - ArraySlice now provides a `find` method allowing you to find the first
   element satisfying the given value.
@@ -78,20 +80,20 @@
 - ArraySlice now provides `flatMap` allowing you to map and then flatten the
   results.
 
-## Bug Fixes
+### Bug Fixes
 
 - Accessing lazy meta accessors on frozen elements such as `title` will now
   return a frozen default value. Previously this would raise an exception
   trying to mutate the element.
 
-# 0.19.1
+## 0.19.1
 
-## Enhancements
+### Enhancements
 
 - Serialisers will now throw TypeError with straight forward messages when you
   try to serialise a non-element type.
 
-## Bug Fixes
+### Bug Fixes
 
 - While accessing meta or attributes of a frozen element that does not contain
   meta or attributes, an exception was raised because these accessors would
@@ -103,9 +105,9 @@
     - When multiple sample values were present additional values were being discarded.
     - Deserialised enum content contained duplicate enumeration values.
 
-# 0.19.0
+## 0.19.0
 
-## Breaking
+### Breaking
 
 - Updated enum serialization/deserialization in the JSON 0.6 serializer to match
   https://github.com/apiaryio/api-elements/pull/28
@@ -121,27 +123,27 @@
   call `freeze` on the element beforehand so that the element has access to the
   parent of the element.
 
-## Enhancements
+### Enhancements
 
 - Introduced JSDoc documentation to public interfaces
 - `Element` now contains a `freeze` method to freeze and prevent an element
   from being mutated, this also adds a parent property on all child elements.
 
-## Bug Fixes
+### Bug Fixes
 
 - Handle serializing key-value pair without value
 - Deserialize `dataStructure` containing an array correctly
 
-# 0.18.1
+## 0.18.1
 
-## Bug Fixes
+### Bug Fixes
 
 - Prevent JSON Serialisers from throwing exception when serialising a key value
   pair without any value.
 
-# 0.18.0
+## 0.18.0
 
-## Breaking
+### Breaking
 
 - JSON Serialisation now follows the JSON Refract serialisation rules defined at
   https://github.com/refractproject/refract-spec/blob/master/formats/json-refract.md.
@@ -156,23 +158,23 @@
     serialiser.serialise(element);
     ```
 
-## Enhancements
+### Enhancements
 
 - ArrayElement high-order functions, `map`, `filter` and `forEach` now accept
   `thisArg` like the equivalent functionality in `Array`.
 
-# 0.17.1 - 2016-07-29
+## 0.17.1 (2016-07-29)
 
-## Bug Fixes
+### Bug Fixes
 
 - Initialising an Element with given meta or attributes as ObjectElement is now
   supported.
 - When converting JavaScript values to Refract, objects are now supported.
 - Adds a special case to serialise sourceMap elements as values.
 
-# 0.17.0 - 2017-06-16
+## 0.17.0 (2017-06-16)
 
-## Breaking
+### Breaking
 
 - `Element.toRefract()` and `Element.fromRefract()` have been removed. JSON
   Serialisation is now decoupled from the Element model. A minim namespace
@@ -205,7 +207,7 @@
 
 - Embedded Refract support has been removed.
 
-## Enhancements
+### Enhancements
 
 - All elements now contain a `children` and `recursiveChildren` properties that
   return an ArrayElement of the respective children elements.
@@ -215,64 +217,64 @@
 - Element now contains a `toRef()` function to create a ref element referencing
   the element.
 
-# 0.16.0 - 2017-05-04
+## 0.16.0 (2017-05-04)
 
-## Breaking
+### Breaking
 
 - Node 0.10 and 0.12 are no longer supported.
 - Elements `name` property was removed. There is no longer a name property in
   Refract specification.
 
-## Enhancements
+### Enhancements
 
 - Elements now provide a `findRecursive` method allowing you to recursively
   find matching elements.
 - Added function for remove key in an Object element and Array element
 
-### Array Element
+#### Array Element
 
 - New `isEmpty` convenience property for determining if an array is empty.
 
-# 0.15.0 - 2017-04-03
+## 0.15.0 (2017-04-03)
 
 - Getters of link element will now return an element
 - Meta convenience methods will now return an element
 
-# 0.14.2 - 2016-08-19
+## 0.14.2 (2016-08-19)
 
 - Update Lodash version
 
-# 0.14.1 - 2016-08-17
+## 0.14.1 (2016-08-17)
 
 - Update Uptown to 0.4.1
 
-# 0.14.0 - 2016-04-28
+## 0.14.0 (2016-04-28)
 
 - **BREAKING** The public interface of the `minim` module has changed significantly. List of changes:
 
   - Removed `toCompactRefract` and `fromCompactRefract`
   - Improved the default refract serialization such that when an element in `attributes` has its own metadata or attributes defined then it will now be refracted when calling `toRefract`
 
-# 0.13.0 - 2015-12-03
+## 0.13.0 (2015-12-03)
 
 - Added support for hyperlinks per [RFC 0008](https://github.com/refractproject/rfcs/blob/b6e390f7bbc960808ba053e172cccd9e4a81a04a/text/0008-add-hyperlinks.md)
 - Upgraded Lodash to 3.10.1
 - Refract elements will be automatically parsed when found in arrays in `meta`
 
-# 0.12.3 - 2015-11-30
+## 0.12.3 (2015-11-30)
 
 - When an element in `meta` has its own metadata or attributes defined then it will now be refracted when calling `toRefract` or `toCompactRefract`.
 - When loading from refract or compact refract, if an item in `meta` looks like an element it will be loaded as such. This may cause false positives.
 
-# 0.12.2 - 2015-11-24
+## 0.12.2 (2015-11-24)
 
 - Fix a bug related to setting the default key names that should be treated as refracted elements in element attributes. This is now accomplished via the namespace: `namespace._elementAttributeKeys.push('my-value');`. This fixes bugs related to overwriting the `namespace.BaseElement`.
 
-# 0.12.1 - 2015-11-24
+## 0.12.1 (2015-11-24)
 
 - Fix a bug when loading refracted attributes from compact refract.
 
-# 0.12.0 - 2015-11-23
+## 0.12.0 (2015-11-23)
 
 - Provide a way for elements to mark attributes as unrefracted arrays of
   refracted elements. Subclassed elements can push onto the
@@ -287,9 +289,11 @@
 
 - Add functionality for Embedded Refract
 
-# 0.11.0 - 2015-09-07
+## 0.11.0 (2015-09-07)
 
-- **BREAKING** The public interface of the `minim` module has changed significantly. List of changes:
+### Breaking
+
+The public interface of the `minim` module has changed significantly. List of changes:
 
   - `ElementRegistry` has been renamed to `Namespace`.
   - `minim` has only one public method, called `namespace`, which creates a new `Namespace` instance.
@@ -318,12 +322,12 @@
 - Add a `.toValue()` method to member elements which returns a hash with the key
    and value and their respective values.
 
-# 0.10.0 - 2015-08-18
+## 0.10.0 (2015-08-18)
 
 - Rename the `class` metadata property to `classes`. The convenience property
   is also now called `classes`, e.g. `element.classes.contains('abc')`.
 
-# 0.9.0 - 2015-07-28
+## 0.9.0 (2015-07-28)
 
 - Allow the iterator protocol to be used with arrays and objects if the runtime
   supports it. This enables using `for ... of` loops on elements as well as
@@ -336,7 +340,7 @@
 - Fix a serialization bug when initializing using falsey values
   (`null`, `0`, `false`).
 
-# 0.8.0 - 2015-07-09
+## 0.8.0 (2015-07-09)
 
 - Allow `#set` to take an object for Object Elements
 - Convert `meta` to be Minim Object Elements
