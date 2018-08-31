@@ -1,5 +1,12 @@
 # Minim Changelog
 
+## 0.20.7
+
+### Bug Fixes
+
+- Fixes a regression from 0.20.6 where `metadata` became an `ObjectElement`
+  instead of `ArrayElement` as it was in the past.
+
 ## 0.20.6
 
 ### Bug Fixes

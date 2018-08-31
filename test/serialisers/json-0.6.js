@@ -883,11 +883,12 @@ describe('JSON 0.6 Serialiser', function() {
       });
 
       var metadata = category.attributes.get('metadata');
-      expect(metadata).to.be.instanceof(minim.elements.Object);
+      expect(metadata).to.be.instanceof(minim.elements.Array);
 
-      var member = metadata.getMember('HOST');
+      var member = metadata.get(0);
       expect(member).to.be.instanceof(minim.elements.Member);
       expect(member.classes.toValue()).to.deep.equal(['user']);
+      expect(member.key.toValue()).to.equal('HOST');
       expect(member.value.toValue()).to.equal('https://example.com');
     });
 
