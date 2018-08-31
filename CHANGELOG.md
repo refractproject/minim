@@ -1,6 +1,6 @@
 # Minim Changelog
 
-## Master
+## 0.20.7
 
 ### Bug Fixes
 
