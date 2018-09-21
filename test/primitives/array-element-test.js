@@ -99,6 +99,17 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#compactMap', function() {
+      it('allows compact mapping the content of the array', function() {
+        var newArray = arrayElement.compactMap(function(item) {
+          if (item.element === 'string' || item.element === 'number') {
+            return item.toValue();
+          }
+        });
+        expect(newArray).to.deep.equal(['a', 1]);
+      });
+    });
+
     describe('#filter', function() {
       it('allows for filtering the content', function() {
         var newArray = arrayElement.filter(function(item) {

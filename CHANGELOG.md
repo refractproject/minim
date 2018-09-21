@@ -17,6 +17,10 @@
 
 - Object Element can now be created with an array of member elements.
 
+- Adds `compactMap` functionality to Array and Object elements allowing you to
+  returns an array containing the truthy results of calling the given
+  transformation with each element of this sequence.
+
 ### Bug Fixes
 
 - The default content value of an element is undefined. Whereas before the
