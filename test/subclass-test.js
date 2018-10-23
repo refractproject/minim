@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var expect = require('./spec-helper').expect;
 var minim = require('../lib/minim').namespace();
 

@@ -5,7 +5,7 @@
   "main": "lib/minim.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "browserify -d -s minim -x lodash -o dist/minim.js lib/minim.js",
+    "build": "browserify -d -s minim -o dist/minim.js lib/minim.js",
     "coverage": "istanbul cover _mocha -- -R spec --recursive",
     "coveralls": "coveralls <coverage/lcov.info",
     "frontendtests": "karma start",
@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "lodash": "^4.15.0",
-    "uptown": "^1.0.1"
+    "uptown": "^1.1.0"
   },
   "engines": {
     "node": ">=4"
