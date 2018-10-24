@@ -161,7 +161,21 @@ describe('ArraySlice', function () {
     var two = new Element('two');
     var slice = new ArraySlice([one, two]);
 
-    var titles = slice.flatMap(function (element) {
+    var titles = slice.compactMap(function (element) {
+      return element.attributes.get('default');
+    });
+
+    expect(titles).to.deep.equal([element]);
+  });
+
+  it('provides compactMap', function () {
+    var element = new Element('compact mapping for this element');
+    var one = new Element('one');
+    one.attributes.set('default', element);
+    var two = new Element('two');
+    var slice = new ArraySlice([one, two]);
+
+    var titles = slice.compactMap(function (element) {
       return element.attributes.get('default');
     });
 
