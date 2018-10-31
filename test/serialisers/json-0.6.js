@@ -336,6 +336,68 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
+    it('serialises samples attributes as element', function() {
+      var sample = new minim.elements.Object({name: 'Doe'});
+
+      var element = new minim.elements.Object();
+      element.attributes.set('samples', [sample]);
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'object',
+        attributes: {
+          samples: [
+            [
+              {
+                element: 'member',
+                content: {
+                  key: {
+                    element: 'string',
+                    content: 'name'
+                  },
+                  value: {
+                    element: 'string',
+                    content: 'Doe'
+                  }
+                }
+              }
+            ]
+          ]
+        },
+        content: [],
+      });
+    });
+
+    it('serialises default attributes as element', function() {
+      var defaultElement = new minim.elements.Object({name: 'Doe'});
+
+      var element = new minim.elements.Object();
+      element.attributes.set('default', [defaultElement]);
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'object',
+        attributes: {
+          'default': [
+            {
+              element: 'member',
+              content: {
+                key: {
+                  element: 'string',
+                  content: 'name'
+                },
+                value: {
+                  element: 'string',
+                  content: 'Doe'
+                }
+              }
+            }
+          ]
+        },
+        content: [],
+      });
+    });
+
     it('serialises enum with fixed content', function() {
       var enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
