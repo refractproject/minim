@@ -508,6 +508,42 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
+    it('serialises enumerations even when element name is not `enum`', function () {
+      var enumeration = new minim.Element();
+      enumeration.element = 'B';
+      enumeration.attributes.set('enumerations', ['North']);
+
+      var object = serialiser.serialise(enumeration);
+      console.log(JSON.stringify((new (require('../../lib/serialisers/json'))(minim)).serialise(enumeration), null, 2));
+
+      expect(object).to.deep.equal({
+        element: 'B',
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+        ],
+      });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'B',
+      //   attributes: {
+      //     enumerations: {
+      //       element: 'array',
+      //       content: [
+      //         {
+      //           element: 'string',
+      //           content: 'North'
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   content: null
+      // }
+    });
+
     it('always serialises items inside `default` attribute', function() {
       var element = new minim.elements.String('Hello World')
       element.attributes.set('default', new minim.elements.String('North'));
