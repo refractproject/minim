@@ -1,5 +1,18 @@
 # Minim Changelog
 
+## Master
+
+### Breaking
+
+- Minim no longer supports importing files directly from the minim package.
+  Importing the JSON 0.6 serialiser via
+  `require('minim/lib/serialisers/json-0.6')` is not supported, it is now
+  recommended to import `JSON06Serialiser` and other APIs from minim directly.
+
+    ```js
+    const { JSON06Serialiser } = require('minim');
+    ```
+
 ## 0.20.7
 
 ### Bug Fixes
