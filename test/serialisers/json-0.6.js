@@ -430,7 +430,7 @@ describe('JSON 0.6 Serialiser', function() {
       var defaultElement = new minim.elements.Object({name: 'Doe'});
 
       var element = new minim.elements.Object();
-      element.attributes.set('default', [defaultElement]);
+      element.attributes.set('default', defaultElement);
       var object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
@@ -576,7 +576,6 @@ describe('JSON 0.6 Serialiser', function() {
       enumeration.attributes.set('enumerations', ['North']);
 
       var object = serialiser.serialise(enumeration);
-      console.log(JSON.stringify((new (require('../../lib/serialisers/json'))(minim)).serialise(enumeration), null, 2));
 
       expect(object).to.deep.equal({
         element: 'B',
