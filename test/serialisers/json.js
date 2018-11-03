@@ -82,19 +82,6 @@ describe('JSON Serialiser', function() {
       });
     });
 
-
-    it('serialise an element with object content', function() {
-      var element = new minim.elements.Element({ message: 'hello' });
-      var object = serialiser.serialise(element);
-
-      expect(object).to.deep.equal({
-        element: 'element',
-        content: {
-          message: 'hello'
-        }
-      });
-    });
-
     it('serialises an element containing a pair', function() {
       var name = new minim.elements.String('name')
       var doe = new minim.elements.String('Doe')

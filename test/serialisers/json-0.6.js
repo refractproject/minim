@@ -84,14 +84,26 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialise an element with object content', function() {
-      var element = new minim.elements.Element({ message: 'hello' });
+      var element = new minim.Element({ message: 'hello' });
       var object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'element',
-        content: {
-          message: 'hello'
-        }
+        content: [
+          {
+            element: 'member',
+            content: {
+              key: {
+                element: 'string',
+                content: 'message',
+              },
+              value: {
+                element: 'string',
+                content: 'hello',
+              },
+            }
+          }
+        ]
       });
     });
 
@@ -535,14 +547,14 @@ describe('JSON 0.6 Serialiser', function() {
 
     it('deserialises from a JSON object containing JSON object content', function() {
       var element = serialiser.deserialise({
-        element: 'element',
+        element: 'object',
         content: {
           message: 'hello'
         }
       });
 
       expect(element).to.be.instanceof(minim.elements.Element);
-      expect(element.content).to.deep.equal({ message: 'hello' });
+      expect(element.toValue()).to.deep.equal({ message: 'hello' });
     });
 
     it('deserialise from a JSON object containing a key-value pair', function() {

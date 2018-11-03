@@ -13,6 +13,30 @@
     const { JSON06Serialiser } = require('minim');
     ```
 
+### Enhancements
+
+- Object Element can now be created with an array of member elements.
+
+### Bug Fixes
+
+- The default content value of an element is undefined. Whereas before the
+  default value was `null`.
+
+- Setting the `content` property on an Element now behaves the same as passing
+  content in to the constructor. For example, the following two elements are
+  identical:
+
+  ```js
+  new ArrayElement([1])
+
+  const element = new ArrayElement()
+  element.content = [1]
+  ```
+
+  Passing `[1]` to an `ArrayElement` constructor would produce an array of
+  number elements, whereas setting the content to `[1]` resulted in setting the
+  content to be an array of non-elements which is invalid.
+
 ## 0.20.7
 
 ### Bug Fixes
