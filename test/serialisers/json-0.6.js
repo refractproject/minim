@@ -264,6 +264,64 @@ describe('JSON 0.6 Serialiser', function() {
           },
         ],
       });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'enum',
+      //   attributes: {
+      //     default: {
+      //       element: 'enum',
+      //       content: {
+      //         element: 'string',
+      //         content: 'North'
+      //       }
+      //     },
+      //     enumerations: {
+      //       element: 'array',
+      //       content: [
+      //         {
+      //           element: 'string',
+      //           content: 'North'
+      //         },
+      //         {
+      //           element: 'string',
+      //           content: 'East'
+      //         },
+      //         {
+      //           element: 'string',
+      //           content: 'South'
+      //         },
+      //         {
+      //           element: 'string',
+      //           content: 'West'
+      //         }
+      //       ]
+      //     },
+      //     samples: {
+      //       element: 'array',
+      //       content: [
+      //         {
+      //           element: 'enum',
+      //           content: {
+      //             element: 'string',
+      //             content: 'North'
+      //           }
+      //         },
+      //         {
+      //           element: 'enum',
+      //           content: {
+      //             element: 'string',
+      //             content: 'East'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   content: {
+      //     element: 'string',
+      //     content: 'South'
+      //   }
+      // }
     });
 
     it('serialises enum with fixed values', function() {
@@ -348,6 +406,68 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
+    it('serialises samples attributes as element', function() {
+      var sample = new minim.elements.Object({name: 'Doe'});
+
+      var element = new minim.elements.Object();
+      element.attributes.set('samples', [sample]);
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'object',
+        attributes: {
+          samples: [
+            [
+              {
+                element: 'member',
+                content: {
+                  key: {
+                    element: 'string',
+                    content: 'name'
+                  },
+                  value: {
+                    element: 'string',
+                    content: 'Doe'
+                  }
+                }
+              }
+            ]
+          ]
+        },
+        content: [],
+      });
+    });
+
+    it('serialises default attributes as element', function() {
+      var defaultElement = new minim.elements.Object({name: 'Doe'});
+
+      var element = new minim.elements.Object();
+      element.attributes.set('default', defaultElement);
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'object',
+        attributes: {
+          'default': [
+            {
+              element: 'member',
+              content: {
+                key: {
+                  element: 'string',
+                  content: 'name'
+                },
+                value: {
+                  element: 'string',
+                  content: 'Doe'
+                }
+              }
+            }
+          ]
+        },
+        content: [],
+      });
+    });
+
     it('serialises enum with fixed content', function() {
       var enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
@@ -394,6 +514,35 @@ describe('JSON 0.6 Serialiser', function() {
           },
         ],
       });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'enum',
+      //   attributes: {
+      //     enumerations: {
+      //       element: 'array',
+      //       content: [
+      //         {
+      //           element: 'string',
+      //           content: 'North'
+      //         },
+      //         {
+      //           element: 'string',
+      //           content: 'East'
+      //         },
+      //         {
+      //           element: 'string',
+      //           content: 'South'
+      //         },
+      //         {
+      //           element: 'string',
+      //           content: 'West'
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   content: null
+      // }
     });
 
     it('serialises enum inside array inside attributes as array', function() {
@@ -416,27 +565,131 @@ describe('JSON 0.6 Serialiser', function() {
         },
         content: 'Hello World'
       });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'string',
+      //   attributes: {
+      //     directions: {
+      //       element: 'enum',
+      //       content: {
+      //         element: 'string',
+      //         content: 'North'
+      //       }
+      //     }
+      //   },
+      //   content: 'Hello World'
+      // }
     });
 
-    it('always serialises items inside `default` attribute array', function() {
+    it('serialises enumerations even when element name is not `enum`', function () {
+      var enumeration = new minim.Element();
+      enumeration.element = 'B';
+      enumeration.attributes.set('enumerations', ['North']);
+
+      var object = serialiser.serialise(enumeration);
+
+      expect(object).to.deep.equal({
+        element: 'B',
+        content: [
+          {
+            element: 'string',
+            content: 'North',
+          },
+        ],
+      });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'B',
+      //   attributes: {
+      //     enumerations: {
+      //       element: 'array',
+      //       content: [
+      //         {
+      //           element: 'string',
+      //           content: 'North'
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   content: null
+      // }
+    });
+
+    it('always serialises items inside `default` attribute', function() {
       var element = new minim.elements.String('Hello World')
-      var values = new minim.elements.Array([new minim.elements.String('North')]);
-      element.attributes.set('default', values);
+      element.attributes.set('default', new minim.elements.String('North'));
 
       var object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
-          default: [
-            {
-              'element': 'string',
-              'content': 'North'
-            }
-          ]
+          default: 'North'
         },
         content: 'Hello World'
       });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'string',
+      //   attributes: {
+      //     default: {
+      //       element: 'string',
+      //       content: 'North'
+      //     }
+      //   },
+      //   content: 'Hello World'
+      // }
+    });
+
+    it('always serialises items inside `default` attribute array', function() {
+      var element = new minim.elements.Array(['Hello World'])
+      var values = new minim.elements.Array([new minim.elements.String('North')]);
+      element.attributes.set('default', values);
+
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'array',
+        attributes: {
+          default: [
+            {
+              element: 'string',
+              content: 'North'
+            }
+          ]
+        },
+        content: [
+          {
+            element: 'string',
+            content: 'Hello World'
+          }
+        ]
+      });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'array',
+      //   attributes: {
+      //     default: {
+      //       element: 'array',
+      //       content: [
+      //         {
+      //           element: 'string',
+      //           content: 'North'
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   content: [
+      //     {
+      //       element: 'string',
+      //       content: 'Hello World'
+      //     }
+      //   ]
+      // }
     });
 
     it('serialises a ref element', function() {
@@ -451,6 +704,18 @@ describe('JSON 0.6 Serialiser', function() {
           href: 'content',
         }
       });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'ref',
+      //   attributes: {
+      //     path: {
+      //       element: 'string',
+      //       content: 'element'
+      //     }
+      //   },
+      //   content: 'content'
+      // }
     });
 
     it('serialises a sourceMap element as values', function() {
@@ -467,6 +732,29 @@ describe('JSON 0.6 Serialiser', function() {
         element: 'sourceMap',
         content: [[1,2]]
       });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'sourceMap',
+      //   content: {
+      //     element: 'array',
+      //     content: [
+      //       {
+      //         element: 'array',
+      //         content: [
+      //           {
+      //             element: 'number',
+      //             content: 1
+      //           },
+      //           {
+      //             element: 'number',
+      //             content: 2
+      //           }
+      //         ]
+      //       }
+      //     ]
+      //   }
+      // }
     });
 
     it('serialises a dataStructure element inside an array', function() {
@@ -486,6 +774,15 @@ describe('JSON 0.6 Serialiser', function() {
           }
         ]
       });
+
+      // Refract 1.0 serialisation
+      // {
+      //   element: 'dataStructure',
+      //   content: {
+      //     element: 'string',
+      //     content: 'Hello'
+      //   }
+      // }
     });
 
     it('serialises a element attribute called meta as metadata', function() {
