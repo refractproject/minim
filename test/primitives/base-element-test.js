@@ -40,6 +40,11 @@ describe('Element', function() {
   describe('when initializing with value', function() {
     var el;
 
+    it('should properly default to undefined', function() {
+      el = new minim.Element();
+      expect(el.toValue()).to.equal(undefined);
+    });
+
     it('should properly serialize falsey string', function() {
       el = new minim.Element('');
       expect(el.toValue()).to.equal('');
@@ -97,6 +102,82 @@ describe('Element', function() {
     });
   });
 
+  describe('#content', function() {
+    var element;
+
+    before(function() {
+      element = new minim.Element();
+    });
+
+    it('should allow setting undefined', function() {
+      element.content = undefined;
+
+      expect(element.content).to.equal(undefined);
+    });
+
+    it('should allow setting null', function() {
+      element.content = null;
+
+      expect(element.content).to.equal(null);
+    });
+
+    it('should allow setting boolean value', function() {
+      element.content = true;
+
+      expect(element.content).to.equal(true);
+    });
+
+    it('should allow setting string value', function() {
+      element.content = '';
+
+      expect(element.content).to.equal('');
+    });
+
+    it('should allow setting number value', function() {
+      element.content = 5;
+
+      expect(element.content).to.equal(5);
+    });
+
+    it('should allow setting element value', function() {
+      element.content = new minim.Element();
+
+      expect(element.content).to.deep.equal(new minim.Element());
+    });
+
+    it('should allow setting array of elements', function() {
+      element.content = [new minim.Element(1)];
+
+      expect(element.content).to.deep.equal([
+        new minim.Element(1)
+      ]);
+    });
+
+    it('should allow setting array of non-elements', function() {
+      element.content = [true];
+
+      expect(element.content).to.deep.equal([
+        new minim.elements.Boolean(true)
+      ]);
+    });
+
+    it('should allow setting object', function() {
+      element.content = {
+        name: 'Doe'
+      };
+
+      expect(element.content).to.deep.equal([
+        new minim.elements.Member('name', 'Doe')
+      ]);
+    });
+
+    it('should allow setting KeyValuePair', function() {
+      element.content = new KeyValuePair();
+
+      expect(element.content).to.deep.equal(new KeyValuePair());
+    });
+  });
+
   describe('#element', function() {
     context('when getting an element that has not been set', function() {
       var el;
@@ -135,7 +216,7 @@ describe('Element', function() {
     var el;
 
     before(function() {
-      el = new minim.Element({
+      el = new minim.elements.Object({
         foo: 'bar'
       }, {
         id: 'foobar'

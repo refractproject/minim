@@ -128,7 +128,6 @@ describe('Minim subclasses', function() {
             ],
           },
         },
-        content: null
       });
     });
 
