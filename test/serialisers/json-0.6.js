@@ -799,6 +799,29 @@ describe('JSON 0.6 Serialiser', function() {
         content: null
       });
     });
+
+    it('serialises a variable member', function() {
+      var element = new minim.elements.Member('self', 'https://example.com');
+      element.attributes.set('variable', true);
+      var object = serialiser.serialise(element);
+
+      expect(object).to.deep.equal({
+        element: 'member',
+        content: {
+          key: {
+            element: 'string',
+            attributes: {
+              variable: true
+            },
+            content: 'self',
+          },
+          value: {
+            element: 'string',
+            content: 'https://example.com',
+          }
+        }
+      });
+    });
   });
 
   describe('deserialisation', function() {
@@ -1198,6 +1221,29 @@ describe('JSON 0.6 Serialiser', function() {
       expect(member.classes.toValue()).to.deep.equal(['user']);
       expect(member.key.toValue()).to.equal('HOST');
       expect(member.value.toValue()).to.equal('https://example.com');
+    });
+
+    it('deserialises a variable member', function() {
+      var member = serialiser.deserialise({
+        element: 'member',
+        content: {
+          key: {
+            element: 'self',
+            attributes: {
+              variable: true,
+            },
+            content: 'https://example.com',
+          },
+          value: {
+            element: 'string',
+            content: 'https://example.com',
+          }
+        }
+      });
+
+      expect(member).to.be.instanceof(minim.elements.Member);
+      expect(member.attributes.getValue('variable')).to.be.true;
+      expect(member.key.attributes.get('variable')).to.be.undefined;
     });
 
     describe('deserialising base elements', function() {

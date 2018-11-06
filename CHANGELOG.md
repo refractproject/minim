@@ -37,6 +37,10 @@
   number elements, whereas setting the content to `[1]` resulted in setting the
   content to be an array of non-elements which is invalid.
 
+- The serialisation of the `variable` attribute in the JSON 0.6 serialisation
+  is updated to reflect API Elements 1.0. The `variable` attribute is now
+  present on a member element instead of the key of a member element.
+
 ## 0.20.7
 
 ### Bug Fixes
