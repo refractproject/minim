@@ -78,8 +78,7 @@ describe('JSON 0.6 Serialiser', function() {
       var object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
-        element: 'array',
-        content: []
+        element: 'array'
       });
     });
 
@@ -434,7 +433,6 @@ describe('JSON 0.6 Serialiser', function() {
             ]
           ]
         },
-        content: [],
       });
     });
 
@@ -464,7 +462,6 @@ describe('JSON 0.6 Serialiser', function() {
             }
           ]
         },
-        content: [],
       });
     });
 
@@ -820,6 +817,39 @@ describe('JSON 0.6 Serialiser', function() {
             content: 'https://example.com',
           }
         }
+      });
+    });
+
+    it('serialises empty httpRequest content', function() {
+      var element = new minim.elements.Element([]);
+      element.element = 'httpRequest';
+      var serialised = serialiser.serialise(element);
+
+      expect(serialised).to.deep.equal({
+        element: 'httpRequest',
+        content: []
+      });
+    });
+
+    it('serialises empty httpResponse content', function() {
+      var element = new minim.elements.Element([]);
+      element.element = 'httpResponse';
+      var serialised = serialiser.serialise(element);
+
+      expect(serialised).to.deep.equal({
+        element: 'httpResponse',
+        content: []
+      });
+    });
+
+    it('serialises empty category content', function() {
+      var element = new minim.elements.Element([]);
+      element.element = 'category';
+      var serialised = serialiser.serialise(element);
+
+      expect(serialised).to.deep.equal({
+        element: 'category',
+        content: []
       });
     });
   });
