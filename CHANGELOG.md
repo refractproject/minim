@@ -13,6 +13,14 @@
     const { JSON06Serialiser } = require('minim');
     ```
 
+- `flatMap` in `ArraySlice` no longer removes empty items. Instead `flatMap` is
+  aligned with
+  [`Array.flatMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap)
+  which first maps each element using a mapping function, then flattens the
+  result into a new array.
+
+  Existing `flatMap` behaviour is now available under the method `compactMap`.
+
 ### Enhancements
 
 - Object Element can now be created with an array of member elements.
@@ -20,6 +28,8 @@
 - Adds `compactMap` functionality to Array and Object elements allowing you to
   returns an array containing the truthy results of calling the given
   transformation with each element of this sequence.
+
+- Added `flatMap` to `ArrayElement`.
 
 ### Bug Fixes
 

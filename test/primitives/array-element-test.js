@@ -99,6 +99,33 @@ describe('ArrayElement', function() {
       });
     });
 
+    describe('#flatMap', function() {
+      /**
+       * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#Examples
+       */
+      it('provides flatMap to flatten one level', function () {
+        var arr1 = new ArrayElement([1, 2, 3, 4]);
+
+        var mapped = arr1.map(function (x) {
+          return [x.toValue() * 2];
+        });
+
+        expect(mapped).to.deep.equal([[2], [4], [6], [8]]);
+
+        var flattened = arr1.flatMap(function (x) {
+          return [x.toValue() * 2];
+        });
+
+        expect(flattened).to.deep.equal([2, 4, 6, 8]);
+
+        var flattenOnce = arr1.flatMap(function (x) {
+          return [[x.toValue() * 2]];
+        });
+
+        expect(flattenOnce).to.deep.equal([[2], [4], [6], [8]]);
+      });
+    });
+
     describe('#compactMap', function() {
       it('allows compact mapping the content of the array', function() {
         var newArray = arrayElement.compactMap(function(item) {
