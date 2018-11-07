@@ -199,6 +199,82 @@ describe('ArraySlice', function () {
     expect(indexes).to.deep.equal([0, 1]);
   });
 
+  /**
+   * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Examples
+   */
+  it('provides reduce to sum all the values of an array', function () {
+    var slice = new ArraySlice([0, 1, 2, 3]);
+
+    var sum = slice.reduce(function (accumulator, currentValue) {
+      return accumulator + currentValue;
+    }, 0);
+
+    expect(sum).to.equal(6);
+  });
+
+  /**
+   * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Examples
+   */
+  it('provides reduce to flatten an array of arrays', function () {
+    var slice = new ArraySlice([[0, 1], [2, 3], [4, 5]]);
+
+    var flattened = slice.reduce(
+      function(accumulator, currentValue) {
+        return accumulator.concat(currentValue);
+      },
+      []
+    );
+
+    expect(flattened).to.deep.equal([0, 1, 2, 3, 4, 5]);
+  });
+
+  /**
+   * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#Alternative
+   */
+  it('provides flatMap as an alternative to reduce', function () {
+    var arr1 = new ArraySlice([1, 2, 3, 4]);
+
+    var reduced = arr1.reduce(
+      function (acc, x) {
+        return acc.concat([x * 2]);
+      },
+      []
+    );
+
+    expect(reduced).to.deep.equal([2, 4, 6, 8]);
+
+    var flattened = arr1.flatMap(function (x) {
+      return [x * 2];
+    });
+
+    expect(flattened).to.deep.equal(reduced);
+  });
+
+  /**
+   * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#Examples
+   */
+  it('provides flatMap to flatten one level', function () {
+    var arr1 = new ArraySlice([1, 2, 3, 4]);
+
+    var mapped = arr1.map(function (x) {
+      return [x * 2];
+    });
+
+    expect(mapped).to.deep.equal([[2], [4], [6], [8]]);
+
+    var flattened = arr1.flatMap(function (x) {
+      return [x * 2];
+    });
+
+    expect(flattened).to.deep.equal([2, 4, 6, 8]);
+
+    var flattenOnce = arr1.flatMap(function (x) {
+      return [[x * 2]];
+    });
+
+    expect(flattenOnce).to.deep.equal([[2], [4], [6], [8]]);
+  });
+
   describe('#includes', function () {
     var slice = new ArraySlice([
       new Element('one'),
