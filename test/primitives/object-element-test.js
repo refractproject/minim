@@ -241,6 +241,35 @@ describe('ObjectElement', function() {
     });
   });
 
+  describe('#compactMap', function() {
+    it('provides the keys', function() {
+      var keys = objectElement.compactMap(function(value, key, member) {
+        if (key.toValue() === 'foo') {
+          return key.toValue();
+        }
+      });
+      expect(keys).to.deep.equal(['foo']);
+    });
+
+    it('provides the values', function() {
+      var values = objectElement.compactMap(function(value, key, member) {
+        if (key.toValue() === 'foo') {
+          return value.toValue();
+        }
+      });
+      expect(values).to.deep.equal(['bar']);
+    });
+
+    it('provides the members', function() {
+      var keys = objectElement.compactMap(function(value, key, member) {
+        if (key.toValue() === 'foo') {
+          return member.key.toValue();
+        }
+      });
+      expect(keys).to.deep.equal(['foo']);
+    });
+  });
+
   describe('#filter', function() {
     it('allows for filtering on keys', function() {
       var foo = objectElement.filter(function(value, key, member) {
