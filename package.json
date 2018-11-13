@@ -45,6 +45,7 @@
     "karma-sinon": "^1.0.4",
     "mocha": "^5.2.0",
     "mocha-sinon": "^2.1.0",
+    "ramda": "^0.25.0",
     "sinon": "^5.0.10",
     "sinon-chai": "^3.1.0",
     "watchify": "^3.11.0"
