@@ -3,6 +3,8 @@ var minim = require('../../lib/minim').namespace();
 var KeyValuePair = require('../../lib/key-value-pair');
 var RefElement = require('../../lib/minim').RefElement;
 var ArraySlice = require('../../lib/minim').ArraySlice;
+var ObjectSlice = require('../../lib/minim').ObjectSlice;
+var NumberElement = require('../../lib/minim').NumberElement;
 
 describe('Element', function() {
   context('when initializing', function() {
@@ -175,6 +177,24 @@ describe('Element', function() {
       element.content = new KeyValuePair();
 
       expect(element.content).to.deep.equal(new KeyValuePair());
+    });
+
+    it('should allow setting ArraySlice (converted to array)', function() {
+      element.content = new ArraySlice([1, 2]);
+
+      expect(element.content).to.deep.equal([
+        new NumberElement(1),
+        new NumberElement(2)
+      ]);
+    });
+
+    it('should allow setting ObjectSlice (converted to array)', function() {
+      var MemberElement = minim.getElementClass('member');
+      element.content = new ObjectSlice([new MemberElement("name", "Doe")]);
+
+      expect(element.content).to.deep.equal([
+        new MemberElement("name", "Doe"),
+      ]);
     });
   });
 
