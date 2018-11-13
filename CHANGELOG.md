@@ -55,6 +55,8 @@
   is updated to reflect API Elements 1.0. The `variable` attribute is now
   present on a member element instead of the key of a member element.
 
+- Empty arrays are no longer serialised in JSON 06 Serialiser.
+
 ## 0.20.7
 
 ### Bug Fixes
