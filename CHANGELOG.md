@@ -25,6 +25,14 @@
 
 - Object Element can now be created with an array of member elements.
 
+- You can now create an element from an ArraySlice or ObjectSlice, for example,
+  passing the result of a `filter` operation into a new element.
+
+  ```
+  const numbers = new ArrayElement([1, 2, 3, 4])
+  new ArrayElement(numbers.filter((e) => e.toValue() % 2))
+  ```
+
 - Adds `compactMap` functionality to Array and Object elements allowing you to
   returns an array containing the truthy results of calling the given
   transformation with each element of this sequence.
