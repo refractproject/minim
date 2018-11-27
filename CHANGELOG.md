@@ -1,6 +1,6 @@
 # Minim Changelog
 
-## Master
+## 0.22.0
 
 ### Enhancements
 
