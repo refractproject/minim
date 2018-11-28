@@ -1,5 +1,12 @@
 # Minim Changelog
 
+## 0.21.1
+
+### Bug Fixes
+
+- Empty parseResult and link arrays are serialised in JSON 06 Serialiser, a
+  regression of 0.21.0 caused these to not be serialised.
+
 ## 0.21.0
 
 ### Breaking
