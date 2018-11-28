@@ -820,6 +820,17 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
+    it('serialises empty parseResult content', function() {
+      var element = new minim.elements.Element([]);
+      element.element = 'parseResult';
+      var serialised = serialiser.serialise(element);
+
+      expect(serialised).to.deep.equal({
+        element: 'parseResult',
+        content: []
+      });
+    });
+
     it('serialises empty httpRequest content', function() {
       var element = new minim.elements.Element([]);
       element.element = 'httpRequest';
@@ -839,6 +850,17 @@ describe('JSON 0.6 Serialiser', function() {
       expect(serialised).to.deep.equal({
         element: 'httpResponse',
         content: []
+      });
+    });
+
+    it('serialises empty link content', function() {
+      var element = new minim.elements.Element([]);
+      element.element = 'link';
+      var serialised = serialiser.serialise(element);
+
+      expect(serialised).to.deep.equal({
+        element: 'link',
+        content: [],
       });
     });
 
