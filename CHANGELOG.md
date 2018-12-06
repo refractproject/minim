@@ -1,5 +1,14 @@
 # Minim Changelog
 
+## 0.22.0
+
+### Enhancements
+
+- `ArrayElement` now conforms to parts of the [Fantasy
+  Land](https://github.com/fantasyland/fantasy-land) 3.5 specification.
+  `Functor`, `Semigroup`, `Monoid`, `Filterable`, `Chain`, and `Foldable` are
+  now supported.
+
 ## 0.21.1
 
 ### Bug Fixes
