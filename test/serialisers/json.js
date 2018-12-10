@@ -23,6 +23,27 @@ describe('JSON Serialiser', function() {
   });
 
   describe('serialisation', function() {
+    describe('#serialiseObject', function() {
+      it('can serialise an ObjectElement', function () {
+        var object = new minim.elements.Object({ id: 'Example' });
+        var result = serialiser.serialiseObject(object);
+
+        expect(result).to.deep.equal({
+          id: {
+            element: 'string',
+            content: 'Example',
+          },
+        });
+      });
+
+      it('can serialise an ObjectElement containg undefined key', function () {
+        var object = new minim.elements.Object({ key: undefined });
+        var result = serialiser.serialiseObject(object);
+
+        expect(result).to.deep.equal({});
+      });
+    });
+
     it('errors when serialising a non-element', function() {
       expect(function(){
         serialiser.serialise('Hello');
