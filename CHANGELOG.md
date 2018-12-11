@@ -1,6 +1,6 @@
 # Minim Changelog
 
-## Master
+## 0.22.1 (2018-12-10)
 
 ### Bug Fixes
 
