@@ -1,5 +1,14 @@
 # Minim Changelog
 
+## 0.22.1 (2018-12-10)
+
+### Bug Fixes
+
+- Fixes serialising an element with an undefined meta or attributes value. For
+  example if a meta value (`id`) was set to `undefined`, then it should not be
+  serialised. Previously the serialiser would throw an exception that
+  undefined was not an element.
+
 ## 0.22.0
 
 ### Enhancements
