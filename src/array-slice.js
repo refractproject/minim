@@ -1,7 +1,5 @@
 'use strict';
 
-var uptown = require('uptown');
-var createClass = uptown.createClass;
 var negate = require('lodash/negate');
 
 // Coerces an a parameter into a callback for matching elements.
@@ -32,20 +30,19 @@ function coerceElementMatchingCallback(value) {
  *
  * @property {Element[]} elements
  */
-var ArraySlice = createClass({
-  constructor: function (elements) {
+class ArraySlice {
+  constructor(elements) {
     this.elements = elements || [];
-  },
+  }
 
   /**
    * @returns {Array}
-   * @memberof ArraySlice.prototype
    */
-  toValue: function () {
+  toValue() {
     return this.elements.map(function (element) {
       return element.toValue();
     });
-  },
+  }
 
   // High Order Functions
 
@@ -53,24 +50,22 @@ var ArraySlice = createClass({
    * @param callback - Function to execute for each element
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    * @returns {array} A new array with each element being the result of the callback function
-   * @memberof ArraySlice.prototype
    */
-  map: function (callback, thisArg) {
+  map(callback, thisArg) {
     return this.elements.map(callback, thisArg);
-  },
+  }
 
   /**
    * Maps and then flattens the results.
    * @param callback - Function to execute for each element.
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    * @returns {array}
-   * @memberof ArraySlice.prototype
    */
-  flatMap: function (callback, thisArg) {
+  flatMap(callback, thisArg) {
     return this
       .map(callback, thisArg)
       .reduce(function (a, b) { return a.concat(b); }, []);
-  },
+  }
 
   /**
    * Returns an array containing the truthy results of calling the given transformation with each element of this sequence
@@ -79,7 +74,7 @@ var ArraySlice = createClass({
    * @memberof ArraySlice.prototype
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
-  compactMap: function (transform, thisArg) {
+  compactMap(transform, thisArg) {
     var results = [];
 
     this.forEach(function (element) {
@@ -91,7 +86,7 @@ var ArraySlice = createClass({
     }, thisArg);
 
     return results;
-  },
+  }
 
   /**
    * @param callback - Function to execute for each element. This may be a callback, an element name or an element class.
@@ -99,10 +94,10 @@ var ArraySlice = createClass({
    * @returns {ArraySlice}
    * @memberof ArraySlice.prototype
    */
-  filter: function (callback, thisArg) {
+  filter(callback, thisArg) {
     callback = coerceElementMatchingCallback(callback);
     return new ArraySlice(this.elements.filter(callback, thisArg));
-  },
+  }
 
   /**
    * @param callback - Function to execute for each element. This may be a callback, an element name or an element class.
@@ -110,10 +105,10 @@ var ArraySlice = createClass({
    * @returns {ArraySlice}
    * @memberof ArraySlice.prototype
    */
-  reject: function (callback, thisArg) {
+  reject(callback, thisArg) {
     callback = coerceElementMatchingCallback(callback);
     return new ArraySlice(this.elements.filter(negate(callback), thisArg));
-  },
+  }
 
   /**
    * Returns the first element in the array that satisfies the given value
@@ -122,39 +117,39 @@ var ArraySlice = createClass({
    * @returns {Element}
    * @memberof ArraySlice.prototype
    */
-  find: function (callback, thisArg) {
+  find(callback, thisArg) {
     callback = coerceElementMatchingCallback(callback);
     return this.elements.find(callback, thisArg);
-  },
+  }
 
   /**
    * @param callback - Function to execute for each element
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    * @memberof ArraySlice.prototype
    */
-  forEach: function (callback, thisArg) {
+  forEach(callback, thisArg) {
     this.elements.forEach(callback, thisArg);
-  },
+  }
 
   /**
    * @param callback - Function to execute for each element
    * @param initialValue
    * @memberof ArraySlice.prototype
    */
-  reduce: function (callback, initialValue) {
+  reduce(callback, initialValue) {
     return this.elements.reduce(callback, initialValue);
-  },
+  }
 
   /**
    * @param value
    * @returns {boolean}
    * @memberof ArraySlice.prototype
    */
-  includes: function(value) {
+  includes(value) {
     return this.elements.some(function (element) {
       return element.equals(value);
     });
-  },
+  }
 
   // Mutation
 
@@ -163,36 +158,36 @@ var ArraySlice = createClass({
    * @returns {Element} The removed element or undefined if the slice is empty
    * @memberof ArraySlice.prototype
    */
-  shift: function() {
+  shift() {
     return this.elements.shift();
-  },
+  }
 
   /**
    * Adds the given element to the begining of the slice
    * @parameter {Element} value
    * @memberof ArraySlice.prototype
    */
-  unshift: function(value) {
+  unshift(value) {
     this.elements.unshift(this.refract(value));
-  },
+  }
 
   /**
    * Adds the given element to the end of the slice
    * @parameter {Element} value
    * @memberof ArraySlice.prototype
    */
-  push: function(value) {
+  push(value) {
     this.elements.push(this.refract(value));
     return this;
-  },
+  }
 
   /**
    * @parameter {Element} value
    * @memberof ArraySlice.prototype
    */
-  add: function(value) {
+  add(value) {
     this.push(value);
-  },
+  }
 
   // Accessors
 
@@ -201,15 +196,15 @@ var ArraySlice = createClass({
    * @returns {Element}
    * @memberof ArraySlice.prototype
    */
-  get: function(index) {
+  get(index) {
     return this.elements[index];
-  },
+  }
 
   /**
    * @parameter {number} index
    * @memberof ArraySlice.prototype
    */
-  getValue: function(index) {
+  getValue(index) {
     var element = this.elements[index];
 
     if (element) {
@@ -218,43 +213,31 @@ var ArraySlice = createClass({
 
     return undefined;
   }
-}, {}, {
+
   /**
    * Returns the number of elements in the slice
    * @type number
-   * @readonly
-   * @memberof ArraySlice.prototype
    */
-  length: {
-    get: function () {
-      return this.elements.length;
-    }
-  },
+  get length() {
+    return this.elements.length;
+  }
 
   /**
    * Returns whether the slice is empty
    * @type boolean
-   * @readonly
-   * @memberof ArraySlice.prototype
    */
-  isEmpty: {
-    get: function() {
-      return this.elements.length === 0;
-    }
-  },
+  get isEmpty() {
+    return this.elements.length === 0;
+  }
 
   /**
    * Returns the first element in the slice or undefined if the slice is empty
    * @type Element
-   * @readonly
-   * @memberof ArraySlice.prototype
    */
-  first: {
-    get: function() {
-      return this.elements[0];
-    }
-  },
-});
+  get first() {
+    return this.elements[0];
+  }
+};
 
 if (typeof Symbol !== 'undefined') {
   ArraySlice.prototype[Symbol.iterator] = function () {

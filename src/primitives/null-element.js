@@ -2,21 +2,17 @@
 
 var Element = require('./element');
 
-/**
- * @class NullElement
- * @extends Element
- */
-module.exports = Element.extend({
-  constructor: function(content, meta, attributes) {
-    Element.call(this, content || null, meta, attributes);
+module.exports = class NullElement extends Element {
+  constructor(content, meta, attributes) {
+    super(content || null, meta, attributes);
     this.element = 'null';
-  },
+  }
 
-  primitive: function() {
+  primitive() {
     return 'null';
-  },
+  }
 
-  set: function() {
+  set() {
     return new Error('Cannot set the value of null');
   }
-});
+};

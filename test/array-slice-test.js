@@ -65,7 +65,7 @@ describe('ArraySlice', function () {
       var two = new Element('two');
       var slice = new ArraySlice([one, two]);
 
-      var filtered = slice.filter(StringElement);
+      var filtered = slice.filter(elem => elem instanceof StringElement);
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([one]);
@@ -102,7 +102,7 @@ describe('ArraySlice', function () {
       var two = new Element('two');
       var slice = new ArraySlice([one, two]);
 
-      var filtered = slice.reject(StringElement);
+      var filtered = slice.reject(elem => elem instanceof StringElement);
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([two]);
@@ -138,7 +138,7 @@ describe('ArraySlice', function () {
       var two = new StringElement('two');
       var slice = new ArraySlice([one, two]);
 
-      var element = slice.find(StringElement);
+      var element = slice.find(elem => elem instanceof StringElement);
 
       expect(element).to.be.equal(two);
     });

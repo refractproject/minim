@@ -3,7 +3,6 @@
 var KeyValuePair = require('../key-value-pair');
 var Element = require('./element');
 
-
 /**
  * @class MemberElement
  *
@@ -11,41 +10,35 @@ var Element = require('./element');
  * @param {Element} value
  * @param meta
  * @param attributes
- *
- * @extends Element
  */
-module.exports = Element.extend({
-  constructor: function(key, value, meta, attributes) {
-    Element.call(this, new KeyValuePair(), meta, attributes);
+module.exports = class MemberElement extends Element {
+  constructor(key, value, meta, attributes) {
+    super(new KeyValuePair(), meta, attributes);
 
     this.element = 'member';
     this.key = key;
     this.value = value;
   }
-}, {}, {
-  /**
-   * @type Element
-   * @memberof MemberElement.prototype
-   */
-  key: {
-    get: function() {
-      return this.content.key;
-    },
-    set: function(key) {
-      this.content.key = this.refract(key);
-    }
-  },
 
   /**
    * @type Element
-   * @memberof MemberElement.prototype
    */
-  value: {
-    get: function() {
-      return this.content.value;
-    },
-    set: function(value) {
-      this.content.value = this.refract(value);
-    }
+  get key() {
+    return this.content.key;
   }
-});
+
+  set key(key) {
+    this.content.key = this.refract(key);
+  }
+
+  /**
+   * @type Element
+   */
+  get value() {
+    return this.content.value;
+  }
+
+  set value(value) {
+    this.content.value = this.refract(value);
+  }
+};

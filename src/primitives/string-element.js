@@ -8,28 +8,22 @@ var Element = require('./element');
  * @param {string} content
  * @param meta
  * @param attributes
- *
- * @extends Element
  */
-module.exports = Element.extend({
-  constructor: function() {
-    Element.apply(this, arguments);
+module.exports = class StringElement extends Element {
+  constructor(content, meta, attributes) {
+    super(content, meta, attributes);
     this.element = 'string';
-  },
+  }
 
-  primitive: function() {
+  primitive() {
     return 'string';
   }
-}, {}, {
+
   /**
    * The length of the string.
    * @type number
-   * @readonly
-   * @memberof StringElement.prototype
    */
-  length: {
-    get: function() {
-      return this.content.length;
-    }
+  get length() {
+    return this.content.length;
   }
-});
+};

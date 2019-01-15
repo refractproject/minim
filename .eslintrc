@@ -24,5 +24,8 @@
         "node": true,
         "browser": true,
         "mocha": true
-    }
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
 }

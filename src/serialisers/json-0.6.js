@@ -2,8 +2,8 @@
 
 var JSONSerialiser = require('./json');
 
-module.exports = JSONSerialiser.extend({
-  serialise: function(element) {
+module.exports = class JSONSerialiser06 extends JSONSerialiser {
+  serialise(element) {
     if (!(element instanceof this.namespace.elements.Element)) {
       throw new TypeError('Given element `' + element + '` is not an Element instance');
     }
@@ -70,9 +70,9 @@ module.exports = JSONSerialiser.extend({
     }
 
     return payload;
-  },
+  }
 
-  shouldSerialiseContent: function(element, content) {
+  shouldSerialiseContent(element, content) {
     if (content === undefined) {
       return false;
     }
@@ -89,26 +89,26 @@ module.exports = JSONSerialiser.extend({
     }
 
     return true;
-  },
+  }
 
-  refSerialiseContent: function(element, payload) {
+  refSerialiseContent(element, payload) {
     delete payload['attributes'];
 
     return {
       href: element.toValue(),
       path: element.path.toValue(),
     };
-  },
+  }
 
-  sourceMapSerialiseContent: function(element) {
+  sourceMapSerialiseContent(element) {
     return element.toValue();
-  },
+  }
 
-  dataStructureSerialiseContent: function(element) {
+  dataStructureSerialiseContent(element) {
     return [this.serialiseContent(element.content)];
-  },
+  }
 
-  enumSerialiseAttributes: function(element) {
+  enumSerialiseAttributes(element) {
     var attributes = element.attributes.clone();
 
     // Enumerations attribute was is placed inside content (see `enumSerialiseContent` below)
@@ -146,9 +146,9 @@ module.exports = JSONSerialiser.extend({
     if (attributes.length > 0) {
       return this.serialiseObject(attributes);
     }
-  },
+  }
 
-  enumSerialiseContent: function(element) {
+  enumSerialiseContent(element) {
     // In API Elements < 1.0, the content is the enumerations
     // If we don't have an enumerations, use the value (Drafter 3 behaviour)
 
@@ -171,9 +171,9 @@ module.exports = JSONSerialiser.extend({
     }
 
     return [];
-  },
+  }
 
-  deserialise: function(value) {
+  deserialise(value) {
     if (typeof value === 'string') {
       return new this.namespace.elements.String(value);
     } else if (typeof value === 'number') {
@@ -267,11 +267,11 @@ module.exports = JSONSerialiser.extend({
     }
 
     return element;
-  },
+  }
 
   // Private API
 
-  serialiseContent: function(content) {
+  serialiseContent(content) {
     if (content instanceof this.namespace.elements.Element) {
       return this.serialise(content);
     } else if (content instanceof this.namespace.KeyValuePair) {
@@ -289,9 +289,9 @@ module.exports = JSONSerialiser.extend({
     }
 
     return content;
-  },
+  }
 
-  deserialiseContent: function(content) {
+  deserialiseContent(content) {
     if (content) {
       if (content.element) {
         return this.deserialise(content);
@@ -309,9 +309,9 @@ module.exports = JSONSerialiser.extend({
     }
 
     return content;
-  },
+  }
 
-  shouldRefract: function (element) {
+  shouldRefract(element) {
     if ((element._attributes && element.attributes.keys().length) || (element._meta && element.meta.keys().length)) {
       return true;
     }
@@ -326,9 +326,9 @@ module.exports = JSONSerialiser.extend({
     }
 
     return false;
-  },
+  }
 
-  convertKeyToRefract: function (key, item) {
+  convertKeyToRefract(key, item) {
     if (this.shouldRefract(item)) {
       return this.serialise(item);
     }
@@ -376,17 +376,17 @@ module.exports = JSONSerialiser.extend({
     }
 
     return item.toValue();
-  },
+  }
 
-  serialiseEnum: function(element) {
+  serialiseEnum(element) {
     var self = this;
 
     return element.children.map(function(item) {
       return self.serialise(item);
     });
-  },
+  }
 
-  serialiseObject: function(obj) {
+  serialiseObject(obj) {
     var result = {};
 
     obj.keys().forEach(function (key) {
@@ -398,11 +398,11 @@ module.exports = JSONSerialiser.extend({
     }, this);
 
     return result;
-  },
+  }
 
-  deserialiseObject: function(from, to) {
+  deserialiseObject(from, to) {
     Object.keys(from).forEach(function (key) {
       to.set(key, this.deserialise(from[key]));
     }, this);
   }
-});
+};

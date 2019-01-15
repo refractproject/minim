@@ -58,8 +58,7 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
-    "lodash": "^4.15.0",
-    "uptown": "^1.1.0"
+    "lodash": "^4.15.0"
   },
   "engines": {
     "node": ">=4"

@@ -1,6 +1,5 @@
 'use strict';
 
-var createClass = require('uptown').createClass;
 var Namespace = require('../namespace');
 
 /**
@@ -10,17 +9,16 @@ var Namespace = require('../namespace');
  *
  * @property {Namespace} namespace
  */
-module.exports = createClass({
-  constructor: function(namespace) {
+class JSONSerialiser {
+  constructor(namespace) {
     this.namespace = namespace || new this.Namespace();
-  },
+  }
 
   /**
    * @param {Element} element
    * @returns {object}
-   * @memberof JSONSerialiser.prototype
    */
-  serialise: function(element) {
+  serialise(element) {
     if (!(element instanceof this.namespace.elements.Element)) {
       throw new TypeError('Given element `' + element + '` is not an Element instance');
     }
@@ -44,14 +42,13 @@ module.exports = createClass({
     }
 
     return payload;
-  },
+  }
 
   /**
    * @param {object} value
    * @returns {Element}
-   * @memberof JSONSerialiser.prototype
    */
-  deserialise: function(value) {
+  deserialise(value) {
     if (!value.element) {
       throw new Error('Given value is not an object containing an element name');
     }
@@ -77,11 +74,11 @@ module.exports = createClass({
     }
 
     return element;
-  },
+  }
 
   // Private API
 
-  serialiseContent: function(content) {
+  serialiseContent(content) {
     if (content instanceof this.namespace.elements.Element) {
       return this.serialise(content);
     } else if (content instanceof this.namespace.KeyValuePair) {
@@ -103,9 +100,9 @@ module.exports = createClass({
     }
 
     return content;
-  },
+  }
 
-  deserialiseContent: function(content) {
+  deserialiseContent(content) {
     if (content) {
       if (content.element) {
         return this.deserialise(content);
@@ -123,9 +120,9 @@ module.exports = createClass({
     }
 
     return content;
-  },
+  }
 
-  serialiseObject: function(obj) {
+  serialiseObject(obj) {
     var result = {};
 
     obj.keys().forEach(function (key) {
@@ -137,11 +134,15 @@ module.exports = createClass({
     }, this);
 
     return result;
-  },
+  }
 
-  deserialiseObject: function(from, to) {
+  deserialiseObject(from, to) {
     Object.keys(from).forEach(function (key) {
       to.set(key, this.deserialise(from[key]));
     }, this);
   }
-});
+
+}
+
+
+module.exports = JSONSerialiser;
