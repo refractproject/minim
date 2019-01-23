@@ -1,5 +1,5 @@
 var expect = require('../spec-helper').expect;
-var minim = require('../../lib/minim');
+var minim = require('../../src/minim');
 var RefElement = minim.RefElement;
 var StringElement = minim.StringElement;
 

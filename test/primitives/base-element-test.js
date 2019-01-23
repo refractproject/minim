@@ -1,10 +1,10 @@
 var expect = require('../spec-helper').expect;
-var minim = require('../../lib/minim').namespace();
-var KeyValuePair = require('../../lib/key-value-pair');
-var RefElement = require('../../lib/minim').RefElement;
-var ArraySlice = require('../../lib/minim').ArraySlice;
-var ObjectSlice = require('../../lib/minim').ObjectSlice;
-var NumberElement = require('../../lib/minim').NumberElement;
+var minim = require('../../src/minim').namespace();
+var KeyValuePair = require('../../src/key-value-pair');
+var RefElement = require('../../src/minim').RefElement;
+var ArraySlice = require('../../src/minim').ArraySlice;
+var ObjectSlice = require('../../src/minim').ObjectSlice;
+var NumberElement = require('../../src/minim').NumberElement;
 
 describe('Element', function() {
   context('when initializing', function() {

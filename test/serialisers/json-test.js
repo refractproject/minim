@@ -1,8 +1,8 @@
 var expect = require('../spec-helper').expect;
-var Namespace = require('../../lib/minim').Namespace;
-var minim = require('../../lib/minim').namespace();
-var KeyValuePair = require('../../lib/key-value-pair');
-var JSONSerialiser = require('../../lib/serialisers/json');
+var Namespace = require('../../src/minim').Namespace;
+var minim = require('../../src/minim').namespace();
+var KeyValuePair = require('../../src/key-value-pair');
+var JSONSerialiser = require('../../src/serialisers/json');
 
 describe('JSON Serialiser', function() {
   var serialiser;

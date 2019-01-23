@@ -2,7 +2,7 @@
 
 var fl = require('fantasy-land');
 var expect = require('../spec-helper').expect;
-var namespace = require('../../lib/minim').namespace();
+var namespace = require('../../src/minim').namespace();
 
 var ArrayElement = namespace.getElementClass('array');
 

@@ -1,5 +1,5 @@
 var expect = require('./spec-helper').expect;
-var minim = require('../lib/minim').namespace();
+var minim = require('../src/minim').namespace();
 
 describe('Minim Converters', function() {
   describe('convertToElement', function() {

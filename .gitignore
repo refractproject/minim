@@ -58,3 +58,4 @@ typings/
 .next
 
 dist/
+lib/
