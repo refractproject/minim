@@ -13,40 +13,34 @@ var Element = require('../primitives/element');
  * @param content
  * @param meta
  * @param attributes
- *
- * @extends Element
  */
-module.exports = Element.extend({
-  constructor: function(content, meta, attributes) {
-    Element.call(this, content || [], meta, attributes);
+module.exports = class LinkElement extends Element {
+  constructor(content, meta, attributes) {
+    super(content || [], meta, attributes);
     this.element = 'link';
   }
-}, {}, {
+
   /**
    * The relation identifier for the link, as defined in RFC 5988.
    * @type StringElement
-   * @memberof LinkElement.prototype
    */
-  relation: {
-    get: function() {
-      return this.attributes.get('relation');
-    },
-    set: function(relation) {
-      this.attributes.set('relation', relation);
-    }
-  },
+  get relation() {
+    return this.attributes.get('relation');
+  }
+
+  set relation(relation) {
+    this.attributes.set('relation', relation);
+  }
 
   /**
    * The URI for the given link.
    * @type StringElement
-   * @memberof LinkElement.prototype
    */
-  href: {
-    get: function() {
-      return this.attributes.get('href');
-    },
-    set: function(href) {
-      this.attributes.set('href', href);
-    }
+  get href() {
+    return this.attributes.get('href');
   }
-});
+
+  set href(href) {
+    this.attributes.set('href', href);
+  }
+};

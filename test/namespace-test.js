@@ -1,7 +1,7 @@
 var expect = require('./spec-helper').expect;
-var minim = require('../lib/minim');
-var Namespace = require('../lib/namespace');
-var JSONSerialiser = require('../lib/serialisers/json');
+var minim = require('../src/minim');
+var Namespace = require('../src/namespace');
+var JSONSerialiser = require('../src/serialisers/json');
 
 describe('Minim namespace', function() {
   var namespace;

@@ -8,16 +8,14 @@ var Element = require('./element');
  * @param {number} content
  * @param meta
  * @param attributes
- *
- * @extends Element
  */
-module.exports = Element.extend({
-  constructor: function() {
-    Element.apply(this, arguments);
+module.exports = class NumberElement extends Element {
+  constructor(content, meta, attributes) {
+    super(content, meta, attributes);
     this.element = 'number';
-  },
+  }
 
-  primitive: function() {
+  primitive() {
     return 'number';
   }
-});
+};

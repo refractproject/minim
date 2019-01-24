@@ -5,8 +5,6 @@ var isString = require('lodash/isString');
 var isNumber = require('lodash/isNumber');
 var isBoolean = require('lodash/isBoolean');
 var isObject = require('lodash/isObject');
-var uptown = require('uptown');
-var createClass = uptown.createClass;
 
 var JSONSerialiser = require('./serialisers/json');
 var elements = require('./elements');
@@ -21,8 +19,8 @@ var elements = require('./elements');
  * when a particular refract element is encountered, and allows you to specify
  * which elements get instantiated for existing Javascript objects.
  */
-var Namespace = createClass({
-  constructor: function(options) {
+class Namespace {
+  constructor(options) {
     this.elementMap = {};
     this.elementDetection = [];
     this.Element = elements.Element;
@@ -35,16 +33,14 @@ var Namespace = createClass({
     // These provide the defaults for new elements.
     this._attributeElementKeys = [];
     this._attributeElementArrayKeys = [];
-  },
+  }
 
   /**
    * Use a namespace plugin or load a generic plugin.
    *
    * @param plugin
-   *
-   * @memberof Namespace.prototype
    */
-  use: function(plugin) {
+  use(plugin) {
     if (plugin.namespace) {
       plugin.namespace({base: this});
     }
@@ -52,13 +48,13 @@ var Namespace = createClass({
       plugin.load({base: this});
     }
     return this;
-  },
+  }
 
   /*
    * Use the default namespace. This preloads all the default elements
    * into this registry instance.
    */
-  useDefault: function() {
+  useDefault() {
     // Set up classes for default elements
     this
       .register('null', elements.NullElement)
@@ -82,41 +78,37 @@ var Namespace = createClass({
       .detect(isObject, elements.ObjectElement, false);
 
     return this;
-  },
+  }
 
   /**
    * Register a new element class for an element.
    *
    * @param {string} name
    * @param elementClass
-   *
-   * @memberof Namespace.prototype
    */
-  register: function(name, ElementClass) {
+  register(name, ElementClass) {
     this._elements = undefined;
     this.elementMap[name] = ElementClass;
     return this;
-  },
+  }
 
   /**
    * Unregister a previously registered class for an element.
    *
    * @param {string} name
-   *
-   * @memberof Namespace.prototype
    */
-  unregister: function(name) {
+  unregister(name) {
     this._elements = undefined;
     delete this.elementMap[name];
     return this;
-  },
+  }
 
   /*
    * Add a new detection function to determine which element
    * class to use when converting existing js instances into
    * refract element.
    */
-  detect: function(test, ElementClass, givenPrepend) {
+  detect(test, ElementClass, givenPrepend) {
     var prepend = givenPrepend === undefined ? true : givenPrepend;
 
     if (prepend) {
@@ -126,7 +118,7 @@ var Namespace = createClass({
     }
 
     return this;
-  },
+  }
 
   /*
    * Convert an existing Javascript object into refract element instances, which
@@ -134,7 +126,7 @@ var Namespace = createClass({
    * If the item passed in is already refracted, then it is returned
    * unmodified.
    */
-  toElement: function(value) {
+  toElement(value) {
     if (value instanceof this.Element) { return value; }
 
     var element;
@@ -150,12 +142,12 @@ var Namespace = createClass({
     }
 
     return element;
-  },
+  }
 
   /*
    * Get an element class given an element name.
    */
-  getElementClass: function(element) {
+  getElementClass(element) {
     var ElementClass = this.elementMap[element];
 
     if (ElementClass === undefined) {
@@ -166,46 +158,44 @@ var Namespace = createClass({
     }
 
     return ElementClass;
-  },
+  }
 
   /*
    * Convert a refract document into refract element instances.
    */
-  fromRefract: function(doc) {
+  fromRefract(doc) {
     return this.serialiser.deserialise(doc);
-  },
+  }
 
   /*
    * Convert an element to a Refracted JSON object.
    */
-  toRefract: function(element) {
+  toRefract(element) {
     return this.serialiser.serialise(element);
   }
-}, {}, {
+
   /*
    * Get an object that contains all registered element classes, where
    * the key is the PascalCased element name and the value is the class.
    */
-  elements: {
-    get: function() {
-      if (this._elements === undefined) {
-        var name, pascal;
-        this._elements = {
-          Element: this.Element
-        };
+  get elements() {
+    if (this._elements === undefined) {
+      var name, pascal;
+      this._elements = {
+        Element: this.Element
+      };
 
-        for (name in this.elementMap) {
-          // Currently, all registered element types use a camelCaseName.
-          // Converting to PascalCase is as simple as upper-casing the first
-          // letter.
-          pascal = name[0].toUpperCase() + name.substr(1);
-          this._elements[pascal] = this.elementMap[name];
-        }
+      for (name in this.elementMap) {
+        // Currently, all registered element types use a camelCaseName.
+        // Converting to PascalCase is as simple as upper-casing the first
+        // letter.
+        pascal = name[0].toUpperCase() + name.substr(1);
+        this._elements[pascal] = this.elementMap[name];
       }
-
-      return this._elements;
     }
-  },
+
+    return this._elements;
+  }
 
   /**
    * Convinience method for getting a JSON Serialiser configured with the
@@ -216,12 +206,10 @@ var Namespace = createClass({
    *
    * @memberof Namespace.prototype
    */
-  serialiser: {
-    get: function() {
-      return new JSONSerialiser(this);
-    }
+  get serialiser() {
+    return new JSONSerialiser(this);
   }
-});
+};
 
 JSONSerialiser.prototype.Namespace = Namespace;
 

@@ -8,16 +8,14 @@ var Element = require('./element');
  * @param {boolean} content
  * @param meta
  * @param attributes
- *
- * @extends Element
  */
-module.exports = Element.extend({
-  constructor: function() {
-    Element.apply(this, arguments);
+module.exports = class BooleanElement extends Element {
+  constructor(content, meta, attributes) {
+    super(content, meta, attributes);
     this.element = 'boolean';
-  },
+  }
 
-  primitive: function() {
+  primitive() {
     return 'boolean';
   }
-});
+};

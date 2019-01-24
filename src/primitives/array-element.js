@@ -10,33 +10,29 @@ var negate = require('lodash/negate');
  * @param {Element[]} content
  * @param meta
  * @param attributes
- *
- * @extends Element
  */
-var ArrayElement = Element.extend({
-  constructor: function (content, meta, attributes) {
-    Element.call(this, content || [], meta, attributes);
+class ArrayElement extends Element {
+  constructor(content, meta, attributes) {
+    super(content || [], meta, attributes);
     this.element = 'array';
-  },
+  }
 
-  primitive: function() {
+  primitive() {
     return 'array';
-  },
+  }
 
   /**
    * @returns {Element}
-   * @memberof ArrayElement.prototype
    */
-  get: function(index) {
+  get(index) {
     return this.content[index];
-  },
+  }
 
   /**
    * Helper for returning the value of an item
    * This works for both ArrayElement and ObjectElement instances
-   * @memberof ArrayElement.prototype
    */
-  getValue: function(indexOrKey) {
+  getValue(indexOrKey) {
     var item = this.get(indexOrKey);
 
     if (item) {
@@ -44,28 +40,21 @@ var ArrayElement = Element.extend({
     }
 
     return undefined;
-  },
+  }
 
   /**
    * @returns {Element}
-   * @memberof ArrayElement.prototype
    */
-  getIndex: function(index) {
+  getIndex(index) {
     return this.content[index];
-  },
+  }
 
-  /**
-   * @memberof ArrayElement.prototype
-   */
-  set: function(index, value) {
+  set(index, value) {
     this.content[index] = this.refract(value);
     return this;
-  },
+  }
 
-  /**
-   * @memberof ArrayElement.prototype
-   */
-  remove: function (index) {
+  remove(index) {
     var removed = this.content.splice(index, 1);
 
     if (removed.length) {
@@ -73,29 +62,27 @@ var ArrayElement = Element.extend({
     }
 
     return null;
-  },
+  }
 
   /**
    * @param callback - Function to execute for each element
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
-   * @memberof ArrayElement.prototype
    */
-  map: function(callback, thisArg) {
+  map(callback, thisArg) {
     return this.content.map(callback, thisArg);
-  },
+  }
 
   /**
    * Maps and then flattens the results.
    * @param callback - Function to execute for each element.
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    * @returns {array}
-   * @memberof ArrayElement.prototype
    */
-  flatMap: function (callback, thisArg) {
+  flatMap(callback, thisArg) {
     return this
       .map(callback, thisArg)
       .reduce(function (a, b) { return a.concat(b); }, []);
-  },
+  }
 
   /**
    * Returns an array containing the truthy results of calling the given transformation with each element of this sequence
@@ -104,7 +91,7 @@ var ArrayElement = Element.extend({
    * @memberof ArrayElement.prototype
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
-  compactMap: function (transform, thisArg) {
+  compactMap(transform, thisArg) {
     var results = [];
 
     this.forEach(function (element) {
@@ -116,35 +103,32 @@ var ArrayElement = Element.extend({
     }, thisArg);
 
     return results;
-  },
+  }
 
   /**
    * @param callback - Function to execute for each element
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    * @returns {ArraySlice}
-   * @memberof ArrayElement.prototype
    */
-  filter: function(callback, thisArg) {
+  filter(callback, thisArg) {
     return new ArraySlice(this.content.filter(callback, thisArg));
-  },
+  }
 
   /**
    * @param callback - Function to execute for each element
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    * @returns {ArraySlice}
-   * @memberof ArrayElement.prototype
    */
-  reject: function(callback, thisArg) {
+  reject(callback, thisArg) {
     return this.filter(negate(callback), thisArg);
-  },
+  }
 
   /**
    * This is a reduce function specifically for Minim arrays and objects. It
    * allows for returning normal values or Minim instances, so it converts any
    * primitives on each step.
-   * @memberof MemberElement.prototype
    */
-  reduce: function(callback, initialValue) {
+  reduce(callback, initialValue) {
     var startIndex;
     var memo;
 
@@ -174,7 +158,7 @@ var ArrayElement = Element.extend({
     }
 
     return memo;
-  },
+  }
 
   /**
    * @callback forEachCallback
@@ -187,53 +171,48 @@ var ArrayElement = Element.extend({
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    * @memberof ArrayElement.prototype
    */
-  forEach: function(callback, thisArg) {
+  forEach(callback, thisArg) {
     var refract = this.refract;
 
     this.content.forEach(function(item, index) {
       callback(item, refract(index));
     }, thisArg);
-  },
+  }
 
   /**
-   * @memberof ArrayElement.prototype
    * @returns {Element}
    */
-  shift: function() {
+  shift() {
     return this.content.shift();
-  },
+  }
 
   /**
    * @param value
-   * @memberof ArrayElement.prototype
    */
-  unshift: function(value) {
+  unshift(value) {
     this.content.unshift(this.refract(value));
-  },
+  }
 
   /**
    * @param value
-   * @memberof ArrayElement.prototype
    */
-  push: function(value) {
+  push(value) {
     this.content.push(this.refract(value));
     return this;
-  },
+  }
 
   /**
    * @param value
-   * @memberof ArrayElement.prototype
    */
-  add: function(value) {
+  add(value) {
     this.push(value);
-  },
+  }
 
   /**
    * Recusively search all descendents using a condition function.
    * @returns {Element[]}
-   * @memberof ArrayElement.prototype
    */
-  findElements: function(condition, givenOptions) {
+  findElements(condition, givenOptions) {
     var options = givenOptions || {};
     var recursive = !!options.recursive;
     var results = options.results === undefined ? [] : options.results;
@@ -256,39 +235,37 @@ var ArrayElement = Element.extend({
     });
 
     return results;
-  },
+  }
 
   /**
    * Recusively search all descendents using a condition function.
    * @param condition
    * @returns {ArraySlice}
-   * @memberof ArrayElement.prototype
    */
-  find: function(condition) {
+  find(condition) {
     return new ArraySlice(this.findElements(condition, {recursive: true}));
-  },
+  }
 
   /**
    * @param {string} element
    * @returns {ArraySlice}
-   * @memberof ArrayElement.prototype
    */
-  findByElement: function(element) {
+  findByElement(element) {
     return this.find(function(item) {
       return item.element === element;
     });
-  },
+  }
 
   /**
    * @param {string} className
    * @returns {ArraySlice}
    * @memberof ArrayElement.prototype
    */
-  findByClass: function(className) {
+  findByClass(className) {
     return this.find(function(item) {
       return item.classes.contains(className);
     });
-  },
+  }
 
   /**
    * Search the tree recursively and find the element with the matching ID
@@ -296,120 +273,99 @@ var ArrayElement = Element.extend({
    * @returns {Element}
    * @memberof ArrayElement.prototype
    */
-  getById: function(id) {
+  getById(id) {
     return this.find(function(item) {
       return item.id.toValue() === id;
     }).first;
-  },
+  }
 
   /**
    * Looks for matching children using deep equality
    * @param value
    * @returns {boolean}
-   * @memberof ArrayElement.prototype
    */
-  contains: function(value) {
+  contains(value) {
     return this.content.some(function (element) {
       return element.equals(value);
     });
-  },
+  }
 
   // Fantasy Land
 
-  empty: function() {
+  empty() {
     return new this.constructor([]);
-  },
+  }
 
-  'fantasy-land/empty': function() {
+  ['fantasy-land/empty']() {
     return this.empty();
-  },
+  }
 
-  concat: function(other) {
+  concat(other) {
     return new this.constructor(this.content.concat(other.content));
-  },
+  }
 
-  'fantasy-land/concat': function(other) {
+  ['fantasy-land/concat'](other) {
     return this.concat(other);
-  },
+  }
 
-  'fantasy-land/map': function(transform) {
+  ['fantasy-land/map'](transform) {
     return new this.constructor(this.map(transform));
-  },
+  }
 
-  'fantasy-land/chain': function(transform) {
+  ['fantasy-land/chain'](transform) {
     return this
       .map(function (element) { return transform(element); }, this)
       .reduce(function (a, b) { return a.concat(b); }, this.empty());
-  },
+  }
 
-  'fantasy-land/filter': function(callback) {
+  ['fantasy-land/filter'](callback) {
     return new this.constructor(this.content.filter(callback));
-  },
+  }
 
-  'fantasy-land/reduce': function(transform, initialValue) {
+  ['fantasy-land/reduce'](transform, initialValue) {
     return this.content.reduce(transform, initialValue);
-  },
-}, {}, {
+  }
+
   /**
    * Returns the length of the collection
    * @type number
-   * @readonly
-   * @memberof ArrayElement.prototype
    */
-  length: {
-    get: function() {
-      return this.content.length;
-    }
-  },
+  get length() {
+    return this.content.length;
+  }
 
   /**
    * Returns whether the collection is empty
    * @type boolean
-   * @readonly
-   * @memberof ArrayElement.prototype
    */
-  isEmpty: {
-    get: function() {
-      return this.content.length === 0;
-    }
-  },
+  get isEmpty() {
+    return this.content.length === 0;
+  }
 
   /**
    * Return the first item in the collection
    * @type Element
-   * @readonly
-   * @memberof ArrayElement.prototype
    */
-  first: {
-    get: function () {
-      return this.getIndex(0);
-    },
-  },
+  get first() {
+    return this.getIndex(0);
+  }
 
   /**
    * Return the second item in the collection
    * @type Element
-   * @readonly
-   * @memberof ArrayElement.prototype
    */
-  second: {
-    get: function() {
-      return this.getIndex(1);
-    },
-  },
+  get second() {
+    return this.getIndex(1);
+  }
 
   /**
    * Return the last item in the collection
    * @type Element
-   * @readonly
-   * @memberof ArrayElement.prototype
    */
-  last: {
-    get: function() {
-      return this.getIndex(this.length - 1);
-    },
-  },
-});
+  get last() {
+    return this.getIndex(this.length - 1);
+  }
+};
 
 ArrayElement.empty = function () {
   return new this();

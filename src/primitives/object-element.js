@@ -14,32 +14,29 @@ var ObjectSlice = require('../object-slice');
  * @param content
  * @param meta
  * @param attributes
- *
- * @extends ArrayElement
  */
-var ObjectElement = ArrayElement.extend({
-  constructor: function (content, meta, attributes) {
-    Element.call(this, content || [], meta, attributes);
+class ObjectElement extends ArrayElement {
+  constructor(content, meta, attributes) {
+    super(content || [], meta, attributes);
     this.element = 'object';
-  },
+  }
 
-  primitive: function() {
+  primitive() {
     return 'object';
-  },
+  }
 
-  toValue: function() {
+  toValue() {
     return this.content.reduce(function(results, el) {
       results[el.key.toValue()] = el.value.toValue();
       return results;
     }, {});
-  },
+  }
 
   /**
    * @param key
    * @returns {Element}
-   * @memberof ObjectElement.prototype
    */
-  get: function(name) {
+  get(name) {
     var member = this.getMember(name);
 
     if (member) {
@@ -47,26 +44,24 @@ var ObjectElement = ArrayElement.extend({
     }
 
     return undefined;
-  },
+  }
 
   /**
    * @param key
    * @returns {MemberElement}
-   * @memberof ObjectElement.prototype
    */
-  getMember: function(name) {
+  getMember(name) {
     if (name === undefined) { return undefined; }
 
     return this.content.find(function (element) {
       return element.key.toValue() === name;
     });
-  },
+  }
 
   /**
    * @param key
-   * @memberof ObjectElement.prototype
    */
-  remove: function (name) {
+  remove (name) {
     var removed = null;
 
     this.content = this.content.filter(function (item) {
@@ -79,14 +74,13 @@ var ObjectElement = ArrayElement.extend({
     });
 
     return removed;
-  },
+  }
 
   /**
    * @param key
    * @returns {Element}
-   * @memberof ObjectElement.prototype
    */
-  getKey: function(name) {
+  getKey(name) {
     var member = this.getMember(name);
 
     if (member) {
@@ -94,15 +88,13 @@ var ObjectElement = ArrayElement.extend({
     }
 
     return undefined;
-  },
+  }
 
   /**
    * Set allows either a key/value pair to be given or an object
    * If an object is given, each key is set to its respective value
-   *
-   * @memberof ObjectElement.prototype
    */
-  set: function(keyOrObject, value) {
+  set(keyOrObject, value) {
     if (isObject(keyOrObject)) {
       var self = this;
       Object.keys(keyOrObject).forEach(function(objectKey) {
@@ -123,31 +115,24 @@ var ObjectElement = ArrayElement.extend({
     }
 
     return this;
-  },
+  }
 
-  /**
-   * @memberof ObjectElement.prototype
-   */
-  keys: function() {
+  keys() {
     return this.content.map(function(item) {
       return item.key.toValue();
     });
-  },
+  }
 
-  /**
-   * @memberof ObjectElement.prototype
-   */
-  values: function() {
+  values() {
     return this.content.map(function(item) {
       return item.value.toValue();
     });
-  },
+  }
 
   /**
    * @returns {boolean}
-   * @memberof ObjectElement.prototype
    */
-  hasKey: function(value) {
+  hasKey(value) {
     for (var i = 0; i < this.content.length; i++) {
       if (this.content[i].key.equals(value)) {
         return true;
@@ -155,38 +140,34 @@ var ObjectElement = ArrayElement.extend({
     }
 
     return false;
-  },
+  }
 
   /**
    * @returns {array}
-   * @memberof ObjectElement.prototype
    */
-  items: function() {
+  items() {
     return this.content.map(function(item) {
       return [item.key.toValue(), item.value.toValue()];
     });
-  },
+  }
 
   /**
    * @param callback
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
-   *
-   * @memberof ObjectElement.prototype
    */
-  map: function(callback, thisArg) {
+  map(callback, thisArg) {
     return this.content.map(function(item) {
       return callback(item.value, item.key, item);
     }, thisArg);
-  },
+  }
 
   /**
    * Returns an array containing the truthy results of calling the given transformation with each element of this sequence
    * @param transform - A closure that accepts the value, key and member element of this object as its argument and returns an optional value.
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
-   * @memberof ObjectElement.prototype
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
-  compactMap: function(callback, thisArg) {
+  compactMap(callback, thisArg) {
     var results = [];
 
     this.forEach(function (value, key, member) {
@@ -198,19 +179,17 @@ var ObjectElement = ArrayElement.extend({
     }, thisArg);
 
     return results;
-  },
+  }
 
   /**
    * @param callback
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    *
    * @returns {ObjectSlice}
-   *
-   * @memberof ObjectElement.prototype
    */
-  filter: function(callback, thisArg) {
+  filter(callback, thisArg) {
     return new ObjectSlice(this.content).filter(callback, thisArg);
-  },
+  }
 
   /**
    * @param callback
@@ -220,9 +199,9 @@ var ObjectElement = ArrayElement.extend({
    *
    * @memberof ObjectElement.prototype
    */
-  reject: function(callback, thisArg) {
+  reject(callback, thisArg) {
     return this.filter(negate(callback), thisArg);
-  },
+  }
 
   /**
    * @param callback
@@ -230,11 +209,11 @@ var ObjectElement = ArrayElement.extend({
    *
    * @memberof ObjectElement.prototype
    */
-  forEach: function(callback, thisArg) {
+  forEach(callback, thisArg) {
     return this.content.forEach(function(item) {
       return callback(item.value, item.key, item);
     }, thisArg);
   }
-});
+};
 
 module.exports = ObjectElement;
