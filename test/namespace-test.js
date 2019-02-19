@@ -123,9 +123,9 @@ describe('Minim namespace', () => {
     });
 
     it('should use pascal casing', () => {
-      for (const name in namespace.elements) {
+      Object.keys(namespace.elements).forEach((name) => {
         expect(name[0]).to.equal(name[0].toUpperCase());
-      }
+      });
     });
 
     it('should contain the base element', () => {

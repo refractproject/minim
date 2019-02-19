@@ -178,18 +178,17 @@ class Namespace {
    */
   get elements() {
     if (this._elements === undefined) {
-      let name; let pascal;
       this._elements = {
         Element: this.Element,
       };
 
-      for (name in this.elementMap) {
+      Object.keys(this.elementMap).forEach((name) => {
         // Currently, all registered element types use a camelCaseName.
         // Converting to PascalCase is as simple as upper-casing the first
         // letter.
-        pascal = name[0].toUpperCase() + name.substr(1);
+        const pascal = name[0].toUpperCase() + name.substr(1);
         this._elements[pascal] = this.elementMap[name];
-      }
+      });
     }
 
     return this._elements;

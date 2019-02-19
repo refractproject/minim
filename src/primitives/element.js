@@ -188,6 +188,7 @@ class Element {
       elements = elements.filter((element) => {
         let parentElements = element.parents.map(e => e.element);
 
+        // eslint-disable-next-line no-restricted-syntax
         for (const namesIndex in elementNames) {
           const name = elementNames[namesIndex];
           const index = parentElements.indexOf(name);

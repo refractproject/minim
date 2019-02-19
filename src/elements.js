@@ -45,12 +45,7 @@ function refract(value) {
   }
 
   if (typeof value === 'object') {
-    const element = new ObjectElement();
-
-    for (const key in value) {
-      element.set(key, value[key]);
-    }
-
+    const element = new ObjectElement(value);
     return element;
   }
 

@@ -22,7 +22,6 @@
     "no-loop-func": "off",
     "no-param-reassign": "off",
     "no-redeclare": "off",
-    "no-restricted-syntax": "off",
     "no-underscore-dangle": "off",
   },
   "overrides": [
