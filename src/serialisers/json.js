@@ -137,7 +137,6 @@ class JSONSerialiser {
       to.set(key, this.deserialise(from[key]));
     }, this);
   }
-
 }
 
 
