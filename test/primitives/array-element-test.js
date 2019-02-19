@@ -122,6 +122,8 @@ describe('ArrayElement', () => {
           if (item.element === 'string' || item.element === 'number') {
             return item.toValue();
           }
+
+          return undefined;
         });
         expect(newArray).to.deep.equal(['a', 1]);
       });

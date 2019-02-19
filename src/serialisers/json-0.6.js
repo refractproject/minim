@@ -143,6 +143,8 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     if (attributes.length > 0) {
       return this.serialiseObject(attributes);
     }
+
+    return undefined;
   }
 
   enumSerialiseContent(element) {

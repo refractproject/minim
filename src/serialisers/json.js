@@ -93,7 +93,7 @@ class JSONSerialiser {
 
     if (content && content.map) {
       if (content.length === 0) {
-        return;
+        return undefined;
       }
 
       return content.map(this.serialise, this);

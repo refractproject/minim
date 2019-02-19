@@ -239,6 +239,8 @@ describe('ObjectElement', () => {
         if (key.toValue() === 'foo') {
           return key.toValue();
         }
+
+        return undefined;
       });
       expect(keys).to.deep.equal(['foo']);
     });
@@ -248,6 +250,8 @@ describe('ObjectElement', () => {
         if (key.toValue() === 'foo') {
           return value.toValue();
         }
+
+        return undefined;
       });
       expect(values).to.deep.equal(['bar']);
     });
@@ -257,6 +261,8 @@ describe('ObjectElement', () => {
         if (key.toValue() === 'foo') {
           return member.key.toValue();
         }
+
+        return undefined;
       });
       expect(keys).to.deep.equal(['foo']);
     });
