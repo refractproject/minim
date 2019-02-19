@@ -91,9 +91,8 @@ class ObjectElement extends ArrayElement {
    */
   set(keyOrObject, value) {
     if (isObject(keyOrObject)) {
-      const self = this;
       Object.keys(keyOrObject).forEach((objectKey) => {
-        self.set(objectKey, keyOrObject[objectKey]);
+        this.set(objectKey, keyOrObject[objectKey]);
       });
 
       return this;

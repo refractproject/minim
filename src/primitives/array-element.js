@@ -357,14 +357,14 @@ class ArrayElement extends Element {
   }
 }
 
-ArrayElement.empty = function () {
+ArrayElement.empty = function empty() {
   return new this();
 };
 
 ArrayElement['fantasy-land/empty'] = ArrayElement.empty;
 
 if (typeof Symbol !== 'undefined') {
-  ArrayElement.prototype[Symbol.iterator] = function () {
+  ArrayElement.prototype[Symbol.iterator] = function symbol() {
     return this.content[Symbol.iterator]();
   };
 }

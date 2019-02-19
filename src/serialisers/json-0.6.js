@@ -132,9 +132,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       samples.unshift(element.content);
     }
 
-    samples = samples.map(function (sample) {
-      return new this.namespace.elements.Array([sample.content]);
-    }, this);
+    samples = samples.map(sample => new this.namespace.elements.Array([sample.content]));
 
     if (samples.length) {
       attributes.set('samples', samples);
@@ -155,11 +153,11 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       const enumerations = element.attributes.get('enumerations');
 
       if (enumerations && enumerations.length > 0) {
-        return enumerations.content.map(function (enumeration) {
+        return enumerations.content.map((enumeration) => {
           const e = enumeration.clone();
           e.attributes.remove('typeAttributes');
           return this.serialise(e);
-        }, this);
+        });
       }
     }
 
@@ -364,8 +362,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
           values.push(this.serialise(subItem));
         } else if (subItem.element === 'array' || subItem.element === 'object' || subItem.element === 'enum') {
           // items for array or enum inside array are always serialised
-          const self = this;
-          const value = subItem.children.map(subSubItem => self.serialise(subSubItem));
+          const value = subItem.children.map(subSubItem => this.serialise(subSubItem));
           values.push(value);
         } else {
           values.push(subItem.toValue());
@@ -392,28 +389,26 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   }
 
   serialiseEnum(element) {
-    const self = this;
-
-    return element.children.map(item => self.serialise(item));
+    return element.children.map(item => this.serialise(item));
   }
 
   serialiseObject(obj) {
     const result = {};
 
-    obj.keys().forEach(function (key) {
+    obj.keys().forEach((key) => {
       const value = obj.get(key);
 
       if (value) {
         result[key] = this.convertKeyToRefract(key, value);
       }
-    }, this);
+    });
 
     return result;
   }
 
   deserialiseObject(from, to) {
-    Object.keys(from).forEach(function (key) {
+    Object.keys(from).forEach((key) => {
       to.set(key, this.deserialise(from[key]));
-    }, this);
+    });
   }
 };

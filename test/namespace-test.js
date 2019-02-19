@@ -89,7 +89,7 @@ describe('Minim namespace', () => {
   });
 
   describe('#detect', () => {
-    const test = function () { return true; };
+    const test = () => true;
 
     it('should prepend by default', () => {
       namespace.elementDetection = [[test, NullElement]];

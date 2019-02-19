@@ -42,7 +42,7 @@ class Element {
       this.attributes.freeze();
     }
 
-    this.children.forEach(function (element) {
+    this.children.forEach((element) => {
       element.parent = this;
       element.freeze();
     }, this);
@@ -142,14 +142,14 @@ class Element {
     const elementName = elementNames.pop();
     let elements = new ArraySlice();
 
-    const append = function (array, element) {
+    const append = (array, element) => {
       array.push(element);
       return array;
     };
 
     // Checks the given element and appends element/sub-elements
     // that match element name to given array
-    const checkElement = function (array, element) {
+    const checkElement = (array, element) => {
       if (element.element === elementName) {
         array.push(element);
       }
@@ -269,9 +269,7 @@ class Element {
     } else if (Array.isArray(value)) {
       this._content = value.map(this.refract);
     } else if (typeof value === 'object') {
-      this._content = Object.keys(value).map(function (key) {
-        return new this.MemberElement(key, value[key]);
-      }, this);
+      this._content = Object.keys(value).map(key => new this.MemberElement(key, value[key]));
     } else {
       throw new Error('Cannot set content to given value');
     }

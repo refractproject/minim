@@ -58,7 +58,7 @@ describe('ArrayElement', () => {
 
   describe('Chain', () => {
     it('can transform and chain results into new ArrayElement', () => {
-      const duplicate = function (n) { return new ArrayElement([n, n]); };
+      const duplicate = n => new ArrayElement([n, n]);
       const result = array[fl.chain](duplicate);
 
       expect(result).to.be.instanceof(ArrayElement);

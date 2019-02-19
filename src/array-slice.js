@@ -6,16 +6,12 @@ const negate = require('lodash/negate');
 function coerceElementMatchingCallback(value) {
   // Element Name
   if (typeof value === 'string') {
-    return function (element) {
-      return element.element === value;
-    };
+    return element => element.element === value;
   }
 
   // Element Type
   if (value.constructor && value.extend) {
-    return function (element) {
-      return element instanceof value;
-    };
+    return element => element instanceof value;
   }
 
   return value;
@@ -234,7 +230,7 @@ class ArraySlice {
 }
 
 if (typeof Symbol !== 'undefined') {
-  ArraySlice.prototype[Symbol.iterator] = function () {
+  ArraySlice.prototype[Symbol.iterator] = function symbol() {
     return this.elements[Symbol.iterator]();
   };
 }

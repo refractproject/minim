@@ -129,21 +129,21 @@ class JSONSerialiser {
   serialiseObject(obj) {
     const result = {};
 
-    obj.keys().forEach(function (key) {
+    obj.keys().forEach((key) => {
       const value = obj.get(key);
 
       if (value) {
         result[key] = this.serialise(value);
       }
-    }, this);
+    });
 
     return result;
   }
 
   deserialiseObject(from, to) {
-    Object.keys(from).forEach(function (key) {
+    Object.keys(from).forEach((key) => {
       to.set(key, this.deserialise(from[key]));
-    }, this);
+    });
   }
 }
 
