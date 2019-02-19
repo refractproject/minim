@@ -19,7 +19,6 @@
     "eqeqeq": "off",
     "func-names": "off",
     "guard-for-in": "off",
-    "import/order": "off",
     "max-len": "off",
     "no-else-return": "off",
     "no-loop-func": "off",
