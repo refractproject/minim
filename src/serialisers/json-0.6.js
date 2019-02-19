@@ -3,7 +3,7 @@ const JSONSerialiser = require('./json');
 module.exports = class JSONSerialiser06 extends JSONSerialiser {
   serialise(element) {
     if (!(element instanceof this.namespace.elements.Element)) {
-      throw new TypeError('Given element `' + element + '` is not an Element instance');
+      throw new TypeError(`Given element \`${element}\` is not an Element instance`);
     }
 
     let variable;
@@ -49,8 +49,8 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
 
     if (isEnum) {
       payload.content = this.enumSerialiseContent(element, payload);
-    } else if (this[element.element + 'SerialiseContent']) {
-      payload.content = this[element.element + 'SerialiseContent'](element, payload);
+    } else if (this[`${element.element}SerialiseContent`]) {
+      payload.content = this[`${element.element}SerialiseContent`](element, payload);
     } else if (element.content !== undefined) {
       let content;
 

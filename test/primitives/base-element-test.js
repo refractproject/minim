@@ -269,7 +269,7 @@ describe('Element', function () {
       const el = new minim.Element(null, meta);
 
       Object.keys(meta).forEach(function (key) {
-        it('provides a convenience method for ' + key, function () {
+        it(`provides a convenience method for ${key}`, function () {
           expect(el[key].toValue()).to.deep.equal(meta[key]);
         });
       });
@@ -281,11 +281,11 @@ describe('Element', function () {
       Object.keys(meta).forEach(function (key) {
         el[key] = meta[key];
 
-        it('works for getters and setters for ' + key, function () {
+        it(`works for getters and setters for ${key}`, function () {
           expect(el[key].toValue()).to.deep.equal(meta[key]);
         });
 
-        it('stores the correct data in meta for ' + key, function () {
+        it(`stores the correct data in meta for ${key}`, function () {
           expect(el.meta.get(key).toValue()).to.deep.equal(meta[key]);
         });
       });

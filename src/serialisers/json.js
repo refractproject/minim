@@ -16,7 +16,7 @@ class JSONSerialiser {
    */
   serialise(element) {
     if (!(element instanceof this.namespace.elements.Element)) {
-      throw new TypeError('Given element `' + element + '` is not an Element instance');
+      throw new TypeError(`Given element \`${element}\` is not an Element instance`);
     }
 
     const payload = {

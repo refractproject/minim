@@ -205,8 +205,8 @@ describe('ObjectElement', function () {
   });
 
   function itHascollectionMethod(method) {
-    describe('#' + method, function () {
-      it('responds to #' + method, function () {
+    describe(`#${method}`, function () {
+      it(`responds to #${method}`, function () {
         expect(objectElement).to.respondTo(method);
       });
     });

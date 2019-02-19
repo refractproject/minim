@@ -6,12 +6,12 @@ describe('Minim Converters', function () {
     function elementCheck(name, val) {
       let returnedElement;
 
-      context('when given ' + name, function () {
+      context(`when given ${name}`, function () {
         before(function () {
           returnedElement = minim.toElement(val);
         });
 
-        it('returns ' + name, function () {
+        it(`returns ${name}`, function () {
           expect(returnedElement.element).to.equal(name);
         });
       });
@@ -29,14 +29,14 @@ describe('Minim Converters', function () {
 
   describe('convertFromElement', function () {
     function elementCheck(name, el) {
-      context('when given ' + name, function () {
+      context(`when given ${name}`, function () {
         let returnedElement;
 
         before(function () {
           returnedElement = minim.fromRefract(el);
         });
 
-        it('returns ' + name + ' element', function () {
+        it(`returns ${name} element`, function () {
           expect(returnedElement.element).to.equal(name);
         });
 
