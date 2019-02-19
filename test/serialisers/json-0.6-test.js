@@ -42,7 +42,7 @@ describe('JSON 0.6 Serialiser', function () {
     });
 
     it('errors when serialising a non-element', function () {
-      expect(function (){
+      expect(function () {
         serialiser.serialise('Hello');
       }).to.throw(TypeError, 'Given element `Hello` is not an Element instance');
     });

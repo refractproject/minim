@@ -53,7 +53,6 @@
     "prefer-spread": "off",
     "prefer-template": "off",
     "quote-props": "off",
-    "space-before-blocks": "off",
     "valid-typeof": "off",
     "vars-on-top": "off"
   },
