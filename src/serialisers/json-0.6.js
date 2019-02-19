@@ -16,7 +16,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     };
 
     if (element._meta && element._meta.length > 0) {
-      payload['meta'] = this.serialiseObject(element.meta);
+      payload.meta = this.serialiseObject(element.meta);
     }
 
     var isEnum = (element.element === 'enum' || element.attributes.keys().indexOf('enumerations') !== -1);
@@ -25,7 +25,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       var attributes = this.enumSerialiseAttributes(element);
 
       if (attributes) {
-        payload['attributes'] = attributes;
+        payload.attributes = attributes;
       }
     } else if (element._attributes && element._attributes.length > 0) {
       var attributes = element.attributes;
@@ -43,14 +43,14 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       }
 
       if (attributes.length > 0) {
-        payload['attributes'] = this.serialiseObject(attributes);
+        payload.attributes = this.serialiseObject(attributes);
       }
     }
 
     if (isEnum) {
-      payload['content'] = this.enumSerialiseContent(element, payload);
+      payload.content = this.enumSerialiseContent(element, payload);
     } else if (this[element.element + 'SerialiseContent']) {
-      payload['content'] = this[element.element + 'SerialiseContent'](element, payload);
+      payload.content = this[element.element + 'SerialiseContent'](element, payload);
     } else if (element.content !== undefined) {
       var content;
 
@@ -63,7 +63,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       }
 
       if (this.shouldSerialiseContent(element, content)) {
-        payload['content'] = content;
+        payload.content = content;
       }
     }
 
@@ -90,7 +90,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   }
 
   refSerialiseContent(element, payload) {
-    delete payload['attributes'];
+    delete payload.attributes;
 
     return {
       href: element.toValue(),
@@ -278,7 +278,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       };
 
       if (content.value) {
-        pair['value'] = this.serialise(content.value);
+        pair.value = this.serialise(content.value);
       }
 
       return pair;

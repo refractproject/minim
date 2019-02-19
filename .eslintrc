@@ -18,7 +18,6 @@
       }
     ],
     "consistent-return": "off",
-    "dot-notation": "off",
     "eqeqeq": "off",
     "func-names": "off",
     "guard-for-in": "off",

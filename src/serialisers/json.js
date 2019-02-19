@@ -24,17 +24,17 @@ class JSONSerialiser {
     };
 
     if (element._meta && element._meta.length > 0) {
-      payload['meta'] = this.serialiseObject(element.meta);
+      payload.meta = this.serialiseObject(element.meta);
     }
 
     if (element._attributes && element._attributes.length > 0) {
-      payload['attributes'] = this.serialiseObject(element.attributes);
+      payload.attributes = this.serialiseObject(element.attributes);
     }
 
     var content = this.serialiseContent(element.content);
 
     if (content !== undefined) {
-      payload['content'] = content;
+      payload.content = content;
     }
 
     return payload;
@@ -83,7 +83,7 @@ class JSONSerialiser {
       };
 
       if (content.value) {
-        pair['value'] = this.serialise(content.value);
+        pair.value = this.serialise(content.value);
       }
 
       return pair;
