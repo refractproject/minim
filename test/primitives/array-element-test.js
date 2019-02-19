@@ -130,8 +130,8 @@ describe('ArrayElement', () => {
     describe('#filter', () => {
       it('allows for filtering the content', () => {
         const newArray = arrayElement.filter((item) => {
-          let ref;
-          return (ref = item.toValue()) === 'a' || ref === 1;
+          const ref = item.toValue();
+          return ref === 'a' || ref === 1;
         });
         expect(newArray.toValue()).to.deep.equal(['a', 1]);
       });
@@ -140,8 +140,8 @@ describe('ArrayElement', () => {
     describe('#reject', () => {
       it('allows for rejecting the content', () => {
         const newArray = arrayElement.reject((item) => {
-          let ref;
-          return (ref = item.toValue()) === 'a' || ref === 1;
+          const ref = item.toValue();
+          return ref === 'a' || ref === 1;
         });
         expect(newArray.toValue()).to.deep.equal([true, null]);
       });
