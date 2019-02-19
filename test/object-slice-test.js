@@ -1,5 +1,6 @@
 const { expect } = require('./spec-helper');
 const minim = require('../src/minim');
+
 const { MemberElement } = minim;
 const { ObjectSlice } = minim;
 

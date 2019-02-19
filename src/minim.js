@@ -10,6 +10,7 @@ exports.namespace = function namespace(options) {
 };
 
 exports.KeyValuePair = require('./key-value-pair');
+
 exports.ArraySlice = elements.ArraySlice;
 exports.ObjectSlice = elements.ObjectSlice;
 
