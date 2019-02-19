@@ -31,4 +31,4 @@ describe('MemberElement', function() {
   it('correctly sets the attributes', function() {
     expect(member.attributes.get('foo').toValue()).to.equal('bar');
   });
-})
+});

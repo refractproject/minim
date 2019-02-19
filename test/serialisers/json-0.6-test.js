@@ -48,7 +48,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises a primitive element', function() {
-      var element = new minim.elements.String('Hello')
+      var element = new minim.elements.String('Hello');
       var object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
@@ -58,7 +58,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises an element containing element', function() {
-      var string = new minim.elements.String('Hello')
+      var string = new minim.elements.String('Hello');
       var element = new minim.Element(string);
       element.element = 'custom';
 
@@ -74,7 +74,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises an element containing element array', function() {
-      var string = new minim.elements.String('Hello')
+      var string = new minim.elements.String('Hello');
       var element = new minim.elements.Array([string]);
 
       var object = serialiser.serialise(element);
@@ -125,8 +125,8 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises an element containing a pair', function() {
-      var name = new minim.elements.String('name')
-      var doe = new minim.elements.String('Doe')
+      var name = new minim.elements.String('name');
+      var doe = new minim.elements.String('Doe');
       var element = new minim.elements.Member(name, doe);
 
       var object = serialiser.serialise(element);
@@ -147,7 +147,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises an element containing a pair without a value', function() {
-      var name = new minim.elements.String('name')
+      var name = new minim.elements.String('name');
       var element = new minim.elements.Member(name);
 
       var object = serialiser.serialise(element);
@@ -164,7 +164,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises an elements meta', function() {
-      var doe = new minim.elements.String('Doe')
+      var doe = new minim.elements.String('Doe');
       doe.title = 'Name';
 
       var object = serialiser.serialise(doe);
@@ -179,7 +179,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises an elements attributes', function() {
-      var element = new minim.elements.String('Hello World')
+      var element = new minim.elements.String('Hello World');
       element.attributes.set('thread', 123);
 
       var object = serialiser.serialise(element);
@@ -194,7 +194,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises an element with custom element attributes', function() {
-      var element = new minim.elements.String('Hello World')
+      var element = new minim.elements.String('Hello World');
       element.attributes.set('thread', new minim.Element(123));
 
       var object = serialiser.serialise(element);
@@ -561,7 +561,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('serialises enum inside array inside attributes as array', function() {
-      var element = new minim.elements.String('Hello World')
+      var element = new minim.elements.String('Hello World');
       var enumeration = new minim.Element(new minim.elements.String('North'));
       enumeration.element = 'enum';
       element.attributes.set('directions', enumeration);
@@ -633,7 +633,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('always serialises items inside `default` attribute', function() {
-      var element = new minim.elements.String('Hello World')
+      var element = new minim.elements.String('Hello World');
       element.attributes.set('default', new minim.elements.String('North'));
 
       var object = serialiser.serialise(element);
@@ -660,7 +660,7 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
     it('always serialises items inside `default` attribute array', function() {
-      var element = new minim.elements.Array(['Hello World'])
+      var element = new minim.elements.Array(['Hello World']);
       var values = new minim.elements.Array([new minim.elements.String('North')]);
       element.attributes.set('default', values);
 

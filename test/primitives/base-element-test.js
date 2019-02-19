@@ -222,7 +222,7 @@ describe('Element', function() {
       it('sets the element correctly', function() {
         expect(el.element).to.equal('foobar');
       });
-    })
+    });
   });
 
   describe('#primitive', function() {
@@ -286,7 +286,7 @@ describe('Element', function() {
         });
 
         it('stores the correct data in meta for ' + key, function() {
-          expect(el.meta.get(key).toValue()).to.deep.equal(meta[key])
+          expect(el.meta.get(key).toValue()).to.deep.equal(meta[key]);
         });
       });
     });
@@ -375,7 +375,7 @@ describe('Element', function() {
             }
           },
           content: 'foobar'
-        })
+        });
       });
 
       it('correctly loads the links', function() {

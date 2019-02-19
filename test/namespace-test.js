@@ -90,7 +90,7 @@ describe('Minim namespace', function() {
   });
 
   describe('#detect', function() {
-    var test = function() { return true; }
+    var test = function() { return true; };
 
     it('should prepend by default', function() {
       namespace.elementDetection = [[test, NullElement]];
