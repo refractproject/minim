@@ -33,8 +33,6 @@
     "no-underscore-dangle": "off",
     "no-var": "off",
     "object-curly-spacing": "off",
-    "one-var": "off",
-    "one-var-declaration-per-line": "off",
     "prefer-arrow-callback": "off",
     "prefer-destructuring": "off",
     "prefer-rest-params": "off",

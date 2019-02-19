@@ -5,7 +5,7 @@ var ObjectElement = minim.getElementClass('object');
 var StringElement = minim.getElementClass('string');
 
 describe('Element whose attribute has attribute', function () {
-  var object, string;
+  var object; var string;
 
   before(function () {
     object = new ObjectElement({

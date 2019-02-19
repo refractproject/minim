@@ -5,7 +5,7 @@ var JSONSerialiser = require('../src/serialisers/json');
 
 describe('Minim namespace', function () {
   var namespace;
-  var NullElement, ObjectElement, StringElement;
+  var NullElement; var ObjectElement; var StringElement;
 
   beforeEach(function () {
     namespace = new Namespace();

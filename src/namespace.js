@@ -178,7 +178,7 @@ class Namespace {
    */
   get elements() {
     if (this._elements === undefined) {
-      var name, pascal;
+      var name; var pascal;
       this._elements = {
         Element: this.Element,
       };
