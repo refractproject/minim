@@ -559,7 +559,6 @@ describe('Element', () => {
     it('finds direct element inside array', () => {
       const ArrayElement = minim.getElementClass('array');
       const StringElement = minim.getElementClass('string');
-      const NumberElement = minim.getElementClass('number');
       const element = new ArrayElement([
         new StringElement('One'),
         new NumberElement(2),
@@ -576,7 +575,6 @@ describe('Element', () => {
       const ObjectElement = minim.getElementClass('object');
       const MemberElement = minim.getElementClass('member');
       const StringElement = minim.getElementClass('string');
-      const NumberElement = minim.getElementClass('number');
 
       const element = new ObjectElement();
       element.push(new MemberElement(new StringElement('key1'), new NumberElement(1)));
@@ -624,7 +622,6 @@ describe('Element', () => {
       const ArrayElement = minim.getElementClass('array');
       const MemberElement = minim.getElementClass('member');
       const StringElement = minim.getElementClass('string');
-      const NumberElement = minim.getElementClass('number');
 
       const element = new ObjectElement();
       element.push(new MemberElement(

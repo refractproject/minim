@@ -23,7 +23,6 @@
     "no-param-reassign": "off",
     "no-redeclare": "off",
     "no-restricted-syntax": "off",
-    "no-shadow": "off",
     "no-underscore-dangle": "off",
   },
   "overrides": [

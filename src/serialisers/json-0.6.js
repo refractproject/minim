@@ -154,9 +154,9 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
 
       if (enumerations && enumerations.length > 0) {
         return enumerations.content.map(function (enumeration) {
-          const element = enumeration.clone();
-          element.attributes.remove('typeAttributes');
-          return this.serialise(element);
+          const e = enumeration.clone();
+          e.attributes.remove('typeAttributes');
+          return this.serialise(e);
         }, this);
       }
     }
@@ -227,8 +227,8 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
         const existingSamples = samples;
 
         samples = new this.namespace.elements.Array();
-        existingSamples.forEach((sample) => {
-          sample.forEach((sample) => {
+        existingSamples.forEach((existingSample) => {
+          existingSample.forEach((sample) => {
             const enumElement = new ElementClass(sample);
             enumElement.element = element.element;
             samples.push(enumElement);

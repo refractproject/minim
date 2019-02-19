@@ -186,7 +186,7 @@ class Element {
 
     if (!elementNames.isEmpty) {
       elements = elements.filter((element) => {
-        let parentElements = element.parents.map(element => element.element);
+        let parentElements = element.parents.map(e => e.element);
 
         for (const namesIndex in elementNames) {
           const name = elementNames[namesIndex];

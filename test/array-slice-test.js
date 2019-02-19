@@ -40,7 +40,7 @@ describe('ArraySlice', () => {
     const element = new Element('hello');
     const slice = new ArraySlice([element]);
 
-    const mapped = slice.map(element => element.toValue());
+    const mapped = slice.map(e => e.toValue());
 
     expect(mapped).to.deep.equal(['hello']);
   });
@@ -121,7 +121,7 @@ describe('ArraySlice', () => {
       const two = new Element('two');
       const slice = new ArraySlice([one, two]);
 
-      const element = slice.find(element => element.toValue() === 'two');
+      const element = slice.find(e => e.toValue() === 'two');
 
       expect(element).to.be.equal(two);
     });
@@ -154,7 +154,7 @@ describe('ArraySlice', () => {
     const two = new Element('two');
     const slice = new ArraySlice([one, two]);
 
-    const titles = slice.compactMap(element => element.attributes.get('default'));
+    const titles = slice.compactMap(e => e.attributes.get('default'));
 
     expect(titles).to.deep.equal([element]);
   });
@@ -166,7 +166,7 @@ describe('ArraySlice', () => {
     const two = new Element('two');
     const slice = new ArraySlice([one, two]);
 
-    const titles = slice.compactMap(element => element.attributes.get('default'));
+    const titles = slice.compactMap(e => e.attributes.get('default'));
 
     expect(titles).to.deep.equal([element]);
   });
