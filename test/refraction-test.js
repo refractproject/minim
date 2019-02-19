@@ -50,7 +50,7 @@ describe('refract', function () {
   });
 
   it('can refract an object into an object element', function () {
-    var element = refract({'name': 'Doe'});
+    var element = refract({name: 'Doe'});
 
     expect(element).to.be.instanceof(minim.ObjectElement);
     expect(element.length).to.equal(1);

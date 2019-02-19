@@ -43,7 +43,6 @@
     "prefer-rest-params": "off",
     "prefer-spread": "off",
     "prefer-template": "off",
-    "quote-props": "off",
     "valid-typeof": "off",
     "vars-on-top": "off"
   },

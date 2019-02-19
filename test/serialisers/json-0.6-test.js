@@ -464,7 +464,7 @@ describe('JSON 0.6 Serialiser', function () {
       expect(object).to.deep.equal({
         element: 'object',
         attributes: {
-          'default': [
+          default: [
             {
               element: 'member',
               content: {
@@ -573,8 +573,8 @@ describe('JSON 0.6 Serialiser', function () {
         attributes: {
           directions: [
             {
-              'element': 'string',
-              'content': 'North',
+              element: 'string',
+              content: 'North',
             },
           ],
         },

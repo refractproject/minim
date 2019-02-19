@@ -313,7 +313,7 @@ describe('ArrayElement', function () {
             {
               element: 'string',
               meta: {
-                'classes': {
+                classes: {
                   element: 'array',
                   content: [
                     {

@@ -274,7 +274,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       return this.serialise(content);
     } else if (content instanceof this.namespace.KeyValuePair) {
       var pair = {
-        'key': this.serialise(content.key),
+        key: this.serialise(content.key),
       };
 
       if (content.value) {
