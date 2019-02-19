@@ -1,5 +1,3 @@
-var Namespace = require('../namespace');
-
 /**
  * @class JSONSerialiser
  *

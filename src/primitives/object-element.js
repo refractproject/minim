@@ -1,7 +1,6 @@
 var negate = require('lodash/negate');
 var isObject = require('lodash/isObject');
 
-var Element = require('./element');
 var ArrayElement = require('./array-element');
 var MemberElement = require('./member-element');
 var ObjectSlice = require('../object-slice');

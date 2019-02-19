@@ -220,14 +220,14 @@ describe('ObjectElement', function() {
 
   describe('#map', function() {
     it('provides the keys', function() {
-      var keys = objectElement.map(function(value, key, member) {
+      var keys = objectElement.map(function(value, key) {
         return key.toValue();
       });
       expect(keys).to.deep.equal(['foo', 'z']);
     });
 
     it('provides the values', function() {
-      var values = objectElement.map(function(value, key, member) {
+      var values = objectElement.map(function(value) {
         return value.toValue();
       });
       expect(values).to.deep.equal(['bar', 1]);
@@ -243,7 +243,7 @@ describe('ObjectElement', function() {
 
   describe('#compactMap', function() {
     it('provides the keys', function() {
-      var keys = objectElement.compactMap(function(value, key, member) {
+      var keys = objectElement.compactMap(function(value, key) {
         if (key.toValue() === 'foo') {
           return key.toValue();
         }
@@ -252,7 +252,7 @@ describe('ObjectElement', function() {
     });
 
     it('provides the values', function() {
-      var values = objectElement.compactMap(function(value, key, member) {
+      var values = objectElement.compactMap(function(value, key) {
         if (key.toValue() === 'foo') {
           return value.toValue();
         }
@@ -272,14 +272,14 @@ describe('ObjectElement', function() {
 
   describe('#filter', function() {
     it('allows for filtering on keys', function() {
-      var foo = objectElement.filter(function(value, key, member) {
+      var foo = objectElement.filter(function(value, key) {
         return key.equals('foo');
       });
       expect(foo.keys()).to.deep.equal(['foo']);
     });
 
     it('allows for filtering on values', function() {
-      var foo = objectElement.filter(function(value, key, member) {
+      var foo = objectElement.filter(function(value) {
         return value.equals('bar');
       });
       expect(foo.keys()).to.deep.equal(['foo']);
@@ -295,14 +295,14 @@ describe('ObjectElement', function() {
 
   describe('#reject', function() {
     it('allows for rejecting on keys', function() {
-      var foo = objectElement.reject(function(value, key, member) {
+      var foo = objectElement.reject(function(value, key) {
         return key.equals('foo');
       });
       expect(foo.keys()).to.deep.equal(['z']);
     });
 
     it('allows for rejecting on values', function() {
-      var foo = objectElement.reject(function(value, key, member) {
+      var foo = objectElement.reject(function(value) {
         return value.equals('bar');
       });
       expect(foo.keys()).to.deep.equal(['z']);
@@ -360,7 +360,7 @@ describe('ObjectElement', function() {
   describe('#forEach', function() {
     it('provides the keys', function() {
       var keys = [];
-      objectElement.forEach(function(value, key, member) {
+      objectElement.forEach(function(value, key) {
         return keys.push(key.toValue());
       });
       expect(keys).to.deep.equal(['foo', 'z']);
@@ -368,7 +368,7 @@ describe('ObjectElement', function() {
 
     it('provides the values', function() {
       var values = [];
-      objectElement.forEach(function(value, key, member) {
+      objectElement.forEach(function(value) {
         return values.push(value.toValue());
       });
       expect(values).to.deep.equal(['bar', 1]);

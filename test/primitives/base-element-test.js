@@ -457,8 +457,6 @@ describe('Element', function() {
   });
 
   describe('#children', function() {
-    const ArrayElement = minim.getElementClass('array');
-
     it('returns empty element slice when content is primitive', function() {
       const element = new minim.Element('value');
       const children = element.children;
@@ -516,8 +514,6 @@ describe('Element', function() {
   });
 
   describe('#recursiveChildren', function() {
-    const ArrayElement = minim.getElementClass('array');
-
     it('returns empty element slice when content is primitive', function() {
       const element = new minim.Element('value');
       const children = element.recursiveChildren;
