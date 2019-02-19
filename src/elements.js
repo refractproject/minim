@@ -22,17 +22,29 @@ const KeyValuePair = require('./key-value-pair');
 function refract(value) {
   if (value instanceof Element) {
     return value;
-  } else if (typeof value === 'string') {
+  }
+
+  if (typeof value === 'string') {
     return new StringElement(value);
-  } else if (typeof value === 'number') {
+  }
+
+  if (typeof value === 'number') {
     return new NumberElement(value);
-  } else if (typeof value === 'boolean') {
+  }
+
+  if (typeof value === 'boolean') {
     return new BooleanElement(value);
-  } else if (value === null) {
+  }
+
+  if (value === null) {
     return new NullElement();
-  } else if (Array.isArray(value)) {
+  }
+
+  if (Array.isArray(value)) {
     return new ArrayElement(value.map(refract));
-  } else if (typeof value === 'object') {
+  }
+
+  if (typeof value === 'object') {
     const element = new ObjectElement();
 
     for (const key in value) {

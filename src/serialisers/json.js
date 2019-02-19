@@ -77,7 +77,9 @@ class JSONSerialiser {
   serialiseContent(content) {
     if (content instanceof this.namespace.elements.Element) {
       return this.serialise(content);
-    } else if (content instanceof this.namespace.KeyValuePair) {
+    }
+
+    if (content instanceof this.namespace.KeyValuePair) {
       const pair = {
         key: this.serialise(content.key),
       };
@@ -87,7 +89,9 @@ class JSONSerialiser {
       }
 
       return pair;
-    } else if (content && content.map) {
+    }
+
+    if (content && content.map) {
       if (content.length === 0) {
         return;
       }
@@ -102,7 +106,9 @@ class JSONSerialiser {
     if (content) {
       if (content.element) {
         return this.deserialise(content);
-      } else if (content.key) {
+      }
+
+      if (content.key) {
         const pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
 
         if (content.value) {
@@ -110,7 +116,9 @@ class JSONSerialiser {
         }
 
         return pair;
-      } else if (content.map) {
+      }
+
+      if (content.map) {
         return content.map(this.deserialise, this);
       }
     }

@@ -20,7 +20,6 @@
     "func-names": "off",
     "guard-for-in": "off",
     "max-len": "off",
-    "no-else-return": "off",
     "no-loop-func": "off",
     "no-param-reassign": "off",
     "no-redeclare": "off",

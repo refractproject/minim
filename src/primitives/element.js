@@ -428,7 +428,9 @@ class Element {
   get children() {
     if (Array.isArray(this.content)) {
       return new ArraySlice(this.content);
-    } else if (this.content instanceof KeyValuePair) {
+    }
+
+    if (this.content instanceof KeyValuePair) {
       const children = new ArraySlice([this.content.key]);
 
       if (this.content.value) {
@@ -436,11 +438,13 @@ class Element {
       }
 
       return children;
-    } else if (this.content instanceof Element) {
-      return new ArraySlice([this.content]);
-    } else {
-      return new ArraySlice();
     }
+
+    if (this.content instanceof Element) {
+      return new ArraySlice([this.content]);
+    }
+
+    return new ArraySlice();
   }
 
   /**

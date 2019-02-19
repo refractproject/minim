@@ -173,13 +173,21 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   deserialise(value) {
     if (typeof value === 'string') {
       return new this.namespace.elements.String(value);
-    } else if (typeof value === 'number') {
+    }
+
+    if (typeof value === 'number') {
       return new this.namespace.elements.Number(value);
-    } else if (typeof value === 'boolean') {
+    }
+
+    if (typeof value === 'boolean') {
       return new this.namespace.elements.Boolean(value);
-    } else if (value === null) {
+    }
+
+    if (value === null) {
       return new this.namespace.elements.Null();
-    } else if (Array.isArray(value)) {
+    }
+
+    if (Array.isArray(value)) {
       return new this.namespace.elements.Array(value.map(this.deserialise, this));
     }
 
@@ -271,7 +279,9 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   serialiseContent(content) {
     if (content instanceof this.namespace.elements.Element) {
       return this.serialise(content);
-    } else if (content instanceof this.namespace.KeyValuePair) {
+    }
+
+    if (content instanceof this.namespace.KeyValuePair) {
       const pair = {
         key: this.serialise(content.key),
       };
@@ -281,7 +291,9 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       }
 
       return pair;
-    } else if (content && content.map) {
+    }
+
+    if (content && content.map) {
       return content.map(this.serialise, this);
     }
 
@@ -292,7 +304,9 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     if (content) {
       if (content.element) {
         return this.deserialise(content);
-      } else if (content.key) {
+      }
+
+      if (content.key) {
         const pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
 
         if (content.value) {
@@ -300,7 +314,9 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
         }
 
         return pair;
-      } else if (content.map) {
+      }
+
+      if (content.map) {
         return content.map(this.deserialise, this);
       }
     }
