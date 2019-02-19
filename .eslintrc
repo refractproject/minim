@@ -19,7 +19,6 @@
     "max-len": "off",
     "no-loop-func": "off",
     "no-param-reassign": "off",
-    "no-redeclare": "off",
     "no-underscore-dangle": "off",
   },
   "overrides": [
