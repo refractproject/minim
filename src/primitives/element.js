@@ -262,11 +262,11 @@ class Element {
     } else if (value instanceof ArraySlice) {
       this.content = value.elements;
     } else if (
-      typeof value == 'string' ||
-      typeof value == 'number' ||
-      typeof value == 'boolean' ||
-      typeof value == 'null' ||
-      value == undefined
+      typeof value == 'string'
+      || typeof value == 'number'
+      || typeof value == 'boolean'
+      || typeof value == 'null'
+      || value == undefined
     ) {
       // Primitive Values
       this._content = value;
