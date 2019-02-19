@@ -23,7 +23,7 @@ class ObjectElement extends ArrayElement {
   }
 
   toValue() {
-    return this.content.reduce(function(results, el) {
+    return this.content.reduce(function (results, el) {
       results[el.key.toValue()] = el.value.toValue();
       return results;
     }, {});
@@ -58,7 +58,7 @@ class ObjectElement extends ArrayElement {
   /**
    * @param key
    */
-  remove (name) {
+  remove(name) {
     var removed = null;
 
     this.content = this.content.filter(function (item) {
@@ -94,7 +94,7 @@ class ObjectElement extends ArrayElement {
   set(keyOrObject, value) {
     if (isObject(keyOrObject)) {
       var self = this;
-      Object.keys(keyOrObject).forEach(function(objectKey) {
+      Object.keys(keyOrObject).forEach(function (objectKey) {
         self.set(objectKey, keyOrObject[objectKey]);
       });
 
@@ -115,13 +115,13 @@ class ObjectElement extends ArrayElement {
   }
 
   keys() {
-    return this.content.map(function(item) {
+    return this.content.map(function (item) {
       return item.key.toValue();
     });
   }
 
   values() {
-    return this.content.map(function(item) {
+    return this.content.map(function (item) {
       return item.value.toValue();
     });
   }
@@ -143,7 +143,7 @@ class ObjectElement extends ArrayElement {
    * @returns {array}
    */
   items() {
-    return this.content.map(function(item) {
+    return this.content.map(function (item) {
       return [item.key.toValue(), item.value.toValue()];
     });
   }
@@ -153,7 +153,7 @@ class ObjectElement extends ArrayElement {
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    */
   map(callback, thisArg) {
-    return this.content.map(function(item) {
+    return this.content.map(function (item) {
       return callback(item.value, item.key, item);
     }, thisArg);
   }
@@ -207,7 +207,7 @@ class ObjectElement extends ArrayElement {
    * @memberof ObjectElement.prototype
    */
   forEach(callback, thisArg) {
-    return this.content.forEach(function(item) {
+    return this.content.forEach(function (item) {
       return callback(item.value, item.key, item);
     }, thisArg);
   }

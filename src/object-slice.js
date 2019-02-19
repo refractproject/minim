@@ -3,13 +3,13 @@ var ArraySlice = require('./array-slice');
 
 class ObjectSlice extends ArraySlice {
   map(callback, thisArg) {
-    return this.elements.map(function(member) {
+    return this.elements.map(function (member) {
       return callback(member.value, member.key, member);
     }, thisArg);
   }
 
   filter(callback, thisArg) {
-    return new ObjectSlice(this.elements.filter(function(member) {
+    return new ObjectSlice(this.elements.filter(function (member) {
       return callback(member.value, member.key, member);
     }, thisArg));
   }
@@ -19,7 +19,7 @@ class ObjectSlice extends ArraySlice {
   }
 
   forEach(callback, thisArg) {
-    return this.elements.forEach(function(member, index) {
+    return this.elements.forEach(function (member, index) {
       return callback(member.value, member.key, member, index);
     }, thisArg);
   }
@@ -28,7 +28,7 @@ class ObjectSlice extends ArraySlice {
    * @returns {array}
    */
   keys() {
-    return this.map(function(value, key) {
+    return this.map(function (value, key) {
       return key.toValue();
     });
   }
@@ -37,7 +37,7 @@ class ObjectSlice extends ArraySlice {
    * @returns {array}
    */
   values() {
-    return this.map(function(value) {
+    return this.map(function (value) {
       return value.toValue();
     });
   }

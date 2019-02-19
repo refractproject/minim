@@ -54,7 +54,6 @@
     "prefer-template": "off",
     "quote-props": "off",
     "space-before-blocks": "off",
-    "space-before-function-paren": "off",
     "valid-typeof": "off",
     "vars-on-top": "off"
   },

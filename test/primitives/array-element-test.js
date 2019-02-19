@@ -3,103 +3,103 @@ var minim = require('../../src/minim').namespace();
 
 var ArrayElement = minim.getElementClass('array');
 
-describe('ArrayElement', function() {
-  context('value methods', function() {
+describe('ArrayElement', function () {
+  context('value methods', function () {
     var arrayElement;
 
     function setArray() {
       arrayElement = new ArrayElement(['a', true, null, 1]);
     }
 
-    before(function() {
+    before(function () {
       setArray();
     });
 
-    beforeEach(function() {
+    beforeEach(function () {
       setArray();
     });
 
-    describe('.content', function() {
+    describe('.content', function () {
       var correctElementNames;
       var storedElementNames;
 
-      before(function() {
+      before(function () {
         correctElementNames = ['string', 'boolean', 'null', 'number'];
-        storedElementNames = arrayElement.content.map(function(el) {
+        storedElementNames = arrayElement.content.map(function (el) {
           return el.element;
         });
       });
 
-      it('stores the correct elements', function() {
+      it('stores the correct elements', function () {
         expect(storedElementNames).to.deep.equal(correctElementNames);
       });
     });
 
-    describe('#element', function() {
-      it('is an array', function() {
+    describe('#element', function () {
+      it('is an array', function () {
         expect(arrayElement.element).to.equal('array');
       });
     });
 
-    describe('#primitive', function() {
-      it('returns array as the Refract primitive', function() {
+    describe('#primitive', function () {
+      it('returns array as the Refract primitive', function () {
         expect(arrayElement.primitive()).to.equal('array');
       });
     });
 
-    describe('#get', function() {
-      context('when an index is given', function() {
-        it('returns the item from the array', function() {
+    describe('#get', function () {
+      context('when an index is given', function () {
+        it('returns the item from the array', function () {
           expect(arrayElement.get(0).toValue()).to.equal('a');
         });
       });
 
-      context('when no index is given', function() {
-        it('is undefined', function() {
+      context('when no index is given', function () {
+        it('is undefined', function () {
           expect(arrayElement.get()).to.be.undefined;
         });
       });
     });
 
-    describe('#getValue', function() {
-      context('when an index is given', function() {
-        it('returns the item from the array', function() {
+    describe('#getValue', function () {
+      context('when an index is given', function () {
+        it('returns the item from the array', function () {
           expect(arrayElement.getValue(0)).to.equal('a');
         });
       });
 
-      context('when no index is given', function() {
-        it('is undefined', function() {
+      context('when no index is given', function () {
+        it('is undefined', function () {
           expect(arrayElement.getValue()).to.be.undefined;
         });
       });
     });
 
-    describe('#getIndex', function() {
+    describe('#getIndex', function () {
       var numbers = new ArrayElement([1, 2, 3, 4]);
 
-      it('returns the correct item', function() {
+      it('returns the correct item', function () {
         expect(numbers.getIndex(1).toValue()).to.equal(2);
       });
     });
 
-    describe('#set', function() {
-      it('sets the value of the array', function() {
+    describe('#set', function () {
+      it('sets the value of the array', function () {
         arrayElement.set(0, 'hello world');
         expect(arrayElement.get(0).toValue()).to.equal('hello world');
       });
     });
 
-    describe('#map', function() {
-      it('allows for mapping the content of the array', function() {
-        var newArray = arrayElement.map(function(item) {
+    describe('#map', function () {
+      it('allows for mapping the content of the array', function () {
+        var newArray = arrayElement.map(function (item) {
           return item.toValue();
         });
         expect(newArray).to.deep.equal(['a', true, null, 1]);
       });
     });
 
-    describe('#flatMap', function() {
+    describe('#flatMap', function () {
       /**
        * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#Examples
        */
@@ -126,9 +126,9 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#compactMap', function() {
-      it('allows compact mapping the content of the array', function() {
-        var newArray = arrayElement.compactMap(function(item) {
+    describe('#compactMap', function () {
+      it('allows compact mapping the content of the array', function () {
+        var newArray = arrayElement.compactMap(function (item) {
           if (item.element === 'string' || item.element === 'number') {
             return item.toValue();
           }
@@ -137,9 +137,9 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#filter', function() {
-      it('allows for filtering the content', function() {
-        var newArray = arrayElement.filter(function(item) {
+    describe('#filter', function () {
+      it('allows for filtering the content', function () {
+        var newArray = arrayElement.filter(function (item) {
           var ref;
           return (ref = item.toValue()) === 'a' || ref === 1;
         });
@@ -147,9 +147,9 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#reject', function() {
-      it('allows for rejecting the content', function() {
-        var newArray = arrayElement.reject(function(item) {
+    describe('#reject', function () {
+      it('allows for rejecting the content', function () {
+        var newArray = arrayElement.reject(function (item) {
           var ref;
           return (ref = item.toValue()) === 'a' || ref === 1;
         });
@@ -157,11 +157,11 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#reduce', function() {
+    describe('#reduce', function () {
       var numbers = new ArrayElement([1, 2, 3, 4]);
 
       it('sends index and array elements', function () {
-        var sum = numbers.reduce(function(result, item, index, array) {
+        var sum = numbers.reduce(function (result, item, index, array) {
           expect(index).to.be.below(numbers.length);
           expect(array).to.equal(numbers);
 
@@ -172,18 +172,18 @@ describe('ArrayElement', function() {
         expect(sum.toValue()).to.equal(6);
       });
 
-      context('when no beginning value is given', function() {
-        it('correctly reduces the array', function() {
-          var total = numbers.reduce(function(result, item) {
+      context('when no beginning value is given', function () {
+        it('correctly reduces the array', function () {
+          var total = numbers.reduce(function (result, item) {
             return result.toValue() + item.toValue();
           });
           expect(total.toValue()).to.equal(10);
         });
       });
 
-      context('when a beginning value is given', function() {
-        it('correctly reduces the array', function() {
-          var total = numbers.reduce(function(result, item) {
+      context('when a beginning value is given', function () {
+        it('correctly reduces the array', function () {
+          var total = numbers.reduce(function (result, item) {
             return result.toValue() + item.toValue();
           }, 20);
           expect(total.toValue()).to.equal(30);
@@ -191,12 +191,12 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#forEach', function() {
-      it('iterates over each item', function() {
+    describe('#forEach', function () {
+      it('iterates over each item', function () {
         var indexes = [];
         var results = [];
 
-        arrayElement.forEach(function(item, index) {
+        arrayElement.forEach(function (item, index) {
           indexes.push(index.toValue());
           results.push(item);
         });
@@ -206,18 +206,18 @@ describe('ArrayElement', function() {
       });
     });
 
-    describe('#length', function() {
-      it('returns the length of the content', function() {
+    describe('#length', function () {
+      it('returns the length of the content', function () {
         expect(arrayElement.length).to.equal(4);
       });
     });
 
     describe('#isEmpty', function () {
-      it('returns empty when there are no elements', function() {
+      it('returns empty when there are no elements', function () {
         expect(new ArrayElement().isEmpty).to.be.true;
       });
 
-      it('returns non empty when there are elements', function() {
+      it('returns non empty when there are elements', function () {
         expect(arrayElement.isEmpty).to.be.false;
       });
     });
@@ -242,39 +242,39 @@ describe('ArrayElement', function() {
       expect(instance.get(4).toValue()).to.equal('foobar');
     };
 
-    describe('#shift', function() {
-      it('removes an item from the start of an array', function() {
+    describe('#shift', function () {
+      it('removes an item from the start of an array', function () {
         var shifted = arrayElement.shift();
         expect(arrayElement.length).to.equal(3);
         expect(shifted.toValue()).to.equal('a');
       });
     });
 
-    describe('#unshift', function() {
-      it('adds a new item to the start of the array', function() {
+    describe('#unshift', function () {
+      it('adds a new item to the start of the array', function () {
         arrayElement.unshift('foobar');
         expect(arrayElement.length).to.equal(5);
         expect(arrayElement.get(0).toValue()).to.equal('foobar');
       });
     });
 
-    describe('#push', function() {
-      it('adds a new item to the end of the array', function() {
+    describe('#push', function () {
+      it('adds a new item to the end of the array', function () {
         arrayElement.push('foobar');
         itAddsToArray(arrayElement);
       });
     });
 
-    describe('#add', function() {
-      it('adds a new item to the array', function() {
+    describe('#add', function () {
+      it('adds a new item to the array', function () {
         arrayElement.add('foobar');
         itAddsToArray(arrayElement);
       });
     });
 
     if (typeof Symbol !== 'undefined') {
-      describe('#[Symbol.iterator]', function() {
-        it('can be used in a for ... of loop', function() {
+      describe('#[Symbol.iterator]', function () {
+        it('can be used in a for ... of loop', function () {
           // We know the runtime supports Symbol but don't know if it supports
           // the actual `for ... of` loop syntax. Here we simulate it by
           // directly manipulating the iterator the same way that `for ... of`
@@ -297,7 +297,7 @@ describe('ArrayElement', function() {
     }
   });
 
-  describe('searching', function() {
+  describe('searching', function () {
     var refract = {
       element: 'array',
       content: [
@@ -354,106 +354,106 @@ describe('ArrayElement', function() {
     var strings;
     var recursiveStrings;
 
-    before(function() {
+    before(function () {
       doc = minim.fromRefract(refract);
-      strings = doc.children.filter(function(el) {
+      strings = doc.children.filter(function (el) {
         return el.element === 'string';
       });
-      recursiveStrings = doc.find(function(el) {
+      recursiveStrings = doc.find(function (el) {
         return el.element === 'string';
       });
     });
 
-    describe('#children', function() {
-      it('returns the correct number of items', function() {
+    describe('#children', function () {
+      it('returns the correct number of items', function () {
         expect(strings.length).to.equal(2);
       });
 
-      it('returns the correct values', function() {
+      it('returns the correct values', function () {
         expect(strings.toValue()).to.deep.equal(['foobar', 'hello world']);
       });
     });
 
-    describe('#find', function() {
-      it('returns the correct number of items', function() {
+    describe('#find', function () {
+      it('returns the correct number of items', function () {
         expect(recursiveStrings).to.have.lengthOf(4);
       });
 
-      it('returns the correct values', function() {
+      it('returns the correct values', function () {
         expect(recursiveStrings.toValue()).to.deep.equal(['foobar', 'hello world', 'baz', 'bar']);
       });
     });
 
-    describe('#findByElement', function() {
+    describe('#findByElement', function () {
       var items;
 
-      before(function() {
+      before(function () {
         items = doc.findByElement('number');
       });
 
-      it('returns the correct number of items', function() {
+      it('returns the correct number of items', function () {
         expect(items).to.have.lengthOf(1);
       });
 
-      it('returns the correct values', function() {
+      it('returns the correct values', function () {
         expect(items.toValue()).to.deep.equal([4]);
       });
     });
 
-    describe('#findByClass', function() {
+    describe('#findByClass', function () {
       var items;
 
-      before(function() {
+      before(function () {
         items = doc.findByClass('test-class');
       });
 
-      it('returns the correct number of items', function() {
+      it('returns the correct number of items', function () {
         expect(items).to.have.lengthOf(1);
       });
 
-      it('returns the correct values', function() {
+      it('returns the correct values', function () {
         expect(items.toValue()).to.deep.equal(['baz']);
       });
     });
 
-    describe('#first', function() {
-      it('returns the first item', function() {
+    describe('#first', function () {
+      it('returns the first item', function () {
         expect(doc.first).to.deep.equal(doc.content[0]);
       });
     });
 
-    describe('#second', function() {
-      it('returns the second item', function() {
+    describe('#second', function () {
+      it('returns the second item', function () {
         expect(doc.second).to.deep.equal(doc.content[1]);
       });
     });
 
-    describe('#last', function() {
-      it('returns the last item', function() {
+    describe('#last', function () {
+      it('returns the last item', function () {
         expect(doc.last).to.deep.equal(doc.content[2]);
       });
     });
 
-    describe('#getById', function() {
-      it('returns the item for the ID given', function() {
+    describe('#getById', function () {
+      it('returns the item for the ID given', function () {
         expect(doc.getById('nested-id').toValue()).to.equal('bar');
       });
     });
 
-    describe('#contains', function() {
-      it('uses deep equality', function() {
+    describe('#contains', function () {
+      it('uses deep equality', function () {
         expect(doc.get(2).contains(['not', 'there'])).to.be.false;
         expect(doc.get(2).contains(['bar', 4])).to.be.true;
       });
 
-      context('when given a value that is in the array', function() {
-        it('returns true', function() {
+      context('when given a value that is in the array', function () {
+        it('returns true', function () {
           expect(doc.contains('foobar')).to.be.true;
         });
       });
 
-      context('when given a value that is not in the array', function() {
-        it('returns false', function() {
+      context('when given a value that is not in the array', function () {
+        it('returns false', function () {
           expect(doc.contains('not-there')).to.be.false;
         });
       });

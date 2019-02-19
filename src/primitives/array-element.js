@@ -172,7 +172,7 @@ class ArrayElement extends Element {
   forEach(callback, thisArg) {
     var refract = this.refract;
 
-    this.content.forEach(function(item, index) {
+    this.content.forEach(function (item, index) {
       callback(item, refract(index));
     }, thisArg);
   }
@@ -217,7 +217,7 @@ class ArrayElement extends Element {
 
     // The forEach method for Object Elements returns value, key, and member.
     // This passes those along to the condition function below.
-    this.forEach(function(item, keyOrIndex, member) {
+    this.forEach(function (item, keyOrIndex, member) {
       // We use duck-typing here to support any registered class that
       // may contain other elements.
       if (recursive && (item.findElements !== undefined)) {
@@ -249,7 +249,7 @@ class ArrayElement extends Element {
    * @returns {ArraySlice}
    */
   findByElement(element) {
-    return this.find(function(item) {
+    return this.find(function (item) {
       return item.element === element;
     });
   }
@@ -260,7 +260,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   findByClass(className) {
-    return this.find(function(item) {
+    return this.find(function (item) {
       return item.classes.contains(className);
     });
   }
@@ -272,7 +272,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   getById(id) {
-    return this.find(function(item) {
+    return this.find(function (item) {
       return item.id.toValue() === id;
     }).first;
   }

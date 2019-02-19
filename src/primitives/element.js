@@ -104,7 +104,7 @@ class Element {
     }
 
     if (this.content && this.content.map) {
-      return this.content.map(function(element) {
+      return this.content.map(function (element) {
         return element.toValue();
       }, this);
     }
@@ -147,14 +147,14 @@ class Element {
     var elementName = elementNames.pop();
     var elements = new ArraySlice();
 
-    var append = function(array, element) {
+    var append = function (array, element) {
       array.push(element);
       return array;
     };
 
     // Checks the given element and appends element/sub-elements
     // that match element name to given array
-    var checkElement = function(array, element) {
+    var checkElement = function (array, element) {
       if (element.element === elementName) {
         array.push(element);
       }
@@ -275,7 +275,7 @@ class Element {
     } else if (Array.isArray(value)) {
       this._content = value.map(this.refract);
     } else if (typeof value === 'object') {
-      this._content = Object.keys(value).map(function(key) {
+      this._content = Object.keys(value).map(function (key) {
         return new this.MemberElement(key, value[key]);
       }, this);
     } else {
@@ -328,7 +328,7 @@ class Element {
     return this._attributes;
   }
 
-  set attributes (value) {
+  set attributes(value) {
     if (value instanceof this.ObjectElement) {
       this._attributes = value;
     } else {

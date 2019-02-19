@@ -219,7 +219,7 @@ describe('ArraySlice', function () {
     var slice = new ArraySlice([[0, 1], [2, 3], [4, 5]]);
 
     var flattened = slice.reduce(
-      function(accumulator, currentValue) {
+      function (accumulator, currentValue) {
         return accumulator.concat(currentValue);
       },
       []

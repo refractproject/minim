@@ -3,33 +3,33 @@ var minim = require('../../src/minim').namespace();
 
 var BooleanElement = minim.getElementClass('boolean');
 
-describe('BooleanElement', function() {
+describe('BooleanElement', function () {
   var booleanElement;
 
-  beforeEach(function() {
+  beforeEach(function () {
     booleanElement = new BooleanElement(true);
   });
 
-  describe('#element', function() {
-    it('is a boolean', function() {
+  describe('#element', function () {
+    it('is a boolean', function () {
       expect(booleanElement.element).to.equal('boolean');
     });
   });
 
-  describe('#primitive', function() {
-    it('returns boolean as the Refract primitive', function() {
+  describe('#primitive', function () {
+    it('returns boolean as the Refract primitive', function () {
       expect(booleanElement.primitive()).to.equal('boolean');
     });
   });
 
-  describe('#get', function() {
-    it('returns the boolean value', function() {
+  describe('#get', function () {
+    it('returns the boolean value', function () {
       expect(booleanElement.toValue()).to.equal(true);
     });
   });
 
-  describe('#set', function() {
-    it('sets the value of the boolean', function() {
+  describe('#set', function () {
+    it('sets the value of the boolean', function () {
       booleanElement.set(false);
       expect(booleanElement.toValue()).to.equal(false);
     });

@@ -3,33 +3,33 @@ var minim = require('../../src/minim').namespace();
 
 var NullElement = minim.getElementClass('null');
 
-describe('NullElement', function() {
+describe('NullElement', function () {
   var nullElement;
 
-  before(function() {
+  before(function () {
     nullElement = new NullElement();
   });
 
-  describe('#element', function() {
-    it('is null', function() {
+  describe('#element', function () {
+    it('is null', function () {
       expect(nullElement.element).to.equal('null');
     });
   });
 
-  describe('#primitive', function() {
-    it('returns null as the Refract primitive', function() {
+  describe('#primitive', function () {
+    it('returns null as the Refract primitive', function () {
       expect(nullElement.primitive()).to.equal('null');
     });
   });
 
-  describe('#get', function() {
-    it('returns the null value', function() {
+  describe('#get', function () {
+    it('returns the null value', function () {
       expect(nullElement.toValue()).to.equal(null);
     });
   });
 
-  describe('#set', function() {
-    it('cannot set the value', function() {
+  describe('#set', function () {
+    it('cannot set the value', function () {
       expect(nullElement.set('foobar')).to.be.an.instanceof(Error);
     });
   });

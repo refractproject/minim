@@ -1,17 +1,17 @@
 var expect = require('./spec-helper').expect;
 var minim = require('../src/minim').namespace();
 
-describe('Minim Converters', function() {
-  describe('convertToElement', function() {
+describe('Minim Converters', function () {
+  describe('convertToElement', function () {
     function elementCheck(name, val) {
       var returnedElement;
 
-      context('when given ' + name, function() {
-        before(function() {
+      context('when given ' + name, function () {
+        before(function () {
           returnedElement = minim.toElement(val);
         });
 
-        it('returns ' + name, function() {
+        it('returns ' + name, function () {
           expect(returnedElement.element).to.equal(name);
         });
       });
@@ -27,20 +27,20 @@ describe('Minim Converters', function() {
     });
   });
 
-  describe('convertFromElement', function() {
+  describe('convertFromElement', function () {
     function elementCheck(name, el) {
-      context('when given ' + name, function() {
+      context('when given ' + name, function () {
         var returnedElement;
 
-        before(function() {
+        before(function () {
           returnedElement = minim.fromRefract(el);
         });
 
-        it('returns ' + name + ' element', function() {
+        it('returns ' + name + ' element', function () {
           expect(returnedElement.element).to.equal(name);
         });
 
-        it('has the correct value', function() {
+        it('has the correct value', function () {
           expect(returnedElement.toValue()).to.equal(el.content);
         });
       });
@@ -66,7 +66,7 @@ describe('Minim Converters', function() {
       content: true,
     });
 
-    context('when given array', function() {
+    context('when given array', function () {
       var el = {
         element: 'array',
         content: [
@@ -81,20 +81,20 @@ describe('Minim Converters', function() {
       };
       var returnedElement;
 
-      before(function() {
+      before(function () {
         returnedElement = minim.fromRefract(el);
       });
 
-      it('returns array element', function() {
+      it('returns array element', function () {
         expect(returnedElement.element).to.equal('array');
       });
 
-      it('has the correct values', function() {
+      it('has the correct values', function () {
         expect(returnedElement.toValue()).to.deep.equal([1, 2]);
       });
     });
 
-    context('when given object', function() {
+    context('when given object', function () {
       var el = {
         element: 'object',
         meta: {},
@@ -140,15 +140,15 @@ describe('Minim Converters', function() {
       };
       var returnedElement;
 
-      before(function() {
+      before(function () {
         returnedElement = minim.fromRefract(el);
       });
 
-      it('returns object element', function() {
+      it('returns object element', function () {
         expect(returnedElement.element).to.equal('object');
       });
 
-      it('has the correct values', function() {
+      it('has the correct values', function () {
         expect(returnedElement.toValue()).to.deep.equal({
           foo: 'bar',
           z: 2,

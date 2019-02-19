@@ -4,7 +4,7 @@ var minim = require('../../src/minim').namespace();
 var ObjectElement = minim.getElementClass('object');
 var StringElement = minim.getElementClass('string');
 
-describe('Element whose meta has meta', function() {
+describe('Element whose meta has meta', function () {
   var object, string;
 
   before(function () {
@@ -18,7 +18,7 @@ describe('Element whose meta has meta', function() {
     object.meta.set('baz', string);
   });
 
-  it('returns the correct Refract value', function() {
+  it('returns the correct Refract value', function () {
     const pqr = object.meta.get('baz').meta.getValue('pqr');
     expect(pqr).to.equal(1);
   });
