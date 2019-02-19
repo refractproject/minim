@@ -1,10 +1,10 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var MemberElement = minim.getElementClass('member');
+const MemberElement = minim.getElementClass('member');
 
 describe('MemberElement', function () {
-  var member = new MemberElement('foo', 'bar', {}, { foo: 'bar' });
+  const member = new MemberElement('foo', 'bar', {}, { foo: 'bar' });
 
   context('key', function () {
     it('provides the set key', function () {

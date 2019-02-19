@@ -1,4 +1,4 @@
-var Element = require('./element');
+const Element = require('./element');
 
 /**
  * @class StringElement

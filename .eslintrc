@@ -31,7 +31,6 @@
     "no-return-assign": "off",
     "no-shadow": "off",
     "no-underscore-dangle": "off",
-    "no-var": "off",
     "object-curly-spacing": "off",
     "prefer-arrow-callback": "off",
     "prefer-destructuring": "off",

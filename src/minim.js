@@ -1,5 +1,5 @@
-var Namespace = require('./namespace');
-var elements = require('./elements');
+const Namespace = require('./namespace');
+const elements = require('./elements');
 
 // Direct access to the Namespace class
 exports.Namespace = Namespace;

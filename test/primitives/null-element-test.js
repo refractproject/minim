@@ -1,10 +1,10 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var NullElement = minim.getElementClass('null');
+const NullElement = minim.getElementClass('null');
 
 describe('NullElement', function () {
-  var nullElement;
+  let nullElement;
 
   before(function () {
     nullElement = new NullElement();

@@ -1,10 +1,10 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var NumberElement = minim.getElementClass('number');
+const NumberElement = minim.getElementClass('number');
 
 describe('NumberElement', function () {
-  var numberElement;
+  let numberElement;
 
   before(function () {
     numberElement = new NumberElement(4);

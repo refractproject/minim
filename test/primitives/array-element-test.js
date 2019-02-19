@@ -1,11 +1,11 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var ArrayElement = minim.getElementClass('array');
+const ArrayElement = minim.getElementClass('array');
 
 describe('ArrayElement', function () {
   context('value methods', function () {
-    var arrayElement;
+    let arrayElement;
 
     function setArray() {
       arrayElement = new ArrayElement(['a', true, null, 1]);
@@ -20,8 +20,8 @@ describe('ArrayElement', function () {
     });
 
     describe('.content', function () {
-      var correctElementNames;
-      var storedElementNames;
+      let correctElementNames;
+      let storedElementNames;
 
       before(function () {
         correctElementNames = ['string', 'boolean', 'null', 'number'];
@@ -76,7 +76,7 @@ describe('ArrayElement', function () {
     });
 
     describe('#getIndex', function () {
-      var numbers = new ArrayElement([1, 2, 3, 4]);
+      const numbers = new ArrayElement([1, 2, 3, 4]);
 
       it('returns the correct item', function () {
         expect(numbers.getIndex(1).toValue()).to.equal(2);
@@ -92,7 +92,7 @@ describe('ArrayElement', function () {
 
     describe('#map', function () {
       it('allows for mapping the content of the array', function () {
-        var newArray = arrayElement.map(function (item) {
+        const newArray = arrayElement.map(function (item) {
           return item.toValue();
         });
         expect(newArray).to.deep.equal(['a', true, null, 1]);
@@ -104,21 +104,21 @@ describe('ArrayElement', function () {
        * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#Examples
        */
       it('provides flatMap to flatten one level', function () {
-        var arr1 = new ArrayElement([1, 2, 3, 4]);
+        const arr1 = new ArrayElement([1, 2, 3, 4]);
 
-        var mapped = arr1.map(function (x) {
+        const mapped = arr1.map(function (x) {
           return [x.toValue() * 2];
         });
 
         expect(mapped).to.deep.equal([[2], [4], [6], [8]]);
 
-        var flattened = arr1.flatMap(function (x) {
+        const flattened = arr1.flatMap(function (x) {
           return [x.toValue() * 2];
         });
 
         expect(flattened).to.deep.equal([2, 4, 6, 8]);
 
-        var flattenOnce = arr1.flatMap(function (x) {
+        const flattenOnce = arr1.flatMap(function (x) {
           return [[x.toValue() * 2]];
         });
 
@@ -128,7 +128,7 @@ describe('ArrayElement', function () {
 
     describe('#compactMap', function () {
       it('allows compact mapping the content of the array', function () {
-        var newArray = arrayElement.compactMap(function (item) {
+        const newArray = arrayElement.compactMap(function (item) {
           if (item.element === 'string' || item.element === 'number') {
             return item.toValue();
           }
@@ -139,8 +139,8 @@ describe('ArrayElement', function () {
 
     describe('#filter', function () {
       it('allows for filtering the content', function () {
-        var newArray = arrayElement.filter(function (item) {
-          var ref;
+        const newArray = arrayElement.filter(function (item) {
+          let ref;
           return (ref = item.toValue()) === 'a' || ref === 1;
         });
         expect(newArray.toValue()).to.deep.equal(['a', 1]);
@@ -149,8 +149,8 @@ describe('ArrayElement', function () {
 
     describe('#reject', function () {
       it('allows for rejecting the content', function () {
-        var newArray = arrayElement.reject(function (item) {
-          var ref;
+        const newArray = arrayElement.reject(function (item) {
+          let ref;
           return (ref = item.toValue()) === 'a' || ref === 1;
         });
         expect(newArray.toValue()).to.deep.equal([true, null]);
@@ -158,10 +158,10 @@ describe('ArrayElement', function () {
     });
 
     describe('#reduce', function () {
-      var numbers = new ArrayElement([1, 2, 3, 4]);
+      const numbers = new ArrayElement([1, 2, 3, 4]);
 
       it('sends index and array elements', function () {
-        var sum = numbers.reduce(function (result, item, index, array) {
+        const sum = numbers.reduce(function (result, item, index, array) {
           expect(index).to.be.below(numbers.length);
           expect(array).to.equal(numbers);
 
@@ -174,7 +174,7 @@ describe('ArrayElement', function () {
 
       context('when no beginning value is given', function () {
         it('correctly reduces the array', function () {
-          var total = numbers.reduce(function (result, item) {
+          const total = numbers.reduce(function (result, item) {
             return result.toValue() + item.toValue();
           });
           expect(total.toValue()).to.equal(10);
@@ -183,7 +183,7 @@ describe('ArrayElement', function () {
 
       context('when a beginning value is given', function () {
         it('correctly reduces the array', function () {
-          var total = numbers.reduce(function (result, item) {
+          const total = numbers.reduce(function (result, item) {
             return result.toValue() + item.toValue();
           }, 20);
           expect(total.toValue()).to.equal(30);
@@ -193,8 +193,8 @@ describe('ArrayElement', function () {
 
     describe('#forEach', function () {
       it('iterates over each item', function () {
-        var indexes = [];
-        var results = [];
+        const indexes = [];
+        const results = [];
 
         arrayElement.forEach(function (item, index) {
           indexes.push(index.toValue());
@@ -224,14 +224,14 @@ describe('ArrayElement', function () {
 
     describe('#remove', function () {
       it('removes the specified item', function () {
-        var removed = arrayElement.remove(0);
+        const removed = arrayElement.remove(0);
 
         expect(removed.toValue()).to.equal('a');
         expect(arrayElement.length).to.equal(3);
       });
 
       it('removing unknown item', function () {
-        var removed = arrayElement.remove(10);
+        const removed = arrayElement.remove(10);
 
         expect(removed).to.be.null;
       });
@@ -244,7 +244,7 @@ describe('ArrayElement', function () {
 
     describe('#shift', function () {
       it('removes an item from the start of an array', function () {
-        var shifted = arrayElement.shift();
+        const shifted = arrayElement.shift();
         expect(arrayElement.length).to.equal(3);
         expect(shifted.toValue()).to.equal('a');
       });
@@ -279,9 +279,9 @@ describe('ArrayElement', function () {
           // the actual `for ... of` loop syntax. Here we simulate it by
           // directly manipulating the iterator the same way that `for ... of`
           // does.
-          var items = [];
-          var iterator = arrayElement[Symbol.iterator]();
-          var result;
+          const items = [];
+          const iterator = arrayElement[Symbol.iterator]();
+          let result;
 
           do {
             result = iterator.next();
@@ -298,7 +298,7 @@ describe('ArrayElement', function () {
   });
 
   describe('searching', function () {
-    var refract = {
+    const refract = {
       element: 'array',
       content: [
         {
@@ -350,9 +350,9 @@ describe('ArrayElement', function () {
       ],
     };
 
-    var doc;
-    var strings;
-    var recursiveStrings;
+    let doc;
+    let strings;
+    let recursiveStrings;
 
     before(function () {
       doc = minim.fromRefract(refract);
@@ -385,7 +385,7 @@ describe('ArrayElement', function () {
     });
 
     describe('#findByElement', function () {
-      var items;
+      let items;
 
       before(function () {
         items = doc.findByElement('number');
@@ -401,7 +401,7 @@ describe('ArrayElement', function () {
     });
 
     describe('#findByClass', function () {
-      var items;
+      let items;
 
       before(function () {
         items = doc.findByClass('test-class');

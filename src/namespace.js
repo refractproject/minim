@@ -1,11 +1,11 @@
-var isNull = require('lodash/isNull');
-var isString = require('lodash/isString');
-var isNumber = require('lodash/isNumber');
-var isBoolean = require('lodash/isBoolean');
-var isObject = require('lodash/isObject');
+const isNull = require('lodash/isNull');
+const isString = require('lodash/isString');
+const isNumber = require('lodash/isNumber');
+const isBoolean = require('lodash/isBoolean');
+const isObject = require('lodash/isObject');
 
-var JSONSerialiser = require('./serialisers/json');
-var elements = require('./elements');
+const JSONSerialiser = require('./serialisers/json');
+const elements = require('./elements');
 
 /**
  * @class
@@ -107,7 +107,7 @@ class Namespace {
    * refract element.
    */
   detect(test, ElementClass, givenPrepend) {
-    var prepend = givenPrepend === undefined ? true : givenPrepend;
+    const prepend = givenPrepend === undefined ? true : givenPrepend;
 
     if (prepend) {
       this.elementDetection.unshift([test, ElementClass]);
@@ -127,11 +127,11 @@ class Namespace {
   toElement(value) {
     if (value instanceof this.Element) { return value; }
 
-    var element;
+    let element;
 
-    for (var i = 0; i < this.elementDetection.length; i += 1) {
-      var test = this.elementDetection[i][0];
-      var ElementClass = this.elementDetection[i][1];
+    for (let i = 0; i < this.elementDetection.length; i += 1) {
+      const test = this.elementDetection[i][0];
+      const ElementClass = this.elementDetection[i][1];
 
       if (test(value)) {
         element = new ElementClass(value);
@@ -146,7 +146,7 @@ class Namespace {
    * Get an element class given an element name.
    */
   getElementClass(element) {
-    var ElementClass = this.elementMap[element];
+    const ElementClass = this.elementMap[element];
 
     if (ElementClass === undefined) {
       // Fall back to the base element. We may not know what
@@ -178,7 +178,7 @@ class Namespace {
    */
   get elements() {
     if (this._elements === undefined) {
-      var name; var pascal;
+      let name; let pascal;
       this._elements = {
         Element: this.Element,
       };

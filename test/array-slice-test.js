@@ -1,45 +1,45 @@
-var expect = require('./spec-helper').expect;
-var minim = require('../src/minim');
-var Element = minim.Element;
-var StringElement = minim.StringElement;
-var ArraySlice = minim.ArraySlice;
+const expect = require('./spec-helper').expect;
+const minim = require('../src/minim');
+const Element = minim.Element;
+const StringElement = minim.StringElement;
+const ArraySlice = minim.ArraySlice;
 
 describe('ArraySlice', function () {
   it('can be created from an array of elements', function () {
-    var element = new Element();
-    var slice = new ArraySlice([element]);
+    const element = new Element();
+    const slice = new ArraySlice([element]);
 
     expect(slice.elements).to.deep.equal([element]);
   });
 
   it('returns the length of the slice', function () {
-    var slice = new ArraySlice([new Element()]);
+    const slice = new ArraySlice([new Element()]);
 
     expect(slice.length).to.equal(1);
   });
 
   it('returns when the slice is empty', function () {
-    var slice = new ArraySlice();
+    const slice = new ArraySlice();
     expect(slice.isEmpty).to.be.true;
   });
 
   it('returns when the slice is not empty', function () {
-    var slice = new ArraySlice([new ArraySlice()]);
+    const slice = new ArraySlice([new ArraySlice()]);
     expect(slice.isEmpty).to.be.false;
   });
 
   it('allows converting to value', function () {
-    var element = new Element('hello');
-    var slice = new ArraySlice([element]);
+    const element = new Element('hello');
+    const slice = new ArraySlice([element]);
 
     expect(slice.toValue()).to.deep.equal(['hello']);
   });
 
   it('provides map', function () {
-    var element = new Element('hello');
-    var slice = new ArraySlice([element]);
+    const element = new Element('hello');
+    const slice = new ArraySlice([element]);
 
-    var mapped = slice.map(function (element) {
+    const mapped = slice.map(function (element) {
       return element.toValue();
     });
 
@@ -48,11 +48,11 @@ describe('ArraySlice', function () {
 
   context('#filter', function () {
     it('filters elements satisfied from callback', function () {
-      var one = new Element('one');
-      var two = new Element('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new Element('one');
+      const two = new Element('two');
+      const slice = new ArraySlice([one, two]);
 
-      var filtered = slice.filter(function (element) {
+      const filtered = slice.filter(function (element) {
         return element.toValue() === 'one';
       });
 
@@ -61,22 +61,22 @@ describe('ArraySlice', function () {
     });
 
     it('filters elements satisfied from element class', function () {
-      var one = new StringElement('one');
-      var two = new Element('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new StringElement('one');
+      const two = new Element('two');
+      const slice = new ArraySlice([one, two]);
 
-      var filtered = slice.filter(elem => elem instanceof StringElement);
+      const filtered = slice.filter(elem => elem instanceof StringElement);
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([one]);
     });
 
     it('filters elements satisfied from element name', function () {
-      var one = new StringElement('one');
-      var two = new Element('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new StringElement('one');
+      const two = new Element('two');
+      const slice = new ArraySlice([one, two]);
 
-      var filtered = slice.filter('string');
+      const filtered = slice.filter('string');
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([one]);
@@ -85,11 +85,11 @@ describe('ArraySlice', function () {
 
   context('#reject', function () {
     it('rejects elements satisfied from callback', function () {
-      var one = new Element('one');
-      var two = new Element('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new Element('one');
+      const two = new Element('two');
+      const slice = new ArraySlice([one, two]);
 
-      var filtered = slice.reject(function (element) {
+      const filtered = slice.reject(function (element) {
         return element.toValue() === 'one';
       });
 
@@ -98,22 +98,22 @@ describe('ArraySlice', function () {
     });
 
     it('rejects elements satisfied from element class', function () {
-      var one = new StringElement('one');
-      var two = new Element('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new StringElement('one');
+      const two = new Element('two');
+      const slice = new ArraySlice([one, two]);
 
-      var filtered = slice.reject(elem => elem instanceof StringElement);
+      const filtered = slice.reject(elem => elem instanceof StringElement);
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([two]);
     });
 
     it('rejects elements satisfied from element name', function () {
-      var one = new StringElement('one');
-      var two = new Element('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new StringElement('one');
+      const two = new Element('two');
+      const slice = new ArraySlice([one, two]);
 
-      var filtered = slice.reject('string');
+      const filtered = slice.reject('string');
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([two]);
@@ -122,11 +122,11 @@ describe('ArraySlice', function () {
 
   describe('#find', function () {
     it('finds first element satisfied from callback', function () {
-      var one = new Element('one');
-      var two = new Element('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new Element('one');
+      const two = new Element('two');
+      const slice = new ArraySlice([one, two]);
 
-      var element = slice.find(function (element) {
+      const element = slice.find(function (element) {
         return element.toValue() === 'two';
       });
 
@@ -134,34 +134,34 @@ describe('ArraySlice', function () {
     });
 
     it('finds first element satisfied from element class', function () {
-      var one = new Element('one');
-      var two = new StringElement('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new Element('one');
+      const two = new StringElement('two');
+      const slice = new ArraySlice([one, two]);
 
-      var element = slice.find(elem => elem instanceof StringElement);
+      const element = slice.find(elem => elem instanceof StringElement);
 
       expect(element).to.be.equal(two);
     });
 
     it('finds first element satisfied from element name', function () {
-      var one = new Element('one');
-      var two = new StringElement('two');
-      var slice = new ArraySlice([one, two]);
+      const one = new Element('one');
+      const two = new StringElement('two');
+      const slice = new ArraySlice([one, two]);
 
-      var element = slice.find('string');
+      const element = slice.find('string');
 
       expect(element).to.be.equal(two);
     });
   });
 
   it('provides flatMap', function () {
-    var element = new Element('flat mapping for this element');
-    var one = new Element('one');
+    const element = new Element('flat mapping for this element');
+    const one = new Element('one');
     one.attributes.set('default', element);
-    var two = new Element('two');
-    var slice = new ArraySlice([one, two]);
+    const two = new Element('two');
+    const slice = new ArraySlice([one, two]);
 
-    var titles = slice.compactMap(function (element) {
+    const titles = slice.compactMap(function (element) {
       return element.attributes.get('default');
     });
 
@@ -169,13 +169,13 @@ describe('ArraySlice', function () {
   });
 
   it('provides compactMap', function () {
-    var element = new Element('compact mapping for this element');
-    var one = new Element('one');
+    const element = new Element('compact mapping for this element');
+    const one = new Element('one');
     one.attributes.set('default', element);
-    var two = new Element('two');
-    var slice = new ArraySlice([one, two]);
+    const two = new Element('two');
+    const slice = new ArraySlice([one, two]);
 
-    var titles = slice.compactMap(function (element) {
+    const titles = slice.compactMap(function (element) {
       return element.attributes.get('default');
     });
 
@@ -183,12 +183,12 @@ describe('ArraySlice', function () {
   });
 
   it('provides forEach', function () {
-    var one = new Element('one');
-    var two = new Element('two');
-    var slice = new ArraySlice([one, two]);
+    const one = new Element('one');
+    const two = new Element('two');
+    const slice = new ArraySlice([one, two]);
 
-    var elements = [];
-    var indexes = [];
+    const elements = [];
+    const indexes = [];
 
     slice.forEach(function (element, index) {
       elements.push(element);
@@ -203,9 +203,9 @@ describe('ArraySlice', function () {
    * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Examples
    */
   it('provides reduce to sum all the values of an array', function () {
-    var slice = new ArraySlice([0, 1, 2, 3]);
+    const slice = new ArraySlice([0, 1, 2, 3]);
 
-    var sum = slice.reduce(function (accumulator, currentValue) {
+    const sum = slice.reduce(function (accumulator, currentValue) {
       return accumulator + currentValue;
     }, 0);
 
@@ -216,9 +216,9 @@ describe('ArraySlice', function () {
    * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Examples
    */
   it('provides reduce to flatten an array of arrays', function () {
-    var slice = new ArraySlice([[0, 1], [2, 3], [4, 5]]);
+    const slice = new ArraySlice([[0, 1], [2, 3], [4, 5]]);
 
-    var flattened = slice.reduce(
+    const flattened = slice.reduce(
       function (accumulator, currentValue) {
         return accumulator.concat(currentValue);
       },
@@ -232,9 +232,9 @@ describe('ArraySlice', function () {
    * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#Alternative
    */
   it('provides flatMap as an alternative to reduce', function () {
-    var arr1 = new ArraySlice([1, 2, 3, 4]);
+    const arr1 = new ArraySlice([1, 2, 3, 4]);
 
-    var reduced = arr1.reduce(
+    const reduced = arr1.reduce(
       function (acc, x) {
         return acc.concat([x * 2]);
       },
@@ -243,7 +243,7 @@ describe('ArraySlice', function () {
 
     expect(reduced).to.deep.equal([2, 4, 6, 8]);
 
-    var flattened = arr1.flatMap(function (x) {
+    const flattened = arr1.flatMap(function (x) {
       return [x * 2];
     });
 
@@ -254,21 +254,21 @@ describe('ArraySlice', function () {
    * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#Examples
    */
   it('provides flatMap to flatten one level', function () {
-    var arr1 = new ArraySlice([1, 2, 3, 4]);
+    const arr1 = new ArraySlice([1, 2, 3, 4]);
 
-    var mapped = arr1.map(function (x) {
+    const mapped = arr1.map(function (x) {
       return [x * 2];
     });
 
     expect(mapped).to.deep.equal([[2], [4], [6], [8]]);
 
-    var flattened = arr1.flatMap(function (x) {
+    const flattened = arr1.flatMap(function (x) {
       return [x * 2];
     });
 
     expect(flattened).to.deep.equal([2, 4, 6, 8]);
 
-    var flattenOnce = arr1.flatMap(function (x) {
+    const flattenOnce = arr1.flatMap(function (x) {
       return [[x * 2]];
     });
 
@@ -276,7 +276,7 @@ describe('ArraySlice', function () {
   });
 
   describe('#includes', function () {
-    var slice = new ArraySlice([
+    const slice = new ArraySlice([
       new Element('one'),
       new Element('two'),
     ]);
@@ -291,19 +291,19 @@ describe('ArraySlice', function () {
   });
 
   it('allows shifting an element', function () {
-    var one = new Element('one');
-    var two = new Element('two');
-    var slice = new ArraySlice([one, two]);
+    const one = new Element('one');
+    const two = new Element('two');
+    const slice = new ArraySlice([one, two]);
 
-    var shifted = slice.shift();
+    const shifted = slice.shift();
 
     expect(slice.length).to.equal(1);
     expect(shifted).to.equal(one);
   });
 
   it('allows unshifting an element', function () {
-    var two = new Element('two');
-    var slice = new ArraySlice([two]);
+    const two = new Element('two');
+    const slice = new ArraySlice([two]);
 
     slice.unshift('one');
 
@@ -312,8 +312,8 @@ describe('ArraySlice', function () {
   });
 
   it('allows pushing new items to end', function () {
-    var one = new Element('one');
-    var slice = new ArraySlice([one]);
+    const one = new Element('one');
+    const slice = new ArraySlice([one]);
 
     slice.push('two');
 
@@ -322,8 +322,8 @@ describe('ArraySlice', function () {
   });
 
   it('allows adding new items to end', function () {
-    var one = new Element('one');
-    var slice = new ArraySlice([one]);
+    const one = new Element('one');
+    const slice = new ArraySlice([one]);
 
     slice.add('two');
 
@@ -332,27 +332,27 @@ describe('ArraySlice', function () {
   });
 
   it('allows getting an element via index', function () {
-    var one = new Element('one');
-    var slice = new ArraySlice([one]);
+    const one = new Element('one');
+    const slice = new ArraySlice([one]);
     expect(slice.get(0)).to.deep.equal(one);
   });
 
   it('allows getting a value via index', function () {
-    var one = new Element('one');
-    var slice = new ArraySlice([one]);
+    const one = new Element('one');
+    const slice = new ArraySlice([one]);
     expect(slice.getValue(0)).to.equal('one');
   });
 
   describe('#first', function () {
     it('returns the first item', function () {
-      var element = new Element();
-      var slice = new ArraySlice([element]);
+      const element = new Element();
+      const slice = new ArraySlice([element]);
 
       expect(slice.first).to.equal(element);
     });
 
     it('returns undefined when there isnt any items', function () {
-      var slice = new ArraySlice();
+      const slice = new ArraySlice();
 
       expect(slice.first).to.be.undefined;
     });

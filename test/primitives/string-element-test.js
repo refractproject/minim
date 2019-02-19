@@ -1,10 +1,10 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var StringElement = minim.getElementClass('string');
+const StringElement = minim.getElementClass('string');
 
 describe('StringElement', function () {
-  var stringElement;
+  let stringElement;
 
   before(function () {
     stringElement = new StringElement('foobar');

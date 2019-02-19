@@ -1,15 +1,15 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
-var KeyValuePair = require('../../src/key-value-pair');
-var RefElement = require('../../src/minim').RefElement;
-var ArraySlice = require('../../src/minim').ArraySlice;
-var ObjectSlice = require('../../src/minim').ObjectSlice;
-var NumberElement = require('../../src/minim').NumberElement;
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
+const KeyValuePair = require('../../src/key-value-pair');
+const RefElement = require('../../src/minim').RefElement;
+const ArraySlice = require('../../src/minim').ArraySlice;
+const ObjectSlice = require('../../src/minim').ObjectSlice;
+const NumberElement = require('../../src/minim').NumberElement;
 
 describe('Element', function () {
   context('when initializing', function () {
     it('should initialize the correct meta data', function () {
-      var element = new minim.Element({}, {
+      const element = new minim.Element({}, {
         id: 'foobar',
         classes: ['a', 'b'],
         title: 'Title',
@@ -23,24 +23,24 @@ describe('Element', function () {
     });
 
     it('should allow initialising with meta object', function () {
-      var meta = new minim.elements.Object();
+      const meta = new minim.elements.Object();
       meta.set('id', 'foobar');
-      var element = new minim.Element(null, meta);
+      const element = new minim.Element(null, meta);
 
       expect(element.meta.get('id').toValue()).to.equal('foobar');
     });
 
     it('should allow initialising with attributes object', function () {
-      var attributes = new minim.elements.Object();
+      const attributes = new minim.elements.Object();
       attributes.set('test', 'foobar');
-      var element = new minim.Element(null, null, attributes);
+      const element = new minim.Element(null, null, attributes);
 
       expect(element.attributes.get('test').toValue()).to.equal('foobar');
     });
   });
 
   describe('when initializing with value', function () {
-    var el;
+    let el;
 
     it('should properly default to undefined', function () {
       el = new minim.Element();
@@ -69,7 +69,7 @@ describe('Element', function () {
   });
 
   describe('#meta', function () {
-    var element;
+    let element;
 
     before(function () {
       element = new minim.Element();
@@ -87,7 +87,7 @@ describe('Element', function () {
   });
 
   describe('#attributes', function () {
-    var element;
+    let element;
 
     before(function () {
       element = new minim.Element();
@@ -105,7 +105,7 @@ describe('Element', function () {
   });
 
   describe('#content', function () {
-    var element;
+    let element;
 
     before(function () {
       element = new minim.Element();
@@ -189,7 +189,7 @@ describe('Element', function () {
     });
 
     it('should allow setting ObjectSlice (converted to array)', function () {
-      var MemberElement = minim.getElementClass('member');
+      const MemberElement = minim.getElementClass('member');
       element.content = new ObjectSlice([new MemberElement('name', 'Doe')]);
 
       expect(element.content).to.deep.equal([
@@ -200,7 +200,7 @@ describe('Element', function () {
 
   describe('#element', function () {
     context('when getting an element that has not been set', function () {
-      var el;
+      let el;
 
       before(function () {
         el = new minim.Element();
@@ -212,7 +212,7 @@ describe('Element', function () {
     });
 
     context('when setting the element', function () {
-      var el;
+      let el;
 
       before(function () {
         el = new minim.Element();
@@ -233,7 +233,7 @@ describe('Element', function () {
   });
 
   describe('#equals', function () {
-    var el;
+    let el;
 
     before(function () {
       el = new minim.elements.Object({
@@ -258,7 +258,7 @@ describe('Element', function () {
   });
 
   describe('convenience methods', function () {
-    var meta = {
+    const meta = {
       id: 'foobar',
       classes: ['a'],
       title: 'A Title',
@@ -266,7 +266,7 @@ describe('Element', function () {
     };
 
     context('when the meta is already set', function () {
-      var el = new minim.Element(null, meta);
+      const el = new minim.Element(null, meta);
 
       Object.keys(meta).forEach(function (key) {
         it('provides a convenience method for ' + key, function () {
@@ -276,7 +276,7 @@ describe('Element', function () {
     });
 
     context('when meta is set with getters and setters', function () {
-      var el = new minim.Element(null);
+      const el = new minim.Element(null);
 
       Object.keys(meta).forEach(function (key) {
         el[key] = meta[key];
@@ -293,7 +293,7 @@ describe('Element', function () {
   });
 
   describe('removing meta properties', function () {
-    var el = minim.fromRefract({
+    const el = minim.fromRefract({
       element: 'string',
       meta: {
         id: {
@@ -327,7 +327,7 @@ describe('Element', function () {
   });
 
   describe('removing attribute properties', function () {
-    var el = minim.fromRefract({
+    const el = minim.fromRefract({
       element: 'string',
       attributes: {
         href: {
@@ -349,7 +349,7 @@ describe('Element', function () {
 
   describe('hyperlinking', function () {
     context('when converting from Refract with links', function () {
-      var el;
+      let el;
 
       before(function () {
         el = minim.fromRefract({
@@ -379,7 +379,7 @@ describe('Element', function () {
       });
 
       it('correctly loads the links', function () {
-        var link = el.meta.get('links').first;
+        const link = el.meta.get('links').first;
         expect(link.element).to.equal('link');
         expect(link.relation.toValue()).to.equal('foo');
         expect(link.href.toValue()).to.equal('/bar');
@@ -388,7 +388,7 @@ describe('Element', function () {
 
     describe('#links', function () {
       context('when `links` is empty', function () {
-        var el;
+        let el;
 
         before(function () {
           // String with no links
@@ -405,7 +405,7 @@ describe('Element', function () {
       });
 
       context('when there are existing `links`', function () {
-        var el;
+        let el;
 
         context('refract', function () {
           before(function () {
@@ -436,7 +436,7 @@ describe('Element', function () {
           });
 
           it('provides the links from meta', function () {
-            var link = el.links.first;
+            const link = el.links.first;
             expect(el.links).to.have.length(1);
             expect(link.relation.toValue()).to.equal('foo');
             expect(link.href.toValue()).to.equal('/bar');
@@ -710,28 +710,28 @@ describe('Element', function () {
 
   describe('freezing an element', function () {
     it('is frozen after being frozen', function () {
-      var element = new minim.Element('hello');
+      const element = new minim.Element('hello');
       element.freeze();
 
       expect(element.isFrozen).to.be.true;
     });
 
     it('freezes children when freezing', function () {
-      var element = new minim.Element([new minim.elements.String('hello')]);
+      const element = new minim.Element([new minim.elements.String('hello')]);
       element.freeze();
 
       expect(element.content[0].isFrozen).to.be.true;
     });
 
     it('sets the parent of any children', function () {
-      var element = new minim.Element([new minim.elements.String('hello')]);
+      const element = new minim.Element([new minim.elements.String('hello')]);
       element.freeze();
 
       expect(element.content[0].parent).to.equal(element);
     });
 
     it('sets the parent of meta elements', function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.title = 'Example';
       element.freeze();
 
@@ -740,7 +740,7 @@ describe('Element', function () {
     });
 
     it("doesn't allow modification of content array once frozen", function () {
-      var element = new minim.Element([new minim.elements.String('hello')]);
+      const element = new minim.Element([new minim.elements.String('hello')]);
       element.freeze();
 
       expect(function () {
@@ -749,7 +749,7 @@ describe('Element', function () {
     });
 
     it("doesn't allow modification of meta once frozen", function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.freeze();
 
       expect(function () {
@@ -758,7 +758,7 @@ describe('Element', function () {
     });
 
     it("doesn't allow modification of attributes once frozen", function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.freeze();
 
       expect(function () {
@@ -772,7 +772,7 @@ describe('Element', function () {
       // meta/attributes on frozen elements because the accessor has
       // side-effects of creation.
 
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.freeze();
 
       it('meta', function () {
@@ -791,9 +791,9 @@ describe('Element', function () {
 
   describe('#parents', function () {
     it('configures parent when setting element content to be an element', function () {
-      var one = new minim.Element('bottom');
-      var two = new minim.Element(one);
-      var three = new minim.Element(two);
+      const one = new minim.Element('bottom');
+      const two = new minim.Element(one);
+      const three = new minim.Element(two);
       three.freeze();
 
       expect(one.parents).to.be.instanceof(ArraySlice);
@@ -803,62 +803,62 @@ describe('Element', function () {
 
   describe('#clone', function () {
     it('clones an element', function () {
-      var element = new minim.Element('hello');
-      var cloned = element.clone();
+      const element = new minim.Element('hello');
+      const cloned = element.clone();
 
       expect(cloned.content).to.equal(element.content);
       expect(cloned).not.to.equal(element);
     });
 
     it('clones an element name', function () {
-      var element = new minim.Element('hello');
+      const element = new minim.Element('hello');
       element.element = 'test';
-      var cloned = element.clone();
+      const cloned = element.clone();
 
       expect(cloned.element).to.equal('test');
     });
 
     it('clones an element with child element', function () {
-      var child = new minim.Element('child');
-      var element = new minim.Element(child);
-      var cloned = element.clone();
+      const child = new minim.Element('child');
+      const element = new minim.Element(child);
+      const cloned = element.clone();
 
       expect(cloned.content).not.to.equal(child);
       expect(cloned.content.content).to.equal('child');
     });
 
     it('clones an element with array of elements', function () {
-      var child = new minim.Element('child');
-      var element = new minim.Element([child]);
-      var cloned = element.clone();
+      const child = new minim.Element('child');
+      const element = new minim.Element([child]);
+      const cloned = element.clone();
 
       expect(cloned.content[0]).not.to.equal(child);
       expect(cloned.content[0].content).to.equal('child');
     });
 
     it('clones an element with key value pair', function () {
-      var child = new minim.Element('name');
-      var element = new minim.elements.Member(child);
-      var cloned = element.clone();
+      const child = new minim.Element('name');
+      const element = new minim.elements.Member(child);
+      const cloned = element.clone();
 
       expect(cloned.content.key).not.to.equal(child);
       expect(cloned.content.key.content).to.equal('name');
     });
 
     it('clones meta values', function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.title = 'Test';
 
-      var cloned = element.clone();
+      const cloned = element.clone();
 
       expect(cloned.title.toValue()).to.equal('Test');
     });
 
     it('clones attributes values', function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.attributes.set('name', 'Test');
 
-      var cloned = element.clone();
+      const cloned = element.clone();
 
       expect(cloned.attributes.get('name').toValue()).to.equal('Test');
     });
@@ -866,10 +866,10 @@ describe('Element', function () {
 
   describe('#toRef', function () {
     it('can create ref element for an element', function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.id = 'example';
 
-      var ref = element.toRef();
+      const ref = element.toRef();
 
       expect(ref).to.be.instanceof(RefElement);
       expect(ref.path.toValue()).to.be.equal('element');
@@ -877,10 +877,10 @@ describe('Element', function () {
     });
 
     it('can create a ref element with a path', function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
       element.id = 'example';
 
-      var ref = element.toRef('attributes');
+      const ref = element.toRef('attributes');
 
       expect(ref).to.be.instanceof(RefElement);
       expect(ref.path.toValue()).to.be.equal('attributes');
@@ -888,7 +888,7 @@ describe('Element', function () {
     });
 
     it('throws error when creating ref element from element without ID', function () {
-      var element = new minim.Element();
+      const element = new minim.Element();
 
       expect(function () { element.toRef(); }).to.throw();
     });

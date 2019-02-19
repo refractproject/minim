@@ -1,6 +1,6 @@
-var Element = require('./element');
-var ArraySlice = require('../array-slice');
-var negate = require('lodash/negate');
+const Element = require('./element');
+const ArraySlice = require('../array-slice');
+const negate = require('lodash/negate');
 
 /**
  * @class
@@ -31,7 +31,7 @@ class ArrayElement extends Element {
    * This works for both ArrayElement and ObjectElement instances
    */
   getValue(indexOrKey) {
-    var item = this.get(indexOrKey);
+    const item = this.get(indexOrKey);
 
     if (item) {
       return item.toValue();
@@ -53,7 +53,7 @@ class ArrayElement extends Element {
   }
 
   remove(index) {
-    var removed = this.content.splice(index, 1);
+    const removed = this.content.splice(index, 1);
 
     if (removed.length) {
       return removed[0];
@@ -90,10 +90,10 @@ class ArrayElement extends Element {
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
   compactMap(transform, thisArg) {
-    var results = [];
+    const results = [];
 
     this.forEach(function (element) {
-      var result = transform(element);
+      const result = transform(element);
 
       if (result) {
         results.push(result);
@@ -127,8 +127,8 @@ class ArrayElement extends Element {
    * primitives on each step.
    */
   reduce(callback, initialValue) {
-    var startIndex;
-    var memo;
+    let startIndex;
+    let memo;
 
     // Allows for defining a starting value of the reduce
     if (initialValue !== undefined) {
@@ -145,8 +145,8 @@ class ArrayElement extends Element {
     // Sending each function call to the registry allows for passing Minim
     // instances through the function return. This means you can return
     // primitive values or return Minim instances and reduce will still work.
-    for (var i = startIndex; i < this.length; i += 1) {
-      var item = this.content[i];
+    for (let i = startIndex; i < this.length; i += 1) {
+      const item = this.content[i];
 
       if (this.primitive() === 'object') {
         memo = this.refract(callback(memo, item.value, item.key, item, this));
@@ -170,7 +170,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   forEach(callback, thisArg) {
-    var refract = this.refract;
+    const refract = this.refract;
 
     this.content.forEach(function (item, index) {
       callback(item, refract(index));
@@ -211,9 +211,9 @@ class ArrayElement extends Element {
    * @returns {Element[]}
    */
   findElements(condition, givenOptions) {
-    var options = givenOptions || {};
-    var recursive = !!options.recursive;
-    var results = options.results === undefined ? [] : options.results;
+    const options = givenOptions || {};
+    const recursive = !!options.recursive;
+    const results = options.results === undefined ? [] : options.results;
 
     // The forEach method for Object Elements returns value, key, and member.
     // This passes those along to the condition function below.

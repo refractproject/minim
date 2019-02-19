@@ -1,15 +1,15 @@
-var expect = require('./spec-helper').expect;
-var minim = require('../src/minim');
-var MemberElement = minim.MemberElement;
-var ObjectSlice = minim.ObjectSlice;
+const expect = require('./spec-helper').expect;
+const minim = require('../src/minim');
+const MemberElement = minim.MemberElement;
+const ObjectSlice = minim.ObjectSlice;
 
 describe('ObjectSlice', function () {
   it('provides map', function () {
-    var slice = new ObjectSlice([
+    const slice = new ObjectSlice([
       new MemberElement('name', 'Doe'),
     ]);
 
-    var result = slice.map(function (value) {
+    const result = slice.map(function (value) {
       return value.toValue();
     });
 
@@ -17,13 +17,13 @@ describe('ObjectSlice', function () {
   });
 
   it('provides forEach', function () {
-    var element = new MemberElement('name', 'Doe');
-    var slice = new ObjectSlice([element]);
+    const element = new MemberElement('name', 'Doe');
+    const slice = new ObjectSlice([element]);
 
-    var keys = [];
-    var values = [];
-    var members = [];
-    var indexes = [];
+    const keys = [];
+    const values = [];
+    const members = [];
+    const indexes = [];
 
     slice.forEach(function (value, key, member, index) {
       keys.push(key.toValue());
@@ -39,12 +39,12 @@ describe('ObjectSlice', function () {
   });
 
   it('provides filter', function () {
-    var slice = new ObjectSlice([
+    const slice = new ObjectSlice([
       new MemberElement('name', 'Doe'),
       new MemberElement('name', 'Bill'),
     ]);
 
-    var filtered = slice.filter(function (value) {
+    const filtered = slice.filter(function (value) {
       return value.toValue() === 'Doe';
     });
 
@@ -53,12 +53,12 @@ describe('ObjectSlice', function () {
   });
 
   it('provides reject', function () {
-    var slice = new ObjectSlice([
+    const slice = new ObjectSlice([
       new MemberElement('name', 'Doe'),
       new MemberElement('name', 'Bill'),
     ]);
 
-    var filtered = slice.reject(function (value) {
+    const filtered = slice.reject(function (value) {
       return value.toValue() === 'Doe';
     });
 
@@ -67,15 +67,15 @@ describe('ObjectSlice', function () {
   });
 
   it('provides keys', function () {
-    var element = new MemberElement('name', 'Doe');
-    var slice = new ObjectSlice([element]);
+    const element = new MemberElement('name', 'Doe');
+    const slice = new ObjectSlice([element]);
 
     expect(slice.keys()).to.deep.equal(['name']);
   });
 
   it('provides values', function () {
-    var element = new MemberElement('name', 'Doe');
-    var slice = new ObjectSlice([element]);
+    const element = new MemberElement('name', 'Doe');
+    const slice = new ObjectSlice([element]);
 
     expect(slice.values()).to.deep.equal(['Doe']);
   });

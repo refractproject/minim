@@ -1,8 +1,8 @@
-var expect = require('./spec-helper').expect;
-var minim = require('../src/minim').namespace();
+const expect = require('./spec-helper').expect;
+const minim = require('../src/minim').namespace();
 
-var ArrayElement = minim.getElementClass('array');
-var StringElement = minim.getElementClass('string');
+const ArrayElement = minim.getElementClass('array');
+const StringElement = minim.getElementClass('string');
 
 describe('Minim subclasses', function () {
   class MyElement extends minim.elements.String {
@@ -18,12 +18,12 @@ describe('Minim subclasses', function () {
   minim.register(MyElement);
 
   it('can extend the base element with its own method', function () {
-    var myElement = new MyElement();
+    const myElement = new MyElement();
     expect(myElement.ownMethod()).to.equal('It works!');
   });
 
   context('when initializing', function () {
-    var myElement = new MyElement();
+    const myElement = new MyElement();
 
     it('can overwrite the element name', function () {
       expect(myElement.element).to.equal('myElement');
@@ -35,7 +35,7 @@ describe('Minim subclasses', function () {
   });
 
   describe('deserializing attributes', function () {
-    var myElement = minim.fromRefract({
+    const myElement = minim.fromRefract({
       element: 'myElement',
       attributes: {
         headers: {
@@ -78,7 +78,7 @@ describe('Minim subclasses', function () {
     });
 
     it('should create array of source map elements', function () {
-      var sourceMaps = myElement.attributes.get('sourceMap');
+      const sourceMaps = myElement.attributes.get('sourceMap');
       expect(sourceMaps.content).to.have.length(1);
       expect(sourceMaps.content[0]).to.be.instanceOf(StringElement);
       expect(sourceMaps.content[0].toValue()).to.equal('test');
@@ -86,7 +86,7 @@ describe('Minim subclasses', function () {
   });
 
   describe('serializing attributes', function () {
-    var myElement = new MyElement();
+    const myElement = new MyElement();
 
     myElement.attributes.set('headers', new ArrayElement(['application/json']));
     myElement.attributes.get('headers').content[0].meta.set('name', 'Content-Type');

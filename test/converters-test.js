@@ -1,10 +1,10 @@
-var expect = require('./spec-helper').expect;
-var minim = require('../src/minim').namespace();
+const expect = require('./spec-helper').expect;
+const minim = require('../src/minim').namespace();
 
 describe('Minim Converters', function () {
   describe('convertToElement', function () {
     function elementCheck(name, val) {
-      var returnedElement;
+      let returnedElement;
 
       context('when given ' + name, function () {
         before(function () {
@@ -30,7 +30,7 @@ describe('Minim Converters', function () {
   describe('convertFromElement', function () {
     function elementCheck(name, el) {
       context('when given ' + name, function () {
-        var returnedElement;
+        let returnedElement;
 
         before(function () {
           returnedElement = minim.fromRefract(el);
@@ -67,7 +67,7 @@ describe('Minim Converters', function () {
     });
 
     context('when given array', function () {
-      var el = {
+      const el = {
         element: 'array',
         content: [
           {
@@ -79,7 +79,7 @@ describe('Minim Converters', function () {
           },
         ],
       };
-      var returnedElement;
+      let returnedElement;
 
       before(function () {
         returnedElement = minim.fromRefract(el);
@@ -95,7 +95,7 @@ describe('Minim Converters', function () {
     });
 
     context('when given object', function () {
-      var el = {
+      const el = {
         element: 'object',
         meta: {},
         attributes: {},
@@ -138,7 +138,7 @@ describe('Minim Converters', function () {
           },
         ],
       };
-      var returnedElement;
+      let returnedElement;
 
       before(function () {
         returnedElement = minim.fromRefract(el);

@@ -1,11 +1,11 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var ObjectElement = minim.getElementClass('object');
-var StringElement = minim.getElementClass('string');
+const ObjectElement = minim.getElementClass('object');
+const StringElement = minim.getElementClass('string');
 
 describe('ObjectElement', function () {
-  var objectElement;
+  let objectElement;
 
   function setObject() {
     objectElement = new ObjectElement({
@@ -23,8 +23,8 @@ describe('ObjectElement', function () {
   });
 
   describe('.content', function () {
-    var correctElementNames;
-    var storedElementNames;
+    let correctElementNames;
+    let storedElementNames;
 
     before(function () {
       correctElementNames = ['string', 'number'];
@@ -134,15 +134,15 @@ describe('ObjectElement', function () {
     });
 
     it('accepts an object', function () {
-      var obj = new ObjectElement();
+      const obj = new ObjectElement();
       obj.set({ foo: 'bar' });
       expect(obj.get('foo').toValue()).to.equal('bar');
     });
 
     it('should refract key and value from object', function () {
-      var obj = new ObjectElement();
+      const obj = new ObjectElement();
       obj.set('key', 'value');
-      var member = obj.getMember('key');
+      const member = obj.getMember('key');
 
       expect(member.key).to.be.instanceof(StringElement);
       expect(member.value).to.be.instanceof(StringElement);
@@ -157,7 +157,7 @@ describe('ObjectElement', function () {
 
   describe('#remove', function () {
     it('removes the given key', function () {
-      var removed = objectElement.remove('z');
+      const removed = objectElement.remove('z');
 
       expect(removed.toValue()).to.deep.equal({ key: 'z', value: 1 });
       expect(objectElement.keys()).to.deep.equal(['foo']);
@@ -166,7 +166,7 @@ describe('ObjectElement', function () {
 
   describe('#remove non-existing item', function () {
     it('should not change the object element', function () {
-      var removed = objectElement.remove('k');
+      const removed = objectElement.remove('k');
 
       expect(removed).to.deep.equal(null);
       expect(objectElement.keys()).to.deep.equal(['foo', 'z']);
@@ -188,12 +188,12 @@ describe('ObjectElement', function () {
 
   describe('#items', function () {
     it('provides a list of name/value pairs to iterate', function () {
-      var keys = [];
-      var values = [];
+      const keys = [];
+      const values = [];
 
       objectElement.items().forEach(function (item) {
-        var key = item[0];
-        var value = item[1];
+        const key = item[0];
+        const value = item[1];
 
         keys.push(key);
         values.push(value);
@@ -220,21 +220,21 @@ describe('ObjectElement', function () {
 
   describe('#map', function () {
     it('provides the keys', function () {
-      var keys = objectElement.map(function (value, key) {
+      const keys = objectElement.map(function (value, key) {
         return key.toValue();
       });
       expect(keys).to.deep.equal(['foo', 'z']);
     });
 
     it('provides the values', function () {
-      var values = objectElement.map(function (value) {
+      const values = objectElement.map(function (value) {
         return value.toValue();
       });
       expect(values).to.deep.equal(['bar', 1]);
     });
 
     it('provides the members', function () {
-      var keys = objectElement.map(function (value, key, member) {
+      const keys = objectElement.map(function (value, key, member) {
         return member.key.toValue();
       });
       expect(keys).to.deep.equal(['foo', 'z']);
@@ -243,7 +243,7 @@ describe('ObjectElement', function () {
 
   describe('#compactMap', function () {
     it('provides the keys', function () {
-      var keys = objectElement.compactMap(function (value, key) {
+      const keys = objectElement.compactMap(function (value, key) {
         if (key.toValue() === 'foo') {
           return key.toValue();
         }
@@ -252,7 +252,7 @@ describe('ObjectElement', function () {
     });
 
     it('provides the values', function () {
-      var values = objectElement.compactMap(function (value, key) {
+      const values = objectElement.compactMap(function (value, key) {
         if (key.toValue() === 'foo') {
           return value.toValue();
         }
@@ -261,7 +261,7 @@ describe('ObjectElement', function () {
     });
 
     it('provides the members', function () {
-      var keys = objectElement.compactMap(function (value, key, member) {
+      const keys = objectElement.compactMap(function (value, key, member) {
         if (key.toValue() === 'foo') {
           return member.key.toValue();
         }
@@ -272,21 +272,21 @@ describe('ObjectElement', function () {
 
   describe('#filter', function () {
     it('allows for filtering on keys', function () {
-      var foo = objectElement.filter(function (value, key) {
+      const foo = objectElement.filter(function (value, key) {
         return key.equals('foo');
       });
       expect(foo.keys()).to.deep.equal(['foo']);
     });
 
     it('allows for filtering on values', function () {
-      var foo = objectElement.filter(function (value) {
+      const foo = objectElement.filter(function (value) {
         return value.equals('bar');
       });
       expect(foo.keys()).to.deep.equal(['foo']);
     });
 
     it('allows for filtering on members', function () {
-      var foo = objectElement.filter(function (value, key, member) {
+      const foo = objectElement.filter(function (value, key, member) {
         return member.value.equals('bar');
       });
       expect(foo.keys()).to.deep.equal(['foo']);
@@ -295,21 +295,21 @@ describe('ObjectElement', function () {
 
   describe('#reject', function () {
     it('allows for rejecting on keys', function () {
-      var foo = objectElement.reject(function (value, key) {
+      const foo = objectElement.reject(function (value, key) {
         return key.equals('foo');
       });
       expect(foo.keys()).to.deep.equal(['z']);
     });
 
     it('allows for rejecting on values', function () {
-      var foo = objectElement.reject(function (value) {
+      const foo = objectElement.reject(function (value) {
         return value.equals('bar');
       });
       expect(foo.keys()).to.deep.equal(['z']);
     });
 
     it('allows for rejecting on members', function () {
-      var foo = objectElement.reject(function (value, key, member) {
+      const foo = objectElement.reject(function (value, key, member) {
         return member.value.equals('bar');
       });
       expect(foo.keys()).to.deep.equal(['z']);
@@ -317,7 +317,7 @@ describe('ObjectElement', function () {
   });
 
   describe('#reduce', function () {
-    var numbers = new ObjectElement({
+    const numbers = new ObjectElement({
       a: 1,
       b: 2,
       c: 3,
@@ -325,7 +325,7 @@ describe('ObjectElement', function () {
     });
 
     it('allows for reducing on keys', function () {
-      var letters = numbers.reduce(function (result, item, key) {
+      const letters = numbers.reduce(function (result, item, key) {
         return result.push(key);
       }, []);
       expect(letters.toValue()).to.deep.equal(['a', 'b', 'c', 'd']);
@@ -340,7 +340,7 @@ describe('ObjectElement', function () {
 
     context('when no beginning value is given', function () {
       it('correctly reduces the object', function () {
-        var total = numbers.reduce(function (result, item) {
+        const total = numbers.reduce(function (result, item) {
           return result.toValue() + item.toValue();
         });
         expect(total.toValue()).to.equal(10);
@@ -349,7 +349,7 @@ describe('ObjectElement', function () {
 
     context('when a beginning value is given', function () {
       it('correctly reduces the object', function () {
-        var total = numbers.reduce(function (result, item) {
+        const total = numbers.reduce(function (result, item) {
           return result.toValue() + item.toValue();
         }, 20);
         expect(total.toValue()).to.equal(30);
@@ -359,7 +359,7 @@ describe('ObjectElement', function () {
 
   describe('#forEach', function () {
     it('provides the keys', function () {
-      var keys = [];
+      const keys = [];
       objectElement.forEach(function (value, key) {
         return keys.push(key.toValue());
       });
@@ -367,7 +367,7 @@ describe('ObjectElement', function () {
     });
 
     it('provides the values', function () {
-      var values = [];
+      const values = [];
       objectElement.forEach(function (value) {
         return values.push(value.toValue());
       });
@@ -375,7 +375,7 @@ describe('ObjectElement', function () {
     });
 
     it('provides the members', function () {
-      var keys = [];
+      const keys = [];
       objectElement.forEach(function (value, key, member) {
         return keys.push(member.key.toValue());
       });
@@ -385,14 +385,14 @@ describe('ObjectElement', function () {
 
   describe('#find', function () {
     it('allows for searching based on the keys', function () {
-      var search = objectElement.find(function (value, key) {
+      const search = objectElement.find(function (value, key) {
         return key.toValue() === 'z';
       });
       expect(search.toValue()).to.deep.equal([1]);
     });
 
     it('allows for searching based on the member', function () {
-      var search = objectElement.find(function (value, key, member) {
+      const search = objectElement.find(function (value, key, member) {
         return member.key.toValue() === 'z';
       });
       expect(search.toValue()).to.deep.equal([1]);

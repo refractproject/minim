@@ -1,11 +1,11 @@
-var expect = require('./spec-helper').expect;
-var minim = require('../src/minim');
-var Namespace = require('../src/namespace');
-var JSONSerialiser = require('../src/serialisers/json');
+const expect = require('./spec-helper').expect;
+const minim = require('../src/minim');
+const Namespace = require('../src/namespace');
+const JSONSerialiser = require('../src/serialisers/json');
 
 describe('Minim namespace', function () {
-  var namespace;
-  var NullElement; var ObjectElement; var StringElement;
+  let namespace;
+  let NullElement; let ObjectElement; let StringElement;
 
   beforeEach(function () {
     namespace = new Namespace();
@@ -36,7 +36,7 @@ describe('Minim namespace', function () {
     });
 
     it('can be added after instantiation', function () {
-      var testnamespace = new Namespace({noDefault: true});
+      const testnamespace = new Namespace({noDefault: true});
       testnamespace.useDefault();
       expect(testnamespace.elementMap).not.to.be.empty;
     });
@@ -44,9 +44,9 @@ describe('Minim namespace', function () {
 
   describe('#use', function () {
     it('can load a plugin module using the namespace property', function () {
-      var plugin = {
+      const plugin = {
         namespace(options) {
-          var base = options.base;
+          const base = options.base;
 
           // Register a new element
           base.register('null2', NullElement);
@@ -59,9 +59,9 @@ describe('Minim namespace', function () {
     });
 
     it('can load a plugin module using the load property', function () {
-      var plugin = {
+      const plugin = {
         load(options) {
-          var base = options.base;
+          const base = options.base;
 
           // Register a new element
           base.register('null3', NullElement);
@@ -89,7 +89,7 @@ describe('Minim namespace', function () {
   });
 
   describe('#detect', function () {
-    var test = function () { return true; };
+    const test = function () { return true; };
 
     it('should prepend by default', function () {
       namespace.elementDetection = [[test, NullElement]];
@@ -112,14 +112,14 @@ describe('Minim namespace', function () {
 
   describe('#elements', function () {
     it('should contain registered element classes', function () {
-      var elements = namespace.elements;
+      const elements = namespace.elements;
 
-      var elementValues = Object.keys(elements).map(function (name) {
+      const elementValues = Object.keys(elements).map(function (name) {
         return elements[name];
       });
       elementValues.shift();
 
-      var mapValues = Object.keys(namespace.elementMap).map(function (name) {
+      const mapValues = Object.keys(namespace.elementMap).map(function (name) {
         return namespace.elementMap[name];
       });
 
@@ -127,7 +127,7 @@ describe('Minim namespace', function () {
     });
 
     it('should use pascal casing', function () {
-      for (var name in namespace.elements) {
+      for (const name in namespace.elements) {
         expect(name[0]).to.equal(name[0].toUpperCase());
       }
     });

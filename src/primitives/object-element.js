@@ -1,9 +1,9 @@
-var negate = require('lodash/negate');
-var isObject = require('lodash/isObject');
+const negate = require('lodash/negate');
+const isObject = require('lodash/isObject');
 
-var ArrayElement = require('./array-element');
-var MemberElement = require('./member-element');
-var ObjectSlice = require('../object-slice');
+const ArrayElement = require('./array-element');
+const MemberElement = require('./member-element');
+const ObjectSlice = require('../object-slice');
 
 /**
  * @class
@@ -34,7 +34,7 @@ class ObjectElement extends ArrayElement {
    * @returns {Element}
    */
   get(name) {
-    var member = this.getMember(name);
+    const member = this.getMember(name);
 
     if (member) {
       return member.value;
@@ -59,7 +59,7 @@ class ObjectElement extends ArrayElement {
    * @param key
    */
   remove(name) {
-    var removed = null;
+    let removed = null;
 
     this.content = this.content.filter(function (item) {
       if (item.key.toValue() === name) {
@@ -78,7 +78,7 @@ class ObjectElement extends ArrayElement {
    * @returns {Element}
    */
   getKey(name) {
-    var member = this.getMember(name);
+    const member = this.getMember(name);
 
     if (member) {
       return member.key;
@@ -93,7 +93,7 @@ class ObjectElement extends ArrayElement {
    */
   set(keyOrObject, value) {
     if (isObject(keyOrObject)) {
-      var self = this;
+      const self = this;
       Object.keys(keyOrObject).forEach(function (objectKey) {
         self.set(objectKey, keyOrObject[objectKey]);
       });
@@ -102,8 +102,8 @@ class ObjectElement extends ArrayElement {
     }
 
     // Store as key for clarity
-    var key = keyOrObject;
-    var member = this.getMember(key);
+    const key = keyOrObject;
+    const member = this.getMember(key);
 
     if (member) {
       member.value = value;
@@ -130,7 +130,7 @@ class ObjectElement extends ArrayElement {
    * @returns {boolean}
    */
   hasKey(value) {
-    for (var i = 0; i < this.content.length; i += 1) {
+    for (let i = 0; i < this.content.length; i += 1) {
       if (this.content[i].key.equals(value)) {
         return true;
       }
@@ -165,10 +165,10 @@ class ObjectElement extends ArrayElement {
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
   compactMap(callback, thisArg) {
-    var results = [];
+    const results = [];
 
     this.forEach(function (value, key, member) {
-      var result = callback(value, key, member);
+      const result = callback(value, key, member);
 
       if (result) {
         results.push(result);

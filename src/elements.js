@@ -1,18 +1,18 @@
-var Element = require('./primitives/element');
-var NullElement = require('./primitives/null-element');
-var StringElement = require('./primitives/string-element');
-var NumberElement = require('./primitives/number-element');
-var BooleanElement = require('./primitives/boolean-element');
-var ArrayElement = require('./primitives/array-element');
-var MemberElement = require('./primitives/member-element');
-var ObjectElement = require('./primitives/object-element');
-var LinkElement = require('./elements/link-element');
-var RefElement = require('./elements/ref-element');
+const Element = require('./primitives/element');
+const NullElement = require('./primitives/null-element');
+const StringElement = require('./primitives/string-element');
+const NumberElement = require('./primitives/number-element');
+const BooleanElement = require('./primitives/boolean-element');
+const ArrayElement = require('./primitives/array-element');
+const MemberElement = require('./primitives/member-element');
+const ObjectElement = require('./primitives/object-element');
+const LinkElement = require('./elements/link-element');
+const RefElement = require('./elements/ref-element');
 
-var ArraySlice = require('./array-slice');
-var ObjectSlice = require('./object-slice');
+const ArraySlice = require('./array-slice');
+const ObjectSlice = require('./object-slice');
 
-var KeyValuePair = require('./key-value-pair');
+const KeyValuePair = require('./key-value-pair');
 
 /**
  * Refracts a JSON type to minim elements
@@ -33,9 +33,9 @@ function refract(value) {
   } else if (Array.isArray(value)) {
     return new ArrayElement(value.map(refract));
   } else if (typeof value === 'object') {
-    var element = new ObjectElement();
+    const element = new ObjectElement();
 
-    for (var key in value) {
+    for (const key in value) {
       element.set(key, value[key]);
     }
 

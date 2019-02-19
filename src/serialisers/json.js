@@ -19,7 +19,7 @@ class JSONSerialiser {
       throw new TypeError('Given element `' + element + '` is not an Element instance');
     }
 
-    var payload = {
+    const payload = {
       element: element.element,
     };
 
@@ -31,7 +31,7 @@ class JSONSerialiser {
       payload.attributes = this.serialiseObject(element.attributes);
     }
 
-    var content = this.serialiseContent(element.content);
+    const content = this.serialiseContent(element.content);
 
     if (content !== undefined) {
       payload.content = content;
@@ -49,8 +49,8 @@ class JSONSerialiser {
       throw new Error('Given value is not an object containing an element name');
     }
 
-    var ElementClass = this.namespace.getElementClass(value.element);
-    var element = new ElementClass();
+    const ElementClass = this.namespace.getElementClass(value.element);
+    const element = new ElementClass();
 
     if (element.element !== value.element) {
       element.element = value.element;
@@ -64,7 +64,7 @@ class JSONSerialiser {
       this.deserialiseObject(value.attributes, element.attributes);
     }
 
-    var content = this.deserialiseContent(value.content);
+    const content = this.deserialiseContent(value.content);
     if (content !== undefined || element.content === null) {
       element.content = content;
     }
@@ -78,7 +78,7 @@ class JSONSerialiser {
     if (content instanceof this.namespace.elements.Element) {
       return this.serialise(content);
     } else if (content instanceof this.namespace.KeyValuePair) {
-      var pair = {
+      const pair = {
         key: this.serialise(content.key),
       };
 
@@ -103,7 +103,7 @@ class JSONSerialiser {
       if (content.element) {
         return this.deserialise(content);
       } else if (content.key) {
-        var pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
+        const pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
 
         if (content.value) {
           pair.value = this.deserialise(content.value);
@@ -119,10 +119,10 @@ class JSONSerialiser {
   }
 
   serialiseObject(obj) {
-    var result = {};
+    const result = {};
 
     obj.keys().forEach(function (key) {
-      var value = obj.get(key);
+      const value = obj.get(key);
 
       if (value) {
         result[key] = this.serialise(value);

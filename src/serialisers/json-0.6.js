@@ -1,4 +1,4 @@
-var JSONSerialiser = require('./json');
+const JSONSerialiser = require('./json');
 
 module.exports = class JSONSerialiser06 extends JSONSerialiser {
   serialise(element) {
@@ -6,12 +6,12 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       throw new TypeError('Given element `' + element + '` is not an Element instance');
     }
 
-    var variable;
+    let variable;
     if (element._attributes && element.attributes.get('variable')) {
       variable = element.attributes.get('variable');
     }
 
-    var payload = {
+    const payload = {
       element: element.element,
     };
 
@@ -19,16 +19,16 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       payload.meta = this.serialiseObject(element.meta);
     }
 
-    var isEnum = (element.element === 'enum' || element.attributes.keys().indexOf('enumerations') !== -1);
+    const isEnum = (element.element === 'enum' || element.attributes.keys().indexOf('enumerations') !== -1);
 
     if (isEnum) {
-      var attributes = this.enumSerialiseAttributes(element);
+      const attributes = this.enumSerialiseAttributes(element);
 
       if (attributes) {
         payload.attributes = attributes;
       }
     } else if (element._attributes && element._attributes.length > 0) {
-      var attributes = element.attributes;
+      let attributes = element.attributes;
 
       // Meta attribute was renamed to metadata
       if (attributes.get('metadata')) {
@@ -52,7 +52,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     } else if (this[element.element + 'SerialiseContent']) {
       payload.content = this[element.element + 'SerialiseContent'](element, payload);
     } else if (element.content !== undefined) {
-      var content;
+      let content;
 
       if (variable && element.content.key) {
         content = element.content.clone();
@@ -106,14 +106,14 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   }
 
   enumSerialiseAttributes(element) {
-    var attributes = element.attributes.clone();
+    const attributes = element.attributes.clone();
 
     // Enumerations attribute was is placed inside content (see `enumSerialiseContent` below)
-    var enumerations = attributes.remove('enumerations') || new this.namespace.elements.Array([]);
+    const enumerations = attributes.remove('enumerations') || new this.namespace.elements.Array([]);
 
     // Remove fixed type attribute from samples and default
-    var defaultValue = attributes.get('default');
-    var samples = attributes.get('samples') || new this.namespace.elements.Array([]);
+    const defaultValue = attributes.get('default');
+    let samples = attributes.get('samples') || new this.namespace.elements.Array([]);
 
     if (defaultValue && defaultValue.content) {
       defaultValue.content.attributes.remove('typeAttributes');
@@ -150,11 +150,11 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     // If we don't have an enumerations, use the value (Drafter 3 behaviour)
 
     if (element._attributes) {
-      var enumerations = element.attributes.get('enumerations');
+      const enumerations = element.attributes.get('enumerations');
 
       if (enumerations && enumerations.length > 0) {
         return enumerations.content.map(function (enumeration) {
-          var element = enumeration.clone();
+          const element = enumeration.clone();
           element.attributes.remove('typeAttributes');
           return this.serialise(element);
         }, this);
@@ -162,7 +162,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     }
 
     if (element.content) {
-      var value = element.content.clone();
+      const value = element.content.clone();
       value.attributes.remove('typeAttributes');
       return [this.serialise(value)];
     }
@@ -183,8 +183,8 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       return new this.namespace.elements.Array(value.map(this.deserialise, this));
     }
 
-    var ElementClass = this.namespace.getElementClass(value.element);
-    var element = new ElementClass();
+    const ElementClass = this.namespace.getElementClass(value.element);
+    const element = new ElementClass();
 
     if (element.element !== value.element) {
       element.element = value.element;
@@ -198,7 +198,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       this.deserialiseObject(value.attributes, element.attributes);
     }
 
-    var content = this.deserialiseContent(value.content);
+    const content = this.deserialiseContent(value.content);
     if (content !== undefined || element.content === null) {
       element.content = content;
     }
@@ -210,24 +210,24 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       }
 
       // Unwrap the sample value (inside double array)
-      var samples = element.attributes.get('samples');
+      let samples = element.attributes.get('samples');
       element.attributes.remove('samples');
 
       if (samples) {
         // Re-wrap samples from array of array to array of enum's
 
-        var existingSamples = samples;
+        const existingSamples = samples;
 
         samples = new this.namespace.elements.Array();
         existingSamples.forEach(function (sample) {
           sample.forEach(function (sample) {
-            var enumElement = new ElementClass(sample);
+            const enumElement = new ElementClass(sample);
             enumElement.element = element.element;
             samples.push(enumElement);
           });
         });
 
-        var sample = samples.shift();
+        const sample = samples.shift();
 
         if (sample) {
           element.content = sample.content;
@@ -241,10 +241,10 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       }
 
       // Unwrap the default value
-      var defaultValue = element.attributes.get('default');
+      let defaultValue = element.attributes.get('default');
       if (defaultValue && defaultValue.length > 0) {
         defaultValue = defaultValue.get(0);
-        var defaultElement = new ElementClass(defaultValue);
+        const defaultElement = new ElementClass(defaultValue);
         defaultElement.element = element.element;
         element.attributes.set('default', defaultElement);
       }
@@ -252,7 +252,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       element.content = element.content[0];
     } else if (element.element === 'category') {
       // "meta" attribute has been renamed to metadata
-      var metadata = element.attributes.get('meta');
+      const metadata = element.attributes.get('meta');
 
       if (metadata) {
         element.attributes.set('metadata', metadata);
@@ -272,7 +272,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     if (content instanceof this.namespace.elements.Element) {
       return this.serialise(content);
     } else if (content instanceof this.namespace.KeyValuePair) {
-      var pair = {
+      const pair = {
         key: this.serialise(content.key),
       };
 
@@ -293,7 +293,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       if (content.element) {
         return this.deserialise(content);
       } else if (content.key) {
-        var pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
+        const pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
 
         if (content.value) {
           pair.value = this.deserialise(content.value);
@@ -337,17 +337,17 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     if (item.element === 'array') {
       // This is a plain array, but maybe it contains elements with
       // additional information? Let's see!
-      var values = [];
+      const values = [];
 
-      for (var index = 0; index < item.length; index += 1) {
-        var subItem = item.get(index);
+      for (let index = 0; index < item.length; index += 1) {
+        const subItem = item.get(index);
 
         if (this.shouldRefract(subItem) || key === 'default') {
           values.push(this.serialise(subItem));
         } else if (subItem.element === 'array' || subItem.element === 'object' || subItem.element === 'enum') {
           // items for array or enum inside array are always serialised
-          var self = this;
-          var value = subItem.children.map(function (subSubItem) {
+          const self = this;
+          const value = subItem.children.map(function (subSubItem) {
             return self.serialise(subSubItem);
           });
           values.push(value);
@@ -362,10 +362,10 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
     if (item.element === 'object') {
       // This is an object, so we need to check if it's members contain
       // additional information
-      var values = [];
-      var content = item.content || [];
+      const values = [];
+      const content = item.content || [];
 
-      for (var index = 0; index < content.length; index += 1) {
+      for (let index = 0; index < content.length; index += 1) {
         values.push(this.serialise(content[index]));
       }
 
@@ -376,7 +376,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   }
 
   serialiseEnum(element) {
-    var self = this;
+    const self = this;
 
     return element.children.map(function (item) {
       return self.serialise(item);
@@ -384,10 +384,10 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   }
 
   serialiseObject(obj) {
-    var result = {};
+    const result = {};
 
     obj.keys().forEach(function (key) {
-      var value = obj.get(key);
+      const value = obj.get(key);
 
       if (value) {
         result[key] = this.convertKeyToRefract(key, value);

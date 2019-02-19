@@ -1,11 +1,11 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var LinkElement = minim.getElementClass('link');
+const LinkElement = minim.getElementClass('link');
 
 describe('Link Element', function () {
   context('when creating an instance of LinkElement', function () {
-    var link;
+    let link;
 
     before(function () {
       link = new LinkElement();

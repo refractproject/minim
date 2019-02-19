@@ -1,10 +1,10 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const expect = require('../spec-helper').expect;
+const minim = require('../../src/minim').namespace();
 
-var BooleanElement = minim.getElementClass('boolean');
+const BooleanElement = minim.getElementClass('boolean');
 
 describe('BooleanElement', function () {
-  var booleanElement;
+  let booleanElement;
 
   beforeEach(function () {
     booleanElement = new BooleanElement(true);

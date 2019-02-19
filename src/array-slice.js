@@ -1,4 +1,4 @@
-var negate = require('lodash/negate');
+const negate = require('lodash/negate');
 
 // Coerces an a parameter into a callback for matching elements.
 // This accepts an element name, an element type and returns a
@@ -73,10 +73,10 @@ class ArraySlice {
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
   compactMap(transform, thisArg) {
-    var results = [];
+    const results = [];
 
     this.forEach(function (element) {
-      var result = transform(element);
+      const result = transform(element);
 
       if (result) {
         results.push(result);
@@ -203,7 +203,7 @@ class ArraySlice {
    * @memberof ArraySlice.prototype
    */
   getValue(index) {
-    var element = this.elements[index];
+    const element = this.elements[index];
 
     if (element) {
       return element.toValue();

@@ -1,5 +1,5 @@
-var negate = require('lodash/negate');
-var ArraySlice = require('./array-slice');
+const negate = require('lodash/negate');
+const ArraySlice = require('./array-slice');
 
 class ObjectSlice extends ArraySlice {
   map(callback, thisArg) {
