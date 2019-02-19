@@ -6,7 +6,6 @@
   "rules": {
     "array-callback-return": "off",
     "block-scoped-var": "off",
-    "brace-style": "off",
     "class-methods-use-this": "off",
     "comma-dangle": [
       "error",

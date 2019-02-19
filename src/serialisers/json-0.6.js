@@ -77,8 +77,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
 
     if (element.element === 'parseResult' || element.element === 'httpRequest'
         || element.element === 'httpResponse' || element.element === 'category'
-        || element.element === 'link')
-    {
+        || element.element === 'link') {
       return true;
     }
 
