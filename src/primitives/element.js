@@ -264,7 +264,7 @@ class Element {
       typeof value == 'string'
       || typeof value == 'number'
       || typeof value == 'boolean'
-      || typeof value == 'null'
+      || value === 'null'
       || value == undefined
     ) {
       // Primitive Values

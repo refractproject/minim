@@ -32,7 +32,6 @@
     "no-shadow": "off",
     "no-underscore-dangle": "off",
     "prefer-arrow-callback": "off",
-    "valid-typeof": "off",
     "vars-on-top": "off"
   },
   "overrides": [
