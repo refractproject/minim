@@ -256,7 +256,7 @@ describe('JSON 0.6 Serialiser', function () {
             ],
             [
               {
-                element:'string',
+                element: 'string',
                 content: 'East',
               },
             ],
@@ -396,7 +396,7 @@ describe('JSON 0.6 Serialiser', function () {
             ],
             [
               {
-                element:'string',
+                element: 'string',
                 content: 'East',
               },
             ],

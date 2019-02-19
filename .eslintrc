@@ -25,7 +25,6 @@
     "import/newline-after-import": "off",
     "import/no-unresolved": "off",
     "import/order": "off",
-    "key-spacing": "off",
     "max-len": "off",
     "no-else-return": "off",
     "no-loop-func": "off",
