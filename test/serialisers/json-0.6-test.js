@@ -53,7 +53,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'string',
-        content: 'Hello'
+        content: 'Hello',
       });
     });
 
@@ -68,8 +68,8 @@ describe('JSON 0.6 Serialiser', function() {
         element: 'custom',
         content: {
           element: 'string',
-          content: 'Hello'
-        }
+          content: 'Hello',
+        },
       });
     });
 
@@ -84,9 +84,9 @@ describe('JSON 0.6 Serialiser', function() {
         content: [
           {
             element: 'string',
-            content: 'Hello'
-          }
-        ]
+            content: 'Hello',
+          },
+        ],
       });
     });
 
@@ -96,7 +96,7 @@ describe('JSON 0.6 Serialiser', function() {
       var object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
-        element: 'array'
+        element: 'array',
       });
     });
 
@@ -118,9 +118,9 @@ describe('JSON 0.6 Serialiser', function() {
                 element: 'string',
                 content: 'hello',
               },
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
     });
 
@@ -136,13 +136,13 @@ describe('JSON 0.6 Serialiser', function() {
         content: {
           key: {
             element: 'string',
-            content: 'name'
+            content: 'name',
           },
           value: {
             element: 'string',
-            content: 'Doe'
+            content: 'Doe',
           },
-        }
+        },
       });
     });
 
@@ -157,9 +157,9 @@ describe('JSON 0.6 Serialiser', function() {
         content: {
           key: {
             element: 'string',
-            content: 'name'
+            content: 'name',
           },
-        }
+        },
       });
     });
 
@@ -172,9 +172,9 @@ describe('JSON 0.6 Serialiser', function() {
       expect(object).to.deep.equal({
         element: 'string',
         meta: {
-          title: 'Name'
+          title: 'Name',
         },
-        content: 'Doe'
+        content: 'Doe',
       });
     });
 
@@ -187,9 +187,9 @@ describe('JSON 0.6 Serialiser', function() {
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
-          thread: 123
+          thread: 123,
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
     });
 
@@ -204,10 +204,10 @@ describe('JSON 0.6 Serialiser', function() {
         attributes: {
           thread: {
             element: 'element',
-            content: 123
-          }
+            content: 123,
+          },
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
     });
 
@@ -246,20 +246,20 @@ describe('JSON 0.6 Serialiser', function() {
               {
                 element: 'string',
                 content: 'South',
-              }
+              },
             ],
             [
               {
                 element: 'string',
-                content: 'North'
-              }
+                content: 'North',
+              },
             ],
             [
               {
                 element:'string',
-                content: 'East'
-              }
-            ]
+                content: 'East',
+              },
+            ],
           ],
         },
         content: [
@@ -386,20 +386,20 @@ describe('JSON 0.6 Serialiser', function() {
               {
                 element: 'string',
                 content: 'South',
-              }
+              },
             ],
             [
               {
                 element: 'string',
-                content: 'North'
-              }
+                content: 'North',
+              },
             ],
             [
               {
                 element:'string',
-                content: 'East'
-              }
-            ]
+                content: 'East',
+              },
+            ],
           ],
         },
         content: [
@@ -440,16 +440,16 @@ describe('JSON 0.6 Serialiser', function() {
                 content: {
                   key: {
                     element: 'string',
-                    content: 'name'
+                    content: 'name',
                   },
                   value: {
                     element: 'string',
-                    content: 'Doe'
-                  }
-                }
-              }
-            ]
-          ]
+                    content: 'Doe',
+                  },
+                },
+              },
+            ],
+          ],
         },
       });
     });
@@ -470,15 +470,15 @@ describe('JSON 0.6 Serialiser', function() {
               content: {
                 key: {
                   element: 'string',
-                  content: 'name'
+                  content: 'name',
                 },
                 value: {
                   element: 'string',
-                  content: 'Doe'
-                }
-              }
-            }
-          ]
+                  content: 'Doe',
+                },
+              },
+            },
+          ],
         },
       });
     });
@@ -574,11 +574,11 @@ describe('JSON 0.6 Serialiser', function() {
           directions: [
             {
               'element': 'string',
-              'content': 'North'
-            }
-          ]
+              'content': 'North',
+            },
+          ],
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
 
       // Refract 1.0 serialisation
@@ -641,9 +641,9 @@ describe('JSON 0.6 Serialiser', function() {
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
-          default: 'North'
+          default: 'North',
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
 
       // Refract 1.0 serialisation
@@ -672,16 +672,16 @@ describe('JSON 0.6 Serialiser', function() {
           default: [
             {
               element: 'string',
-              content: 'North'
-            }
-          ]
+              content: 'North',
+            },
+          ],
         },
         content: [
           {
             element: 'string',
-            content: 'Hello World'
-          }
-        ]
+            content: 'Hello World',
+          },
+        ],
       });
 
       // Refract 1.0 serialisation
@@ -717,7 +717,7 @@ describe('JSON 0.6 Serialiser', function() {
         content: {
           path: 'element',
           href: 'content',
-        }
+        },
       });
 
       // Refract 1.0 serialisation
@@ -745,7 +745,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'sourceMap',
-        content: [[1, 2]]
+        content: [[1, 2]],
       });
 
       // Refract 1.0 serialisation
@@ -785,9 +785,9 @@ describe('JSON 0.6 Serialiser', function() {
         content: [
           {
             element: 'string',
-            content: 'Hello'
-          }
-        ]
+            content: 'Hello',
+          },
+        ],
       });
 
       // Refract 1.0 serialisation
@@ -809,9 +809,9 @@ describe('JSON 0.6 Serialiser', function() {
       expect(object).to.deep.equal({
         element: 'null',
         attributes: {
-          meta: 'example'
+          meta: 'example',
         },
-        content: null
+        content: null,
       });
     });
 
@@ -826,15 +826,15 @@ describe('JSON 0.6 Serialiser', function() {
           key: {
             element: 'string',
             attributes: {
-              variable: true
+              variable: true,
             },
             content: 'self',
           },
           value: {
             element: 'string',
             content: 'https://example.com',
-          }
-        }
+          },
+        },
       });
     });
 
@@ -845,7 +845,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(serialised).to.deep.equal({
         element: 'parseResult',
-        content: []
+        content: [],
       });
     });
 
@@ -856,7 +856,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(serialised).to.deep.equal({
         element: 'httpRequest',
-        content: []
+        content: [],
       });
     });
 
@@ -867,7 +867,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(serialised).to.deep.equal({
         element: 'httpResponse',
-        content: []
+        content: [],
       });
     });
 
@@ -889,7 +889,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(serialised).to.deep.equal({
         element: 'category',
-        content: []
+        content: [],
       });
     });
   });
@@ -898,7 +898,7 @@ describe('JSON 0.6 Serialiser', function() {
     it('deserialise from a JSON object', function() {
       var element = serialiser.deserialise({
         element: 'string',
-        content: 'Hello'
+        content: 'Hello',
       });
 
       expect(element).to.be.instanceof(minim.elements.String);
@@ -911,7 +911,7 @@ describe('JSON 0.6 Serialiser', function() {
         content: {
           element: 'string',
           content: 'Hello',
-        }
+        },
       });
 
       expect(element).to.be.instanceof(minim.Element);
@@ -926,8 +926,8 @@ describe('JSON 0.6 Serialiser', function() {
           {
             element: 'string',
             content: 'Hello',
-          }
-        ]
+          },
+        ],
       });
 
       expect(element).to.be.instanceof(minim.elements.Array);
@@ -939,8 +939,8 @@ describe('JSON 0.6 Serialiser', function() {
       var element = serialiser.deserialise({
         element: 'object',
         content: {
-          message: 'hello'
-        }
+          message: 'hello',
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Element);
@@ -957,9 +957,9 @@ describe('JSON 0.6 Serialiser', function() {
           },
           value: {
             element: 'string',
-            content: 'Doe'
-          }
-        }
+            content: 'Doe',
+          },
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Member);
@@ -977,8 +977,8 @@ describe('JSON 0.6 Serialiser', function() {
           key: {
             element: 'string',
             content: 'name',
-          }
-        }
+          },
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Member);
@@ -992,8 +992,8 @@ describe('JSON 0.6 Serialiser', function() {
       var element = serialiser.deserialise({
         element: 'string',
         meta: {
-          title: 'hello'
-        }
+          title: 'hello',
+        },
       });
 
       expect(element.title).to.be.instanceof(minim.elements.String);
@@ -1006,9 +1006,9 @@ describe('JSON 0.6 Serialiser', function() {
         meta: {
           title: {
             element: 'string',
-            content: 'hello'
-          }
-        }
+            content: 'hello',
+          },
+        },
       });
 
       expect(element.title).to.be.instanceof(minim.elements.String);
@@ -1020,8 +1020,8 @@ describe('JSON 0.6 Serialiser', function() {
       var element = serialiser.deserialise({
         element: 'string',
         attributes: {
-          thing: 'hello'
-        }
+          thing: 'hello',
+        },
       });
 
       const attribute = element.attributes.get('thing');
@@ -1035,9 +1035,9 @@ describe('JSON 0.6 Serialiser', function() {
         attributes: {
           thing: {
             element: 'string',
-            content: 'hello'
-          }
-        }
+            content: 'hello',
+          },
+        },
       });
 
       const attribute = element.attributes.get('thing');
@@ -1088,7 +1088,7 @@ describe('JSON 0.6 Serialiser', function() {
                 },
               ],
             ],
-          }
+          },
         });
 
         expect(element.element).to.equal('enum');
@@ -1122,7 +1122,7 @@ describe('JSON 0.6 Serialiser', function() {
                 },
               ],
             ],
-          }
+          },
         });
 
         expect(element.element).to.equal('enum');
@@ -1157,7 +1157,7 @@ describe('JSON 0.6 Serialiser', function() {
                 content: 3,
               },
             ],
-          }
+          },
         });
 
         var defaultElement = element.attributes.get('default');
@@ -1199,8 +1199,8 @@ describe('JSON 0.6 Serialiser', function() {
               {
                 element: 'number',
                 content: 1337,
-              }
-            ]
+              },
+            ],
           },
           content: [
             {
@@ -1255,9 +1255,9 @@ describe('JSON 0.6 Serialiser', function() {
         element: 'dataStructure',
         content: [
           {
-            element: 'string'
-          }
-        ]
+            element: 'string',
+          },
+        ],
       });
 
       expect(dataStructure.content).to.be.instanceof(minim.elements.String);
@@ -1271,16 +1271,16 @@ describe('JSON 0.6 Serialiser', function() {
             {
               element: 'member',
               meta: {
-                classes: ['user']
+                classes: ['user'],
               },
               content: {
                 key: 'HOST',
-                value: 'https://example.com'
-              }
-            }
-          ]
+                value: 'https://example.com',
+              },
+            },
+          ],
         },
-        content: []
+        content: [],
       });
 
       var metadata = category.attributes.get('metadata');
@@ -1307,8 +1307,8 @@ describe('JSON 0.6 Serialiser', function() {
           value: {
             element: 'string',
             content: 'https://example.com',
-          }
-        }
+          },
+        },
       });
 
       expect(member).to.be.instanceof(minim.elements.Member);
@@ -1340,7 +1340,7 @@ describe('JSON 0.6 Serialiser', function() {
       it('deserialise boolean', function() {
         var element = serialiser.deserialise({
           element: 'boolean',
-          content: true
+          content: true,
         });
 
         expect(element).to.be.instanceof(minim.elements.Boolean);

@@ -10,7 +10,7 @@ describe('ObjectElement', function() {
   function setObject() {
     objectElement = new ObjectElement({
       foo: 'bar',
-      z: 1
+      z: 1,
     });
   }
 
@@ -54,7 +54,7 @@ describe('ObjectElement', function() {
     it('returns the object', function() {
       expect(objectElement.toValue()).to.deep.equal({
         foo: 'bar',
-        z: 1
+        z: 1,
       });
     });
   });
@@ -321,7 +321,7 @@ describe('ObjectElement', function() {
       a: 1,
       b: 2,
       c: 3,
-      d: 4
+      d: 4,
     });
 
     it('allows for reducing on keys', function() {

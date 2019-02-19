@@ -51,7 +51,7 @@ describe('Minim namespace', function() {
 
           // Register a new element
           base.register('null2', NullElement);
-        }
+        },
       };
 
       namespace.use(plugin);
@@ -66,7 +66,7 @@ describe('Minim namespace', function() {
 
           // Register a new element
           base.register('null3', NullElement);
-        }
+        },
       };
 
       namespace.use(plugin);
@@ -163,7 +163,7 @@ describe('Minim namespace', function() {
     it('provides a convenience fromRefract', function () {
       const element = namespace.fromRefract({
         element: 'string',
-        content: 'hello'
+        content: 'hello',
       });
 
       expect(element).to.be.instanceof(StringElement);
@@ -176,7 +176,7 @@ describe('Minim namespace', function() {
 
       expect(object).to.deep.equal({
         element: 'string',
-        content: 'hello'
+        content: 'hello',
       });
     });
   });

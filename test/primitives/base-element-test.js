@@ -13,7 +13,7 @@ describe('Element', function() {
         id: 'foobar',
         classes: ['a', 'b'],
         title: 'Title',
-        description: 'Description'
+        description: 'Description',
       });
 
       expect(element.meta.get('id').toValue()).to.equal('foobar');
@@ -151,7 +151,7 @@ describe('Element', function() {
       element.content = [new minim.Element(1)];
 
       expect(element.content).to.deep.equal([
-        new minim.Element(1)
+        new minim.Element(1),
       ]);
     });
 
@@ -159,17 +159,17 @@ describe('Element', function() {
       element.content = [true];
 
       expect(element.content).to.deep.equal([
-        new minim.elements.Boolean(true)
+        new minim.elements.Boolean(true),
       ]);
     });
 
     it('should allow setting object', function() {
       element.content = {
-        name: 'Doe'
+        name: 'Doe',
       };
 
       expect(element.content).to.deep.equal([
-        new minim.elements.Member('name', 'Doe')
+        new minim.elements.Member('name', 'Doe'),
       ]);
     });
 
@@ -184,7 +184,7 @@ describe('Element', function() {
 
       expect(element.content).to.deep.equal([
         new NumberElement(1),
-        new NumberElement(2)
+        new NumberElement(2),
       ]);
     });
 
@@ -237,9 +237,9 @@ describe('Element', function() {
 
     before(function() {
       el = new minim.elements.Object({
-        foo: 'bar'
+        foo: 'bar',
       }, {
-        id: 'foobar'
+        id: 'foobar',
       });
     });
 
@@ -262,7 +262,7 @@ describe('Element', function() {
       id: 'foobar',
       classes: ['a'],
       title: 'A Title',
-      description: 'A Description'
+      description: 'A Description',
     };
 
     context('when the meta is already set', function() {
@@ -305,8 +305,8 @@ describe('Element', function() {
           content: [
             {
               element: 'string',
-              content: 'a'
-            }
+              content: 'a',
+            },
           ],
         },
         title: {
@@ -316,8 +316,8 @@ describe('Element', function() {
         description: {
           element: 'string',
           content: 'A Description',
-        }
-      }
+        },
+      },
     });
 
     it('should allow removing property', function () {
@@ -337,8 +337,8 @@ describe('Element', function() {
         relation: {
           element: 'string',
           content: 'create',
-        }
-      }
+        },
+      },
     });
 
     it('should allow removing property', function () {
@@ -368,13 +368,13 @@ describe('Element', function() {
                     href: {
                       element: 'string',
                       content: '/bar',
-                    }
-                  }
-                }
-              ]
-            }
+                    },
+                  },
+                },
+              ],
+            },
           },
-          content: 'foobar'
+          content: 'foobar',
         });
       });
 
@@ -394,7 +394,7 @@ describe('Element', function() {
           // String with no links
           el = minim.fromRefract({
             element: 'string',
-            content: 'foobar'
+            content: 'foobar',
           });
         });
 
@@ -425,13 +425,13 @@ describe('Element', function() {
                         href: {
                           element: 'string',
                           content: '/bar',
-                        }
-                      }
-                    }
-                  ]
-                }
+                        },
+                      },
+                    },
+                  ],
+                },
               },
-              content: 'foobar'
+              content: 'foobar',
             });
           });
 
@@ -448,7 +448,7 @@ describe('Element', function() {
     it('allows setting links', function() {
       const element = new minim.Element();
       element.links = new minim.elements.Array([
-        new minim.elements.Link('el')
+        new minim.elements.Link('el'),
       ]);
 
       expect(element.links).to.be.instanceof(minim.elements.Array);
@@ -613,7 +613,7 @@ describe('Element', function() {
 
       const element = new minim.Element(
         new ArrayElement([
-          new StringElement('Hello World')
+          new StringElement('Hello World'),
         ])
       );
 
@@ -656,13 +656,13 @@ describe('Element', function() {
       object.push(new MemberElement(
         new StringElement('Three'),
         new ArrayElement([
-          new StringElement('Four')
+          new StringElement('Four'),
         ])
       ));
 
       const element = new ArrayElement([
         new StringElement('One'),
-        object
+        object,
       ]);
 
       element.freeze();
@@ -691,7 +691,7 @@ describe('Element', function() {
 
     it('returns array of element value', function () {
       const element = new minim.Element([
-        new minim.Element('Hello')
+        new minim.Element('Hello'),
       ]);
 
       expect(element.toValue()).to.deep.equal(['Hello']);
@@ -707,7 +707,7 @@ describe('Element', function() {
 
       expect(element.toValue()).to.deep.equal({
         key: 'name',
-        value: 'doe'
+        value: 'doe',
       });
     });
   });

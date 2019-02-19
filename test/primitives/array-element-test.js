@@ -303,10 +303,10 @@ describe('ArrayElement', function() {
       content: [
         {
           element: 'string',
-          content: 'foobar'
+          content: 'foobar',
         }, {
           element: 'string',
-          content: 'hello world'
+          content: 'hello world',
         }, {
           element: 'array',
           content: [
@@ -318,15 +318,15 @@ describe('ArrayElement', function() {
                   content: [
                     {
                       element: 'string',
-                      content: 'test-class'
+                      content: 'test-class',
                     },
                   ],
                 },
               },
-              content: 'baz'
+              content: 'baz',
             }, {
               element: 'boolean',
-              content: true
+              content: true,
             }, {
               element: 'array',
               content: [
@@ -336,18 +336,18 @@ describe('ArrayElement', function() {
                     id: {
                       element: 'string',
                       content: 'nested-id',
-                    }
+                    },
                   },
-                  content: 'bar'
+                  content: 'bar',
                 }, {
                   element: 'number',
-                  content: 4
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  content: 4,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
 
     var doc;

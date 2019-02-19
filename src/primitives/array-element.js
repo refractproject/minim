@@ -223,7 +223,7 @@ class ArrayElement extends Element {
       if (recursive && (item.findElements !== undefined)) {
         item.findElements(condition, {
           results: results,
-          recursive: recursive
+          recursive: recursive,
         });
       }
 

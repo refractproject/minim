@@ -9,7 +9,7 @@ describe('Element whose attribute has attribute', function() {
 
   before(function () {
     object = new ObjectElement({
-      foo: 'bar'
+      foo: 'bar',
     });
 
     string = new StringElement('xyz');

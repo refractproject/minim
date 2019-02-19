@@ -9,7 +9,14 @@
     "block-scoped-var": "off",
     "brace-style": "off",
     "class-methods-use-this": "off",
-    "comma-dangle": "off",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "functions": "never"
+      }
+    ],
     "consistent-return": "off",
     "dot-notation": "off",
     "eqeqeq": "off",

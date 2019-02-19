@@ -180,7 +180,7 @@ class Namespace {
     if (this._elements === undefined) {
       var name, pascal;
       this._elements = {
-        Element: this.Element
+        Element: this.Element,
       };
 
       for (name in this.elementMap) {

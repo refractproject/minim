@@ -23,7 +23,7 @@ describe('Minim Converters', function() {
     elementCheck('boolean', true);
     elementCheck('array', [1, 2, 3]);
     elementCheck('object', {
-      foo: 'bar'
+      foo: 'bar',
     });
   });
 
@@ -48,22 +48,22 @@ describe('Minim Converters', function() {
 
     elementCheck('null', {
       element: 'null',
-      content: null
+      content: null,
     });
 
     elementCheck('string', {
       element: 'string',
-      content: 'foo'
+      content: 'foo',
     });
 
     elementCheck('number', {
       element: 'number',
-      content: 4
+      content: 4,
     });
 
     elementCheck('boolean', {
       element: 'boolean',
-      content: true
+      content: true,
     });
 
     context('when given array', function() {
@@ -72,12 +72,12 @@ describe('Minim Converters', function() {
         content: [
           {
             element: 'number',
-            content: 1
+            content: 1,
           }, {
             element: 'number',
-            content: 2
-          }
-        ]
+            content: 2,
+          },
+        ],
       };
       var returnedElement;
 
@@ -107,15 +107,15 @@ describe('Minim Converters', function() {
                 element: 'string',
                 meta: {},
                 attributes: {},
-                content: 'foo'
+                content: 'foo',
               },
               value: {
                 element: 'string',
                 meta: {},
                 attributes: {},
-                content: 'bar'
-              }
-            }
+                content: 'bar',
+              },
+            },
           },
           {
             element: 'member',
@@ -126,17 +126,17 @@ describe('Minim Converters', function() {
                 element: 'string',
                 meta: {},
                 attributes: {},
-                content: 'z'
+                content: 'z',
               },
               value: {
                 element: 'number',
                 meta: {},
                 attributes: {},
-                content: 2
-              }
-            }
-          }
-        ]
+                content: 2,
+              },
+            },
+          },
+        ],
       };
       var returnedElement;
 
@@ -151,7 +151,7 @@ describe('Minim Converters', function() {
       it('has the correct values', function() {
         expect(returnedElement.toValue()).to.deep.equal({
           foo: 'bar',
-          z: 2
+          z: 2,
         });
       });
     });

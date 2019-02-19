@@ -99,7 +99,7 @@ class Element {
     if (this.content instanceof KeyValuePair) {
       return {
         key: this.content.key.toValue(),
-        value: this.content.value.toValue()
+        value: this.content.value.toValue(),
       };
     }
 

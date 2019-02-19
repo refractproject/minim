@@ -56,7 +56,7 @@ describe('JSON Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'string',
-        content: 'Hello'
+        content: 'Hello',
       });
     });
 
@@ -71,8 +71,8 @@ describe('JSON Serialiser', function() {
         element: 'custom',
         content: {
           element: 'string',
-          content: 'Hello'
-        }
+          content: 'Hello',
+        },
       });
     });
 
@@ -87,9 +87,9 @@ describe('JSON Serialiser', function() {
         content: [
           {
             element: 'string',
-            content: 'Hello'
-          }
-        ]
+            content: 'Hello',
+          },
+        ],
       });
     });
 
@@ -115,13 +115,13 @@ describe('JSON Serialiser', function() {
         content: {
           key: {
             element: 'string',
-            content: 'name'
+            content: 'name',
           },
           value: {
             element: 'string',
-            content: 'Doe'
+            content: 'Doe',
           },
-        }
+        },
       });
     });
 
@@ -136,9 +136,9 @@ describe('JSON Serialiser', function() {
         content: {
           key: {
             element: 'string',
-            content: 'name'
+            content: 'name',
           },
-        }
+        },
       });
     });
 
@@ -154,9 +154,9 @@ describe('JSON Serialiser', function() {
           title: {
             element: 'string',
             content: 'Name',
-          }
+          },
         },
-        content: 'Doe'
+        content: 'Doe',
       });
     });
 
@@ -171,10 +171,10 @@ describe('JSON Serialiser', function() {
         attributes: {
           thread: {
             element: 'number',
-            content: 123
+            content: 123,
           },
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
     });
 
@@ -189,10 +189,10 @@ describe('JSON Serialiser', function() {
         attributes: {
           thread: {
             element: 'element',
-            content: 123
-          }
+            content: 123,
+          },
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
     });
   });
@@ -205,7 +205,7 @@ describe('JSON Serialiser', function() {
     it('deserialise from a JSON object', function() {
       var element = serialiser.deserialise({
         element: 'string',
-        content: 'Hello'
+        content: 'Hello',
       });
 
       expect(element).to.be.instanceof(minim.elements.String);
@@ -218,7 +218,7 @@ describe('JSON Serialiser', function() {
         content: {
           element: 'string',
           content: 'Hello',
-        }
+        },
       });
 
       expect(element).to.be.instanceof(minim.Element);
@@ -233,8 +233,8 @@ describe('JSON Serialiser', function() {
           {
             element: 'string',
             content: 'Hello',
-          }
-        ]
+          },
+        ],
       });
 
       expect(element).to.be.instanceof(minim.elements.Array);
@@ -252,9 +252,9 @@ describe('JSON Serialiser', function() {
           },
           value: {
             element: 'string',
-            content: 'Doe'
-          }
-        }
+            content: 'Doe',
+          },
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Member);
@@ -272,8 +272,8 @@ describe('JSON Serialiser', function() {
           key: {
             element: 'string',
             content: 'name',
-          }
-        }
+          },
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Member);
@@ -290,8 +290,8 @@ describe('JSON Serialiser', function() {
           title: {
             element: 'string',
             content: 'hello',
-          }
-        }
+          },
+        },
       });
 
       expect(element.title).to.be.instanceof(minim.elements.String);
@@ -304,9 +304,9 @@ describe('JSON Serialiser', function() {
         attributes: {
           thing: {
             element: 'string',
-            content: 'hello'
-          }
-        }
+            content: 'hello',
+          },
+        },
       });
 
       const attribute = element.attributes.get('thing');
@@ -338,7 +338,7 @@ describe('JSON Serialiser', function() {
       it('deserialise boolean', function() {
         var element = serialiser.deserialise({
           element: 'boolean',
-          content: true
+          content: true,
         });
 
         expect(element).to.be.instanceof(minim.elements.Boolean);

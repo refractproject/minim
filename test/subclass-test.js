@@ -47,11 +47,11 @@ describe('Minim subclasses', function() {
                 name: {
                   element: 'string',
                   content: 'Content-Type',
-                }
+                },
               },
-              content: 'application/json'
-            }
-          ]
+              content: 'application/json',
+            },
+          ],
         },
         foo: {
           element: 'string',
@@ -62,11 +62,11 @@ describe('Minim subclasses', function() {
           content: [
             {
               element: 'string',
-              content: 'test'
-            }
-          ]
-        }
-      }
+              content: 'test',
+            },
+          ],
+        },
+      },
     });
 
     it('should create headers element instance', function() {
@@ -110,7 +110,7 @@ describe('Minim subclasses', function() {
                     content: 'Content-Type',
                   },
                 },
-                content: 'application/json'
+                content: 'application/json',
               },
             ],
           },
