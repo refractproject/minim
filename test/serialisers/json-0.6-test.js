@@ -736,7 +736,7 @@ describe('JSON 0.6 Serialiser', function() {
     it('serialises a sourceMap element as values', function() {
       var element = new minim.elements.Element(
         new minim.elements.Array(
-          [new minim.elements.Array([1,2])]
+          [new minim.elements.Array([1, 2])]
         )
       );
       element.element = 'sourceMap';
@@ -745,7 +745,7 @@ describe('JSON 0.6 Serialiser', function() {
 
       expect(object).to.deep.equal({
         element: 'sourceMap',
-        content: [[1,2]]
+        content: [[1, 2]]
       });
 
       // Refract 1.0 serialisation
