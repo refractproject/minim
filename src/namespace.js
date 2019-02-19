@@ -1,5 +1,3 @@
-'use strict';
-
 var isNull = require('lodash/isNull');
 var isString = require('lodash/isString');
 var isNumber = require('lodash/isNumber');

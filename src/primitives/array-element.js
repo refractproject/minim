@@ -1,5 +1,3 @@
-'use strict';
-
 var Element = require('./element');
 var ArraySlice = require('../array-slice');
 var negate = require('lodash/negate');

@@ -1,5 +1,3 @@
-'use strict';
-
 var Element = require('./element');
 
 module.exports = class NullElement extends Element {

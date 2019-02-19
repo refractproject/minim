@@ -1,5 +1,3 @@
-'use strict';
-
 var isEqual = require('lodash/isEqual');
 var KeyValuePair = require('../key-value-pair');
 var ArraySlice = require('../array-slice.js');

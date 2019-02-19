@@ -55,7 +55,6 @@
     "semi": "off",
     "space-before-blocks": "off",
     "space-before-function-paren": "off",
-    "strict": "off",
     "valid-typeof": "off",
     "vars-on-top": "off"
   },

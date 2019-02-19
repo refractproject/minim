@@ -1,5 +1,3 @@
-'use strict';
-
 var Namespace = require('./namespace');
 var elements = require('./elements');
 

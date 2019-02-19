@@ -1,5 +1,3 @@
-'use strict';
-
 var negate = require('lodash/negate');
 var ArraySlice = require('./array-slice');
 

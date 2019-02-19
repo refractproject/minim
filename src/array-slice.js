@@ -1,5 +1,3 @@
-'use strict';
-
 var negate = require('lodash/negate');
 
 // Coerces an a parameter into a callback for matching elements.

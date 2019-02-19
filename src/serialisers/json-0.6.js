@@ -1,5 +1,3 @@
-'use strict';
-
 var JSONSerialiser = require('./json');
 
 module.exports = class JSONSerialiser06 extends JSONSerialiser {

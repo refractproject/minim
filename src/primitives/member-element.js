@@ -1,5 +1,3 @@
-'use strict';
-
 var KeyValuePair = require('../key-value-pair');
 var Element = require('./element');
 

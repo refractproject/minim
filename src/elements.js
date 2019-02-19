@@ -1,5 +1,3 @@
-'use strict';
-
 var Element = require('./primitives/element');
 var NullElement = require('./primitives/null-element');
 var StringElement = require('./primitives/string-element');

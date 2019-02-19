@@ -1,5 +1,3 @@
-'use strict';
-
 var fl = require('fantasy-land');
 var expect = require('../spec-helper').expect;
 var namespace = require('../../src/minim').namespace();
