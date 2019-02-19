@@ -241,7 +241,7 @@ class ArrayElement extends Element {
    * @returns {ArraySlice}
    */
   find(condition) {
-    return new ArraySlice(this.findElements(condition, {recursive: true}));
+    return new ArraySlice(this.findElements(condition, { recursive: true }));
   }
 
   /**

@@ -40,10 +40,10 @@ class Namespace {
    */
   use(plugin) {
     if (plugin.namespace) {
-      plugin.namespace({base: this});
+      plugin.namespace({ base: this });
     }
     if (plugin.load) {
-      plugin.load({base: this});
+      plugin.load({ base: this });
     }
     return this;
   }

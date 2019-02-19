@@ -424,7 +424,7 @@ describe('JSON 0.6 Serialiser', function () {
     });
 
     it('serialises samples attributes as element', function () {
-      const sample = new minim.elements.Object({name: 'Doe'});
+      const sample = new minim.elements.Object({ name: 'Doe' });
 
       const element = new minim.elements.Object();
       element.attributes.set('samples', [sample]);
@@ -455,7 +455,7 @@ describe('JSON 0.6 Serialiser', function () {
     });
 
     it('serialises default attributes as element', function () {
-      const defaultElement = new minim.elements.Object({name: 'Doe'});
+      const defaultElement = new minim.elements.Object({ name: 'Doe' });
 
       const element = new minim.elements.Object();
       element.attributes.set('default', defaultElement);

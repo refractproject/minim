@@ -49,7 +49,7 @@ describe('ObjectSlice', function () {
     });
 
     expect(filtered).to.be.instanceof(ObjectSlice);
-    expect(filtered.toValue()).to.deep.equal([{key: 'name', value: 'Doe'}]);
+    expect(filtered.toValue()).to.deep.equal([{ key: 'name', value: 'Doe' }]);
   });
 
   it('provides reject', function () {
@@ -63,7 +63,7 @@ describe('ObjectSlice', function () {
     });
 
     expect(filtered).to.be.instanceof(ObjectSlice);
-    expect(filtered.toValue()).to.deep.equal([{key: 'name', value: 'Bill'}]);
+    expect(filtered.toValue()).to.deep.equal([{ key: 'name', value: 'Bill' }]);
   });
 
   it('provides keys', function () {

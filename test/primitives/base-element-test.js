@@ -81,7 +81,7 @@ describe('Element', function () {
     });
 
     it('allows setting new attributes', function () {
-      element.meta = {title: 'test2'};
+      element.meta = { title: 'test2' };
       expect(element.meta.getValue('title')).to.equal('test2');
     });
   });
@@ -99,7 +99,7 @@ describe('Element', function () {
     });
 
     it('allows setting new attributes', function () {
-      element.attributes = {test: 'bar'};
+      element.attributes = { test: 'bar' };
       expect(element.attributes.getValue('test')).to.equal('bar');
     });
   });
@@ -252,8 +252,8 @@ describe('Element', function () {
     });
 
     it('does a deep equality check', function () {
-      expect(el.equals({ foo: 'bar'})).to.be.true;
-      expect(el.equals({ foo: 'baz'})).to.be.false;
+      expect(el.equals({ foo: 'bar' })).to.be.true;
+      expect(el.equals({ foo: 'baz' })).to.be.false;
     });
   });
 
