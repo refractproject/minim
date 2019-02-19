@@ -5,7 +5,6 @@
   },
   "rules": {
     "array-callback-return": "off",
-    "block-scoped-var": "off",
     "class-methods-use-this": "off",
     "comma-dangle": [
       "error",
