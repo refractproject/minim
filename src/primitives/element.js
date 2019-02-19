@@ -55,7 +55,7 @@ class Element {
   }
 
   primitive() {
-    return;
+
   }
 
   /**

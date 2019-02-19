@@ -36,7 +36,6 @@
     "no-return-assign": "off",
     "no-shadow": "off",
     "no-underscore-dangle": "off",
-    "no-useless-return": "off",
     "no-var": "off",
     "object-curly-spacing": "off",
     "object-property-newline": "off",
