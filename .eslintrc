@@ -4,7 +4,6 @@
     "mocha": true
   },
   "rules": {
-    "array-bracket-spacing": "off",
     "array-callback-return": "off",
     "block-scoped-var": "off",
     "brace-style": "off",
