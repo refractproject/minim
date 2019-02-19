@@ -33,7 +33,6 @@
     "no-extra-semi": "off",
     "no-loop-func": "off",
     "no-param-reassign": "off",
-    "no-plusplus": "off",
     "no-redeclare": "off",
     "no-restricted-syntax": "off",
     "no-return-assign": "off",

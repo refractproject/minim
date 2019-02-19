@@ -340,7 +340,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       // additional information? Let's see!
       var values = [];
 
-      for (var index = 0; index < item.length; index++) {
+      for (var index = 0; index < item.length; index += 1) {
         var subItem = item.get(index);
 
         if (this.shouldRefract(subItem) || key === 'default') {
@@ -366,7 +366,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       var values = [];
       var content = item.content || [];
 
-      for (var index = 0; index < content.length; index++) {
+      for (var index = 0; index < content.length; index += 1) {
         values.push(this.serialise(content[index]));
       }
 

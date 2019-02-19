@@ -131,7 +131,7 @@ class ObjectElement extends ArrayElement {
    * @returns {boolean}
    */
   hasKey(value) {
-    for (var i = 0; i < this.content.length; i++) {
+    for (var i = 0; i < this.content.length; i += 1) {
       if (this.content[i].key.equals(value)) {
         return true;
       }

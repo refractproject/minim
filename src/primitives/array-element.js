@@ -145,7 +145,7 @@ class ArrayElement extends Element {
     // Sending each function call to the registry allows for passing Minim
     // instances through the function return. This means you can return
     // primitive values or return Minim instances and reduce will still work.
-    for (var i = startIndex; i < this.length; i++) {
+    for (var i = startIndex; i < this.length; i += 1) {
       var item = this.content[i];
 
       if (this.primitive() === 'object') {
