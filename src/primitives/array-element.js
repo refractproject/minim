@@ -79,7 +79,7 @@ class ArrayElement extends Element {
   flatMap(callback, thisArg) {
     return this
       .map(callback, thisArg)
-      .reduce(function (a, b) { return a.concat(b); }, []);
+      .reduce((a, b) => a.concat(b), []);
   }
 
   /**
@@ -92,7 +92,7 @@ class ArrayElement extends Element {
   compactMap(transform, thisArg) {
     const results = [];
 
-    this.forEach(function (element) {
+    this.forEach((element) => {
       const result = transform(element);
 
       if (result) {
@@ -172,7 +172,7 @@ class ArrayElement extends Element {
   forEach(callback, thisArg) {
     const { refract } = this;
 
-    this.content.forEach(function (item, index) {
+    this.content.forEach((item, index) => {
       callback(item, refract(index));
     }, thisArg);
   }
@@ -217,7 +217,7 @@ class ArrayElement extends Element {
 
     // The forEach method for Object Elements returns value, key, and member.
     // This passes those along to the condition function below.
-    this.forEach(function (item, keyOrIndex, member) {
+    this.forEach((item, keyOrIndex, member) => {
       // We use duck-typing here to support any registered class that
       // may contain other elements.
       if (recursive && (item.findElements !== undefined)) {
@@ -249,9 +249,7 @@ class ArrayElement extends Element {
    * @returns {ArraySlice}
    */
   findByElement(element) {
-    return this.find(function (item) {
-      return item.element === element;
-    });
+    return this.find(item => item.element === element);
   }
 
   /**
@@ -260,9 +258,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   findByClass(className) {
-    return this.find(function (item) {
-      return item.classes.contains(className);
-    });
+    return this.find(item => item.classes.contains(className));
   }
 
   /**
@@ -272,9 +268,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   getById(id) {
-    return this.find(function (item) {
-      return item.id.toValue() === id;
-    }).first;
+    return this.find(item => item.id.toValue() === id).first;
   }
 
   /**
@@ -283,9 +277,7 @@ class ArrayElement extends Element {
    * @returns {boolean}
    */
   contains(value) {
-    return this.content.some(function (element) {
-      return element.equals(value);
-    });
+    return this.content.some(element => element.equals(value));
   }
 
   // Fantasy Land
@@ -312,8 +304,8 @@ class ArrayElement extends Element {
 
   ['fantasy-land/chain'](transform) {
     return this
-      .map(function (element) { return transform(element); }, this)
-      .reduce(function (a, b) { return a.concat(b); }, this.empty());
+      .map(element => transform(element), this)
+      .reduce((a, b) => a.concat(b), this.empty());
   }
 
   ['fantasy-land/filter'](callback) {

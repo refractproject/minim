@@ -4,7 +4,7 @@ const minim = require('../../src/minim').namespace();
 const ObjectElement = minim.getElementClass('object');
 const StringElement = minim.getElementClass('string');
 
-describe('ObjectElement', function () {
+describe('ObjectElement', () => {
   let objectElement;
 
   function setObject() {
@@ -14,44 +14,42 @@ describe('ObjectElement', function () {
     });
   }
 
-  before(function () {
+  before(() => {
     setObject();
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     setObject();
   });
 
-  describe('.content', function () {
+  describe('.content', () => {
     let correctElementNames;
     let storedElementNames;
 
-    before(function () {
+    before(() => {
       correctElementNames = ['string', 'number'];
-      storedElementNames = objectElement.content.map(function (el) {
-        return el.value.element;
-      });
+      storedElementNames = objectElement.content.map(el => el.value.element);
     });
 
-    it('has the correct element names', function () {
+    it('has the correct element names', () => {
       expect(storedElementNames).to.deep.equal(correctElementNames);
     });
   });
 
-  describe('#element', function () {
-    it('is a string element', function () {
+  describe('#element', () => {
+    it('is a string element', () => {
       expect(objectElement.element).to.equal('object');
     });
   });
 
-  describe('#primitive', function () {
-    it('returns object as the Refract primitive', function () {
+  describe('#primitive', () => {
+    it('returns object as the Refract primitive', () => {
       expect(objectElement.primitive()).to.equal('object');
     });
   });
 
-  describe('#toValue', function () {
-    it('returns the object', function () {
+  describe('#toValue', () => {
+    it('returns the object', () => {
       expect(objectElement.toValue()).to.deep.equal({
         foo: 'bar',
         z: 1,
@@ -59,87 +57,87 @@ describe('ObjectElement', function () {
     });
   });
 
-  describe('#get', function () {
-    context('when a property name is given', function () {
-      it('returns the value of the name given', function () {
+  describe('#get', () => {
+    context('when a property name is given', () => {
+      it('returns the value of the name given', () => {
         expect(objectElement.get('foo').toValue()).to.equal('bar');
       });
     });
 
-    context('when a property name is not given', function () {
-      it('is undefined', function () {
+    context('when a property name is not given', () => {
+      it('is undefined', () => {
         expect(objectElement.get()).to.be.undefined;
       });
     });
   });
 
-  describe('#getValue', function () {
-    context('when a property name is given', function () {
-      it('returns the value of the name given', function () {
+  describe('#getValue', () => {
+    context('when a property name is given', () => {
+      it('returns the value of the name given', () => {
         expect(objectElement.getValue('foo')).to.equal('bar');
       });
     });
 
-    context('when a property name is not given', function () {
-      it('is undefined', function () {
+    context('when a property name is not given', () => {
+      it('is undefined', () => {
         expect(objectElement.getValue()).to.be.undefined;
       });
     });
   });
 
-  describe('#getMember', function () {
-    context('when a property name is given', function () {
-      it('returns the correct member object', function () {
+  describe('#getMember', () => {
+    context('when a property name is given', () => {
+      it('returns the correct member object', () => {
         expect(objectElement.getMember('foo').value.toValue()).to.equal('bar');
       });
     });
 
-    context('when a property name is not given', function () {
-      it('is undefined', function () {
+    context('when a property name is not given', () => {
+      it('is undefined', () => {
         expect(objectElement.getMember()).to.be.undefined;
       });
     });
   });
 
-  describe('#getKey', function () {
-    context('when a property name is given', function () {
-      it('returns the correct key object', function () {
+  describe('#getKey', () => {
+    context('when a property name is given', () => {
+      it('returns the correct key object', () => {
         expect(objectElement.getKey('foo').toValue()).to.equal('foo');
       });
     });
 
-    context('when a property name given that does not exist', function () {
-      it('returns undefined', function () {
+    context('when a property name given that does not exist', () => {
+      it('returns undefined', () => {
         expect(objectElement.getKey('not-defined')).to.be.undefined;
       });
     });
 
-    context('when a property name is not given', function () {
-      it('returns undefined', function () {
+    context('when a property name is not given', () => {
+      it('returns undefined', () => {
         expect(objectElement.getKey()).to.be.undefined;
       });
     });
   });
 
-  describe('#set', function () {
-    it('sets the value of the name given', function () {
+  describe('#set', () => {
+    it('sets the value of the name given', () => {
       expect(objectElement.get('foo').toValue()).to.equal('bar');
       objectElement.set('foo', 'hello world');
       expect(objectElement.get('foo').toValue()).to.equal('hello world');
     });
 
-    it('sets a value that has not been defined yet', function () {
+    it('sets a value that has not been defined yet', () => {
       objectElement.set('bar', 'hello world');
       expect(objectElement.get('bar').toValue()).to.equal('hello world');
     });
 
-    it('accepts an object', function () {
+    it('accepts an object', () => {
       const obj = new ObjectElement();
       obj.set({ foo: 'bar' });
       expect(obj.get('foo').toValue()).to.equal('bar');
     });
 
-    it('should refract key and value from object', function () {
+    it('should refract key and value from object', () => {
       const obj = new ObjectElement();
       obj.set('key', 'value');
       const member = obj.getMember('key');
@@ -149,14 +147,14 @@ describe('ObjectElement', function () {
     });
   });
 
-  describe('#keys', function () {
-    it('gets the keys of all properties', function () {
+  describe('#keys', () => {
+    it('gets the keys of all properties', () => {
       expect(objectElement.keys()).to.deep.equal(['foo', 'z']);
     });
   });
 
-  describe('#remove', function () {
-    it('removes the given key', function () {
+  describe('#remove', () => {
+    it('removes the given key', () => {
       const removed = objectElement.remove('z');
 
       expect(removed.toValue()).to.deep.equal({ key: 'z', value: 1 });
@@ -164,8 +162,8 @@ describe('ObjectElement', function () {
     });
   });
 
-  describe('#remove non-existing item', function () {
-    it('should not change the object element', function () {
+  describe('#remove non-existing item', () => {
+    it('should not change the object element', () => {
       const removed = objectElement.remove('k');
 
       expect(removed).to.deep.equal(null);
@@ -173,25 +171,25 @@ describe('ObjectElement', function () {
     });
   });
 
-  describe('#values', function () {
-    it('gets the values of all properties', function () {
+  describe('#values', () => {
+    it('gets the values of all properties', () => {
       expect(objectElement.values()).to.deep.equal(['bar', 1]);
     });
   });
 
-  describe('#hasKey', function () {
-    it('checks to see if a key exists', function () {
+  describe('#hasKey', () => {
+    it('checks to see if a key exists', () => {
       expect(objectElement.hasKey('foo')).to.be.true;
       expect(objectElement.hasKey('does-not-exist')).to.be.false;
     });
   });
 
-  describe('#items', function () {
-    it('provides a list of name/value pairs to iterate', function () {
+  describe('#items', () => {
+    it('provides a list of name/value pairs to iterate', () => {
       const keys = [];
       const values = [];
 
-      objectElement.items().forEach(function (item) {
+      objectElement.items().forEach((item) => {
         const key = item[0];
         const value = item[1];
 
@@ -205,8 +203,8 @@ describe('ObjectElement', function () {
   });
 
   function itHascollectionMethod(method) {
-    describe(`#${method}`, function () {
-      it(`responds to #${method}`, function () {
+    describe(`#${method}`, () => {
+      it(`responds to #${method}`, () => {
         expect(objectElement).to.respondTo(method);
       });
     });
@@ -218,32 +216,26 @@ describe('ObjectElement', function () {
   itHascollectionMethod('push');
   itHascollectionMethod('add');
 
-  describe('#map', function () {
-    it('provides the keys', function () {
-      const keys = objectElement.map(function (value, key) {
-        return key.toValue();
-      });
+  describe('#map', () => {
+    it('provides the keys', () => {
+      const keys = objectElement.map((value, key) => key.toValue());
       expect(keys).to.deep.equal(['foo', 'z']);
     });
 
-    it('provides the values', function () {
-      const values = objectElement.map(function (value) {
-        return value.toValue();
-      });
+    it('provides the values', () => {
+      const values = objectElement.map(value => value.toValue());
       expect(values).to.deep.equal(['bar', 1]);
     });
 
-    it('provides the members', function () {
-      const keys = objectElement.map(function (value, key, member) {
-        return member.key.toValue();
-      });
+    it('provides the members', () => {
+      const keys = objectElement.map((value, key, member) => member.key.toValue());
       expect(keys).to.deep.equal(['foo', 'z']);
     });
   });
 
-  describe('#compactMap', function () {
-    it('provides the keys', function () {
-      const keys = objectElement.compactMap(function (value, key) {
+  describe('#compactMap', () => {
+    it('provides the keys', () => {
+      const keys = objectElement.compactMap((value, key) => {
         if (key.toValue() === 'foo') {
           return key.toValue();
         }
@@ -251,8 +243,8 @@ describe('ObjectElement', function () {
       expect(keys).to.deep.equal(['foo']);
     });
 
-    it('provides the values', function () {
-      const values = objectElement.compactMap(function (value, key) {
+    it('provides the values', () => {
+      const values = objectElement.compactMap((value, key) => {
         if (key.toValue() === 'foo') {
           return value.toValue();
         }
@@ -260,8 +252,8 @@ describe('ObjectElement', function () {
       expect(values).to.deep.equal(['bar']);
     });
 
-    it('provides the members', function () {
-      const keys = objectElement.compactMap(function (value, key, member) {
+    it('provides the members', () => {
+      const keys = objectElement.compactMap((value, key, member) => {
         if (key.toValue() === 'foo') {
           return member.key.toValue();
         }
@@ -270,53 +262,41 @@ describe('ObjectElement', function () {
     });
   });
 
-  describe('#filter', function () {
-    it('allows for filtering on keys', function () {
-      const foo = objectElement.filter(function (value, key) {
-        return key.equals('foo');
-      });
+  describe('#filter', () => {
+    it('allows for filtering on keys', () => {
+      const foo = objectElement.filter((value, key) => key.equals('foo'));
       expect(foo.keys()).to.deep.equal(['foo']);
     });
 
-    it('allows for filtering on values', function () {
-      const foo = objectElement.filter(function (value) {
-        return value.equals('bar');
-      });
+    it('allows for filtering on values', () => {
+      const foo = objectElement.filter(value => value.equals('bar'));
       expect(foo.keys()).to.deep.equal(['foo']);
     });
 
-    it('allows for filtering on members', function () {
-      const foo = objectElement.filter(function (value, key, member) {
-        return member.value.equals('bar');
-      });
+    it('allows for filtering on members', () => {
+      const foo = objectElement.filter((value, key, member) => member.value.equals('bar'));
       expect(foo.keys()).to.deep.equal(['foo']);
     });
   });
 
-  describe('#reject', function () {
-    it('allows for rejecting on keys', function () {
-      const foo = objectElement.reject(function (value, key) {
-        return key.equals('foo');
-      });
+  describe('#reject', () => {
+    it('allows for rejecting on keys', () => {
+      const foo = objectElement.reject((value, key) => key.equals('foo'));
       expect(foo.keys()).to.deep.equal(['z']);
     });
 
-    it('allows for rejecting on values', function () {
-      const foo = objectElement.reject(function (value) {
-        return value.equals('bar');
-      });
+    it('allows for rejecting on values', () => {
+      const foo = objectElement.reject(value => value.equals('bar'));
       expect(foo.keys()).to.deep.equal(['z']);
     });
 
-    it('allows for rejecting on members', function () {
-      const foo = objectElement.reject(function (value, key, member) {
-        return member.value.equals('bar');
-      });
+    it('allows for rejecting on members', () => {
+      const foo = objectElement.reject((value, key, member) => member.value.equals('bar'));
       expect(foo.keys()).to.deep.equal(['z']);
     });
   });
 
-  describe('#reduce', function () {
+  describe('#reduce', () => {
     const numbers = new ObjectElement({
       a: 1,
       b: 2,
@@ -324,77 +304,61 @@ describe('ObjectElement', function () {
       d: 4,
     });
 
-    it('allows for reducing on keys', function () {
-      const letters = numbers.reduce(function (result, item, key) {
-        return result.push(key);
-      }, []);
+    it('allows for reducing on keys', () => {
+      const letters = numbers.reduce((result, item, key) => result.push(key), []);
       expect(letters.toValue()).to.deep.equal(['a', 'b', 'c', 'd']);
     });
 
-    it('sends member and object elements', function () {
-      numbers.reduce(function (result, item, key, member, obj) {
+    it('sends member and object elements', () => {
+      numbers.reduce((result, item, key, member, obj) => {
         expect(obj.content).to.contain(member);
         expect(obj).to.equal(numbers);
       });
     });
 
-    context('when no beginning value is given', function () {
-      it('correctly reduces the object', function () {
-        const total = numbers.reduce(function (result, item) {
-          return result.toValue() + item.toValue();
-        });
+    context('when no beginning value is given', () => {
+      it('correctly reduces the object', () => {
+        const total = numbers.reduce((result, item) => result.toValue() + item.toValue());
         expect(total.toValue()).to.equal(10);
       });
     });
 
-    context('when a beginning value is given', function () {
-      it('correctly reduces the object', function () {
-        const total = numbers.reduce(function (result, item) {
-          return result.toValue() + item.toValue();
-        }, 20);
+    context('when a beginning value is given', () => {
+      it('correctly reduces the object', () => {
+        const total = numbers.reduce((result, item) => result.toValue() + item.toValue(), 20);
         expect(total.toValue()).to.equal(30);
       });
     });
   });
 
-  describe('#forEach', function () {
-    it('provides the keys', function () {
+  describe('#forEach', () => {
+    it('provides the keys', () => {
       const keys = [];
-      objectElement.forEach(function (value, key) {
-        return keys.push(key.toValue());
-      });
+      objectElement.forEach((value, key) => keys.push(key.toValue()));
       expect(keys).to.deep.equal(['foo', 'z']);
     });
 
-    it('provides the values', function () {
+    it('provides the values', () => {
       const values = [];
-      objectElement.forEach(function (value) {
-        return values.push(value.toValue());
-      });
+      objectElement.forEach(value => values.push(value.toValue()));
       expect(values).to.deep.equal(['bar', 1]);
     });
 
-    it('provides the members', function () {
+    it('provides the members', () => {
       const keys = [];
-      objectElement.forEach(function (value, key, member) {
-        return keys.push(member.key.toValue());
-      });
+      objectElement.forEach((value, key, member) => keys.push(member.key.toValue()));
       expect(keys).to.deep.equal(['foo', 'z']);
     });
   });
 
-  describe('#find', function () {
-    it('allows for searching based on the keys', function () {
-      const search = objectElement.find(function (value, key) {
-        return key.toValue() === 'z';
-      });
+  describe('#find', () => {
+    it('allows for searching based on the keys', () => {
+      const search = objectElement.find((value, key) => key.toValue() === 'z');
       expect(search.toValue()).to.deep.equal([1]);
     });
 
-    it('allows for searching based on the member', function () {
-      const search = objectElement.find(function (value, key, member) {
-        return member.key.toValue() === 'z';
-      });
+    it('allows for searching based on the member', () => {
+      const search = objectElement.find((value, key, member) => member.key.toValue() === 'z');
       expect(search.toValue()).to.deep.equal([1]);
     });
   });

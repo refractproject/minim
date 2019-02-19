@@ -3,32 +3,32 @@ const minim = require('../../src/minim').namespace();
 
 const MemberElement = minim.getElementClass('member');
 
-describe('MemberElement', function () {
+describe('MemberElement', () => {
   const member = new MemberElement('foo', 'bar', {}, { foo: 'bar' });
 
-  context('key', function () {
-    it('provides the set key', function () {
+  context('key', () => {
+    it('provides the set key', () => {
       expect(member.key.toValue()).to.equal('foo');
     });
 
-    it('sets the key', function () {
+    it('sets the key', () => {
       member.key = 'updated';
       expect(member.key.toValue()).to.equal('updated');
     });
   });
 
-  context('value', function () {
-    it('provides the set value', function () {
+  context('value', () => {
+    it('provides the set value', () => {
       expect(member.value.toValue()).to.equal('bar');
     });
 
-    it('sets the key', function () {
+    it('sets the key', () => {
       member.value = 'updated';
       expect(member.value.toValue()).to.equal('updated');
     });
   });
 
-  it('correctly sets the attributes', function () {
+  it('correctly sets the attributes', () => {
     expect(member.attributes.get('foo').toValue()).to.equal('bar');
   });
 });

@@ -3,40 +3,40 @@ const minim = require('../../src/minim').namespace();
 
 const StringElement = minim.getElementClass('string');
 
-describe('StringElement', function () {
+describe('StringElement', () => {
   let stringElement;
 
-  before(function () {
+  before(() => {
     stringElement = new StringElement('foobar');
   });
 
-  describe('#element', function () {
-    it('is a string', function () {
+  describe('#element', () => {
+    it('is a string', () => {
       expect(stringElement.element).to.equal('string');
     });
   });
 
-  describe('#primitive', function () {
-    it('returns string as the Refract primitive', function () {
+  describe('#primitive', () => {
+    it('returns string as the Refract primitive', () => {
       expect(stringElement.primitive()).to.equal('string');
     });
   });
 
-  describe('#get', function () {
-    it('returns the string value', function () {
+  describe('#get', () => {
+    it('returns the string value', () => {
       expect(stringElement.toValue()).to.equal('foobar');
     });
   });
 
-  describe('#set', function () {
-    it('sets the value of the string', function () {
+  describe('#set', () => {
+    it('sets the value of the string', () => {
       stringElement.set('hello world');
       expect(stringElement.toValue()).to.equal('hello world');
     });
   });
 
-  describe('#length', function () {
-    it('returns the length of the string', function () {
+  describe('#length', () => {
+    it('returns the length of the string', () => {
       expect(stringElement.length).to.equal(11);
     });
   });

@@ -2,43 +2,43 @@ const { expect } = require('./spec-helper');
 const minim = require('../src/minim');
 const { refract } = require('../src/minim');
 
-describe('refract', function () {
-  it('returns any given element without refracting', function () {
+describe('refract', () => {
+  it('returns any given element without refracting', () => {
     const element = new minim.StringElement('hello');
     const refracted = refract(element);
 
     expect(refracted).to.equal(element);
   });
 
-  it('can refract a string into a string element', function () {
+  it('can refract a string into a string element', () => {
     const element = refract('Hello');
 
     expect(element).to.be.instanceof(minim.StringElement);
     expect(element.content).to.equal('Hello');
   });
 
-  it('can refract a number into a number element', function () {
+  it('can refract a number into a number element', () => {
     const element = refract(1);
 
     expect(element).to.be.instanceof(minim.NumberElement);
     expect(element.content).to.equal(1);
   });
 
-  it('can refract a boolean into a boolean element', function () {
+  it('can refract a boolean into a boolean element', () => {
     const element = refract(true);
 
     expect(element).to.be.instanceof(minim.BooleanElement);
     expect(element.content).to.equal(true);
   });
 
-  it('can refract a null value into a null element', function () {
+  it('can refract a null value into a null element', () => {
     const element = refract(null);
 
     expect(element).to.be.instanceof(minim.NullElement);
     expect(element.content).to.equal(null);
   });
 
-  it('can refract an array of values into an array element', function () {
+  it('can refract an array of values into an array element', () => {
     const element = refract(['Hi', 1]);
 
     expect(element).to.be.instanceof(minim.ArrayElement);
@@ -49,7 +49,7 @@ describe('refract', function () {
     expect(element.get(1).content).to.equal(1);
   });
 
-  it('can refract an object into an object element', function () {
+  it('can refract an object into an object element', () => {
     const element = refract({ name: 'Doe' });
 
     expect(element).to.be.instanceof(minim.ObjectElement);

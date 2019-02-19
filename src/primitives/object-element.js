@@ -23,7 +23,7 @@ class ObjectElement extends ArrayElement {
   }
 
   toValue() {
-    return this.content.reduce(function (results, el) {
+    return this.content.reduce((results, el) => {
       results[el.key.toValue()] = el.value.toValue();
       return results;
     }, {});
@@ -50,9 +50,7 @@ class ObjectElement extends ArrayElement {
   getMember(name) {
     if (name === undefined) { return undefined; }
 
-    return this.content.find(function (element) {
-      return element.key.toValue() === name;
-    });
+    return this.content.find(element => element.key.toValue() === name);
   }
 
   /**
@@ -61,7 +59,7 @@ class ObjectElement extends ArrayElement {
   remove(name) {
     let removed = null;
 
-    this.content = this.content.filter(function (item) {
+    this.content = this.content.filter((item) => {
       if (item.key.toValue() === name) {
         removed = item;
         return false;
@@ -94,7 +92,7 @@ class ObjectElement extends ArrayElement {
   set(keyOrObject, value) {
     if (isObject(keyOrObject)) {
       const self = this;
-      Object.keys(keyOrObject).forEach(function (objectKey) {
+      Object.keys(keyOrObject).forEach((objectKey) => {
         self.set(objectKey, keyOrObject[objectKey]);
       });
 
@@ -115,15 +113,11 @@ class ObjectElement extends ArrayElement {
   }
 
   keys() {
-    return this.content.map(function (item) {
-      return item.key.toValue();
-    });
+    return this.content.map(item => item.key.toValue());
   }
 
   values() {
-    return this.content.map(function (item) {
-      return item.value.toValue();
-    });
+    return this.content.map(item => item.value.toValue());
   }
 
   /**
@@ -143,9 +137,7 @@ class ObjectElement extends ArrayElement {
    * @returns {array}
    */
   items() {
-    return this.content.map(function (item) {
-      return [item.key.toValue(), item.value.toValue()];
-    });
+    return this.content.map(item => [item.key.toValue(), item.value.toValue()]);
   }
 
   /**
@@ -153,9 +145,7 @@ class ObjectElement extends ArrayElement {
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    */
   map(callback, thisArg) {
-    return this.content.map(function (item) {
-      return callback(item.value, item.key, item);
-    }, thisArg);
+    return this.content.map(item => callback(item.value, item.key, item), thisArg);
   }
 
   /**
@@ -167,7 +157,7 @@ class ObjectElement extends ArrayElement {
   compactMap(callback, thisArg) {
     const results = [];
 
-    this.forEach(function (value, key, member) {
+    this.forEach((value, key, member) => {
       const result = callback(value, key, member);
 
       if (result) {
@@ -207,9 +197,7 @@ class ObjectElement extends ArrayElement {
    * @memberof ObjectElement.prototype
    */
   forEach(callback, thisArg) {
-    return this.content.forEach(function (item) {
-      return callback(item.value, item.key, item);
-    }, thisArg);
+    return this.content.forEach(item => callback(item.value, item.key, item), thisArg);
   }
 }
 

@@ -4,20 +4,20 @@ const minim = require('../../src/minim');
 const { RefElement } = minim;
 const { StringElement } = minim;
 
-describe('Ref Element', function () {
-  it('has ref element name', function () {
+describe('Ref Element', () => {
+  it('has ref element name', () => {
     const element = new RefElement();
 
     expect(element.element).to.equal('ref');
   });
 
-  it('has a default path of element', function () {
+  it('has a default path of element', () => {
     const element = new RefElement();
 
     expect(element.path.toValue()).to.equal('element');
   });
 
-  it('can set the ref element path', function () {
+  it('can set the ref element path', () => {
     const element = new RefElement();
     element.path = 'attributes';
 
@@ -27,7 +27,7 @@ describe('Ref Element', function () {
     expect(path.toValue()).to.be.equal('attributes');
   });
 
-  it('can get the ref element path', function () {
+  it('can get the ref element path', () => {
     const element = new RefElement();
     element.attributes.set('path', 'attributes');
 

@@ -4,7 +4,7 @@ const minim = require('../src/minim').namespace();
 const ArrayElement = minim.getElementClass('array');
 const StringElement = minim.getElementClass('string');
 
-describe('Minim subclasses', function () {
+describe('Minim subclasses', () => {
   class MyElement extends minim.elements.String {
     constructor(content, meta, attributes) {
       super(content, meta, attributes);
@@ -17,24 +17,24 @@ describe('Minim subclasses', function () {
   }
   minim.register(MyElement);
 
-  it('can extend the base element with its own method', function () {
+  it('can extend the base element with its own method', () => {
     const myElement = new MyElement();
     expect(myElement.ownMethod()).to.equal('It works!');
   });
 
-  context('when initializing', function () {
+  context('when initializing', () => {
     const myElement = new MyElement();
 
-    it('can overwrite the element name', function () {
+    it('can overwrite the element name', () => {
       expect(myElement.element).to.equal('myElement');
     });
 
-    it('returns the correct primitive element', function () {
+    it('returns the correct primitive element', () => {
       expect(myElement.primitive()).to.equal('string');
     });
   });
 
-  describe('deserializing attributes', function () {
+  describe('deserializing attributes', () => {
     const myElement = minim.fromRefract({
       element: 'myElement',
       attributes: {
@@ -69,15 +69,15 @@ describe('Minim subclasses', function () {
       },
     });
 
-    it('should create headers element instance', function () {
+    it('should create headers element instance', () => {
       expect(myElement.attributes.get('headers')).to.be.instanceof(ArrayElement);
     });
 
-    it('should leave foo alone', function () {
+    it('should leave foo alone', () => {
       expect(myElement.attributes.get('foo')).to.be.instanceof(StringElement);
     });
 
-    it('should create array of source map elements', function () {
+    it('should create array of source map elements', () => {
       const sourceMaps = myElement.attributes.get('sourceMap');
       expect(sourceMaps.content).to.have.length(1);
       expect(sourceMaps.content[0]).to.be.instanceOf(StringElement);
@@ -85,7 +85,7 @@ describe('Minim subclasses', function () {
     });
   });
 
-  describe('serializing attributes', function () {
+  describe('serializing attributes', () => {
     const myElement = new MyElement();
 
     myElement.attributes.set('headers', new ArrayElement(['application/json']));
@@ -93,7 +93,7 @@ describe('Minim subclasses', function () {
 
     myElement.attributes.set('sourceMap', ['string1', 'string2']);
 
-    it('should serialize element to JSON', function () {
+    it('should serialize element to JSON', () => {
       const refracted = minim.serialiser.serialise(myElement);
 
       expect(refracted).to.deep.equal({
@@ -131,7 +131,7 @@ describe('Minim subclasses', function () {
       });
     });
 
-    it('should round-trip using JSON serialiser', function () {
+    it('should round-trip using JSON serialiser', () => {
       const object = minim.serialiser.serialise(myElement);
       const element = minim.serialiser.deserialise(object);
       const serialised = minim.serialiser.serialise(element);

@@ -37,9 +37,7 @@ class ArraySlice {
    * @returns {Array}
    */
   toValue() {
-    return this.elements.map(function (element) {
-      return element.toValue();
-    });
+    return this.elements.map(element => element.toValue());
   }
 
   // High Order Functions
@@ -62,7 +60,7 @@ class ArraySlice {
   flatMap(callback, thisArg) {
     return this
       .map(callback, thisArg)
-      .reduce(function (a, b) { return a.concat(b); }, []);
+      .reduce((a, b) => a.concat(b), []);
   }
 
   /**
@@ -75,7 +73,7 @@ class ArraySlice {
   compactMap(transform, thisArg) {
     const results = [];
 
-    this.forEach(function (element) {
+    this.forEach((element) => {
       const result = transform(element);
 
       if (result) {
@@ -144,9 +142,7 @@ class ArraySlice {
    * @memberof ArraySlice.prototype
    */
   includes(value) {
-    return this.elements.some(function (element) {
-      return element.equals(value);
-    });
+    return this.elements.some(element => element.equals(value));
   }
 
   // Mutation

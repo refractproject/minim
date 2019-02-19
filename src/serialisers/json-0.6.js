@@ -121,7 +121,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
       attributes.set('default', new this.namespace.elements.Array([defaultValue.content]));
     }
 
-    samples.forEach(function (sample) {
+    samples.forEach((sample) => {
       sample.content.attributes.remove('typeAttributes');
     });
 
@@ -227,8 +227,8 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
         const existingSamples = samples;
 
         samples = new this.namespace.elements.Array();
-        existingSamples.forEach(function (sample) {
-          sample.forEach(function (sample) {
+        existingSamples.forEach((sample) => {
+          sample.forEach((sample) => {
             const enumElement = new ElementClass(sample);
             enumElement.element = element.element;
             samples.push(enumElement);
@@ -363,9 +363,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
         } else if (subItem.element === 'array' || subItem.element === 'object' || subItem.element === 'enum') {
           // items for array or enum inside array are always serialised
           const self = this;
-          const value = subItem.children.map(function (subSubItem) {
-            return self.serialise(subSubItem);
-          });
+          const value = subItem.children.map(subSubItem => self.serialise(subSubItem));
           values.push(value);
         } else {
           values.push(subItem.toValue());
@@ -394,9 +392,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
   serialiseEnum(element) {
     const self = this;
 
-    return element.children.map(function (item) {
-      return self.serialise(item);
-    });
+    return element.children.map(item => self.serialise(item));
   }
 
   serialiseObject(obj) {

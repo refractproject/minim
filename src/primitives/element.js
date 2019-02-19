@@ -78,9 +78,7 @@ class Element {
       if (this.content.clone) {
         copy.content = this.content.clone();
       } else if (Array.isArray(this.content)) {
-        copy.content = this.content.map(function (element) {
-          return element.clone();
-        });
+        copy.content = this.content.map(element => element.clone());
       } else {
         copy.content = this.content;
       }
@@ -104,9 +102,7 @@ class Element {
     }
 
     if (this.content && this.content.map) {
-      return this.content.map(function (element) {
-        return element.toValue();
-      }, this);
+      return this.content.map(element => element.toValue(), this);
     }
 
     return this.content;
@@ -189,10 +185,8 @@ class Element {
     }
 
     if (!elementNames.isEmpty) {
-      elements = elements.filter(function (element) {
-        let parentElements = element.parents.map(function (element) {
-          return element.element;
-        });
+      elements = elements.filter((element) => {
+        let parentElements = element.parents.map(element => element.element);
 
         for (const namesIndex in elementNames) {
           const name = elementNames[namesIndex];
@@ -455,10 +449,10 @@ class Element {
   get recursiveChildren() {
     const children = new ArraySlice();
 
-    this.children.forEach(function (element) {
+    this.children.forEach((element) => {
       children.push(element);
 
-      element.recursiveChildren.forEach(function (child) {
+      element.recursiveChildren.forEach((child) => {
         children.push(child);
       });
     });
