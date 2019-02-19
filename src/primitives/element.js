@@ -138,12 +138,11 @@ class Element {
    * @param names {...elementNames}
    * @returns {ArraySlice}
    */
-  findRecursive() {
+  findRecursive(...elementNames) {
     if (arguments.length > 1 && !this.isFrozen) {
       throw new Error('Cannot find recursive with multiple element names without first freezing the element. Call `element.freeze()`');
     }
 
-    const elementNames = [].concat.apply([], arguments);
     const elementName = elementNames.pop();
     let elements = new ArraySlice();
 
