@@ -1,5 +1,11 @@
 # Minim Changelog
 
+## Master
+
+### Breaking
+
+- Support for Node 4 has been removed. Minim now supports Node >= 6.
+
 ## 0.22.1 (2018-12-10)
 
 ### Bug Fixes
