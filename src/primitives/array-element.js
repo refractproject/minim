@@ -222,8 +222,8 @@ class ArrayElement extends Element {
       // may contain other elements.
       if (recursive && (item.findElements !== undefined)) {
         item.findElements(condition, {
-          results: results,
-          recursive: recursive,
+          results,
+          recursive,
         });
       }
 

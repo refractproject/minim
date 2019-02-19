@@ -45,7 +45,7 @@ describe('Minim namespace', function () {
   describe('#use', function () {
     it('can load a plugin module using the namespace property', function () {
       var plugin = {
-        namespace: function (options) {
+        namespace(options) {
           var base = options.base;
 
           // Register a new element
@@ -60,7 +60,7 @@ describe('Minim namespace', function () {
 
     it('can load a plugin module using the load property', function () {
       var plugin = {
-        load: function (options) {
+        load(options) {
           var base = options.base;
 
           // Register a new element

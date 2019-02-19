@@ -57,20 +57,20 @@ ArraySlice.prototype.refract = refract;
  * for handling with element instances.
  */
 module.exports = {
-  Element: Element,
-  NullElement: NullElement,
-  StringElement: StringElement,
-  NumberElement: NumberElement,
-  BooleanElement: BooleanElement,
-  ArrayElement: ArrayElement,
-  MemberElement: MemberElement,
-  ObjectElement: ObjectElement,
-  LinkElement: LinkElement,
-  RefElement: RefElement,
+  Element,
+  NullElement,
+  StringElement,
+  NumberElement,
+  BooleanElement,
+  ArrayElement,
+  MemberElement,
+  ObjectElement,
+  LinkElement,
+  RefElement,
 
-  refract: refract,
+  refract,
 
-  ArraySlice: ArraySlice,
-  ObjectSlice: ObjectSlice,
-  KeyValuePair: KeyValuePair,
+  ArraySlice,
+  ObjectSlice,
+  KeyValuePair,
 };
