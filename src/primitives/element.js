@@ -460,6 +460,6 @@ class Element {
 
     return children;
   }
-};
+}
 
 module.exports = Element;

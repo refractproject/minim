@@ -14,7 +14,7 @@ describe('Minim subclasses', function () {
     ownMethod() {
       return 'It works!';
     }
-  };
+  }
   minim.register(MyElement);
 
   it('can extend the base element with its own method', function () {

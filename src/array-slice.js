@@ -235,7 +235,7 @@ class ArraySlice {
   get first() {
     return this.elements[0];
   }
-};
+}
 
 if (typeof Symbol !== 'undefined') {
   ArraySlice.prototype[Symbol.iterator] = function () {

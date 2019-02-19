@@ -240,7 +240,7 @@ describe('ArrayElement', function () {
     function itAddsToArray(instance) {
       expect(instance.length).to.equal(5);
       expect(instance.get(4).toValue()).to.equal('foobar');
-    };
+    }
 
     describe('#shift', function () {
       it('removes an item from the start of an array', function () {

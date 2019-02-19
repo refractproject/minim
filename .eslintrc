@@ -29,7 +29,6 @@
     "key-spacing": "off",
     "max-len": "off",
     "no-else-return": "off",
-    "no-extra-semi": "off",
     "no-loop-func": "off",
     "no-param-reassign": "off",
     "no-redeclare": "off",

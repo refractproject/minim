@@ -41,6 +41,6 @@ class ObjectSlice extends ArraySlice {
       return value.toValue();
     });
   }
-};
+}
 
 module.exports = ObjectSlice;

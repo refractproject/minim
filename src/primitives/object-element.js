@@ -211,6 +211,6 @@ class ObjectElement extends ArrayElement {
       return callback(item.value, item.key, item);
     }, thisArg);
   }
-};
+}
 
 module.exports = ObjectElement;

@@ -210,7 +210,7 @@ describe('ObjectElement', function () {
         expect(objectElement).to.respondTo(method);
       });
     });
-  };
+  }
 
   itHascollectionMethod('map');
   itHascollectionMethod('filter');

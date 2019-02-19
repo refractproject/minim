@@ -363,7 +363,7 @@ class ArrayElement extends Element {
   get last() {
     return this.getIndex(this.length - 1);
   }
-};
+}
 
 ArrayElement.empty = function () {
   return new this();

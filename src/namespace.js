@@ -207,7 +207,7 @@ class Namespace {
   get serialiser() {
     return new JSONSerialiser(this);
   }
-};
+}
 
 JSONSerialiser.prototype.Namespace = Namespace;
 
