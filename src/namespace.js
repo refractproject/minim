@@ -129,7 +129,7 @@ class Namespace {
 
     var element;
 
-    for(var i = 0; i < this.elementDetection.length; i += 1) {
+    for (var i = 0; i < this.elementDetection.length; i += 1) {
       var test = this.elementDetection[i][0];
       var ElementClass = this.elementDetection[i][1];
 

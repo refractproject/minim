@@ -27,7 +27,6 @@
     "import/order": "off",
     "indent": "off",
     "key-spacing": "off",
-    "keyword-spacing": "off",
     "max-len": "off",
     "no-else-return": "off",
     "no-extra-semi": "off",
