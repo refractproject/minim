@@ -28,7 +28,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
         payload.attributes = attributes;
       }
     } else if (element._attributes && element._attributes.length > 0) {
-      let attributes = element.attributes;
+      let { attributes } = element;
 
       // Meta attribute was renamed to metadata
       if (attributes.get('metadata')) {
@@ -249,7 +249,7 @@ module.exports = class JSONSerialiser06 extends JSONSerialiser {
         element.attributes.set('default', defaultElement);
       }
     } else if (element.element === 'dataStructure' && Array.isArray(element.content)) {
-      element.content = element.content[0];
+      [element.content] = element.content;
     } else if (element.element === 'category') {
       // "meta" attribute has been renamed to metadata
       const metadata = element.attributes.get('meta');

@@ -1,4 +1,4 @@
-const expect = require('../spec-helper').expect;
+const { expect } = require('../spec-helper');
 const minim = require('../../src/minim').namespace();
 
 const ArrayElement = minim.getElementClass('array');

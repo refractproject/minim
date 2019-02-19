@@ -170,7 +170,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   forEach(callback, thisArg) {
-    const refract = this.refract;
+    const { refract } = this;
 
     this.content.forEach(function (item, index) {
       callback(item, refract(index));

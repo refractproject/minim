@@ -1,8 +1,8 @@
-const expect = require('./spec-helper').expect;
+const { expect } = require('./spec-helper');
 const minim = require('../src/minim');
-const Element = minim.Element;
-const StringElement = minim.StringElement;
-const ArraySlice = minim.ArraySlice;
+const { Element } = minim;
+const { StringElement } = minim;
+const { ArraySlice } = minim;
 
 describe('ArraySlice', function () {
   it('can be created from an array of elements', function () {

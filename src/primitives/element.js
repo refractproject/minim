@@ -408,11 +408,13 @@ class Element {
    * @type ArraySlice
    */
   get parents() {
-    let parent = this.parent;
+    let { parent } = this;
     const parents = new ArraySlice();
 
     while (parent) {
       parents.push(parent);
+
+      // eslint-disable-next-line prefer-destructuring
       parent = parent.parent;
     }
 

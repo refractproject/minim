@@ -1,6 +1,6 @@
-const expect = require('./spec-helper').expect;
+const { expect } = require('./spec-helper');
 const minim = require('../src/minim');
-const refract = require('../src/minim').refract;
+const { refract } = require('../src/minim');
 
 describe('refract', function () {
   it('returns any given element without refracting', function () {

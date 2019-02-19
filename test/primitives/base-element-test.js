@@ -1,10 +1,10 @@
-const expect = require('../spec-helper').expect;
+const { expect } = require('../spec-helper');
 const minim = require('../../src/minim').namespace();
 const KeyValuePair = require('../../src/key-value-pair');
-const RefElement = require('../../src/minim').RefElement;
-const ArraySlice = require('../../src/minim').ArraySlice;
-const ObjectSlice = require('../../src/minim').ObjectSlice;
-const NumberElement = require('../../src/minim').NumberElement;
+const { RefElement } = require('../../src/minim');
+const { ArraySlice } = require('../../src/minim');
+const { ObjectSlice } = require('../../src/minim');
+const { NumberElement } = require('../../src/minim');
 
 describe('Element', function () {
   context('when initializing', function () {
@@ -459,7 +459,7 @@ describe('Element', function () {
   describe('#children', function () {
     it('returns empty element slice when content is primitive', function () {
       const element = new minim.Element('value');
-      const children = element.children;
+      const { children } = element;
 
       expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(0);
@@ -468,7 +468,7 @@ describe('Element', function () {
     it('returns a direct child', function () {
       const child = new minim.Element('value');
       const element = new minim.Element(child);
-      const children = element.children;
+      const { children } = element;
 
       expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(1);
@@ -480,7 +480,7 @@ describe('Element', function () {
       const child2 = new minim.Element('value2');
 
       const element = new minim.Element([child1, child2]);
-      const children = element.children;
+      const { children } = element;
 
       expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(2);
@@ -492,7 +492,7 @@ describe('Element', function () {
       const key = new minim.Element('key');
       const element = new minim.Element(new KeyValuePair(key));
 
-      const children = element.children;
+      const { children } = element;
 
       expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(1);
@@ -504,7 +504,7 @@ describe('Element', function () {
       const value = new minim.Element('value');
       const element = new minim.Element(new KeyValuePair(key, value));
 
-      const children = element.children;
+      const { children } = element;
 
       expect(children).to.be.instanceof(ArraySlice);
       expect(children.length).to.equal(2);

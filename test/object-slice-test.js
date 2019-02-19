@@ -1,7 +1,7 @@
-const expect = require('./spec-helper').expect;
+const { expect } = require('./spec-helper');
 const minim = require('../src/minim');
-const MemberElement = minim.MemberElement;
-const ObjectSlice = minim.ObjectSlice;
+const { MemberElement } = minim;
+const { ObjectSlice } = minim;
 
 describe('ObjectSlice', function () {
   it('provides map', function () {

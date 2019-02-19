@@ -1,7 +1,7 @@
-const expect = require('../spec-helper').expect;
+const { expect } = require('../spec-helper');
 const minim = require('../../src/minim');
-const RefElement = minim.RefElement;
-const StringElement = minim.StringElement;
+const { RefElement } = minim;
+const { StringElement } = minim;
 
 describe('Ref Element', function () {
   it('has ref element name', function () {

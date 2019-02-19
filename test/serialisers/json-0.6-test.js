@@ -1,5 +1,5 @@
-const expect = require('../spec-helper').expect;
-const Namespace = require('../../src/minim').Namespace;
+const { expect } = require('../spec-helper');
+const { Namespace } = require('../../src/minim');
 const minim = require('../../src/minim').namespace();
 const KeyValuePair = require('../../src/key-value-pair');
 const JSONSerialiser = require('../../src/serialisers/json-0.6');

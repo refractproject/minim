@@ -1,4 +1,4 @@
-const expect = require('./spec-helper').expect;
+const { expect } = require('./spec-helper');
 const minim = require('../src/minim');
 const Namespace = require('../src/namespace');
 const JSONSerialiser = require('../src/serialisers/json');
@@ -46,7 +46,7 @@ describe('Minim namespace', function () {
     it('can load a plugin module using the namespace property', function () {
       const plugin = {
         namespace(options) {
-          const base = options.base;
+          const { base } = options;
 
           // Register a new element
           base.register('null2', NullElement);
@@ -61,7 +61,7 @@ describe('Minim namespace', function () {
     it('can load a plugin module using the load property', function () {
       const plugin = {
         load(options) {
-          const base = options.base;
+          const { base } = options;
 
           // Register a new element
           base.register('null3', NullElement);
@@ -112,7 +112,7 @@ describe('Minim namespace', function () {
 
   describe('#elements', function () {
     it('should contain registered element classes', function () {
-      const elements = namespace.elements;
+      const { elements } = namespace;
 
       const elementValues = Object.keys(elements).map(function (name) {
         return elements[name];
