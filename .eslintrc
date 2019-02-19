@@ -51,7 +51,6 @@
     "prefer-spread": "off",
     "prefer-template": "off",
     "quote-props": "off",
-    "quotes": "off",
     "space-before-blocks": "off",
     "space-before-function-paren": "off",
     "valid-typeof": "off",

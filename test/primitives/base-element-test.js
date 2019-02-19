@@ -190,10 +190,10 @@ describe('Element', function() {
 
     it('should allow setting ObjectSlice (converted to array)', function() {
       var MemberElement = minim.getElementClass('member');
-      element.content = new ObjectSlice([new MemberElement("name", "Doe")]);
+      element.content = new ObjectSlice([new MemberElement('name', 'Doe')]);
 
       expect(element.content).to.deep.equal([
-        new MemberElement("name", "Doe"),
+        new MemberElement('name', 'Doe'),
       ]);
     });
   });
