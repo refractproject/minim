@@ -1,14 +1,14 @@
 const { expect } = require('../spec-helper');
 const { Namespace } = require('../../lib/minim');
 const minim = require('../../lib/minim').namespace();
-const KeyValuePair = require('../../lib/key-value-pair');
-const JSONSerialiser = require('../../lib/serialisers/json-0.6');
+const KeyValuePair = require('../../lib/KeyValuePair');
+const JSON06Serialiser = require('../../lib/serialisers/JSON06Serialiser');
 
 describe('JSON 0.6 Serialiser', () => {
   let serialiser;
 
   beforeEach(() => {
-    serialiser = new JSONSerialiser(minim);
+    serialiser = new JSON06Serialiser(minim);
   });
 
   describe('initialisation', () => {
@@ -17,7 +17,7 @@ describe('JSON 0.6 Serialiser', () => {
     });
 
     it('creates a default namespace when no namespace is given', () => {
-      serialiser = new JSONSerialiser();
+      serialiser = new JSON06Serialiser();
       expect(serialiser.namespace).to.be.instanceof(Namespace);
     });
   });
