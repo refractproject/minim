@@ -1,6 +1,6 @@
 const fl = require('fantasy-land');
 const { expect } = require('../spec-helper');
-const namespace = require('../../src/minim').namespace();
+const namespace = require('../../lib/minim').namespace();
 
 const ArrayElement = namespace.getElementClass('array');
 

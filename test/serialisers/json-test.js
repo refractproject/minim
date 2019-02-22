@@ -1,8 +1,8 @@
 const { expect } = require('../spec-helper');
-const { Namespace } = require('../../src/minim');
-const minim = require('../../src/minim').namespace();
-const KeyValuePair = require('../../src/key-value-pair');
-const JSONSerialiser = require('../../src/serialisers/json');
+const { Namespace } = require('../../lib/minim');
+const minim = require('../../lib/minim').namespace();
+const KeyValuePair = require('../../lib/key-value-pair');
+const JSONSerialiser = require('../../lib/serialisers/json');
 
 describe('JSON Serialiser', () => {
   let serialiser;

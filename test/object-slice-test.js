@@ -1,5 +1,5 @@
 const { expect } = require('./spec-helper');
-const { MemberElement, ObjectSlice } = require('../src/minim');
+const { MemberElement, ObjectSlice } = require('../lib/minim');
 
 describe('ObjectSlice', () => {
   const thisArg = { message: 42 };

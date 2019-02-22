@@ -1,5 +1,5 @@
 const { expect } = require('./spec-helper');
-const minim = require('../src/minim');
+const minim = require('../lib/minim');
 
 const { Element } = minim;
 const { StringElement } = minim;

@@ -3,3 +3,4 @@ test
 .travis.yml
 karma.conf.js
 dist/.git-keep
+dist/lib

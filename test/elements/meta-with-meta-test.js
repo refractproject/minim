@@ -1,5 +1,5 @@
 const { expect } = require('../spec-helper');
-const minim = require('../../src/minim').namespace();
+const minim = require('../../lib/minim').namespace();
 
 const ObjectElement = minim.getElementClass('object');
 const StringElement = minim.getElementClass('string');
