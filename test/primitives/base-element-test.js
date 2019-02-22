@@ -784,6 +784,19 @@ describe('Element', () => {
         expect(element.getMetaProperty('title', '').isFrozen).to.be.true;
       });
     });
+
+    it('allows calling freeze on frozen element as no-op', () => {
+      // We must actually set values on meta/attributes for this test to work
+      // We are protecting against trying to set parent on children elements
+      const element = new minim.Element(new minim.Element(true));
+      element.title = 'Hello World';
+      element.attributes.set('version', 1.0);
+
+      element.freeze();
+      element.freeze();
+
+      expect(Object.isFrozen(element)).to.be.true;
+    });
   });
 
   describe('#parents', () => {

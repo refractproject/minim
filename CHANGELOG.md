@@ -8,6 +8,12 @@
 - Minim no longer uses [uptown](http://github.com/smizell/uptown) and thus the
   `extend` API has been removed.
 
+### Enhancements
+
+- Calling `.freeze()` on a frozen element is now supported. Previously you may
+  see an error thrown while freeze was trying to attach parents to any child
+  elements.
+
 ## 0.22.1 (2018-12-10)
 
 ### Bug Fixes
