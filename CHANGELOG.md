@@ -6,6 +6,12 @@
 
 - Support for Node 4 has been removed. Minim now supports Node >= 6.
 
+### Enhancements
+
+- Calling `.freeze()` on a frozen element is now supported. Previously you may
+  see an error thrown while freeze was trying to attach parents to any child
+  elements.
+
 ## 0.22.1 (2018-12-10)
 
 ### Bug Fixes
