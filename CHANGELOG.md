@@ -1,5 +1,12 @@
 # Minim Changelog
 
+## Master
+
+### Bug Fixes
+
+- Restores documentation coverage for all elements, some was unintentionally
+  removed in 0.23.0.
+
 ## 0.23.0 (2019-02-22)
 
 ### Breaking
