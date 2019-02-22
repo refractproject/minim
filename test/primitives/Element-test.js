@@ -1,10 +1,9 @@
 const { expect } = require('../spec-helper');
 const minim = require('../../lib/minim').namespace();
-const KeyValuePair = require('../../lib/key-value-pair');
-const { RefElement } = require('../../lib/minim');
-const { ArraySlice } = require('../../lib/minim');
-const { ObjectSlice } = require('../../lib/minim');
-const { NumberElement } = require('../../lib/minim');
+const KeyValuePair = require('../../lib/KeyValuePair');
+const {
+  RefElement, NumberElement, ArraySlice, ObjectSlice,
+} = require('../../lib/minim');
 
 describe('Element', () => {
   context('when initializing', () => {

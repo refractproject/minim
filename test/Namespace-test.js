@@ -1,7 +1,7 @@
 const { expect } = require('./spec-helper');
 const minim = require('../lib/minim');
-const Namespace = require('../lib/namespace');
-const JSONSerialiser = require('../lib/serialisers/json');
+const Namespace = require('../lib/Namespace');
+const JSONSerialiser = require('../lib/serialisers/JSONSerialiser');
 
 describe('Minim namespace', () => {
   let namespace;
