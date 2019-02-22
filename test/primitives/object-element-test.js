@@ -5,6 +5,8 @@ const ObjectElement = minim.getElementClass('object');
 const StringElement = minim.getElementClass('string');
 
 describe('ObjectElement', () => {
+  const thisArg = { message: 42 };
+
   let objectElement;
 
   function setObject() {
@@ -231,6 +233,14 @@ describe('ObjectElement', () => {
       const keys = objectElement.map((value, key, member) => member.key.toValue());
       expect(keys).to.deep.equal(['foo', 'z']);
     });
+
+    it('provides thisArg as this to callback', () => {
+      const keys = objectElement.map(function map(value, key) {
+        expect(this).to.deep.equal(thisArg);
+        return key.toValue();
+      }, thisArg);
+      expect(keys).to.deep.equal(['foo', 'z']);
+    });
   });
 
   describe('#compactMap', () => {
@@ -266,6 +276,18 @@ describe('ObjectElement', () => {
       });
       expect(keys).to.deep.equal(['foo']);
     });
+
+    it('provides thisArg as this to callback', () => {
+      const keys = objectElement.compactMap(function compactMap(value, key) {
+        expect(this).to.deep.equal(thisArg);
+        if (key.toValue() === 'foo') {
+          return key.toValue();
+        }
+
+        return undefined;
+      }, thisArg);
+      expect(keys).to.deep.equal(['foo']);
+    });
   });
 
   describe('#filter', () => {
@@ -283,6 +305,14 @@ describe('ObjectElement', () => {
       const foo = objectElement.filter((value, key, member) => member.value.equals('bar'));
       expect(foo.keys()).to.deep.equal(['foo']);
     });
+
+    it('provides thisArg as this to callback', () => {
+      const foo = objectElement.filter(function filter(value, key) {
+        expect(this).to.deep.equal(thisArg);
+        return key.equals('foo');
+      }, thisArg);
+      expect(foo.keys()).to.deep.equal(['foo']);
+    });
   });
 
   describe('#reject', () => {
@@ -298,6 +328,14 @@ describe('ObjectElement', () => {
 
     it('allows for rejecting on members', () => {
       const foo = objectElement.reject((value, key, member) => member.value.equals('bar'));
+      expect(foo.keys()).to.deep.equal(['z']);
+    });
+
+    it('provides thisArg as this to callback', () => {
+      const foo = objectElement.reject(function filter(value, key) {
+        expect(this).to.deep.equal(thisArg);
+        return key.equals('foo');
+      }, thisArg);
       expect(foo.keys()).to.deep.equal(['z']);
     });
   });
@@ -353,6 +391,17 @@ describe('ObjectElement', () => {
     it('provides the members', () => {
       const keys = [];
       objectElement.forEach((value, key, member) => keys.push(member.key.toValue()));
+      expect(keys).to.deep.equal(['foo', 'z']);
+    });
+
+    it('provides thisArg as this to callback', () => {
+      const keys = [];
+
+      objectElement.forEach(function forEach(value, key) {
+        expect(this).to.deep.equal(thisArg);
+        return keys.push(key.toValue());
+      }, thisArg);
+
       expect(keys).to.deep.equal(['foo', 'z']);
     });
   });

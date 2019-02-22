@@ -1,16 +1,18 @@
 const { expect } = require('./spec-helper');
-const minim = require('../src/minim');
-
-const { MemberElement } = minim;
-const { ObjectSlice } = minim;
+const { MemberElement, ObjectSlice } = require('../src/minim');
 
 describe('ObjectSlice', () => {
+  const thisArg = { message: 42 };
+
   it('provides map', () => {
     const slice = new ObjectSlice([
       new MemberElement('name', 'Doe'),
     ]);
 
-    const result = slice.map(value => value.toValue());
+    const result = slice.map(function map(value) {
+      expect(this).to.deep.equal(thisArg);
+      return value.toValue();
+    }, thisArg);
 
     expect(result).to.deep.equal(['Doe']);
   });
@@ -24,12 +26,14 @@ describe('ObjectSlice', () => {
     const members = [];
     const indexes = [];
 
-    slice.forEach((value, key, member, index) => {
+    slice.forEach(function forEach(value, key, member, index) {
       keys.push(key.toValue());
       values.push(value.toValue());
       members.push(member);
       indexes.push(index);
-    });
+
+      expect(this).to.deep.equal(thisArg);
+    }, thisArg);
 
     expect(keys).to.deep.equal(['name']);
     expect(values).to.deep.equal(['Doe']);
@@ -43,7 +47,10 @@ describe('ObjectSlice', () => {
       new MemberElement('name', 'Bill'),
     ]);
 
-    const filtered = slice.filter(value => value.toValue() === 'Doe');
+    const filtered = slice.filter(function filter(value) {
+      expect(this).to.deep.equal(thisArg);
+      return value.toValue() === 'Doe';
+    }, thisArg);
 
     expect(filtered).to.be.instanceof(ObjectSlice);
     expect(filtered.toValue()).to.deep.equal([{ key: 'name', value: 'Doe' }]);
@@ -55,7 +62,10 @@ describe('ObjectSlice', () => {
       new MemberElement('name', 'Bill'),
     ]);
 
-    const filtered = slice.reject(value => value.toValue() === 'Doe');
+    const filtered = slice.reject(function filter(value) {
+      expect(this).to.deep.equal(thisArg);
+      return value.toValue() === 'Doe';
+    }, thisArg);
 
     expect(filtered).to.be.instanceof(ObjectSlice);
     expect(filtered.toValue()).to.deep.equal([{ key: 'name', value: 'Bill' }]);

@@ -70,12 +70,12 @@ class ArraySlice {
     const results = [];
 
     this.forEach((element) => {
-      const result = transform(element);
+      const result = transform.bind(thisArg)(element);
 
       if (result) {
         results.push(result);
       }
-    }, thisArg);
+    });
 
     return results;
   }

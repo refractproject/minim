@@ -4,6 +4,8 @@ const minim = require('../../src/minim').namespace();
 const ArrayElement = minim.getElementClass('array');
 
 describe('ArrayElement', () => {
+  const thisArg = { message: 42 };
+
   context('value methods', () => {
     let arrayElement;
 
@@ -90,7 +92,10 @@ describe('ArrayElement', () => {
 
     describe('#map', () => {
       it('allows for mapping the content of the array', () => {
-        const newArray = arrayElement.map(item => item.toValue());
+        const newArray = arrayElement.map(function map(item) {
+          expect(this).to.deep.equal(thisArg);
+          return item.toValue();
+        }, thisArg);
         expect(newArray).to.deep.equal(['a', true, null, 1]);
       });
     });
@@ -118,33 +123,37 @@ describe('ArrayElement', () => {
 
     describe('#compactMap', () => {
       it('allows compact mapping the content of the array', () => {
-        const newArray = arrayElement.compactMap((item) => {
+        const newArray = arrayElement.compactMap(function compactMap(item) {
+          expect(this).to.deep.equal(thisArg);
+
           if (item.element === 'string' || item.element === 'number') {
             return item.toValue();
           }
 
           return undefined;
-        });
+        }, thisArg);
         expect(newArray).to.deep.equal(['a', 1]);
       });
     });
 
     describe('#filter', () => {
       it('allows for filtering the content', () => {
-        const newArray = arrayElement.filter((item) => {
+        const newArray = arrayElement.filter(function filter(item) {
+          expect(this).to.deep.equal(thisArg);
           const ref = item.toValue();
           return ref === 'a' || ref === 1;
-        });
+        }, thisArg);
         expect(newArray.toValue()).to.deep.equal(['a', 1]);
       });
     });
 
     describe('#reject', () => {
       it('allows for rejecting the content', () => {
-        const newArray = arrayElement.reject((item) => {
+        const newArray = arrayElement.reject(function (item) {
+          expect(this).to.deep.equal(thisArg);
           const ref = item.toValue();
           return ref === 'a' || ref === 1;
-        });
+        }, thisArg);
         expect(newArray.toValue()).to.deep.equal([true, null]);
       });
     });
@@ -184,10 +193,11 @@ describe('ArrayElement', () => {
         const indexes = [];
         const results = [];
 
-        arrayElement.forEach((item, index) => {
+        arrayElement.forEach(function forEach(item, index) {
           indexes.push(index.toValue());
           results.push(item);
-        });
+          expect(this).to.deep.equal(thisArg);
+        }, thisArg);
 
         expect(results.length).to.equal(4);
         expect(indexes).to.deep.equal([0, 1, 2, 3]);

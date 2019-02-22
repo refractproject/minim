@@ -144,7 +144,7 @@ class ObjectElement extends ArrayElement {
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    */
   map(callback, thisArg) {
-    return this.content.map(item => callback(item.value, item.key, item), thisArg);
+    return this.content.map(item => callback.bind(thisArg)(item.value, item.key, item));
   }
 
   /**
@@ -157,12 +157,12 @@ class ObjectElement extends ArrayElement {
     const results = [];
 
     this.forEach((value, key, member) => {
-      const result = callback(value, key, member);
+      const result = callback.bind(thisArg)(value, key, member);
 
       if (result) {
         results.push(result);
       }
-    }, thisArg);
+    });
 
     return results;
   }
@@ -196,7 +196,7 @@ class ObjectElement extends ArrayElement {
    * @memberof ObjectElement.prototype
    */
   forEach(callback, thisArg) {
-    return this.content.forEach(item => callback(item.value, item.key, item), thisArg);
+    return this.content.forEach(item => callback.bind(thisArg)(item.value, item.key, item));
   }
 }
 

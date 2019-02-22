@@ -6,6 +6,8 @@ const { StringElement } = minim;
 const { ArraySlice } = minim;
 
 describe('ArraySlice', () => {
+  const thisArg = { message: 42 };
+
   it('can be created from an array of elements', () => {
     const element = new Element();
     const slice = new ArraySlice([element]);
@@ -40,7 +42,10 @@ describe('ArraySlice', () => {
     const element = new Element('hello');
     const slice = new ArraySlice([element]);
 
-    const mapped = slice.map(e => e.toValue());
+    const mapped = slice.map(function map(e) {
+      expect(this).to.deep.equal(thisArg);
+      return e.toValue();
+    }, thisArg);
 
     expect(mapped).to.deep.equal(['hello']);
   });
@@ -51,7 +56,10 @@ describe('ArraySlice', () => {
       const two = new Element('two');
       const slice = new ArraySlice([one, two]);
 
-      const filtered = slice.filter(element => element.toValue() === 'one');
+      const filtered = slice.filter(function filter(element) {
+        expect(this).to.deep.equal(thisArg);
+        return element.toValue() === 'one';
+      }, thisArg);
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([one]);
@@ -86,7 +94,10 @@ describe('ArraySlice', () => {
       const two = new Element('two');
       const slice = new ArraySlice([one, two]);
 
-      const filtered = slice.reject(element => element.toValue() === 'one');
+      const filtered = slice.reject(function filter(element) {
+        expect(this).to.deep.equal(thisArg);
+        return element.toValue() === 'one';
+      }, thisArg);
 
       expect(filtered).to.be.instanceof(ArraySlice);
       expect(filtered.elements).to.deep.equal([two]);
@@ -154,7 +165,16 @@ describe('ArraySlice', () => {
     const two = new Element('two');
     const slice = new ArraySlice([one, two]);
 
-    const titles = slice.compactMap(e => e.attributes.get('default'));
+    const titles = slice.flatMap(function flatMap(e) {
+      expect(this).to.deep.equal(thisArg);
+      const defaultAttribute = e.attributes.get('default');
+
+      if (defaultAttribute) {
+        return [defaultAttribute];
+      }
+
+      return [];
+    }, thisArg);
 
     expect(titles).to.deep.equal([element]);
   });
@@ -166,7 +186,10 @@ describe('ArraySlice', () => {
     const two = new Element('two');
     const slice = new ArraySlice([one, two]);
 
-    const titles = slice.compactMap(e => e.attributes.get('default'));
+    const titles = slice.compactMap(function compactMap(e) {
+      expect(this).to.deep.equal(thisArg);
+      return e.attributes.get('default');
+    }, thisArg);
 
     expect(titles).to.deep.equal([element]);
   });
@@ -179,10 +202,11 @@ describe('ArraySlice', () => {
     const elements = [];
     const indexes = [];
 
-    slice.forEach((element, index) => {
+    slice.forEach(function forEach(element, index) {
       elements.push(element);
       indexes.push(index);
-    });
+      expect(this).to.deep.equal(thisArg);
+    }, thisArg);
 
     expect(elements).to.deep.equal([one, two]);
     expect(indexes).to.deep.equal([0, 1]);

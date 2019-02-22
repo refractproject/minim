@@ -93,12 +93,12 @@ class ArrayElement extends Element {
     const results = [];
 
     this.forEach((element) => {
-      const result = transform(element);
+      const result = transform.bind(thisArg)(element);
 
       if (result) {
         results.push(result);
       }
-    }, thisArg);
+    });
 
     return results;
   }
@@ -170,11 +170,9 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   forEach(callback, thisArg) {
-    const { refract } = this;
-
     this.content.forEach((item, index) => {
-      callback(item, refract(index));
-    }, thisArg);
+      callback.bind(thisArg)(item, this.refract(index));
+    });
   }
 
   /**

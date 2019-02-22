@@ -3,19 +3,19 @@ const ArraySlice = require('./array-slice');
 
 class ObjectSlice extends ArraySlice {
   map(callback, thisArg) {
-    return this.elements.map(member => callback(member.value, member.key, member), thisArg);
+    return this.elements.map(member => callback.bind(thisArg)(member.value, member.key, member));
   }
 
   filter(callback, thisArg) {
-    return new ObjectSlice(this.elements.filter(member => callback(member.value, member.key, member), thisArg));
+    return new ObjectSlice(this.elements.filter(member => callback.bind(thisArg)(member.value, member.key, member)));
   }
 
   reject(callback, thisArg) {
-    return this.filter(negate(callback, thisArg));
+    return this.filter(negate(callback.bind(thisArg)));
   }
 
   forEach(callback, thisArg) {
-    return this.elements.forEach((member, index) => callback(member.value, member.key, member, index), thisArg);
+    return this.elements.forEach((member, index) => { callback.bind(thisArg)(member.value, member.key, member, index); });
   }
 
   /**
