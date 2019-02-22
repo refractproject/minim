@@ -1,6 +1,6 @@
 # Minim Changelog
 
-## Master
+## 0.23.0 (2019-02-22)
 
 ### Breaking
 
