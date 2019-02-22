@@ -1,13 +1,11 @@
-'use strict';
+const isNull = require('lodash/isNull');
+const isString = require('lodash/isString');
+const isNumber = require('lodash/isNumber');
+const isBoolean = require('lodash/isBoolean');
+const isObject = require('lodash/isObject');
 
-var isNull = require('lodash/isNull');
-var isString = require('lodash/isString');
-var isNumber = require('lodash/isNumber');
-var isBoolean = require('lodash/isBoolean');
-var isObject = require('lodash/isObject');
-
-var JSONSerialiser = require('./serialisers/json');
-var elements = require('./elements');
+const JSONSerialiser = require('./serialisers/json');
+const elements = require('./elements');
 
 /**
  * @class
@@ -42,10 +40,10 @@ class Namespace {
    */
   use(plugin) {
     if (plugin.namespace) {
-      plugin.namespace({base: this});
+      plugin.namespace({ base: this });
     }
     if (plugin.load) {
-      plugin.load({base: this});
+      plugin.load({ base: this });
     }
     return this;
   }
@@ -109,7 +107,7 @@ class Namespace {
    * refract element.
    */
   detect(test, ElementClass, givenPrepend) {
-    var prepend = givenPrepend === undefined ? true : givenPrepend;
+    const prepend = givenPrepend === undefined ? true : givenPrepend;
 
     if (prepend) {
       this.elementDetection.unshift([test, ElementClass]);
@@ -129,11 +127,11 @@ class Namespace {
   toElement(value) {
     if (value instanceof this.Element) { return value; }
 
-    var element;
+    let element;
 
-    for(var i = 0; i < this.elementDetection.length; i++) {
-      var test = this.elementDetection[i][0];
-      var ElementClass = this.elementDetection[i][1];
+    for (let i = 0; i < this.elementDetection.length; i += 1) {
+      const test = this.elementDetection[i][0];
+      const ElementClass = this.elementDetection[i][1];
 
       if (test(value)) {
         element = new ElementClass(value);
@@ -148,7 +146,7 @@ class Namespace {
    * Get an element class given an element name.
    */
   getElementClass(element) {
-    var ElementClass = this.elementMap[element];
+    const ElementClass = this.elementMap[element];
 
     if (ElementClass === undefined) {
       // Fall back to the base element. We may not know what
@@ -180,18 +178,17 @@ class Namespace {
    */
   get elements() {
     if (this._elements === undefined) {
-      var name, pascal;
       this._elements = {
-        Element: this.Element
+        Element: this.Element,
       };
 
-      for (name in this.elementMap) {
+      Object.keys(this.elementMap).forEach((name) => {
         // Currently, all registered element types use a camelCaseName.
         // Converting to PascalCase is as simple as upper-casing the first
         // letter.
-        pascal = name[0].toUpperCase() + name.substr(1);
+        const pascal = name[0].toUpperCase() + name.substr(1);
         this._elements[pascal] = this.elementMap[name];
-      }
+      });
     }
 
     return this._elements;
@@ -209,7 +206,7 @@ class Namespace {
   get serialiser() {
     return new JSONSerialiser(this);
   }
-};
+}
 
 JSONSerialiser.prototype.Namespace = Namespace;
 

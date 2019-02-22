@@ -1,6 +1,4 @@
-'use strict';
-
-var negate = require('lodash/negate');
+const negate = require('lodash/negate');
 
 // Coerces an a parameter into a callback for matching elements.
 // This accepts an element name, an element type and returns a
@@ -8,16 +6,12 @@ var negate = require('lodash/negate');
 function coerceElementMatchingCallback(value) {
   // Element Name
   if (typeof value === 'string') {
-    return function (element) {
-      return element.element === value;
-    };
+    return element => element.element === value;
   }
 
   // Element Type
   if (value.constructor && value.extend) {
-    return function (element) {
-      return element instanceof value;
-    };
+    return element => element instanceof value;
   }
 
   return value;
@@ -39,9 +33,7 @@ class ArraySlice {
    * @returns {Array}
    */
   toValue() {
-    return this.elements.map(function (element) {
-      return element.toValue();
-    });
+    return this.elements.map(element => element.toValue());
   }
 
   // High Order Functions
@@ -64,7 +56,7 @@ class ArraySlice {
   flatMap(callback, thisArg) {
     return this
       .map(callback, thisArg)
-      .reduce(function (a, b) { return a.concat(b); }, []);
+      .reduce((a, b) => a.concat(b), []);
   }
 
   /**
@@ -75,15 +67,15 @@ class ArraySlice {
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
   compactMap(transform, thisArg) {
-    var results = [];
+    const results = [];
 
-    this.forEach(function (element) {
-      var result = transform(element);
+    this.forEach((element) => {
+      const result = transform.bind(thisArg)(element);
 
       if (result) {
         results.push(result);
       }
-    }, thisArg);
+    });
 
     return results;
   }
@@ -146,9 +138,7 @@ class ArraySlice {
    * @memberof ArraySlice.prototype
    */
   includes(value) {
-    return this.elements.some(function (element) {
-      return element.equals(value);
-    });
+    return this.elements.some(element => element.equals(value));
   }
 
   // Mutation
@@ -205,7 +195,7 @@ class ArraySlice {
    * @memberof ArraySlice.prototype
    */
   getValue(index) {
-    var element = this.elements[index];
+    const element = this.elements[index];
 
     if (element) {
       return element.toValue();
@@ -237,10 +227,10 @@ class ArraySlice {
   get first() {
     return this.elements[0];
   }
-};
+}
 
 if (typeof Symbol !== 'undefined') {
-  ArraySlice.prototype[Symbol.iterator] = function () {
+  ArraySlice.prototype[Symbol.iterator] = function symbol() {
     return this.elements[Symbol.iterator]();
   };
 }

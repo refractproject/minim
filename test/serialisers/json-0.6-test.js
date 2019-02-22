@@ -1,108 +1,108 @@
-var expect = require('../spec-helper').expect;
-var Namespace = require('../../src/minim').Namespace;
-var minim = require('../../src/minim').namespace();
-var KeyValuePair = require('../../src/key-value-pair');
-var JSONSerialiser = require('../../src/serialisers/json-0.6');
+const { expect } = require('../spec-helper');
+const { Namespace } = require('../../src/minim');
+const minim = require('../../src/minim').namespace();
+const KeyValuePair = require('../../src/key-value-pair');
+const JSONSerialiser = require('../../src/serialisers/json-0.6');
 
-describe('JSON 0.6 Serialiser', function() {
-  var serialiser;
+describe('JSON 0.6 Serialiser', () => {
+  let serialiser;
 
-  beforeEach(function () {
+  beforeEach(() => {
     serialiser = new JSONSerialiser(minim);
   });
 
-  describe('initialisation', function() {
-    it('uses given namespace', function() {
+  describe('initialisation', () => {
+    it('uses given namespace', () => {
       expect(serialiser.namespace).to.equal(minim);
     });
 
-    it('creates a default namespace when no namespace is given', function() {
+    it('creates a default namespace when no namespace is given', () => {
       serialiser = new JSONSerialiser();
       expect(serialiser.namespace).to.be.instanceof(Namespace);
     });
   });
 
-  describe('serialisation', function() {
-    describe('#serialiseObject', function() {
-      it('can serialise an ObjectElement', function () {
-        var object = new minim.elements.Object({ id: 'Example' });
-        var result = serialiser.serialiseObject(object);
+  describe('serialisation', () => {
+    describe('#serialiseObject', () => {
+      it('can serialise an ObjectElement', () => {
+        const object = new minim.elements.Object({ id: 'Example' });
+        const result = serialiser.serialiseObject(object);
 
         expect(result).to.deep.equal({
           id: 'Example',
         });
       });
 
-      it('can serialise an ObjectElement containg undefined key', function () {
-        var object = new minim.elements.Object({ key: undefined });
-        var result = serialiser.serialiseObject(object);
+      it('can serialise an ObjectElement containg undefined key', () => {
+        const object = new minim.elements.Object({ key: undefined });
+        const result = serialiser.serialiseObject(object);
 
         expect(result).to.deep.equal({});
       });
     });
 
-    it('errors when serialising a non-element', function() {
-      expect(function(){
+    it('errors when serialising a non-element', () => {
+      expect(() => {
         serialiser.serialise('Hello');
       }).to.throw(TypeError, 'Given element `Hello` is not an Element instance');
     });
 
-    it('serialises a primitive element', function() {
-      var element = new minim.elements.String('Hello')
-      var object = serialiser.serialise(element);
+    it('serialises a primitive element', () => {
+      const element = new minim.elements.String('Hello');
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'string',
-        content: 'Hello'
+        content: 'Hello',
       });
     });
 
-    it('serialises an element containing element', function() {
-      var string = new minim.elements.String('Hello')
-      var element = new minim.Element(string);
+    it('serialises an element containing element', () => {
+      const string = new minim.elements.String('Hello');
+      const element = new minim.Element(string);
       element.element = 'custom';
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'custom',
         content: {
           element: 'string',
-          content: 'Hello'
-        }
+          content: 'Hello',
+        },
       });
     });
 
-    it('serialises an element containing element array', function() {
-      var string = new minim.elements.String('Hello')
-      var element = new minim.elements.Array([string]);
+    it('serialises an element containing element array', () => {
+      const string = new minim.elements.String('Hello');
+      const element = new minim.elements.Array([string]);
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'array',
         content: [
           {
             element: 'string',
-            content: 'Hello'
-          }
-        ]
+            content: 'Hello',
+          },
+        ],
       });
     });
 
-    it('serialises an element containing an empty array', function() {
-      var element = new minim.elements.Array();
+    it('serialises an element containing an empty array', () => {
+      const element = new minim.elements.Array();
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
-        element: 'array'
+        element: 'array',
       });
     });
 
-    it('serialise an element with object content', function() {
-      var element = new minim.Element({ message: 'hello' });
-      var object = serialiser.serialise(element);
+    it('serialise an element with object content', () => {
+      const element = new minim.Element({ message: 'hello' });
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'element',
@@ -118,119 +118,119 @@ describe('JSON 0.6 Serialiser', function() {
                 element: 'string',
                 content: 'hello',
               },
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
     });
 
-    it('serialises an element containing a pair', function() {
-      var name = new minim.elements.String('name')
-      var doe = new minim.elements.String('Doe')
-      var element = new minim.elements.Member(name, doe);
+    it('serialises an element containing a pair', () => {
+      const name = new minim.elements.String('name');
+      const doe = new minim.elements.String('Doe');
+      const element = new minim.elements.Member(name, doe);
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'member',
         content: {
           key: {
             element: 'string',
-            content: 'name'
+            content: 'name',
           },
           value: {
             element: 'string',
-            content: 'Doe'
+            content: 'Doe',
           },
-        }
+        },
       });
     });
 
-    it('serialises an element containing a pair without a value', function() {
-      var name = new minim.elements.String('name')
-      var element = new minim.elements.Member(name);
+    it('serialises an element containing a pair without a value', () => {
+      const name = new minim.elements.String('name');
+      const element = new minim.elements.Member(name);
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'member',
         content: {
           key: {
             element: 'string',
-            content: 'name'
+            content: 'name',
           },
-        }
+        },
       });
     });
 
-    it('serialises an elements meta', function() {
-      var doe = new minim.elements.String('Doe')
+    it('serialises an elements meta', () => {
+      const doe = new minim.elements.String('Doe');
       doe.title = 'Name';
 
-      var object = serialiser.serialise(doe);
+      const object = serialiser.serialise(doe);
 
       expect(object).to.deep.equal({
         element: 'string',
         meta: {
-          title: 'Name'
+          title: 'Name',
         },
-        content: 'Doe'
+        content: 'Doe',
       });
     });
 
-    it('serialises an elements attributes', function() {
-      var element = new minim.elements.String('Hello World')
+    it('serialises an elements attributes', () => {
+      const element = new minim.elements.String('Hello World');
       element.attributes.set('thread', 123);
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
-          thread: 123
+          thread: 123,
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
     });
 
-    it('serialises an element with custom element attributes', function() {
-      var element = new minim.elements.String('Hello World')
+    it('serialises an element with custom element attributes', () => {
+      const element = new minim.elements.String('Hello World');
       element.attributes.set('thread', new minim.Element(123));
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
           thread: {
             element: 'element',
-            content: 123
-          }
+            content: 123,
+          },
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
     });
 
-    it('serialises enum', function() {
-      var defaultElement = new minim.Element(new minim.elements.String('North'));
+    it('serialises enum', () => {
+      const defaultElement = new minim.Element(new minim.elements.String('North'));
       defaultElement.element = 'enum';
 
-      var sampleNorth = new minim.Element(new minim.elements.String('North'));
+      const sampleNorth = new minim.Element(new minim.elements.String('North'));
       sampleNorth.element = 'enum';
-      var sampleEast = new minim.Element(new minim.elements.String('East'));
+      const sampleEast = new minim.Element(new minim.elements.String('East'));
       sampleEast.element = 'enum';
-      var samples = new minim.elements.Array([
+      const samples = new minim.elements.Array([
         sampleNorth,
         sampleEast,
       ]);
 
-      var enumeration = new minim.Element(new minim.elements.String('South'));
+      const enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
       enumeration.attributes.set('default', defaultElement);
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
       enumeration.attributes.set('samples', samples);
 
-      var object = serialiser.serialise(enumeration);
+      const object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
         element: 'enum',
@@ -246,20 +246,20 @@ describe('JSON 0.6 Serialiser', function() {
               {
                 element: 'string',
                 content: 'South',
-              }
+              },
             ],
             [
               {
                 element: 'string',
-                content: 'North'
-              }
+                content: 'North',
+              },
             ],
             [
               {
-                element:'string',
-                content: 'East'
-              }
-            ]
+                element: 'string',
+                content: 'East',
+              },
+            ],
           ],
         },
         content: [
@@ -341,16 +341,16 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('serialises enum with fixed values', function() {
-      var defaultElement = new minim.Element(new minim.elements.String('North'));
+    it('serialises enum with fixed values', () => {
+      const defaultElement = new minim.Element(new minim.elements.String('North'));
       defaultElement.element = 'enum';
       defaultElement.content.attributes.set('typeAttributes', ['fixed']);
 
-      var sampleNorth = new minim.Element(new minim.elements.String('North'));
+      const sampleNorth = new minim.Element(new minim.elements.String('North'));
       sampleNorth.element = 'enum';
-      var sampleEast = new minim.Element(new minim.elements.String('East'));
+      const sampleEast = new minim.Element(new minim.elements.String('East'));
       sampleEast.element = 'enum';
-      var samples = new minim.elements.Array([
+      const samples = new minim.elements.Array([
         sampleNorth,
         sampleEast,
       ]);
@@ -358,7 +358,7 @@ describe('JSON 0.6 Serialiser', function() {
       sampleNorth.content.attributes.set('typeAttributes', ['fixed']);
       sampleEast.content.attributes.set('typeAttributes', ['fixed']);
 
-      var enumeration = new minim.Element(new minim.elements.String('South'));
+      const enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
       enumeration.attributes.set('default', defaultElement);
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
@@ -370,7 +370,7 @@ describe('JSON 0.6 Serialiser', function() {
       enumerations.get(2).attributes.set('typeAttributes', ['fixed']);
       enumerations.get(3).attributes.set('typeAttributes', ['fixed']);
 
-      var object = serialiser.serialise(enumeration);
+      const object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
         element: 'enum',
@@ -386,20 +386,20 @@ describe('JSON 0.6 Serialiser', function() {
               {
                 element: 'string',
                 content: 'South',
-              }
+              },
             ],
             [
               {
                 element: 'string',
-                content: 'North'
-              }
+                content: 'North',
+              },
             ],
             [
               {
-                element:'string',
-                content: 'East'
-              }
-            ]
+                element: 'string',
+                content: 'East',
+              },
+            ],
           ],
         },
         content: [
@@ -423,12 +423,12 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
-    it('serialises samples attributes as element', function() {
-      var sample = new minim.elements.Object({name: 'Doe'});
+    it('serialises samples attributes as element', () => {
+      const sample = new minim.elements.Object({ name: 'Doe' });
 
-      var element = new minim.elements.Object();
+      const element = new minim.elements.Object();
       element.attributes.set('samples', [sample]);
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'object',
@@ -440,55 +440,55 @@ describe('JSON 0.6 Serialiser', function() {
                 content: {
                   key: {
                     element: 'string',
-                    content: 'name'
+                    content: 'name',
                   },
                   value: {
                     element: 'string',
-                    content: 'Doe'
-                  }
-                }
-              }
-            ]
-          ]
+                    content: 'Doe',
+                  },
+                },
+              },
+            ],
+          ],
         },
       });
     });
 
-    it('serialises default attributes as element', function() {
-      var defaultElement = new minim.elements.Object({name: 'Doe'});
+    it('serialises default attributes as element', () => {
+      const defaultElement = new minim.elements.Object({ name: 'Doe' });
 
-      var element = new minim.elements.Object();
+      const element = new minim.elements.Object();
       element.attributes.set('default', defaultElement);
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'object',
         attributes: {
-          'default': [
+          default: [
             {
               element: 'member',
               content: {
                 key: {
                   element: 'string',
-                  content: 'name'
+                  content: 'name',
                 },
                 value: {
                   element: 'string',
-                  content: 'Doe'
-                }
-              }
-            }
-          ]
+                  content: 'Doe',
+                },
+              },
+            },
+          ],
         },
       });
     });
 
-    it('serialises enum with fixed content', function() {
-      var enumeration = new minim.Element(new minim.elements.String('South'));
+    it('serialises enum with fixed content', () => {
+      const enumeration = new minim.Element(new minim.elements.String('South'));
       enumeration.element = 'enum';
       enumeration.content.attributes.set('typeAttributes', ['fixed']);
 
-      var object = serialiser.serialise(enumeration);
+      const object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
         element: 'enum',
@@ -501,12 +501,12 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
-    it('serialises enum without content, samples & default', function() {
-      var enumeration = new minim.Element();
+    it('serialises enum without content, samples & default', () => {
+      const enumeration = new minim.Element();
       enumeration.element = 'enum';
       enumeration.attributes.set('enumerations', ['North', 'East', 'South', 'West']);
 
-      var object = serialiser.serialise(enumeration);
+      const object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
         element: 'enum',
@@ -560,25 +560,25 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('serialises enum inside array inside attributes as array', function() {
-      var element = new minim.elements.String('Hello World')
-      var enumeration = new minim.Element(new minim.elements.String('North'));
+    it('serialises enum inside array inside attributes as array', () => {
+      const element = new minim.elements.String('Hello World');
+      const enumeration = new minim.Element(new minim.elements.String('North'));
       enumeration.element = 'enum';
       element.attributes.set('directions', enumeration);
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
           directions: [
             {
-              'element': 'string',
-              'content': 'North'
-            }
-          ]
+              element: 'string',
+              content: 'North',
+            },
+          ],
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
 
       // Refract 1.0 serialisation
@@ -597,12 +597,12 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('serialises enumerations even when element name is not `enum`', function () {
-      var enumeration = new minim.Element();
+    it('serialises enumerations even when element name is not `enum`', () => {
+      const enumeration = new minim.Element();
       enumeration.element = 'B';
       enumeration.attributes.set('enumerations', ['North']);
 
-      var object = serialiser.serialise(enumeration);
+      const object = serialiser.serialise(enumeration);
 
       expect(object).to.deep.equal({
         element: 'B',
@@ -632,18 +632,18 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('always serialises items inside `default` attribute', function() {
-      var element = new minim.elements.String('Hello World')
+    it('always serialises items inside `default` attribute', () => {
+      const element = new minim.elements.String('Hello World');
       element.attributes.set('default', new minim.elements.String('North'));
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'string',
         attributes: {
-          default: 'North'
+          default: 'North',
         },
-        content: 'Hello World'
+        content: 'Hello World',
       });
 
       // Refract 1.0 serialisation
@@ -659,12 +659,12 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('always serialises items inside `default` attribute array', function() {
-      var element = new minim.elements.Array(['Hello World'])
-      var values = new minim.elements.Array([new minim.elements.String('North')]);
+    it('always serialises items inside `default` attribute array', () => {
+      const element = new minim.elements.Array(['Hello World']);
+      const values = new minim.elements.Array([new minim.elements.String('North')]);
       element.attributes.set('default', values);
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'array',
@@ -672,16 +672,16 @@ describe('JSON 0.6 Serialiser', function() {
           default: [
             {
               element: 'string',
-              content: 'North'
-            }
-          ]
+              content: 'North',
+            },
+          ],
         },
         content: [
           {
             element: 'string',
-            content: 'Hello World'
-          }
-        ]
+            content: 'Hello World',
+          },
+        ],
       });
 
       // Refract 1.0 serialisation
@@ -707,17 +707,17 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('serialises a ref element', function() {
-      var element = new minim.elements.Ref('content');
+    it('serialises a ref element', () => {
+      const element = new minim.elements.Ref('content');
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'ref',
         content: {
           path: 'element',
           href: 'content',
-        }
+        },
       });
 
       // Refract 1.0 serialisation
@@ -733,19 +733,19 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('serialises a sourceMap element as values', function() {
-      var element = new minim.elements.Element(
+    it('serialises a sourceMap element as values', () => {
+      const element = new minim.elements.Element(
         new minim.elements.Array(
-          [new minim.elements.Array([1,2])]
+          [new minim.elements.Array([1, 2])]
         )
       );
       element.element = 'sourceMap';
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'sourceMap',
-        content: [[1,2]]
+        content: [[1, 2]],
       });
 
       // Refract 1.0 serialisation
@@ -772,22 +772,22 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('serialises a dataStructure element inside an array', function() {
-      var element = new minim.elements.Element(
+    it('serialises a dataStructure element inside an array', () => {
+      const element = new minim.elements.Element(
         new minim.elements.String('Hello')
       );
       element.element = 'dataStructure';
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'dataStructure',
         content: [
           {
             element: 'string',
-            content: 'Hello'
-          }
-        ]
+            content: 'Hello',
+          },
+        ],
       });
 
       // Refract 1.0 serialisation
@@ -800,25 +800,25 @@ describe('JSON 0.6 Serialiser', function() {
       // }
     });
 
-    it('serialises a element attribute called meta as metadata', function() {
-      var element = new minim.elements.Null();
+    it('serialises a element attribute called meta as metadata', () => {
+      const element = new minim.elements.Null();
       element.attributes.set('metadata', 'example');
 
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'null',
         attributes: {
-          meta: 'example'
+          meta: 'example',
         },
-        content: null
+        content: null,
       });
     });
 
-    it('serialises a variable member', function() {
-      var element = new minim.elements.Member('self', 'https://example.com');
+    it('serialises a variable member', () => {
+      const element = new minim.elements.Member('self', 'https://example.com');
       element.attributes.set('variable', true);
-      var object = serialiser.serialise(element);
+      const object = serialiser.serialise(element);
 
       expect(object).to.deep.equal({
         element: 'member',
@@ -826,55 +826,55 @@ describe('JSON 0.6 Serialiser', function() {
           key: {
             element: 'string',
             attributes: {
-              variable: true
+              variable: true,
             },
             content: 'self',
           },
           value: {
             element: 'string',
             content: 'https://example.com',
-          }
-        }
+          },
+        },
       });
     });
 
-    it('serialises empty parseResult content', function() {
-      var element = new minim.elements.Element([]);
+    it('serialises empty parseResult content', () => {
+      const element = new minim.elements.Element([]);
       element.element = 'parseResult';
-      var serialised = serialiser.serialise(element);
+      const serialised = serialiser.serialise(element);
 
       expect(serialised).to.deep.equal({
         element: 'parseResult',
-        content: []
+        content: [],
       });
     });
 
-    it('serialises empty httpRequest content', function() {
-      var element = new minim.elements.Element([]);
+    it('serialises empty httpRequest content', () => {
+      const element = new minim.elements.Element([]);
       element.element = 'httpRequest';
-      var serialised = serialiser.serialise(element);
+      const serialised = serialiser.serialise(element);
 
       expect(serialised).to.deep.equal({
         element: 'httpRequest',
-        content: []
+        content: [],
       });
     });
 
-    it('serialises empty httpResponse content', function() {
-      var element = new minim.elements.Element([]);
+    it('serialises empty httpResponse content', () => {
+      const element = new minim.elements.Element([]);
       element.element = 'httpResponse';
-      var serialised = serialiser.serialise(element);
+      const serialised = serialiser.serialise(element);
 
       expect(serialised).to.deep.equal({
         element: 'httpResponse',
-        content: []
+        content: [],
       });
     });
 
-    it('serialises empty link content', function() {
-      var element = new minim.elements.Element([]);
+    it('serialises empty link content', () => {
+      const element = new minim.elements.Element([]);
       element.element = 'link';
-      var serialised = serialiser.serialise(element);
+      const serialised = serialiser.serialise(element);
 
       expect(serialised).to.deep.equal({
         element: 'link',
@@ -882,36 +882,36 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
-    it('serialises empty category content', function() {
-      var element = new minim.elements.Element([]);
+    it('serialises empty category content', () => {
+      const element = new minim.elements.Element([]);
       element.element = 'category';
-      var serialised = serialiser.serialise(element);
+      const serialised = serialiser.serialise(element);
 
       expect(serialised).to.deep.equal({
         element: 'category',
-        content: []
+        content: [],
       });
     });
   });
 
-  describe('deserialisation', function() {
-    it('deserialise from a JSON object', function() {
-      var element = serialiser.deserialise({
+  describe('deserialisation', () => {
+    it('deserialise from a JSON object', () => {
+      const element = serialiser.deserialise({
         element: 'string',
-        content: 'Hello'
+        content: 'Hello',
       });
 
       expect(element).to.be.instanceof(minim.elements.String);
       expect(element.content).to.equal('Hello');
     });
 
-    it('deserialise from a JSON object containing an sub-element', function() {
-      var element = serialiser.deserialise({
+    it('deserialise from a JSON object containing an sub-element', () => {
+      const element = serialiser.deserialise({
         element: 'custom',
         content: {
           element: 'string',
           content: 'Hello',
-        }
+        },
       });
 
       expect(element).to.be.instanceof(minim.Element);
@@ -919,15 +919,15 @@ describe('JSON 0.6 Serialiser', function() {
       expect(element.content.content).to.equal('Hello');
     });
 
-    it('deserialise from a JSON object containing an array of elements', function() {
-      var element = serialiser.deserialise({
+    it('deserialise from a JSON object containing an array of elements', () => {
+      const element = serialiser.deserialise({
         element: 'array',
         content: [
           {
             element: 'string',
             content: 'Hello',
-          }
-        ]
+          },
+        ],
       });
 
       expect(element).to.be.instanceof(minim.elements.Array);
@@ -935,20 +935,20 @@ describe('JSON 0.6 Serialiser', function() {
       expect(element.content[0].content).to.equal('Hello');
     });
 
-    it('deserialises from a JSON object containing JSON object content', function() {
-      var element = serialiser.deserialise({
+    it('deserialises from a JSON object containing JSON object content', () => {
+      const element = serialiser.deserialise({
         element: 'object',
         content: {
-          message: 'hello'
-        }
+          message: 'hello',
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Element);
       expect(element.toValue()).to.deep.equal({ message: 'hello' });
     });
 
-    it('deserialise from a JSON object containing a key-value pair', function() {
-      var element = serialiser.deserialise({
+    it('deserialise from a JSON object containing a key-value pair', () => {
+      const element = serialiser.deserialise({
         element: 'member',
         content: {
           key: {
@@ -957,9 +957,9 @@ describe('JSON 0.6 Serialiser', function() {
           },
           value: {
             element: 'string',
-            content: 'Doe'
-          }
-        }
+            content: 'Doe',
+          },
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Member);
@@ -970,15 +970,15 @@ describe('JSON 0.6 Serialiser', function() {
       expect(element.value.content).to.equal('Doe');
     });
 
-    it('deserialise from a JSON object containing a key-value pair without value', function() {
-      var element = serialiser.deserialise({
+    it('deserialise from a JSON object containing a key-value pair without value', () => {
+      const element = serialiser.deserialise({
         element: 'member',
         content: {
           key: {
             element: 'string',
             content: 'name',
-          }
-        }
+          },
+        },
       });
 
       expect(element).to.be.instanceof(minim.elements.Member);
@@ -988,27 +988,27 @@ describe('JSON 0.6 Serialiser', function() {
       expect(element.value).to.be.undefined;
     });
 
-    it('deserialise meta', function() {
-      var element = serialiser.deserialise({
+    it('deserialise meta', () => {
+      const element = serialiser.deserialise({
         element: 'string',
         meta: {
-          title: 'hello'
-        }
+          title: 'hello',
+        },
       });
 
       expect(element.title).to.be.instanceof(minim.elements.String);
       expect(element.title.content).to.equal('hello');
     });
 
-    it('deserialise refracted meta', function() {
-      var element = serialiser.deserialise({
+    it('deserialise refracted meta', () => {
+      const element = serialiser.deserialise({
         element: 'string',
         meta: {
           title: {
             element: 'string',
-            content: 'hello'
-          }
-        }
+            content: 'hello',
+          },
+        },
       });
 
       expect(element.title).to.be.instanceof(minim.elements.String);
@@ -1016,12 +1016,12 @@ describe('JSON 0.6 Serialiser', function() {
     });
 
 
-    it('deserialise attributes', function() {
-      var element = serialiser.deserialise({
+    it('deserialise attributes', () => {
+      const element = serialiser.deserialise({
         element: 'string',
         attributes: {
-          thing: 'hello'
-        }
+          thing: 'hello',
+        },
       });
 
       const attribute = element.attributes.get('thing');
@@ -1029,15 +1029,15 @@ describe('JSON 0.6 Serialiser', function() {
       expect(attribute.content).to.equal('hello');
     });
 
-    it('deserialise refracted attributes', function() {
-      var element = serialiser.deserialise({
+    it('deserialise refracted attributes', () => {
+      const element = serialiser.deserialise({
         element: 'string',
         attributes: {
           thing: {
             element: 'string',
-            content: 'hello'
-          }
-        }
+            content: 'hello',
+          },
+        },
       });
 
       const attribute = element.attributes.get('thing');
@@ -1045,16 +1045,16 @@ describe('JSON 0.6 Serialiser', function() {
       expect(attribute.content).to.equal('hello');
     });
 
-    it('deserialises an array element from JS array', function() {
-      var element = serialiser.deserialise([1]);
+    it('deserialises an array element from JS array', () => {
+      const element = serialiser.deserialise([1]);
 
       expect(element).to.be.instanceof(minim.elements.Array);
       expect(element.get(0)).to.be.instanceof(minim.elements.Number);
     });
 
-    context('enum element', function() {
-      it('deserialises content', function() {
-        var element = serialiser.deserialise({
+    context('enum element', () => {
+      it('deserialises content', () => {
+        const element = serialiser.deserialise({
           element: 'enum',
           content: [
             {
@@ -1076,8 +1076,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.content).to.be.undefined;
       });
 
-      it('deserialises with sample', function() {
-        var element = serialiser.deserialise({
+      it('deserialises with sample', () => {
+        const element = serialiser.deserialise({
           element: 'enum',
           attributes: {
             samples: [
@@ -1088,7 +1088,7 @@ describe('JSON 0.6 Serialiser', function() {
                 },
               ],
             ],
-          }
+          },
         });
 
         expect(element.element).to.equal('enum');
@@ -1096,8 +1096,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.toValue()).to.equal(3);
       });
 
-      it('deserialises with samples', function() {
-        var element = serialiser.deserialise({
+      it('deserialises with samples', () => {
+        const element = serialiser.deserialise({
           element: 'enum',
           attributes: {
             samples: [
@@ -1122,13 +1122,13 @@ describe('JSON 0.6 Serialiser', function() {
                 },
               ],
             ],
-          }
+          },
         });
 
         expect(element.element).to.equal('enum');
         expect(element.toValue()).to.equal(3);
 
-        var samples = element.attributes.get('samples');
+        const samples = element.attributes.get('samples');
         expect(samples).to.be.instanceof(minim.elements.Array);
 
         expect(samples.get(0).element).to.equal('enum');
@@ -1147,8 +1147,8 @@ describe('JSON 0.6 Serialiser', function() {
         ]);
       });
 
-      it('deserialises with default', function() {
-        var element = serialiser.deserialise({
+      it('deserialises with default', () => {
+        const element = serialiser.deserialise({
           element: 'enum',
           attributes: {
             default: [
@@ -1157,10 +1157,10 @@ describe('JSON 0.6 Serialiser', function() {
                 content: 3,
               },
             ],
-          }
+          },
         });
 
-        var defaultElement = element.attributes.get('default');
+        const defaultElement = element.attributes.get('default');
 
         expect(element.element).to.equal('enum');
         expect(defaultElement.element).to.equal('enum');
@@ -1169,8 +1169,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.content).to.be.undefined;
       });
 
-      it('deserialises with samples, enumerations and default ', function() {
-        var element = serialiser.deserialise({
+      it('deserialises with samples, enumerations and default ', () => {
+        const element = serialiser.deserialise({
           element: 'enum',
           attributes: {
             samples: [
@@ -1199,8 +1199,8 @@ describe('JSON 0.6 Serialiser', function() {
               {
                 element: 'number',
                 content: 1337,
-              }
-            ]
+              },
+            ],
           },
           content: [
             {
@@ -1217,7 +1217,7 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.element).to.equal('enum');
         expect(element.toValue()).to.equal(3);
 
-        var samples = element.attributes.get('samples');
+        const samples = element.attributes.get('samples');
         expect(samples).to.be.instanceof(minim.elements.Array);
 
         expect(samples.get(0).element).to.equal('enum');
@@ -1235,12 +1235,12 @@ describe('JSON 0.6 Serialiser', function() {
           6,
         ]);
 
-        var defaultElement = element.attributes.get('default');
+        const defaultElement = element.attributes.get('default');
         expect(defaultElement.element).to.equal('enum');
         expect(defaultElement.content).to.be.instanceof(minim.elements.Number);
         expect(defaultElement.toValue()).to.equal(1337);
 
-        var enumerations = element.attributes.get('enumerations');
+        const enumerations = element.attributes.get('enumerations');
         expect(enumerations).to.be.instanceof(minim.elements.Array);
 
         expect(enumerations.get(0)).to.be.instanceof(minim.elements.Number);
@@ -1250,51 +1250,51 @@ describe('JSON 0.6 Serialiser', function() {
       });
     });
 
-    it('deserialises data structure inside an array', function() {
-      var dataStructure = serialiser.deserialise({
+    it('deserialises data structure inside an array', () => {
+      const dataStructure = serialiser.deserialise({
         element: 'dataStructure',
         content: [
           {
-            element: 'string'
-          }
-        ]
+            element: 'string',
+          },
+        ],
       });
 
       expect(dataStructure.content).to.be.instanceof(minim.elements.String);
     });
 
-    it('deserialises category with meta attribute', function() {
-      var category = serialiser.deserialise({
+    it('deserialises category with meta attribute', () => {
+      const category = serialiser.deserialise({
         element: 'category',
         attributes: {
           meta: [
             {
               element: 'member',
               meta: {
-                classes: ['user']
+                classes: ['user'],
               },
               content: {
                 key: 'HOST',
-                value: 'https://example.com'
-              }
-            }
-          ]
+                value: 'https://example.com',
+              },
+            },
+          ],
         },
-        content: []
+        content: [],
       });
 
-      var metadata = category.attributes.get('metadata');
+      const metadata = category.attributes.get('metadata');
       expect(metadata).to.be.instanceof(minim.elements.Array);
 
-      var member = metadata.get(0);
+      const member = metadata.get(0);
       expect(member).to.be.instanceof(minim.elements.Member);
       expect(member.classes.toValue()).to.deep.equal(['user']);
       expect(member.key.toValue()).to.equal('HOST');
       expect(member.value.toValue()).to.equal('https://example.com');
     });
 
-    it('deserialises a variable member', function() {
-      var member = serialiser.deserialise({
+    it('deserialises a variable member', () => {
+      const member = serialiser.deserialise({
         element: 'member',
         content: {
           key: {
@@ -1307,8 +1307,8 @@ describe('JSON 0.6 Serialiser', function() {
           value: {
             element: 'string',
             content: 'https://example.com',
-          }
-        }
+          },
+        },
       });
 
       expect(member).to.be.instanceof(minim.elements.Member);
@@ -1316,9 +1316,9 @@ describe('JSON 0.6 Serialiser', function() {
       expect(member.key.attributes.get('variable')).to.be.undefined;
     });
 
-    describe('deserialising base elements', function() {
-      it('deserialise string', function() {
-        var element = serialiser.deserialise({
+    describe('deserialising base elements', () => {
+      it('deserialise string', () => {
+        const element = serialiser.deserialise({
           element: 'string',
           content: 'Hello',
         });
@@ -1327,8 +1327,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.content).to.equal('Hello');
       });
 
-      it('deserialise number', function() {
-        var element = serialiser.deserialise({
+      it('deserialise number', () => {
+        const element = serialiser.deserialise({
           element: 'number',
           content: 15,
         });
@@ -1337,26 +1337,26 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.content).to.equal(15);
       });
 
-      it('deserialise boolean', function() {
-        var element = serialiser.deserialise({
+      it('deserialise boolean', () => {
+        const element = serialiser.deserialise({
           element: 'boolean',
-          content: true
+          content: true,
         });
 
         expect(element).to.be.instanceof(minim.elements.Boolean);
         expect(element.content).to.equal(true);
       });
 
-      it('deserialise null', function() {
-        var element = serialiser.deserialise({
+      it('deserialise null', () => {
+        const element = serialiser.deserialise({
           element: 'null',
         });
 
         expect(element).to.be.instanceof(minim.elements.Null);
       });
 
-      it('deserialise an array', function() {
-        var object = serialiser.deserialise({
+      it('deserialise an array', () => {
+        const object = serialiser.deserialise({
           element: 'array',
           content: [],
         });
@@ -1365,8 +1365,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(object.content).to.deep.equal([]);
       });
 
-      it('deserialise an object', function() {
-        var object = serialiser.deserialise({
+      it('deserialise an object', () => {
+        const object = serialiser.deserialise({
           element: 'object',
           content: [],
         });
@@ -1375,8 +1375,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(object.content).to.deep.equal([]);
       });
 
-      it('deserialise string without content', function() {
-        var element = serialiser.deserialise({
+      it('deserialise string without content', () => {
+        const element = serialiser.deserialise({
           element: 'string',
         });
 
@@ -1384,8 +1384,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.content).to.be.undefined;
       });
 
-      it('deserialise number without content', function() {
-        var element = serialiser.deserialise({
+      it('deserialise number without content', () => {
+        const element = serialiser.deserialise({
           element: 'number',
         });
 
@@ -1393,8 +1393,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.content).to.be.undefined;
       });
 
-      it('deserialise boolean without content', function() {
-        var element = serialiser.deserialise({
+      it('deserialise boolean without content', () => {
+        const element = serialiser.deserialise({
           element: 'boolean',
         });
 
@@ -1402,8 +1402,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(element.content).to.be.undefined;
       });
 
-      it('deserialise an array', function() {
-        var object = serialiser.deserialise({
+      it('deserialise an array', () => {
+        const object = serialiser.deserialise({
           element: 'array',
         });
 
@@ -1411,8 +1411,8 @@ describe('JSON 0.6 Serialiser', function() {
         expect(object.content).to.deep.equal([]);
       });
 
-      it('deserialise an object without content', function() {
-        var object = serialiser.deserialise({
+      it('deserialise an object without content', () => {
+        const object = serialiser.deserialise({
           element: 'object',
         });
 

@@ -1,31 +1,32 @@
 {
-    "rules": {
-        "no-underscore-dangle": 0,
-        "strict": 2,
-        "indent": [
-            2,
-            2
-        ],
-        "quotes": [
-            2,
-            "single"
-        ],
-        "linebreak-style": [
-            2,
-            "unix"
-        ],
-        "semi": [
-            2,
-            "always"
-        ],
-        "no-use-before-define": 0
-    },
-    "env": {
-        "node": true,
-        "browser": true,
-        "mocha": true
-    },
-    "parserOptions": {
-        "ecmaVersion": 2018
-    },
+  "extends": "airbnb-base",
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "array-callback-return": "off",
+    "class-methods-use-this": "off",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "functions": "never"
+      }
+    ],
+    "eqeqeq": "off",
+    "guard-for-in": "off",
+    "max-len": "off",
+    "no-loop-func": "off",
+    "no-param-reassign": "off",
+    "no-underscore-dangle": "off",
+  },
+  "overrides": [
+    {
+      "files": "*-test.js",
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }

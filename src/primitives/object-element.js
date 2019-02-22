@@ -1,12 +1,9 @@
-'use strict';
+const negate = require('lodash/negate');
+const isObject = require('lodash/isObject');
 
-var negate = require('lodash/negate');
-var isObject = require('lodash/isObject');
-
-var Element = require('./element');
-var ArrayElement = require('./array-element');
-var MemberElement = require('./member-element');
-var ObjectSlice = require('../object-slice');
+const ArrayElement = require('./array-element');
+const MemberElement = require('./member-element');
+const ObjectSlice = require('../object-slice');
 
 /**
  * @class
@@ -26,7 +23,7 @@ class ObjectElement extends ArrayElement {
   }
 
   toValue() {
-    return this.content.reduce(function(results, el) {
+    return this.content.reduce((results, el) => {
       results[el.key.toValue()] = el.value.toValue();
       return results;
     }, {});
@@ -37,7 +34,7 @@ class ObjectElement extends ArrayElement {
    * @returns {Element}
    */
   get(name) {
-    var member = this.getMember(name);
+    const member = this.getMember(name);
 
     if (member) {
       return member.value;
@@ -53,18 +50,16 @@ class ObjectElement extends ArrayElement {
   getMember(name) {
     if (name === undefined) { return undefined; }
 
-    return this.content.find(function (element) {
-      return element.key.toValue() === name;
-    });
+    return this.content.find(element => element.key.toValue() === name);
   }
 
   /**
    * @param key
    */
-  remove (name) {
-    var removed = null;
+  remove(name) {
+    let removed = null;
 
-    this.content = this.content.filter(function (item) {
+    this.content = this.content.filter((item) => {
       if (item.key.toValue() === name) {
         removed = item;
         return false;
@@ -81,7 +76,7 @@ class ObjectElement extends ArrayElement {
    * @returns {Element}
    */
   getKey(name) {
-    var member = this.getMember(name);
+    const member = this.getMember(name);
 
     if (member) {
       return member.key;
@@ -96,17 +91,16 @@ class ObjectElement extends ArrayElement {
    */
   set(keyOrObject, value) {
     if (isObject(keyOrObject)) {
-      var self = this;
-      Object.keys(keyOrObject).forEach(function(objectKey) {
-        self.set(objectKey, keyOrObject[objectKey]);
+      Object.keys(keyOrObject).forEach((objectKey) => {
+        this.set(objectKey, keyOrObject[objectKey]);
       });
 
       return this;
     }
 
     // Store as key for clarity
-    var key = keyOrObject;
-    var member = this.getMember(key);
+    const key = keyOrObject;
+    const member = this.getMember(key);
 
     if (member) {
       member.value = value;
@@ -118,22 +112,18 @@ class ObjectElement extends ArrayElement {
   }
 
   keys() {
-    return this.content.map(function(item) {
-      return item.key.toValue();
-    });
+    return this.content.map(item => item.key.toValue());
   }
 
   values() {
-    return this.content.map(function(item) {
-      return item.value.toValue();
-    });
+    return this.content.map(item => item.value.toValue());
   }
 
   /**
    * @returns {boolean}
    */
   hasKey(value) {
-    for (var i = 0; i < this.content.length; i++) {
+    for (let i = 0; i < this.content.length; i += 1) {
       if (this.content[i].key.equals(value)) {
         return true;
       }
@@ -146,9 +136,7 @@ class ObjectElement extends ArrayElement {
    * @returns {array}
    */
   items() {
-    return this.content.map(function(item) {
-      return [item.key.toValue(), item.value.toValue()];
-    });
+    return this.content.map(item => [item.key.toValue(), item.value.toValue()]);
   }
 
   /**
@@ -156,9 +144,7 @@ class ObjectElement extends ArrayElement {
    * @param thisArg - Value to use as this (i.e the reference Object) when executing callback
    */
   map(callback, thisArg) {
-    return this.content.map(function(item) {
-      return callback(item.value, item.key, item);
-    }, thisArg);
+    return this.content.map(item => callback.bind(thisArg)(item.value, item.key, item));
   }
 
   /**
@@ -168,15 +154,15 @@ class ObjectElement extends ArrayElement {
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
   compactMap(callback, thisArg) {
-    var results = [];
+    const results = [];
 
-    this.forEach(function (value, key, member) {
-      var result = callback(value, key, member);
+    this.forEach((value, key, member) => {
+      const result = callback.bind(thisArg)(value, key, member);
 
       if (result) {
         results.push(result);
       }
-    }, thisArg);
+    });
 
     return results;
   }
@@ -210,10 +196,8 @@ class ObjectElement extends ArrayElement {
    * @memberof ObjectElement.prototype
    */
   forEach(callback, thisArg) {
-    return this.content.forEach(function(item) {
-      return callback(item.value, item.key, item);
-    }, thisArg);
+    return this.content.forEach(item => callback.bind(thisArg)(item.value, item.key, item));
   }
-};
+}
 
 module.exports = ObjectElement;

@@ -1,7 +1,5 @@
-'use strict';
-
-var Namespace = require('./namespace');
-var elements = require('./elements');
+const Namespace = require('./namespace');
+const elements = require('./elements');
 
 // Direct access to the Namespace class
 exports.Namespace = Namespace;
@@ -12,6 +10,7 @@ exports.namespace = function namespace(options) {
 };
 
 exports.KeyValuePair = require('./key-value-pair');
+
 exports.ArraySlice = elements.ArraySlice;
 exports.ObjectSlice = elements.ObjectSlice;
 

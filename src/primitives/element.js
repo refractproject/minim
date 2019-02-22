@@ -1,8 +1,6 @@
-'use strict';
-
-var isEqual = require('lodash/isEqual');
-var KeyValuePair = require('../key-value-pair');
-var ArraySlice = require('../array-slice.js');
+const isEqual = require('lodash/isEqual');
+const KeyValuePair = require('../key-value-pair');
+const ArraySlice = require('../array-slice.js');
 
 /**
  * @class
@@ -44,7 +42,7 @@ class Element {
       this.attributes.freeze();
     }
 
-    this.children.forEach(function (element) {
+    this.children.forEach((element) => {
       element.parent = this;
       element.freeze();
     }, this);
@@ -57,14 +55,14 @@ class Element {
   }
 
   primitive() {
-    return;
+
   }
 
   /**
    * Creates a deep clone of the instance
    */
   clone() {
-    var copy = new this.constructor();
+    const copy = new this.constructor();
 
     copy.element = this.element;
 
@@ -80,9 +78,7 @@ class Element {
       if (this.content.clone) {
         copy.content = this.content.clone();
       } else if (Array.isArray(this.content)) {
-        copy.content = this.content.map(function (element) {
-          return element.clone();
-        });
+        copy.content = this.content.map(element => element.clone());
       } else {
         copy.content = this.content;
       }
@@ -101,14 +97,12 @@ class Element {
     if (this.content instanceof KeyValuePair) {
       return {
         key: this.content.key.toValue(),
-        value: this.content.value.toValue()
+        value: this.content.value.toValue(),
       };
     }
 
     if (this.content && this.content.map) {
-      return this.content.map(function(element) {
-        return element.toValue();
-      }, this);
+      return this.content.map(element => element.toValue(), this);
     }
 
     return this.content;
@@ -124,7 +118,7 @@ class Element {
       throw Error('Cannot create reference to an element that does not contain an ID');
     }
 
-    var ref = new this.RefElement(this.id.toValue());
+    const ref = new this.RefElement(this.id.toValue());
 
     if (path) {
       ref.path = path;
@@ -140,28 +134,27 @@ class Element {
    * @param names {...elementNames}
    * @returns {ArraySlice}
    */
-  findRecursive() {
+  findRecursive(...elementNames) {
     if (arguments.length > 1 && !this.isFrozen) {
       throw new Error('Cannot find recursive with multiple element names without first freezing the element. Call `element.freeze()`');
     }
 
-    var elementNames = [].concat.apply([], arguments);
-    var elementName = elementNames.pop();
-    var elements = new ArraySlice();
+    const elementName = elementNames.pop();
+    let elements = new ArraySlice();
 
-    var append = function(array, element) {
+    const append = (array, element) => {
       array.push(element);
       return array;
     };
 
     // Checks the given element and appends element/sub-elements
     // that match element name to given array
-    var checkElement = function(array, element) {
+    const checkElement = (array, element) => {
       if (element.element === elementName) {
         array.push(element);
       }
 
-      var items = element.findRecursive(elementName);
+      const items = element.findRecursive(elementName);
       if (items) {
         items.reduce(append, array);
       }
@@ -192,14 +185,13 @@ class Element {
     }
 
     if (!elementNames.isEmpty) {
-      elements = elements.filter(function (element) {
-        var parentElements = element.parents.map(function (element) {
-          return element.element;
-        });
+      elements = elements.filter((element) => {
+        let parentElements = element.parents.map(e => e.element);
 
-        for (var namesIndex in elementNames) {
-          var name = elementNames[namesIndex];
-          var index = parentElements.indexOf(name);
+        // eslint-disable-next-line no-restricted-syntax
+        for (const namesIndex in elementNames) {
+          const name = elementNames[namesIndex];
+          const index = parentElements.indexOf(name);
 
           if (index !== -1) {
             parentElements = parentElements.splice(0, index);
@@ -227,7 +219,7 @@ class Element {
   getMetaProperty(name, value) {
     if (!this.meta.hasKey(name)) {
       if (this.isFrozen) {
-        var element = this.refract(value);
+        const element = this.refract(value);
         element.freeze();
         return element;
       }
@@ -264,11 +256,11 @@ class Element {
     } else if (value instanceof ArraySlice) {
       this.content = value.elements;
     } else if (
-      typeof value == 'string' ||
-      typeof value == 'number' ||
-      typeof value == 'boolean' ||
-      typeof value == 'null' ||
-      value == undefined
+      typeof value == 'string'
+      || typeof value == 'number'
+      || typeof value == 'boolean'
+      || value === 'null'
+      || value == undefined
     ) {
       // Primitive Values
       this._content = value;
@@ -277,9 +269,7 @@ class Element {
     } else if (Array.isArray(value)) {
       this._content = value.map(this.refract);
     } else if (typeof value === 'object') {
-      this._content = Object.keys(value).map(function(key) {
-        return new this.MemberElement(key, value[key]);
-      }, this);
+      this._content = Object.keys(value).map(key => new this.MemberElement(key, value[key]));
     } else {
       throw new Error('Cannot set content to given value');
     }
@@ -291,7 +281,7 @@ class Element {
   get meta() {
     if (!this._meta) {
       if (this.isFrozen) {
-        var meta = new this.ObjectElement();
+        const meta = new this.ObjectElement();
         meta.freeze();
         return meta;
       }
@@ -319,7 +309,7 @@ class Element {
   get attributes() {
     if (!this._attributes) {
       if (this.isFrozen) {
-        var meta = new this.ObjectElement();
+        const meta = new this.ObjectElement();
         meta.freeze();
         return meta;
       }
@@ -330,7 +320,7 @@ class Element {
     return this._attributes;
   }
 
-  set attributes (value) {
+  set attributes(value) {
     if (value instanceof this.ObjectElement) {
       this._attributes = value;
     } else {
@@ -410,11 +400,13 @@ class Element {
    * @type ArraySlice
    */
   get parents() {
-    var parent = this.parent;
-    var parents = new ArraySlice();
+    let { parent } = this;
+    const parents = new ArraySlice();
 
     while (parent) {
       parents.push(parent);
+
+      // eslint-disable-next-line prefer-destructuring
       parent = parent.parent;
     }
 
@@ -429,19 +421,23 @@ class Element {
   get children() {
     if (Array.isArray(this.content)) {
       return new ArraySlice(this.content);
-    } else if (this.content instanceof KeyValuePair) {
-      var children = new ArraySlice([this.content.key]);
+    }
+
+    if (this.content instanceof KeyValuePair) {
+      const children = new ArraySlice([this.content.key]);
 
       if (this.content.value) {
         children.push(this.content.value);
       }
 
       return children;
-    } else if (this.content instanceof Element) {
-      return new ArraySlice([this.content]);
-    } else {
-      return new ArraySlice();
     }
+
+    if (this.content instanceof Element) {
+      return new ArraySlice([this.content]);
+    }
+
+    return new ArraySlice();
   }
 
   /**
@@ -450,18 +446,18 @@ class Element {
   * @see children
   */
   get recursiveChildren() {
-    var children = new ArraySlice();
+    const children = new ArraySlice();
 
-    this.children.forEach(function (element) {
+    this.children.forEach((element) => {
       children.push(element);
 
-      element.recursiveChildren.forEach(function (child) {
+      element.recursiveChildren.forEach((child) => {
         children.push(child);
       });
     });
 
     return children;
   }
-};
+}
 
 module.exports = Element;

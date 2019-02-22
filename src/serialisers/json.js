@@ -1,7 +1,3 @@
-'use strict';
-
-var Namespace = require('../namespace');
-
 /**
  * @class JSONSerialiser
  *
@@ -20,25 +16,25 @@ class JSONSerialiser {
    */
   serialise(element) {
     if (!(element instanceof this.namespace.elements.Element)) {
-      throw new TypeError('Given element `' + element + '` is not an Element instance');
+      throw new TypeError(`Given element \`${element}\` is not an Element instance`);
     }
 
-    var payload = {
+    const payload = {
       element: element.element,
     };
 
     if (element._meta && element._meta.length > 0) {
-      payload['meta'] = this.serialiseObject(element.meta);
+      payload.meta = this.serialiseObject(element.meta);
     }
 
     if (element._attributes && element._attributes.length > 0) {
-      payload['attributes'] = this.serialiseObject(element.attributes);
+      payload.attributes = this.serialiseObject(element.attributes);
     }
 
-    var content = this.serialiseContent(element.content);
+    const content = this.serialiseContent(element.content);
 
     if (content !== undefined) {
-      payload['content'] = content;
+      payload.content = content;
     }
 
     return payload;
@@ -53,8 +49,8 @@ class JSONSerialiser {
       throw new Error('Given value is not an object containing an element name');
     }
 
-    var ElementClass = this.namespace.getElementClass(value.element);
-    var element = new ElementClass();
+    const ElementClass = this.namespace.getElementClass(value.element);
+    const element = new ElementClass();
 
     if (element.element !== value.element) {
       element.element = value.element;
@@ -68,7 +64,7 @@ class JSONSerialiser {
       this.deserialiseObject(value.attributes, element.attributes);
     }
 
-    var content = this.deserialiseContent(value.content);
+    const content = this.deserialiseContent(value.content);
     if (content !== undefined || element.content === null) {
       element.content = content;
     }
@@ -81,19 +77,23 @@ class JSONSerialiser {
   serialiseContent(content) {
     if (content instanceof this.namespace.elements.Element) {
       return this.serialise(content);
-    } else if (content instanceof this.namespace.KeyValuePair) {
-      var pair = {
-        'key': this.serialise(content.key),
+    }
+
+    if (content instanceof this.namespace.KeyValuePair) {
+      const pair = {
+        key: this.serialise(content.key),
       };
 
       if (content.value) {
-        pair['value'] = this.serialise(content.value);
+        pair.value = this.serialise(content.value);
       }
 
       return pair;
-    } else if (content && content.map) {
+    }
+
+    if (content && content.map) {
       if (content.length === 0) {
-        return;
+        return undefined;
       }
 
       return content.map(this.serialise, this);
@@ -106,15 +106,19 @@ class JSONSerialiser {
     if (content) {
       if (content.element) {
         return this.deserialise(content);
-      } else if (content.key) {
-        var pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
+      }
+
+      if (content.key) {
+        const pair = new this.namespace.KeyValuePair(this.deserialise(content.key));
 
         if (content.value) {
           pair.value = this.deserialise(content.value);
         }
 
         return pair;
-      } else if (content.map) {
+      }
+
+      if (content.map) {
         return content.map(this.deserialise, this);
       }
     }
@@ -123,25 +127,24 @@ class JSONSerialiser {
   }
 
   serialiseObject(obj) {
-    var result = {};
+    const result = {};
 
-    obj.keys().forEach(function (key) {
-      var value = obj.get(key);
+    obj.keys().forEach((key) => {
+      const value = obj.get(key);
 
       if (value) {
         result[key] = this.serialise(value);
       }
-    }, this);
+    });
 
     return result;
   }
 
   deserialiseObject(from, to) {
-    Object.keys(from).forEach(function (key) {
+    Object.keys(from).forEach((key) => {
       to.set(key, this.deserialise(from[key]));
-    }, this);
+    });
   }
-
 }
 
 

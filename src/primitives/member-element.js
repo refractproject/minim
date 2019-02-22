@@ -1,7 +1,5 @@
-'use strict';
-
-var KeyValuePair = require('../key-value-pair');
-var Element = require('./element');
+const KeyValuePair = require('../key-value-pair');
+const Element = require('./element');
 
 /**
  * @class MemberElement

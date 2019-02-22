@@ -1,6 +1,4 @@
-'use strict';
-
-var Element = require('../primitives/element');
+const Element = require('../primitives/element');
 
 /**
  * @class RefElement

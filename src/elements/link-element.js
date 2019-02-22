@@ -1,6 +1,4 @@
-'use strict';
-
-var Element = require('../primitives/element');
+const Element = require('../primitives/element');
 
 /** Hyperlinking MAY be used to link to other resources, provide links to
  * instructions on how to process a given element (by way of a profile or

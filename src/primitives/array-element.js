@@ -1,8 +1,6 @@
-'use strict';
-
-var Element = require('./element');
-var ArraySlice = require('../array-slice');
-var negate = require('lodash/negate');
+const negate = require('lodash/negate');
+const Element = require('./element');
+const ArraySlice = require('../array-slice');
 
 /**
  * @class
@@ -33,7 +31,7 @@ class ArrayElement extends Element {
    * This works for both ArrayElement and ObjectElement instances
    */
   getValue(indexOrKey) {
-    var item = this.get(indexOrKey);
+    const item = this.get(indexOrKey);
 
     if (item) {
       return item.toValue();
@@ -55,7 +53,7 @@ class ArrayElement extends Element {
   }
 
   remove(index) {
-    var removed = this.content.splice(index, 1);
+    const removed = this.content.splice(index, 1);
 
     if (removed.length) {
       return removed[0];
@@ -81,7 +79,7 @@ class ArrayElement extends Element {
   flatMap(callback, thisArg) {
     return this
       .map(callback, thisArg)
-      .reduce(function (a, b) { return a.concat(b); }, []);
+      .reduce((a, b) => a.concat(b), []);
   }
 
   /**
@@ -92,15 +90,15 @@ class ArrayElement extends Element {
    * @returns An array of the non-undefined results of calling transform with each element of the array
    */
   compactMap(transform, thisArg) {
-    var results = [];
+    const results = [];
 
-    this.forEach(function (element) {
-      var result = transform(element);
+    this.forEach((element) => {
+      const result = transform.bind(thisArg)(element);
 
       if (result) {
         results.push(result);
       }
-    }, thisArg);
+    });
 
     return results;
   }
@@ -129,8 +127,8 @@ class ArrayElement extends Element {
    * primitives on each step.
    */
   reduce(callback, initialValue) {
-    var startIndex;
-    var memo;
+    let startIndex;
+    let memo;
 
     // Allows for defining a starting value of the reduce
     if (initialValue !== undefined) {
@@ -147,8 +145,8 @@ class ArrayElement extends Element {
     // Sending each function call to the registry allows for passing Minim
     // instances through the function return. This means you can return
     // primitive values or return Minim instances and reduce will still work.
-    for (var i = startIndex; i < this.length; i++) {
-      var item = this.content[i];
+    for (let i = startIndex; i < this.length; i += 1) {
+      const item = this.content[i];
 
       if (this.primitive() === 'object') {
         memo = this.refract(callback(memo, item.value, item.key, item, this));
@@ -172,11 +170,9 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   forEach(callback, thisArg) {
-    var refract = this.refract;
-
-    this.content.forEach(function(item, index) {
-      callback(item, refract(index));
-    }, thisArg);
+    this.content.forEach((item, index) => {
+      callback.bind(thisArg)(item, this.refract(index));
+    });
   }
 
   /**
@@ -213,19 +209,19 @@ class ArrayElement extends Element {
    * @returns {Element[]}
    */
   findElements(condition, givenOptions) {
-    var options = givenOptions || {};
-    var recursive = !!options.recursive;
-    var results = options.results === undefined ? [] : options.results;
+    const options = givenOptions || {};
+    const recursive = !!options.recursive;
+    const results = options.results === undefined ? [] : options.results;
 
     // The forEach method for Object Elements returns value, key, and member.
     // This passes those along to the condition function below.
-    this.forEach(function(item, keyOrIndex, member) {
+    this.forEach((item, keyOrIndex, member) => {
       // We use duck-typing here to support any registered class that
       // may contain other elements.
       if (recursive && (item.findElements !== undefined)) {
         item.findElements(condition, {
-          results: results,
-          recursive: recursive
+          results,
+          recursive,
         });
       }
 
@@ -243,7 +239,7 @@ class ArrayElement extends Element {
    * @returns {ArraySlice}
    */
   find(condition) {
-    return new ArraySlice(this.findElements(condition, {recursive: true}));
+    return new ArraySlice(this.findElements(condition, { recursive: true }));
   }
 
   /**
@@ -251,9 +247,7 @@ class ArrayElement extends Element {
    * @returns {ArraySlice}
    */
   findByElement(element) {
-    return this.find(function(item) {
-      return item.element === element;
-    });
+    return this.find(item => item.element === element);
   }
 
   /**
@@ -262,9 +256,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   findByClass(className) {
-    return this.find(function(item) {
-      return item.classes.contains(className);
-    });
+    return this.find(item => item.classes.contains(className));
   }
 
   /**
@@ -274,9 +266,7 @@ class ArrayElement extends Element {
    * @memberof ArrayElement.prototype
    */
   getById(id) {
-    return this.find(function(item) {
-      return item.id.toValue() === id;
-    }).first;
+    return this.find(item => item.id.toValue() === id).first;
   }
 
   /**
@@ -285,9 +275,7 @@ class ArrayElement extends Element {
    * @returns {boolean}
    */
   contains(value) {
-    return this.content.some(function (element) {
-      return element.equals(value);
-    });
+    return this.content.some(element => element.equals(value));
   }
 
   // Fantasy Land
@@ -314,8 +302,8 @@ class ArrayElement extends Element {
 
   ['fantasy-land/chain'](transform) {
     return this
-      .map(function (element) { return transform(element); }, this)
-      .reduce(function (a, b) { return a.concat(b); }, this.empty());
+      .map(element => transform(element), this)
+      .reduce((a, b) => a.concat(b), this.empty());
   }
 
   ['fantasy-land/filter'](callback) {
@@ -365,16 +353,16 @@ class ArrayElement extends Element {
   get last() {
     return this.getIndex(this.length - 1);
   }
-};
+}
 
-ArrayElement.empty = function () {
+ArrayElement.empty = function empty() {
   return new this();
 };
 
 ArrayElement['fantasy-land/empty'] = ArrayElement.empty;
 
 if (typeof Symbol !== 'undefined') {
-  ArrayElement.prototype[Symbol.iterator] = function () {
+  ArrayElement.prototype[Symbol.iterator] = function symbol() {
     return this.content[Symbol.iterator]();
   };
 }

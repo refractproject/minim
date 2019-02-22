@@ -1,20 +1,18 @@
-'use strict';
+const Element = require('./primitives/element');
+const NullElement = require('./primitives/null-element');
+const StringElement = require('./primitives/string-element');
+const NumberElement = require('./primitives/number-element');
+const BooleanElement = require('./primitives/boolean-element');
+const ArrayElement = require('./primitives/array-element');
+const MemberElement = require('./primitives/member-element');
+const ObjectElement = require('./primitives/object-element');
+const LinkElement = require('./elements/link-element');
+const RefElement = require('./elements/ref-element');
 
-var Element = require('./primitives/element');
-var NullElement = require('./primitives/null-element');
-var StringElement = require('./primitives/string-element');
-var NumberElement = require('./primitives/number-element');
-var BooleanElement = require('./primitives/boolean-element');
-var ArrayElement = require('./primitives/array-element');
-var MemberElement = require('./primitives/member-element');
-var ObjectElement = require('./primitives/object-element');
-var LinkElement = require('./elements/link-element');
-var RefElement = require('./elements/ref-element');
+const ArraySlice = require('./array-slice');
+const ObjectSlice = require('./object-slice');
 
-var ArraySlice = require('./array-slice');
-var ObjectSlice = require('./object-slice');
-
-var KeyValuePair = require('./key-value-pair');
+const KeyValuePair = require('./key-value-pair');
 
 /**
  * Refracts a JSON type to minim elements
@@ -24,23 +22,30 @@ var KeyValuePair = require('./key-value-pair');
 function refract(value) {
   if (value instanceof Element) {
     return value;
-  } else if (typeof value === 'string') {
+  }
+
+  if (typeof value === 'string') {
     return new StringElement(value);
-  } else if (typeof value === 'number') {
+  }
+
+  if (typeof value === 'number') {
     return new NumberElement(value);
-  } else if (typeof value === 'boolean') {
+  }
+
+  if (typeof value === 'boolean') {
     return new BooleanElement(value);
-  } else if (value === null) {
+  }
+
+  if (value === null) {
     return new NullElement();
-  } else if (Array.isArray(value)) {
+  }
+
+  if (Array.isArray(value)) {
     return new ArrayElement(value.map(refract));
-  } else if (typeof value === 'object') {
-    var element = new ObjectElement();
+  }
 
-    for (var key in value) {
-      element.set(key, value[key]);
-    }
-
+  if (typeof value === 'object') {
+    const element = new ObjectElement(value);
     return element;
   }
 
@@ -59,20 +64,20 @@ ArraySlice.prototype.refract = refract;
  * for handling with element instances.
  */
 module.exports = {
-  Element: Element,
-  NullElement: NullElement,
-  StringElement: StringElement,
-  NumberElement: NumberElement,
-  BooleanElement: BooleanElement,
-  ArrayElement: ArrayElement,
-  MemberElement: MemberElement,
-  ObjectElement: ObjectElement,
-  LinkElement: LinkElement,
-  RefElement: RefElement,
+  Element,
+  NullElement,
+  StringElement,
+  NumberElement,
+  BooleanElement,
+  ArrayElement,
+  MemberElement,
+  ObjectElement,
+  LinkElement,
+  RefElement,
 
-  refract: refract,
+  refract,
 
-  ArraySlice: ArraySlice,
-  ObjectSlice: ObjectSlice,
-  KeyValuePair: KeyValuePair,
+  ArraySlice,
+  ObjectSlice,
+  KeyValuePair,
 };

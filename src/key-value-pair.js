@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @class
  *
@@ -16,7 +14,7 @@ class KeyValuePair {
    * @returns {KeyValuePair}
    */
   clone() {
-    var clone = new KeyValuePair();
+    const clone = new KeyValuePair();
 
     if (this.key) {
       clone.key = this.key.clone();

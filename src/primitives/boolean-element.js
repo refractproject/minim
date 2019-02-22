@@ -1,6 +1,4 @@
-'use strict';
-
-var Element = require('./element');
+const Element = require('./element');
 
 /**
  * @class BooleanElement

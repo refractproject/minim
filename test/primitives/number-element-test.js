@@ -1,35 +1,35 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const { expect } = require('../spec-helper');
+const minim = require('../../src/minim').namespace();
 
-var NumberElement = minim.getElementClass('number');
+const NumberElement = minim.getElementClass('number');
 
-describe('NumberElement', function() {
-  var numberElement;
+describe('NumberElement', () => {
+  let numberElement;
 
-  before(function() {
+  before(() => {
     numberElement = new NumberElement(4);
   });
 
-  describe('#element', function() {
-    it('is a number', function() {
+  describe('#element', () => {
+    it('is a number', () => {
       expect(numberElement.element).to.equal('number');
     });
   });
 
-  describe('#primitive', function() {
-    it('returns number as the Refract primitive', function() {
+  describe('#primitive', () => {
+    it('returns number as the Refract primitive', () => {
       expect(numberElement.primitive()).to.equal('number');
     });
   });
 
-  describe('#get', function() {
-    it('returns the number value', function() {
+  describe('#get', () => {
+    it('returns the number value', () => {
       expect(numberElement.toValue()).to.equal(4);
     });
   });
 
-  describe('#set', function() {
-    it('sets the value of the number', function() {
+  describe('#set', () => {
+    it('sets the value of the number', () => {
       numberElement.set(10);
       expect(numberElement.toValue()).to.equal(10);
     });

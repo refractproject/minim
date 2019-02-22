@@ -1,48 +1,36 @@
-'use strict';
-
-var negate = require('lodash/negate');
-var ArraySlice = require('./array-slice');
+const negate = require('lodash/negate');
+const ArraySlice = require('./array-slice');
 
 class ObjectSlice extends ArraySlice {
   map(callback, thisArg) {
-    return this.elements.map(function(member) {
-      return callback(member.value, member.key, member);
-    }, thisArg);
+    return this.elements.map(member => callback.bind(thisArg)(member.value, member.key, member));
   }
 
   filter(callback, thisArg) {
-    return new ObjectSlice(this.elements.filter(function(member) {
-      return callback(member.value, member.key, member);
-    }, thisArg));
+    return new ObjectSlice(this.elements.filter(member => callback.bind(thisArg)(member.value, member.key, member)));
   }
 
   reject(callback, thisArg) {
-    return this.filter(negate(callback, thisArg));
+    return this.filter(negate(callback.bind(thisArg)));
   }
 
   forEach(callback, thisArg) {
-    return this.elements.forEach(function(member, index) {
-      return callback(member.value, member.key, member, index);
-    }, thisArg);
+    return this.elements.forEach((member, index) => { callback.bind(thisArg)(member.value, member.key, member, index); });
   }
 
   /**
    * @returns {array}
    */
   keys() {
-    return this.map(function(value, key) {
-      return key.toValue();
-    });
+    return this.map((value, key) => key.toValue());
   }
 
   /**
    * @returns {array}
    */
   values() {
-    return this.map(function(value) {
-      return value.toValue();
-    });
+    return this.map(value => value.toValue());
   }
-};
+}
 
 module.exports = ObjectSlice;

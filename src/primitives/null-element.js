@@ -1,6 +1,4 @@
-'use strict';
-
-var Element = require('./element');
+const Element = require('./element');
 
 module.exports = class NullElement extends Element {
   constructor(content, meta, attributes) {

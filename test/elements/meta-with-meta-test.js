@@ -1,15 +1,15 @@
-var expect = require('../spec-helper').expect;
-var minim = require('../../src/minim').namespace();
+const { expect } = require('../spec-helper');
+const minim = require('../../src/minim').namespace();
 
-var ObjectElement = minim.getElementClass('object');
-var StringElement = minim.getElementClass('string');
+const ObjectElement = minim.getElementClass('object');
+const StringElement = minim.getElementClass('string');
 
-describe('Element whose meta has meta', function() {
-  var object, string;
+describe('Element whose meta has meta', () => {
+  let object; let string;
 
-  before(function () {
+  before(() => {
     object = new ObjectElement({
-      foo: 'bar'
+      foo: 'bar',
     });
 
     string = new StringElement('xyz');
@@ -18,7 +18,7 @@ describe('Element whose meta has meta', function() {
     object.meta.set('baz', string);
   });
 
-  it('returns the correct Refract value', function() {
+  it('returns the correct Refract value', () => {
     const pqr = object.meta.get('baz').meta.getValue('pqr');
     expect(pqr).to.equal(1);
   });
