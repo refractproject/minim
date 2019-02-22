@@ -10,12 +10,10 @@
     "build:browser": "browserify -d -s minim -t [ babelify ] -o dist/minim.js dist/lib/minim.js",
     "coverage": "istanbul cover _mocha -- -R spec --recursive --require babel-register",
     "coveralls": "coveralls <coverage/lcov.info",
-    "frontendtests": "karma start",
     "lint": "eslint .",
-    "nodejstests": "mocha -R spec --recursive",
     "precoveralls": "npm run coverage",
-    "prepublish": "npm run lint",
-    "test": "npm run nodejstests && npm run frontendtests"
+    "test": "mocha -R spec --recursive",
+    "test:browser": "karma start"
   },
   "repository": {
     "type": "git",
