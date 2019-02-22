@@ -107,8 +107,6 @@ var NewElement = StringElement.extend({
 })
 ```
 
-See the [Uptown](https://github.com/smizell/uptown) library for usage with `.extend`.
-
 ### Element Attributes
 
 Each Minim element provides the following attributes:
