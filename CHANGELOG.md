@@ -5,6 +5,8 @@
 ### Breaking
 
 - Support for Node 4 has been removed. Minim now supports Node >= 6.
+- Minim no longer uses [uptown](http://github.com/smizell/uptown) and thus the
+  `extend` API has been removed.
 
 ## 0.22.1 (2018-12-10)
 
