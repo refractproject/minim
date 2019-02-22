@@ -1,15 +1,14 @@
 # Minim
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/refractproject/minim.svg)](https://greenkeeper.io/)
-
 [![Build Status](https://travis-ci.org/refractproject/minim.svg?branch=master)](https://travis-ci.org/refractproject/minim)
 
-A library for interacting with [Refract elements](https://github.com/refractproject/refract-spec)
+A library for interacting with [Refract elements](https://github.com/refractproject/refract-spec).
 
 ## Install
 
 ```shell
-npm install minim
+$ npm install minim
 ```
 
 ## About
@@ -28,10 +27,8 @@ Refract is a JSON structure for JSON documents to make a more flexible document 
 An element ends up looking like this:
 
 ```javascript
-var el = {
+const element = {
   element: 'string',
-  meta: {},
-  attributes: {},
   content: 'bar'
 };
 ```
@@ -51,25 +48,17 @@ The `refract` variable above has the following JSON value.
 ```json
 {
   "element": "array",
-  "meta": {},
-  "attributes": {},
   "content": [
     {
       "element": "number",
-      "meta": {},
-      "attributes": {},
       "content": 1
     },
     {
       "element": "number",
-      "meta": {},
-      "attributes": {},
       "content": 2
     },
     {
       "element": "number",
-      "meta": {},
-      "attributes": {},
       "content": 3
     }
   ]
@@ -84,8 +73,6 @@ Serialized Refract can be converted back to Minim elements to make a roundtrip.
 var arrayElement1 = minim.toElement([1, 2, 3]);
 var refracted = minim.toRefract(arrayElement1);
 var arrayElement2 = minim.fromRefract(refracted);
-```
-
 ```
 
 Note that due to optional refracting in `meta`, anything that looks like an element in the given serialization will be loaded as such.
