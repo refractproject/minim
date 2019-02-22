@@ -12,7 +12,7 @@
     "coveralls": "coveralls <coverage/lcov.info",
     "lint": "eslint .",
     "precoveralls": "npm run coverage",
-    "test": "mocha -R spec --recursive",
+    "test": "mocha",
     "test:browser": "karma start"
   },
   "repository": {
