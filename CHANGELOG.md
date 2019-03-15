@@ -1,5 +1,12 @@
 # Minim Changelog
 
+## Master
+
+### Bug Fixes
+
+- Fixes serialisation of array and object sample values in enumerations in
+  Refract JSON 0.6 serialisation.
+
 ## 0.23.1 (2019-02-25)
 
 ### Bug Fixes
