@@ -341,6 +341,52 @@ describe('JSON 0.6 Serialiser', () => {
       // }
     });
 
+    it('serialises enum with object samples', () => {
+      const object = new minim.elements.Object();
+      const array = new minim.elements.Array();
+
+      const sample = new minim.elements.Object({ message: 'Hello World' });
+
+      const enumeration = new minim.Element();
+      enumeration.element = 'enum';
+      enumeration.attributes.set('enumerations', [object, array]);
+      enumeration.attributes.set('samples', [sample]);
+
+      const result = serialiser.serialise(enumeration);
+
+      expect(result).to.deep.equal({
+        element: 'enum',
+        attributes: {
+          samples: [
+            [
+              {
+                element: 'object',
+                content: [
+                  {
+                    element: 'member',
+                    content: {
+                      key: {
+                        element: 'string',
+                        content: 'message',
+                      },
+                      value: {
+                        element: 'string',
+                        content: 'Hello World',
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+        content: [
+          { element: 'object' },
+          { element: 'array' },
+        ],
+      });
+    });
+
     it('serialises enum with fixed values', () => {
       const defaultElement = new minim.Element(new minim.elements.String('North'));
       defaultElement.element = 'enum';
