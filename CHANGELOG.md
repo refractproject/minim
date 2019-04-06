@@ -1,5 +1,12 @@
 # Minim Changelog
 
+## 0.23.3 (2019-04-06)
+
+### Enhancements
+
+- Added support for IE11 in the included web distribution of minim
+  (`dist/minim.js`).
+
 ## 0.23.2 (2019-03-15)
 
 ### Bug Fixes
