@@ -387,6 +387,28 @@ describe('JSON 0.6 Serialiser', () => {
       });
     });
 
+    it('serialises enum with default', () => {
+      const defaultElement = new minim.elements.String('one');
+      const enumeration = new minim.Element();
+      enumeration.element = 'enum';
+      enumeration.attributes.set('default', defaultElement);
+
+      const result = serialiser.serialise(enumeration);
+
+      expect(result).to.deep.equal({
+        element: 'enum',
+        attributes: {
+          default: [
+            {
+              element: 'string',
+              content: 'one',
+            },
+          ],
+        },
+        content: [],
+      });
+    });
+
     it('serialises enum with fixed values', () => {
       const defaultElement = new minim.Element(new minim.elements.String('North'));
       defaultElement.element = 'enum';
