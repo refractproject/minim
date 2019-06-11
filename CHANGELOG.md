@@ -1,5 +1,12 @@
 # Minim Changelog
 
+## 0.23.4 (2019-06-11)
+
+### Bug Fixes
+
+- Fixes serialisation of default values in enumerations in 
+  Refract JSON 0.6 serialisation.
+
 ## 0.23.3 (2019-04-06)
 
 ### Enhancements
