@@ -1,6 +1,6 @@
 # Minim Changelog
 
-## 0.24.5 (2019-07-02)
+## 0.23.5 (2019-07-02)
 
 This release brings some performance improvements, namely to serialising with
 the JSON serialisers.
