@@ -241,7 +241,7 @@ The `set` method sets the value of the `StringElement` instance.
 ```javascript
 var stringElement = minim.toElement('');
 stringElement.set('foobar');
-var value = stringElement.get() // get() returns 'foobar'
+var value = stringElement.toValue() // toValue() returns 'foobar'
 ```
 
 #### NumberElement
@@ -255,7 +255,7 @@ The `set` method sets the value of the `NumberElement` instance.
 ```javascript
 var numberElement = minim.toElement(0);
 numberElement.set(4);
-var value = numberElement.get() // get() returns 4
+var value = numberElement.toValue() // toValue() returns 4
 ```
 
 #### BooleanElement
@@ -269,7 +269,7 @@ The `set` method sets the value of the `BooleanElement` instance.
 ```javascript
 var booleanElement = minim.toElement(false);
 booleanElement.set(true);
-var value = booleanElement.get() // get() returns true
+var value = booleanElement.toValue() // toValue() returns true
 ```
 
 #### ArrayElement
@@ -353,7 +353,7 @@ The `filter` method may be used to filter a Minim array. This method returns a M
 ```javascript
 var arrayElement = minim.toElement(['a', 'b', 'c']);
 var newArray = arrayElement.filter(function(item) {
-  return item.get() === 'a'
+  return item.toValue() === 'a'
 }); // newArray.toValue() is now ['a']
 ```
 
