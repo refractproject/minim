@@ -928,6 +928,18 @@ describe('JSON 0.6 Serialiser', () => {
       });
     });
 
+    it('serialises undefined httpRequest content', () => {
+      const element = new minim.elements.Array();
+      element.element = 'httpRequest';
+      element.content = undefined;
+      const serialised = serialiser.serialise(element);
+
+      expect(serialised).to.deep.equal({
+        element: 'httpRequest',
+        content: [],
+      });
+    });
+
     it('serialises empty httpResponse content', () => {
       const element = new minim.elements.Element([]);
       element.element = 'httpResponse';

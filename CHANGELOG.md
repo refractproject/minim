@@ -1,5 +1,13 @@
 # Minim Changelog
 
+## Master
+
+### Bug Fixes
+
+- Fixes a JSON 0.6 serialisation bug where httpRequest and similar array-based
+  elements with undefined content would be serialised with undefined content
+  instead of an empty array as content.
+
 ## 0.23.5 (2019-07-02)
 
 This release brings some performance improvements, namely to serialising with
