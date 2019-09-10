@@ -1,6 +1,6 @@
 # Minim Changelog
 
-## Master
+## 0.23.6 (2019-09-10)
 
 ### Bug Fixes
 
