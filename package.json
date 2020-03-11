@@ -52,7 +52,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sinon": "^1.0.4",
     "mocha": "^6.0.1",
-    "sinon": "^8.1.0"
+    "sinon": "^9.0.1"
   },
   "dependencies": {
     "lodash": "^4.15.0"
