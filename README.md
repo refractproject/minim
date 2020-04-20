@@ -136,25 +136,6 @@ var ref = element.toRef();
 var ref = element.toRef('attributes');
 ```
 
-#### toEmbeddedRefract
-
-The `toEmbeddedRefract` method returns the Embedded Refract value of the Minim element.
-
-```javascript
-var stringElement = minim.toElement("foobar");
-stringElement.attributes.set('a', 'b');
-var embedded = stringElement.toEmbeddedRefract();
-// Serializes to:
-//
-// {
-//   _refract: {
-//     element: 'string',
-//     attributes: { a: 'b' },
-//     content: 'foobar'
-//   }
-// }
-```
-
 #### equals
 
 Allows for testing equality with the content of the element.
