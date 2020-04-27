@@ -40,7 +40,7 @@ describe('JSON Serialiser', () => {
         const object = new minim.elements.Object({ key: undefined });
         const result = serialiser.serialiseObject(object);
 
-        expect(result).to.deep.equal({});
+        expect(result).to.deep.equal(undefined);
       });
     });
 
