@@ -1,5 +1,14 @@
 # Minim Changelog
 
+## 0.23.7 (2020-04-27)
+
+### Bug Fixes
+
+- Prevents the JSON serializer from serializing an empty object (`{}`) under
+  meta and attributes under the case where none of the meta or attribute
+  member's have a value. This prevents `{}` from being present under meta or
+  attributes when setting a member with an undefined key.
+
 ## 0.23.6 (2019-09-10)
 
 ### Bug Fixes
