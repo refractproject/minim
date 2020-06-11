@@ -1,5 +1,12 @@
 # Minim Changelog
 
+## Master
+
+### Bug Fixes
+
+- Prevent throwing an error when calling `toValue()` on an element with a key
+  value pair which does not have a value.
+
 ## 0.23.7 (2020-04-27)
 
 ### Bug Fixes
