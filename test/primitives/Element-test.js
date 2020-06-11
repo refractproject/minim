@@ -702,6 +702,31 @@ describe('Element', () => {
         value: 'doe',
       });
     });
+
+    it('returns KeyValuePair without value', () => {
+      const element = new minim.Element(
+        new KeyValuePair(
+          new minim.Element('name')
+        )
+      );
+
+      const value = element.toValue();
+      expect(value.key).to.equal('name');
+      expect(value.value).to.be.undefined;
+    });
+
+    it('returns KeyValuePair with empty value', () => {
+      const element = new minim.Element(
+        new KeyValuePair(
+          new minim.Element('name'),
+          new minim.Element()
+        )
+      );
+
+      const value = element.toValue();
+      expect(value.key).to.equal('name');
+      expect(value.value).to.be.undefined;
+    });
   });
 
   describe('freezing an element', () => {
