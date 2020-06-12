@@ -2,6 +2,12 @@
 
 ## Master
 
+### Enhancements
+
+- `ArrayElement`'s `contains` method has been renamed to `includes` to be
+  consistent with `Array.includes`. `ArrayElement.contains` has been
+  deprecated, and remains for compatibility.
+
 ### Bug Fixes
 
 - Prevent throwing an error when calling `toValue()` on an element with a key

@@ -450,13 +450,13 @@ Search the entire tree to find a matching ID.
 elTree.getById('some-id');
 ```
 
-##### contains
+##### includes
 
-Test to see if a collection contains the value given. Does a deep equality check.
+Test to see if a collection includes the value given. Does a deep equality check.
 
 ```javascript
 var arrayElement = minim.toElement(['a', [1, 2], 'b', 3]);
-arrayElement.contains('a'); // returns true
+arrayElement.includes('a'); // returns true
 ```
 
 ##### length
