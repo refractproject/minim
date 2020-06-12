@@ -434,6 +434,26 @@ describe('ArrayElement', () => {
       });
     });
 
+    describe('#includes', () => {
+      it('uses deep equality', () => {
+        expect(doc.get(2).includes(['not', 'there'])).to.be.false;
+        expect(doc.get(2).includes(['bar', 4])).to.be.true;
+      });
+
+      context('when given a value that is in the array', () => {
+        it('returns true', () => {
+          expect(doc.includes('foobar')).to.be.true;
+        });
+      });
+
+      context('when given a value that is not in the array', () => {
+        it('returns false', () => {
+          expect(doc.includes('not-there')).to.be.false;
+        });
+      });
+    });
+
+    // Deprecated functionality
     describe('#contains', () => {
       it('uses deep equality', () => {
         expect(doc.get(2).contains(['not', 'there'])).to.be.false;
