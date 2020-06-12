@@ -57,6 +57,14 @@ describe('ObjectElement', () => {
         z: 1,
       });
     });
+
+    it('returns undefined with member does not have a value', () => {
+      const element = new ObjectElement();
+      element.set('name', undefined);
+
+      const value = element.toValue();
+      expect(value.name).to.be.undefined;
+    });
   });
 
   describe('#get', () => {
