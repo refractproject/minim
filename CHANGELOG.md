@@ -1,6 +1,6 @@
 # Minim Changelog
 
-## Master
+## 0.23.8 (2020-06-12)
 
 ### Enhancements
 
