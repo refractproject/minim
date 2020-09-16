@@ -45,7 +45,7 @@
     "fantasy-land": "^4.1.0",
     "istanbul": "^0.4.5",
     "karma": "^4.0.0",
-    "karma-browserify": "^6.0.0",
+    "karma-browserify": "^7.0.0",
     "karma-chai": "^0.1.0",
     "karma-firefox-launcher": "^1.1.0",
     "karma-mocha": "^2.0.1",
